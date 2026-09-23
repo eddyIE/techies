@@ -1,0 +1,50 @@
+# Production overlay for a public VM. Use alongside the base file:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+#
+# What it changes, and why each one matters once the host has a public IP:
+#   - `!override` is required on every `ports:` below. Compose merges sequences by default,
+#     so without it these entries are ADDED to the base file's and the public bindings stay.
+#   - Postgres stops publishing 5432. In the base file that port is bound to the host for
+#     local psql access; on a public VM it would expose the database to the internet.
+#   - The gateway serves on 80 instead of 8080, so the API needs no port in its URL.
+#   - Services restart on boot, so a VM reboot does not take the demo down.
+#   - Log volume is capped, so logs cannot fill the disk and stop Docker.
+services:
+  postgres:
+    # Override the published port with an explicit loopback bind: reachable via SSH tunnel
+    # from your laptop, unreachable from the internet.
+    ports: !override
+      - "127.0.0.1:5432:5432"
+    restart: always
+    logging: &logging
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  discovery-server:
+    restart: always
+    logging: *logging
+
+  identity-service:
+    restart: always
+    logging: *logging
+
+  catalog-service:
+    restart: always
+    logging: *logging
+
+  inventory-service:
+    restart: always
+    logging: *logging
+
+  order-service:
+    restart: always
+    logging: *logging
+
+  api-gateway:
+    ports: !override
+      - "80:8080"
+    restart: always
+    logging: *logging

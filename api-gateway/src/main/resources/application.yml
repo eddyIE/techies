@@ -1,0 +1,115 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: false
+          routes:
+            # ---- public ----
+            - id: auth
+              uri: lb://identity-service
+              predicates:
+                - Path=/api/auth/**
+              filters:
+                - StripPrefix=1
+
+            - id: categories
+              uri: lb://catalog-service
+              predicates:
+                - Path=/api/categories/**
+              filters:
+                - StripPrefix=1
+
+            - id: products
+              uri: lb://catalog-service
+              predicates:
+                - Path=/api/products/**
+              filters:
+                - StripPrefix=1
+
+            # Read-only stock badge. Only GET, and only a single product id: /api/stock/deduct
+            # and /api/stock/restore deliberately match nothing and 404 at the edge.
+            - id: stock-read
+              uri: lb://inventory-service
+              predicates:
+                - Path=/api/stock/{productId}
+                - Method=GET
+              filters:
+                - StripPrefix=1
+
+            # ---- authenticated ----
+            - id: users
+              uri: lb://identity-service
+              predicates:
+                - Path=/api/users/**
+              filters:
+                - StripPrefix=1
+
+            - id: addresses
+              uri: lb://identity-service
+              predicates:
+                - Path=/api/addresses/**
+              filters:
+                - StripPrefix=1
+
+            - id: cart
+              uri: lb://order-service
+              predicates:
+                - Path=/api/cart/**
+              filters:
+                - StripPrefix=1
+
+            - id: checkout
+              uri: lb://order-service
+              predicates:
+                - Path=/api/checkout
+              filters:
+                - StripPrefix=1
+
+            - id: orders
+              uri: lb://order-service
+              predicates:
+                - Path=/api/orders/**
+              filters:
+                - StripPrefix=1
+
+          httpclient:
+            connect-timeout: 2000
+            response-timeout: 10s
+
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowedOriginPatterns: "*"
+                allowedMethods: "*"
+                allowedHeaders: "*"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+techies:
+  jwt:
+    secret: ${JWT_SECRET:change-me-to-a-long-random-string-at-least-32-bytes}
+  public-paths:
+    - /api/auth/**
+    - /api/categories/**
+    - /api/products/**
+    - /api/stock/**
+    - /actuator/**

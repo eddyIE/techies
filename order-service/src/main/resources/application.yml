@@ -1,0 +1,59 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:techies}
+    username: ${POSTGRES_USER:techies}
+    password: ${POSTGRES_PASSWORD:techies_local_dev}
+    hikari:
+      schema: orders
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: orders
+    open-in-view: false
+  flyway:
+    enabled: true
+    schemas: orders
+    default-schema: orders
+    create-schemas: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+spring.cloud.openfeign.client.config:
+  default:
+    connectTimeout: 2000
+    readTimeout: 5000
+    loggerLevel: basic
+
+techies:
+  shipping:
+    flat-fee: 30000
+    free-threshold: 500000
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+  info:
+    title: Techies Order API
+    description: Cart, checkout saga, orders and cancellation
+    version: 1.0.0

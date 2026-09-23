@@ -1,0 +1,3 @@
+vn.techies.ecommerce.common.error.ErrorHandlingAutoConfiguration
+vn.techies.ecommerce.common.security.CurrentUserAutoConfiguration
+vn.techies.ecommerce.common.logging.LoggingAutoConfiguration

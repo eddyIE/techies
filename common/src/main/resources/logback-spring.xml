@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Shared logging configuration for every service.
+
+  Lives in the `common` jar so all five services log identically without copy-paste.
+  Spring Boot picks logback-spring.xml up from the classpath, including from inside a
+  dependency jar. A service that needs different behaviour can override it by adding its
+  own logback-spring.xml, which takes precedence.
+
+  Two files per service:
+    logs/<service>.log        everything at INFO and above
+    logs/<service>-error.log  WARN and above only, which is where problems land
+-->
+<configuration>
+
+    <springProperty scope="context" name="appName" source="spring.application.name"
+                    defaultValue="techies"/>
+
+    <!-- Overridable so containers can write somewhere else. -->
+    <property name="LOG_DIR" value="${LOG_DIR:-logs}"/>
+
+    <!--
+      requestId ties one user action together across all services; userId says who it
+      happened to. Both come from the MDC, populated by RequestContextFilter.
+    -->
+    <property name="PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [${appName}] [%X{requestId:-no-request-id}] [%X{userId:-anonymous}] %logger{40} - %msg%n"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${appName}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/archive/${appName}.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>7</maxHistory>
+            <totalSizeCap>200MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Problems only. This is the file to read first when something goes wrong. -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${appName}-error.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/archive/${appName}-error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>200MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
+    </root>
+
+    <logger name="vn.techies.ecommerce" level="DEBUG"/>
+
+    <!-- Routine chatter that would otherwise bury real problems. -->
+    <logger name="com.netflix.discovery" level="WARN"/>
+    <!-- Advisory about using Caffeine in production; not a problem with this project. -->
+    <logger name="org.springframework.cloud.loadbalancer.config.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger"
+            level="ERROR"/>
+    <logger name="org.springframework.cloud.netflix.eureka" level="WARN"/>
+
+</configuration>

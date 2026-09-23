@@ -1,0 +1,53 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: identity-service
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:techies}
+    username: ${POSTGRES_USER:techies}
+    password: ${POSTGRES_PASSWORD:techies_local_dev}
+    hikari:
+      schema: identity
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: identity
+    open-in-view: false
+  flyway:
+    enabled: true
+    schemas: identity
+    default-schema: identity
+    create-schemas: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+techies:
+  jwt:
+    secret: ${JWT_SECRET:change-me-to-a-long-random-string-at-least-32-bytes}
+    ttl-days: ${JWT_TTL_DAYS:30}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+  info:
+    title: Techies Identity API
+    description: Accounts, authentication and delivery addresses
+    version: 1.0.0

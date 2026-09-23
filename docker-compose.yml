@@ -1,0 +1,153 @@
+name: techies-ecommerce
+
+x-service-base: &service-base
+  build:
+    context: .
+    dockerfile: docker/Dockerfile
+  volumes:
+    - ./logs:/app/logs
+  environment: &service-env
+    LOG_DIR: /app/logs
+    EUREKA_URL: http://discovery-server:8761/eureka/
+    POSTGRES_HOST: postgres
+    POSTGRES_PORT: 5432
+    POSTGRES_DB: ${POSTGRES_DB:-techies}
+    POSTGRES_USER: ${POSTGRES_USER:-techies}
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-techies_local_dev}
+    JWT_SECRET: ${JWT_SECRET:-change-me-to-a-long-random-string-at-least-32-bytes}
+    JWT_TTL_DAYS: ${JWT_TTL_DAYS:-30}
+  networks: [techies]
+  restart: unless-stopped
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: techies-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-techies}
+      POSTGRES_USER: ${POSTGRES_USER:-techies}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-techies_local_dev}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/00-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-techies} -d ${POSTGRES_DB:-techies}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks: [techies]
+
+  discovery-server:
+    <<: *service-base
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        MODULE: discovery-server
+    container_name: techies-discovery
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8761/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  identity-service:
+    <<: *service-base
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        MODULE: identity-service
+    container_name: techies-identity
+    depends_on:
+      postgres: {condition: service_healthy}
+      discovery-server: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8081/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  catalog-service:
+    <<: *service-base
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        MODULE: catalog-service
+    container_name: techies-catalog
+    depends_on:
+      postgres: {condition: service_healthy}
+      discovery-server: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8082/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  inventory-service:
+    <<: *service-base
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        MODULE: inventory-service
+    container_name: techies-inventory
+    depends_on:
+      postgres: {condition: service_healthy}
+      discovery-server: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8083/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  order-service:
+    <<: *service-base
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        MODULE: order-service
+    container_name: techies-order
+    depends_on:
+      postgres: {condition: service_healthy}
+      discovery-server: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8084/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  # The only port published to the host. Everything else is reachable only on this network,
+  # which is what makes the gateway's X-User-Id injection trustworthy (docs/SPEC-gateway.md).
+  api-gateway:
+    <<: *service-base
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        MODULE: api-gateway
+    container_name: techies-gateway
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    depends_on:
+      discovery-server: {condition: service_healthy}
+      identity-service: {condition: service_healthy}
+      catalog-service: {condition: service_healthy}
+      inventory-service: {condition: service_healthy}
+      order-service: {condition: service_healthy}
+
+volumes:
+  pgdata:
+
+networks:
+  techies:
+    driver: bridge

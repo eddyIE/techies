@@ -362,6 +362,43 @@ everything builds natively on Ampere. No emulation, no `--platform` flag.
 
 ---
 
+## Quickest option: a public URL with no server at all
+
+If you just need the API reachable from a phone or by the frontend team, skip the VM. A
+Cloudflare quick tunnel puts the stack you already run locally on a public HTTPS URL:
+
+```bash
+docker compose up -d          # the stack must be running
+./scripts/tunnel.sh
+```
+
+It prints something like `https://discussion-eminem-rugs-grip.trycloudflare.com/api`.
+
+No Cloudflare account, no domain, no capacity lottery, no cost. Verified end to end: register,
+browse, cart, a successful checkout, a declined checkout that restores stock, cancellation and
+the out-of-stock branch all work over the tunnel exactly as they do locally.
+
+**What it does and does not give you**
+
+| | |
+|---|---|
+| Public HTTPS URL | yes, immediately |
+| Full architecture, all 7 containers | yes, unchanged |
+| Works while your machine sleeps | **no** — the tunnel dies with the process |
+| Stable URL | **no** — a new random one every restart |
+
+The changing URL means the mobile app must read the base URL from config rather than having it
+compiled in. A stable hostname needs a named tunnel, which requires a Cloudflare account and a
+domain you control.
+
+> **This makes the API genuinely public.** The password reset takes no proof of ownership, so
+> anyone who learns the URL can take over any account by email address alone. The URL is
+> random and unguessable, but treat the deployment as throwaway: use fake emails, never a
+> password you use elsewhere, and stop the tunnel when you are not demonstrating
+> (`pkill -f 'cloudflared tunnel'`).
+
+---
+
 ## Why not Render
 
 Render's free tier states that free web services **cannot receive private network traffic**,

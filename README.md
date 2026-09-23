@@ -109,6 +109,7 @@ docker compose up --build -d
 docker compose ps                  # wait for all seven containers to report healthy
 
 python3 scripts/demo.py            # full end-to-end walkthrough
+./scripts/tunnel.sh                # optional: public HTTPS URL via Cloudflare
 ```
 
 Only **port 8080** is published. Everything else is reachable solely on the compose network,

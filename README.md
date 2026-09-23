@@ -1,6 +1,6 @@
 # Techies — E-Commerce Mobile Backend
 
-REST API backing an Android/iOS shopping app. University project, Nhóm 3.
+REST API backing an Android shopping app (Java). University project, Nhóm 3.
 Java 21 · Spring Boot 3.5 · Spring Cloud 2025.0 · PostgreSQL 16 · Docker Compose.
 
 There is no admin site by design, so catalog, category and stock data are seeded by migration.
@@ -10,7 +10,7 @@ There is no admin site by design, so catalog, category and stock data are seeded
 ```mermaid
 %% name: architecture
 flowchart TB
-    mobile["Mobile app<br/><i>Android / iOS</i>"]
+    mobile["Android app<br/><i>Java</i>"]
     gw["<b>api-gateway</b> :8080<br/><i>the only published port</i><br/>routes · validates the JWT once · injects X-User-Id"]
 
     subgraph internal["Internal services — reachable only on the compose network"]

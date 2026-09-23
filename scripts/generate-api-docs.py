@@ -61,9 +61,10 @@ def main():
     w = doc.append
 
     w(textwrap.dedent("""\
-        # Techies API — Reference for the Mobile App
+        # Techies API — Reference for the Android App
 
-        Everything the app needs to talk to the backend. **Every example is a real captured
+        Everything the app needs to talk to the backend. The client is an Android app written
+        in Java; it is a course demo and is not published to any store. **Every example is a real captured
         request and response**, not written by hand — regenerate with
         `python3 scripts/generate-api-docs.py` against a running stack.
 
@@ -85,14 +86,22 @@ def main():
         `/stock/restore`, is blocked at the gateway and will 404 — those are service-to-service
         only.
 
+        > **Browser testing note.** The shared URL runs through ngrok's free plan, which serves an
+        > HTML interstitial to requests with a *browser* User-Agent. Your app is unaffected —
+        > OkHttp and Retrofit receive JSON normally, as do curl and Postman. It only appears when
+        > you open the URL in Chrome or Safari, where you click through once. To bypass it from a
+        > browser, send `ngrok-skip-browser-warning: true` with an extension such as ModHeader.
+
         ---
 
         ## Authentication
 
         1. `POST /auth/register` to create the account.
-        2. `POST /auth/login` returns `accessToken`. Store it securely (Keychain / Keystore —
-           **not** plain `SharedPreferences` or `UserDefaults`).
-        3. Send it as `Authorization: Bearer <token>` on every authenticated call.
+        2. `POST /auth/login` returns `accessToken`. Store it in `EncryptedSharedPreferences`
+           (androidx.security-crypto), **not** plain `SharedPreferences` — that file is readable
+           on a rooted device and in any device backup.
+        3. Send it as `Authorization: Bearer <token>` on every authenticated call — an OkHttp
+           `Interceptor` is the tidy way to attach it to every request.
 
         **The token lasts 30 days and there is no refresh endpoint.** When it expires the app
         must send the user back to Login. There is also **no logout endpoint** — logging out
@@ -152,6 +161,71 @@ def main():
         — it finds every log line for that exact request across all services.
 
         ---
+        """))
+
+    w(textwrap.dedent("""\
+        ---
+
+        ## Android client notes
+
+        Two things that break Android clients against this API, both with unhelpful errors.
+
+        ### `localhost` does not mean your machine
+
+        On an emulator, `localhost` is the emulator itself. Your backend is on the host:
+
+        | Running on | Base URL for a locally-run backend |
+        |---|---|
+        | Android emulator | `http://10.0.2.2:8080/api` |
+        | Physical device, same Wi-Fi | `http://<your-computer-LAN-ip>:8080/api` |
+        | Anywhere | the shared ngrok URL above |
+
+        ### Cleartext HTTP is blocked by default
+
+        Since Android 9 (API 28), plain `http://` fails with
+        `CLEARTEXT communication to ... not permitted by network security policy`.
+
+        The shared ngrok URL is HTTPS, so it just works. But if you point at a local backend
+        over `http://`, add a debug-only network security config:
+
+        ```xml
+        <!-- app/src/debug/res/xml/network_security_config.xml -->
+        <network-security-config>
+            <domain-config cleartextTrafficPermitted="true">
+                <domain includeSubdomains="true">10.0.2.2</domain>
+            </domain-config>
+        </network-security-config>
+        ```
+
+        ```xml
+        <!-- app/src/debug/AndroidManifest.xml -->
+        <application android:networkSecurityConfig="@xml/network_security_config" />
+        ```
+
+        Keep it in the `debug` source set so the release build stays HTTPS-only.
+
+        ### Base URL belongs in config, not in code
+
+        The shared URL is stable while the ngrok agent keeps the same dev domain, but it is not
+        permanent infrastructure. Put it in `BuildConfig` or a resource string so it can change
+        without a code edit:
+
+        ```gradle
+        buildConfigField "String", "API_BASE_URL", "\"https://pounce-arise-pacifier.ngrok-free.dev/api/\""
+        ```
+
+        ### Timeouts
+
+        Checkout runs a saga across four services. It normally answers in well under a second,
+        but give OkHttp some headroom rather than the default 10s read timeout:
+
+        ```java
+        new OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build();
+        ```
+
         """))
 
     w("## Auth endpoints\n")

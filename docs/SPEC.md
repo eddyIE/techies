@@ -5,10 +5,11 @@ Root spec. Shared conventions for every module. Module-specific contracts live i
 
 ## Objective
 
-A REST API backing an Android/iOS shopping app for a university course project.
+A REST API backing an Android shopping app, written in Java, for a university course
+project. The app is a demo and is not published to any store.
 No admin site; catalog, category and stock data are seeded by migration.
 
-**User:** a mobile app consumer who browses products, manages a cart, and places orders.
+**User:** an Android app consumer who browses products, manages a cart, and places orders.
 **Grader:** a lecturer assessing whether the microservice decomposition is real and whether
 the hard problem (distributed checkout) is solved rather than hand-waved.
 

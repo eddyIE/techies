@@ -157,16 +157,26 @@ capacity errors are retried.
 ## 2. Open port 80 in the VCN
 
 Oracle blocks traffic in two independent places, and missing either looks identical: the site
-simply never responds. Cloud-init already handled the host firewall; **this layer is console
-only, so it cannot be automated.**
+simply never responds. Cloud-init already handled the host firewall; this layer is the VCN.
 
-Networking → your VCN → Subnet → Security List → Add Ingress Rule:
+In the console: Networking → your VCN → Subnet → Security List → Add Ingress Rule:
 
 | Field | Value |
 |---|---|
 | Source CIDR | `0.0.0.0/0` |
 | IP protocol | TCP |
 | Destination port | `80` |
+
+Or via the CLI, which is what `deploy/provision-network.sh` does:
+
+```bash
+oci network security-list update --security-list-id "$SL" --force \
+  --ingress-security-rules file://ingress-rules.json
+```
+
+> Pass rule JSON via `file://`, not inline. An inline `--ingress-security-rules '[...]'` is
+> mangled by shell quoting and the CLI can accept it while silently applying nothing — which
+> is exactly how a missing default route cost us a debugging round.
 
 > If the API is unreachable, this rule is the usual cause. Confirm the host side with
 > `sudo iptables -L INPUT -n --line-numbers | grep 80` on the VM.

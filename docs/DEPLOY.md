@@ -55,7 +55,7 @@ The latency difference barely matters here — Singapore is roughly 30 ms from V
 Tokyo roughly 70 ms, and nobody grading a REST API will notice. **Capacity is the real
 constraint**, because a region you cannot launch a free instance in is worth nothing.
 
-## 1. Create the VM
+## 1. Create the VM, with cloud-init
 
 In the Oracle Cloud console: **Compute → Instances → Create instance**.
 
@@ -78,13 +78,34 @@ In the Oracle Cloud console: **Compute → Instances → Create instance**.
 
 Note the **public IP** when it finishes.
 
-## 2. Open port 80 — both layers
+### Paste the cloud-init script
 
-Oracle blocks traffic in two independent places. Missing either one looks identical: the
-site simply never responds.
+Before clicking Create, open **Show advanced options → Management → Cloud-init script** and
+paste the contents of `deploy/cloud-init.yaml`.
 
-**Layer 1 — the VCN security list.** Networking → your VCN → Subnet → Security List → Add
-Ingress Rule:
+It installs Docker, opens port 80 in the *host* firewall, pre-trusts GitHub's host key, adds
+the keep-alive cron, and writes `/opt/techies-deploy.sh` — everything that needs no
+credentials.
+
+**It deliberately does not clone the repo.** `eddyIE/techies` is private, and cloud-init
+user-data is readable from inside the instance via the metadata service at `169.254.169.254`,
+so a key pasted there would be readable by anyone who gets shell.
+
+Watch it finish:
+
+```bash
+ssh ubuntu@<public-ip>
+tail -f /var/log/techies-prep.log
+ls /opt/techies-prep.done          # appears when prep is done
+```
+
+## 2. Open port 80 in the VCN
+
+Oracle blocks traffic in two independent places, and missing either looks identical: the site
+simply never responds. Cloud-init already handled the host firewall; **this layer is console
+only, so it cannot be automated.**
+
+Networking → your VCN → Subnet → Security List → Add Ingress Rule:
 
 | Field | Value |
 |---|---|
@@ -92,79 +113,61 @@ Ingress Rule:
 | IP protocol | TCP |
 | Destination port | `80` |
 
-**Layer 2 — the instance firewall.** Oracle's Ubuntu images ship restrictive `iptables` rules
-that drop everything but SSH:
+> If the API is unreachable, this rule is the usual cause. Confirm the host side with
+> `sudo iptables -L INPUT -n --line-numbers | grep 80` on the VM.
+
+## 3. Give the VM read access, then deploy
+
+### Preferred: a read-only deploy key
+
+Scoped to this one repository and unable to push. Two commands on your laptop:
 
 ```bash
-sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 80 -j ACCEPT
-sudo netfilter-persistent save        # survives reboot
+ssh-keygen -t ed25519 -f ~/.ssh/techies_deploy -C "techies oracle vm" -N ""
+cat ~/.ssh/techies_deploy.pub
 ```
 
-## 3. Install Docker
+Paste that public key at **github.com/eddyIE/techies → Settings → Deploy keys → Add deploy
+key**. Leave *Allow write access* unchecked. Then:
 
 ```bash
-sudo apt-get update
-sudo apt-get install -y ca-certificates curl git
-sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc >/dev/null
-sudo chmod a+r /etc/apt/keyrings/docker.asc
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
-https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) stable" \
-  | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
-sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-sudo usermod -aG docker $USER && newgrp docker
-docker --version && docker compose version
+scp ~/.ssh/techies_deploy ubuntu@<public-ip>:~/.ssh/
+ssh ubuntu@<public-ip> 'sudo DEPLOY_KEY=/home/ubuntu/.ssh/techies_deploy /opt/techies-deploy.sh'
 ```
 
-All three base images (`maven`, `eclipse-temurin`, `postgres`) publish `linux/arm64`, so
-everything builds natively on Ampere. No emulation, no `--platform` flag.
+### Alternative: your existing account key
 
-## 4. Get the code and generate real secrets
+`~/.ssh/id_ed25519_gh` is the default the script expects, so this works with no extra flags:
 
 ```bash
-git clone <your-repo-url> techies && cd techies
-cp .env.example .env
+scp ~/.ssh/id_ed25519_gh ubuntu@<public-ip>:~/.ssh/
+ssh ubuntu@<public-ip> 'sudo /opt/techies-deploy.sh'
 ```
 
-**Do not deploy with the defaults.** `.env.example` ships a literal
-`change-me-to-a-long-random-string-at-least-32-bytes`; anyone who reads the repo can forge a
-token for any user with it.
+> **Understand what this hands over.** That key authenticates as the GitHub *account*
+> `eddyIE`, not as this repository, so it can **push to every repo your account can reach**.
+> A VM on the public internet is a poor place to keep it, particularly one running an API
+> whose password reset takes no proof of ownership. The deploy key above takes 30 seconds and
+> removes the risk entirely. If you use the account key anyway, delete it from the VM after
+> the demo:
+> ```bash
+> ssh ubuntu@<public-ip> 'shred -u ~/.ssh/id_ed25519_gh'
+> ```
 
-```bash
-# Generate and write real secrets
-sed -i "s|^JWT_SECRET=.*|JWT_SECRET=$(openssl rand -base64 48 | tr -d '\n')|" .env
-sed -i "s|^POSTGRES_PASSWORD=.*|POSTGRES_PASSWORD=$(openssl rand -base64 24 | tr -d '\n/+=')|" .env
+### What the deploy script does
 
-grep -c "change-me\|techies_local_dev" .env   # must print 0
-```
+`REPO_URL` defaults to `git@github.com:eddyIE/techies.git` and `DEPLOY_KEY` to
+`~/.ssh/id_ed25519_gh`; override either with an environment variable. The script clones (or
+fast-forwards an existing checkout), generates `JWT_SECRET` and `POSTGRES_PASSWORD` on the
+first run only, **refuses to start if the shipped placeholders are still in `.env`**, and
+brings the stack up with the production overlay.
 
-`.env` is gitignored. Keep it off the repo.
+Re-run the same command to redeploy after a push. Existing secrets are kept, so app tokens
+keep working.
 
-## 5. Deploy
+Expect **15-25 minutes** on the first build.
 
-```bash
-docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
-```
-
-The first build takes roughly **15-25 minutes on 2 ARM OCPUs** — it compiles all seven Maven
-modules. Later builds reuse the cached dependency layer and take a few minutes. Run it inside
-`tmux` or `screen` so an SSH drop does not kill it.
-
-What the production overlay changes:
-
-| Base (local) | Production overlay |
-|---|---|
-| Gateway on `8080` | Gateway on **`80`** |
-| Postgres published on `0.0.0.0:5432` | **`127.0.0.1:5432`** — SSH tunnel only |
-| No restart policy | `restart: always`, survives reboot |
-| Unbounded container logs | Capped at 10 MB × 3 per service |
-
-> The overlay uses `ports: !override`. Compose *merges* sequences by default, so without that
-> tag these entries would be added to the base file's and Postgres would stay publicly bound.
-
-## 6. Verify
+## 4. Verify
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.prod.yml ps   # 7 healthy
@@ -187,7 +190,7 @@ ssh -L 5432:localhost:5432 ubuntu@<public-ip>
 psql -h localhost -U techies -d techies
 ```
 
-## 7. Operating it
+## 5. Operating it
 
 ```bash
 # logs (same files as locally)
@@ -242,23 +245,11 @@ Two defences, both already in `deploy/cloud-init.yaml`:
 
 ### Rebuilding from nothing
 
-Create the instance as in §1, and under **Show advanced options → Management → Cloud-init
-script**, paste `deploy/cloud-init.yaml`. Edit `REPO_URL` first. It installs Docker, opens
-port 80 in the host firewall, clones the repo, generates fresh secrets, refuses to start on
-the shipped placeholders, and brings the stack up.
+Repeat steps 1 to 3: create the instance with `deploy/cloud-init.yaml` pasted in, add the VCN
+ingress rule, copy the deploy key up and run `sudo /opt/techies-deploy.sh`.
 
-You still have to add the **VCN security list ingress rule** by hand — that is network
-configuration, outside the instance, so cloud-init cannot do it.
-
-Watch it run:
-
-```bash
-ssh ubuntu@<new-ip>
-tail -f /var/log/techies-bootstrap.log
-ls /opt/techies-bootstrap.done      # appears when finished
-```
-
-Expect 15-25 minutes, most of it the Maven build.
+That is roughly five minutes of clicking plus a 15-25 minute build, against an afternoon of
+following this guide by hand. The VCN rule is the only part that cannot be automated.
 
 ### What survives a rebuild, and what does not
 
@@ -278,6 +269,31 @@ can mint a token for any user.
 
 To preserve real order history you would need a database backup, which is genuinely out of
 scope here; `docker compose exec postgres pg_dump` on a schedule is the starting point.
+
+---
+
+## Appendix: manual setup, if you skipped cloud-init
+
+Only needed if you did not paste `deploy/cloud-init.yaml` at creation.
+
+```bash
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl git
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc >/dev/null
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) stable" \
+  | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+sudo usermod -aG docker $USER && newgrp docker
+docker --version && docker compose version
+```
+
+All three base images (`maven`, `eclipse-temurin`, `postgres`) publish `linux/arm64`, so
+everything builds natively on Ampere. No emulation, no `--platform` flag.
 
 ---
 

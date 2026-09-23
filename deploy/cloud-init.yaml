@@ -1,12 +1,15 @@
 #cloud-config
-# Rebuilds the whole stack on a fresh Oracle Cloud ARM VM, unattended.
+# Prepares a fresh Oracle Cloud ARM VM for the Techies stack.
 #
-# Paste this into "Show advanced options -> Management -> Cloud-init script" when creating
-# the instance. It installs Docker, fetches the code, generates secrets and brings the stack
-# up, so replacing a lost instance is one instance-create rather than an afternoon.
+# Paste into "Show advanced options -> Management -> Cloud-init script" at instance creation.
 #
-# Set REPO_URL below before using it. If you want to keep the same JWT secret across
-# rebuilds (so existing app tokens keep working), also set JWT_SECRET_OVERRIDE.
+# This does everything that needs no credentials: Docker, the host firewall rule, the
+# keep-alive cron, and it writes the deploy script to /opt/techies-deploy.sh.
+#
+# It deliberately does NOT clone the repository. The repo is private, and cloud-init
+# user-data is readable from inside the instance via the metadata service at
+# 169.254.169.254 -- a deploy key placed here would be readable by anyone who gets shell.
+# You copy the key over SSH after boot, then run the deploy script. See docs/DEPLOY.md.
 
 package_update: true
 package_upgrade: false
@@ -18,19 +21,14 @@ packages:
   - iptables-persistent
 
 write_files:
-  - path: /opt/techies-bootstrap.sh
+  # --- machine preparation, runs automatically ---------------------------------
+  - path: /opt/techies-prep.sh
     permissions: "0755"
     content: |
       #!/usr/bin/env bash
       set -euxo pipefail
-
-      REPO_URL="${REPO_URL:-https://github.com/YOUR_USER/YOUR_REPO.git}"
       APP_USER="ubuntu"
-      APP_DIR="/home/${APP_USER}/techies"
-      # Leave empty to generate a fresh secret. Set it to keep tokens valid across rebuilds.
-      JWT_SECRET_OVERRIDE="${JWT_SECRET_OVERRIDE:-}"
 
-      # --- Docker ---------------------------------------------------------------
       install -m 0755 -d /etc/apt/keyrings
       curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
       chmod a+r /etc/apt/keyrings/docker.asc
@@ -41,45 +39,94 @@ write_files:
       apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
       usermod -aG docker "${APP_USER}"
 
-      # --- Firewall -------------------------------------------------------------
-      # Oracle's Ubuntu images drop everything except SSH. The VCN security list rule is
-      # separate and must still be added in the console.
+      # Oracle's Ubuntu images drop everything but SSH. The VCN security list rule is a
+      # separate layer and must still be added in the console.
       iptables -I INPUT 6 -m state --state NEW -p tcp --dport 80 -j ACCEPT
       netfilter-persistent save
 
-      # --- Application ----------------------------------------------------------
-      sudo -u "${APP_USER}" git clone "${REPO_URL}" "${APP_DIR}"
-      cd "${APP_DIR}"
-      sudo -u "${APP_USER}" cp .env.example .env
+      # Pre-trust GitHub's host key so the later clone cannot hang on a prompt.
+      install -d -m 0700 -o "${APP_USER}" -g "${APP_USER}" "/home/${APP_USER}/.ssh"
+      ssh-keyscan -t ed25519,rsa github.com >> "/home/${APP_USER}/.ssh/known_hosts" 2>/dev/null
+      chown "${APP_USER}:${APP_USER}" "/home/${APP_USER}/.ssh/known_hosts"
 
-      if [ -n "${JWT_SECRET_OVERRIDE}" ]; then
-        JWT="${JWT_SECRET_OVERRIDE}"
-      else
-        JWT="$(openssl rand -base64 48 | tr -d '\n')"
+      echo "prep finished at $(date -Is)" > /opt/techies-prep.done
+
+  # --- application deploy, run by hand once the deploy key is in place ---------
+  - path: /opt/techies-deploy.sh
+    permissions: "0755"
+    content: |
+      #!/usr/bin/env bash
+      # Clones the repo and brings the stack up. Run as: sudo /opt/techies-deploy.sh
+      #
+      #   REPO_URL              defaults to git@github.com:eddyIE/techies.git
+      #   DEPLOY_KEY            private key path, default /home/ubuntu/.ssh/id_ed25519_gh
+      #   JWT_SECRET_OVERRIDE   set to reuse the same secret so app tokens survive a rebuild
+      set -euo pipefail
+
+      REPO_URL="${REPO_URL:-git@github.com:eddyIE/techies.git}"
+      APP_USER="ubuntu"
+      APP_DIR="/home/${APP_USER}/techies"
+      DEPLOY_KEY="${DEPLOY_KEY:-/home/${APP_USER}/.ssh/id_ed25519_gh}"
+      JWT_SECRET_OVERRIDE="${JWT_SECRET_OVERRIDE:-}"
+
+      if [ ! -f /opt/techies-prep.done ]; then
+        echo "FATAL: machine prep has not finished. Check /var/log/techies-prep.log" >&2
+        exit 1
       fi
-      DBPW="$(openssl rand -base64 24 | tr -d '\n/+=')"
 
-      sudo -u "${APP_USER}" sed -i "s|^JWT_SECRET=.*|JWT_SECRET=${JWT}|" .env
-      sudo -u "${APP_USER}" sed -i "s|^POSTGRES_PASSWORD=.*|POSTGRES_PASSWORD=${DBPW}|" .env
+      # An SSH remote needs the key; an HTTPS one (public repo) does not.
+      GIT_ENV=()
+      case "${REPO_URL}" in
+        git@*|ssh://*)
+          if [ ! -f "${DEPLOY_KEY}" ]; then
+            echo "FATAL: no deploy key at ${DEPLOY_KEY}." >&2
+            echo "Copy it up first:  scp ~/.ssh/id_ed25519_gh ubuntu@<ip>:~/.ssh/" >&2
+            exit 1
+          fi
+          chmod 600 "${DEPLOY_KEY}"
+          chown "${APP_USER}:${APP_USER}" "${DEPLOY_KEY}"
+          GIT_ENV=("GIT_SSH_COMMAND=ssh -i ${DEPLOY_KEY} -o IdentitiesOnly=yes")
+          ;;
+      esac
 
-      # Refuse to start with the shipped placeholders.
+      if [ -d "${APP_DIR}/.git" ]; then
+        sudo -u "${APP_USER}" env "${GIT_ENV[@]:-}" git -C "${APP_DIR}" pull --ff-only
+      else
+        sudo -u "${APP_USER}" env "${GIT_ENV[@]:-}" git clone "${REPO_URL}" "${APP_DIR}"
+      fi
+
+      cd "${APP_DIR}"
+
+      # Keep existing secrets on a redeploy; only generate them on a first run.
+      if [ ! -f .env ]; then
+        sudo -u "${APP_USER}" cp .env.example .env
+        JWT="${JWT_SECRET_OVERRIDE:-$(openssl rand -base64 48 | tr -d '\n')}"
+        DBPW="$(openssl rand -base64 24 | tr -d '\n/+=')"
+        sudo -u "${APP_USER}" sed -i "s|^JWT_SECRET=.*|JWT_SECRET=${JWT}|" .env
+        sudo -u "${APP_USER}" sed -i "s|^POSTGRES_PASSWORD=.*|POSTGRES_PASSWORD=${DBPW}|" .env
+      fi
+
       if grep -q "change-me\|techies_local_dev" .env; then
-        echo "FATAL: .env still contains default secrets" >&2
+        echo "FATAL: .env still contains the shipped placeholder secrets" >&2
         exit 1
       fi
 
       sudo -u "${APP_USER}" docker compose \
         -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 
-      echo "bootstrap finished at $(date -Is)" > /opt/techies-bootstrap.done
+      echo
+      echo "Deployed. The build takes 15-25 minutes on 2 ARM OCPUs."
+      echo "Watch:  docker compose -f docker-compose.yml -f docker-compose.prod.yml ps"
 
-  # Keeps the box above Oracle's idle-reclamation threshold and acts as a health probe.
+  # Keeps the instance above Oracle's idle-reclamation threshold, and probes health.
   - path: /etc/cron.d/techies-keepalive
     permissions: "0644"
     content: |
       */5 * * * * ubuntu curl -fsS -o /dev/null http://localhost/api/categories || true
 
 runcmd:
-  - ["/bin/bash", "-c", "/opt/techies-bootstrap.sh 2>&1 | tee /var/log/techies-bootstrap.log"]
+  - ["/bin/bash", "-c", "/opt/techies-prep.sh 2>&1 | tee /var/log/techies-prep.log"]
 
-final_message: "Techies stack bootstrapped after $UPTIME seconds. Check /var/log/techies-bootstrap.log"
+final_message: |
+  Machine prepared after $UPTIME seconds.
+  Next: copy the deploy key up, then run  sudo /opt/techies-deploy.sh

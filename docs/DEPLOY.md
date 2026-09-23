@@ -91,6 +91,19 @@ credentials.
 user-data is readable from inside the instance via the metadata service at `169.254.169.254`,
 so a key pasted there would be readable by anyone who gets shell.
 
+> **"If the repo is private, how does cloud-init itself get onto the VM?"**
+>
+> It does not come from the repo. You paste the text into the console, OCI stores it as
+> instance metadata, and cloud-init reads it from there at boot — GitHub is never involved.
+> `/opt/techies-deploy.sh` is *embedded* in that same paste via `write_files`, so the script
+> that needs the key is already on disk before any key exists.
+>
+> | Stage | Needs repo access? |
+> |---|---|
+> | Pasting cloud-init into the console | No — the file is in your local checkout |
+> | Boot: Docker, firewall, `ssh-keyscan` | No — apt and a host-key fetch, no authentication |
+> | `sudo /opt/techies-deploy.sh` | **Yes** — this is the only step that clones |
+
 Watch it finish:
 
 ```bash

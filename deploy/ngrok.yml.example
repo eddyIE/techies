@@ -1,0 +1,36 @@
+version: "3"
+
+agent:
+    authtoken: REPLACE_WITH_YOUR_NGROK_AUTHTOKEN
+    # Local request inspector: http://127.0.0.1:4040
+    web_addr: 127.0.0.1:4040
+
+endpoints:
+  - name: techies-api
+    # Stable dev domain: survives agent restarts.
+    url: https://pounce-arise-pacifier.ngrok-free.dev
+    upstream:
+      url: 8080
+
+    traffic_policy:
+      on_http_request:
+        # Geo-restrict to Vietnam. Enforced at ngrok's edge, so a blocked request never
+        # reaches the gateway or any service -- it also costs no upstream work.
+        #
+        # This is a blunt instrument, not a security control. See docs/SECURITY-NOTES.md:
+        # a VPN defeats it in seconds, and it will wrongly block a legitimate user who is
+        # roaming or on a corporate VPN that egresses abroad.
+        - expressions:
+            - "conn.geo.country_code != 'VN'"
+          actions:
+            - type: custom-response
+              config:
+                status_code: 403
+                headers:
+                  content-type: application/json
+                body: |
+                  {"status":403,"code":"FORBIDDEN","message":"This demo API is restricted to Vietnam.","path":"/"}
+
+# On the free plan ngrok shows an HTML interstitial to BROWSER User-Agents. It cannot be
+# disabled server-side; `ngrok-skip-browser-warning` only works when the client sends it.
+# curl, Postman and OkHttp are unaffected, so the Android app never sees it.

@@ -369,10 +369,24 @@ Cloudflare quick tunnel puts the stack you already run locally on a public HTTPS
 
 ```bash
 docker compose up -d          # the stack must be running
-./scripts/tunnel.sh
+./scripts/tunnel.sh           # ngrok, stable URL
+./scripts/tunnel.sh cloudflare  # Cloudflare, random URL, no quota
 ```
 
-It prints something like `https://discussion-eminem-rugs-grip.trycloudflare.com/api`.
+ngrok is the default. Its free **dev domain is stable across restarts**, so the frontend team
+can be given the URL once — verified by restarting the agent and confirming the hostname was
+unchanged. Cloudflare quick tunnels issue a new random hostname on every reconnect, which is
+what made the first URL go dead on its own.
+
+| | ngrok free | Cloudflare quick |
+|---|---|---|
+| Stable URL | **yes** | no |
+| Requests | **20k / month, then the endpoint stops** | unlimited |
+| Bandwidth | 1 GB / month | unlimited |
+| Request inspector | `http://127.0.0.1:4040` | none |
+
+`ngrok.yml` sets `ngrok-skip-browser-warning` so callers receive JSON rather than the free
+plan's HTML interstitial on first visit.
 
 No Cloudflare account, no domain, no capacity lottery, no cost. Verified end to end: register,
 browse, cart, a successful checkout, a declined checkout that restores stock, cancellation and

@@ -11,7 +11,8 @@ request and response**, not written by hand — regenerate with
 | | |
 |---|---|
 | Base URL (local) | `http://localhost:8080/api` |
-| Base URL (deployed) | `http://<host>/api` |
+| Base URL (shared) | `https://pounce-arise-pacifier.ngrok-free.dev/api` |
+
 | Content type | `application/json` on every request with a body |
 | Auth | `Authorization: Bearer <accessToken>` |
 | Money | VND, JSON number with 2 decimals. Never a float in your code — use a decimal type |

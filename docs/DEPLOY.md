@@ -385,8 +385,11 @@ what made the first URL go dead on its own.
 | Bandwidth | 1 GB / month | unlimited |
 | Request inspector | `http://127.0.0.1:4040` | none |
 
-`ngrok.yml` sets `ngrok-skip-browser-warning` so callers receive JSON rather than the free
-plan's HTML interstitial on first visit.
+On the free plan ngrok shows an HTML interstitial to requests with a **browser** User-Agent.
+It cannot be disabled server-side: the check runs before any traffic policy, and
+`ngrok-skip-browser-warning` only works when the *client* sends it. curl, Postman, OkHttp and
+URLSession are all unaffected, so the mobile app never sees it — only manual browser testing
+does.
 
 No Cloudflare account, no domain, no capacity lottery, no cost. Verified end to end: register,
 browse, cart, a successful checkout, a declined checkout that restores stock, cancellation and

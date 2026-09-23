@@ -231,6 +231,7 @@ Not routed by the gateway, and unreachable from the host: `/internal/**` on any 
 | `docs/DEPLOY.md` | Deploying to a free Oracle Cloud ARM VM, and why not Render |
 | `docs/API.md` | **API reference for the mobile team** — generated from real responses |
 | `docs/SECURITY-NOTES.md` | What the deployment does and does not protect against |
+| `docs/postman/` | **Importable Postman collection** with real saved examples |
 
 ## Working in this repo
 

@@ -72,9 +72,8 @@ In the Oracle Cloud console: **Compute → Instances → Create instance**.
 > in older write-ups. You can split it (two 1-OCPU instances) but one 2 OCPU / 12 GB box is
 > the right shape here. 12 GB is still ample: six JVMs use roughly 2.5 GB.
 
-> **If you get "Out of host capacity"**, that is the usual Always Free ARM shortage, not a
-> mistake on your part. Try a different availability domain, or retry over a few hours. A
-> 1 OCPU / 6 GB shape also runs this stack.
+> **If you get "Out of capacity for shape VM.Standard.A1.Flex"**, that is the usual Always
+> Free ARM shortage, not a mistake on your part. See "When there is no capacity" below.
 
 Note the **public IP** when it finishes.
 
@@ -111,6 +110,49 @@ ssh ubuntu@<public-ip>
 tail -f /var/log/techies-prep.log
 ls /opt/techies-prep.done          # appears when prep is done
 ```
+
+### When there is no capacity
+
+Free ARM capacity is heavily contested and frees up at random. Three things help, in order of
+effort:
+
+**1. Ask for less.** The stack measures about **2.5 GB** in practice:
+
+| Service | Memory |
+|---|---:|
+| identity / inventory / catalog / order | ~430 MB each |
+| api-gateway | ~380 MB |
+| discovery-server | ~350 MB |
+| postgres | ~105 MB |
+| **total** | **~2.5 GB** |
+
+So **1 OCPU / 6 GB** is ample, and a smaller request fits into leftover capacity far more
+often than 2 OCPU / 12 GB. The only cost is a slower first build — nearer 30-45 minutes on a
+single core.
+
+**2. Do not pin a fault domain,** and cycle through every availability domain your region
+offers. Capacity is tracked per AD.
+
+**3. Retry on a loop.** `deploy/retry-launch.sh` attempts a launch across every AD once a
+minute until one succeeds, then prints the public IP. Most people land an instance within a
+few hours.
+
+```bash
+brew install oci-cli && oci setup config
+
+export COMPARTMENT_OCID=ocid1.compartment.oc1..xxx
+export SUBNET_OCID=ocid1.subnet.oc1..xxx
+export IMAGE_OCID=ocid1.image.oc1..xxx
+./deploy/retry-launch.sh                 # defaults to 1 OCPU / 6 GB
+```
+
+It passes `deploy/cloud-init.yaml` as user-data automatically, and stops immediately on a real
+error — a bad OCID or a quota problem will never fix itself by retrying, so only genuine
+capacity errors are retried.
+
+> **Do not let this block your submission.** A local `docker compose up` demo is entirely
+> defensible for a graded project, and the deployment is a bonus. If capacity has not appeared
+> a day or two before the deadline, record a screen capture of the local demo and move on.
 
 ## 2. Open port 80 in the VCN
 

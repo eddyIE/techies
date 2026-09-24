@@ -105,11 +105,19 @@ an atomic `UPDATE ... WHERE available >= qty`, `@Version` optimistic locking, an
 
 ```bash
 cp .env.example .env               # first time only
-docker compose up --build -d
-docker compose ps                  # wait for all seven containers to report healthy
+./scripts/start.sh                 # everything up, detached, prints the public URL
+```
 
+`start.sh` starts Docker if it is not running, brings up all seven containers, waits for
+Eureka registration (the gateway answers 503 for ~30s before that completes), starts the
+ngrok tunnel detached, and verifies the public URL actually serves before reporting success.
+It is safe to re-run: it reuses whatever is already healthy.
+
+```bash
+./scripts/start.sh --no-tunnel     # local only, no public URL
+./scripts/stop.sh                  # stop everything, keep data
+./scripts/stop.sh --clean          # also drop the database volume, reseeds next start
 python3 scripts/demo.py            # full end-to-end walkthrough
-./scripts/tunnel.sh                # optional: public HTTPS URL via Cloudflare
 ```
 
 Only **port 8080** is published. Everything else is reachable solely on the compose network,

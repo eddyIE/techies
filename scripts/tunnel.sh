@@ -37,7 +37,7 @@ sleep 2
 
 if [ "$BACKEND" = "ngrok" ]; then
   # The endpoint name and its stable dev domain live in ngrok.yml.
-  nohup ngrok start techies-api --log=stdout > "$LOG" 2>&1 &
+  nohup ngrok start techies-api --log=stdout < /dev/null > "$LOG" 2>&1 &
   for _ in $(seq 1 30); do
     URL=$(curl -s --max-time 3 http://127.0.0.1:4040/api/tunnels 2>/dev/null \
       | python3 -c "import sys,json

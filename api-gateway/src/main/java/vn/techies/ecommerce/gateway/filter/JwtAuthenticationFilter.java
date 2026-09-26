@@ -61,12 +61,13 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
+        String method = exchange.getRequest().getMethod().name();
 
         // Strip first, unconditionally. A public route must not be able to smuggle an
         // identity downstream either.
         ServerHttpRequest sanitized = stripForgedIdentityHeaders(exchange.getRequest());
 
-        if (isPublic(path)) {
+        if (isPublic(method, path)) {
             return chain.filter(exchange.mutate().request(sanitized).build());
         }
 
@@ -110,8 +111,25 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
                 .build();
     }
 
-    private boolean isPublic(String path) {
-        return publicPaths.stream().anyMatch(pattern -> pathMatcher.match(pattern, path));
+    /**
+     * A public-path entry is either a bare pattern, or {@code METHOD:pattern} to open only
+     * one verb. The method form matters where a path is public to read but not to write:
+     * {@code GET:/api/users/*&#47;avatar} exposes profile images to image loaders without also
+     * exposing {@code POST /api/users/me/avatar}, which must stay authenticated.
+     */
+    private boolean isPublic(String method, String path) {
+        for (String entry : publicPaths) {
+            int colon = entry.indexOf(':');
+            if (colon > 0 && entry.substring(0, colon).chars().allMatch(Character::isUpperCase)) {
+                if (entry.substring(0, colon).equals(method)
+                        && pathMatcher.match(entry.substring(colon + 1), path)) {
+                    return true;
+                }
+            } else if (pathMatcher.match(entry, path)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Mono<Void> reject(ServerWebExchange exchange, ErrorCode code, String message,

@@ -164,6 +164,59 @@ def main():
         """))
 
     w(textwrap.dedent("""\
+        ### Profile image
+
+        `POST /users/me/avatar` · Bearer · **multipart/form-data**, field name `file` · responds `204`
+
+        PNG or JPEG, **2 MB maximum**. Uploading again replaces the previous image.
+
+        ```java
+        // OkHttp / Retrofit
+        RequestBody part = RequestBody.create(imageFile, MediaType.parse("image/png"));
+        MultipartBody.Part file = MultipartBody.Part.createFormData("file", "profile.png", part);
+        api.uploadAvatar(file);   // @Multipart @POST("users/me/avatar")
+        ```
+
+        **The format is decided by the file's bytes, not its name or its Content-Type.** A file
+        whose content is not really PNG or JPEG is rejected with `UNSUPPORTED_IMAGE_TYPE`, even
+        if it is called `photo.png` and uploaded as `image/png`. Renaming a GIF will not work.
+
+        | Failure | HTTP | `code` |
+        |---|---|---|
+        | Not a PNG or JPEG | 400 | `UNSUPPORTED_IMAGE_TYPE` |
+        | Declared type disagrees with the bytes | 400 | `UNSUPPORTED_IMAGE_TYPE` |
+        | Larger than 2 MB | 413 | `FILE_TOO_LARGE` |
+        | Empty file | 400 | `VALIDATION_ERROR` |
+
+        `GET /users/{id}/avatar` · **Public, no token** · responds `200` with the image bytes
+
+        Deliberately public so an image library can load it in one line:
+
+        ```java
+        Glide.with(context)
+             .load(BuildConfig.API_BASE_URL + user.avatarUrl)
+             .into(profileImageView);
+        ```
+
+        404 when the user has no image, so render your placeholder on 404 rather than expecting
+        an empty 200.
+
+        `DELETE /users/me/avatar` · Bearer · responds `204`, or 404 if there was no image.
+
+        ### avatarUrl on the user object
+
+        `GET /users/me` and the login response both carry `avatarUrl`:
+
+        - `null` when no image has been uploaded — show your placeholder.
+        - otherwise a path **relative to the API base URL**, e.g. `/users/<id>/avatar`.
+
+        Join it to your own base: `BuildConfig.API_BASE_URL + user.avatarUrl`. It is relative on
+        purpose, so the same response works against localhost, the emulator and the shared URL
+        without the server needing to know which one you are on.
+
+        """))
+
+    w(textwrap.dedent("""\
         ---
 
         ## Android client notes

@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: identity-service
+  servlet:
+    multipart:
+      # Slightly above the 2 MB business limit so the service returns its own
+      # FILE_TOO_LARGE error rather than Tomcat rejecting the request opaquely.
+      max-file-size: 3MB
+      max-request-size: 3MB
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:techies}
     username: ${POSTGRES_USER:techies}

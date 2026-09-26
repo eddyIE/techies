@@ -45,6 +45,12 @@ public final class AuthDtos {
             @NotBlank String newPassword) {
     }
 
-    public record UserResponse(UUID id, String email, String fullName, String phone) {
+    /**
+     * @param avatarUrl path to the profile image, relative to the API base URL, or null when
+     *                  the user has not uploaded one. The client joins it to its own base:
+     *                  {@code BuildConfig.API_BASE_URL + user.avatarUrl}.
+     */
+    public record UserResponse(UUID id, String email, String fullName, String phone,
+                               String avatarUrl) {
     }
 }

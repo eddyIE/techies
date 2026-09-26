@@ -8,6 +8,7 @@ public enum ErrorCode {
 
     // 400
     VALIDATION_ERROR(400),
+    UNSUPPORTED_IMAGE_TYPE(400),
     WEAK_PASSWORD(400),
     MALFORMED_REQUEST(400),
 
@@ -34,6 +35,9 @@ public enum ErrorCode {
     PRODUCT_UNAVAILABLE(409),
     EMPTY_CART(409),
     ORDER_NOT_CANCELLABLE(409),
+
+    // 413
+    FILE_TOO_LARGE(413),
 
     // 422
     PAYMENT_FAILED(422),

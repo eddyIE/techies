@@ -1,0 +1,778 @@
+{
+  "auth.register": {
+    "method": "POST",
+    "path": "/auth/register",
+    "request": {
+      "email": "fe-demo-f76392@techies.vn",
+      "password": "password1",
+      "fullName": "Nguyen Van A",
+      "phone": "0901234567"
+    },
+    "status": 201,
+    "response": {
+      "userId": "2e2f4fb7-93f9-4992-8993-db768538dfca",
+      "email": "fe-demo-f76392@techies.vn"
+    },
+    "note": null
+  },
+  "auth.register.duplicate": {
+    "method": "POST",
+    "path": "/auth/register",
+    "request": {
+      "email": "fe-demo-f76392@techies.vn",
+      "password": "password1",
+      "fullName": "Nguyen Van A",
+      "phone": "0901234567"
+    },
+    "status": 409,
+    "response": {
+      "timestamp": "2026-09-26T04:44:08.411096924Z",
+      "status": 409,
+      "code": "EMAIL_ALREADY_EXISTS",
+      "message": "An account with this email already exists",
+      "path": "/auth/register"
+    },
+    "note": null
+  },
+  "auth.register.invalid": {
+    "method": "POST",
+    "path": "/auth/register",
+    "request": {
+      "email": "not-an-email",
+      "password": "x",
+      "fullName": "",
+      "phone": "abc"
+    },
+    "status": 400,
+    "response": {
+      "timestamp": "2026-09-26T04:44:08.440077340Z",
+      "status": 400,
+      "code": "VALIDATION_ERROR",
+      "message": "Request validation failed",
+      "path": "/auth/register",
+      "fieldErrors": {
+        "phone": "must be 9-11 digits",
+        "email": "must be a well-formed email address",
+        "fullName": "must not be blank"
+      }
+    },
+    "note": null
+  },
+  "auth.login": {
+    "method": "POST",
+    "path": "/auth/login",
+    "request": {
+      "email": "fe-demo-f76392@techies.vn",
+      "password": "password1"
+    },
+    "status": 200,
+    "response": {
+      "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIyZTJmNGZiNy05M2Y5LTQ5OTItODk5My1kYjc2ODUzOGRmY2EiLCJlbWFpbCI6ImZlLWRlbW8tZjc2MzkyQHRlY2hpZXMudm4iLCJpYXQiOjE3OTAzOTc4NDgsImV4cCI6MTc5Mjk4OTg0OH0.KN444Ps7dur8NT9hHesjjbYrKplFLZVGobBi3qvf3e-rjUP2J1OxdGU6ZmLo-jNe",
+      "tokenType": "Bearer",
+      "expiresIn": 2592000,
+      "user": {
+        "id": "2e2f4fb7-93f9-4992-8993-db768538dfca",
+        "email": "fe-demo-f76392@techies.vn",
+        "fullName": "Nguyen Van A",
+        "phone": "0901234567",
+        "avatarUrl": null
+      }
+    },
+    "note": null
+  },
+  "auth.login.bad": {
+    "method": "POST",
+    "path": "/auth/login",
+    "request": {
+      "email": "fe-demo-f76392@techies.vn",
+      "password": "wrongpassword1"
+    },
+    "status": 401,
+    "response": {
+      "timestamp": "2026-09-26T04:44:08.622859965Z",
+      "status": 401,
+      "code": "INVALID_CREDENTIALS",
+      "message": "Email or password is incorrect",
+      "path": "/auth/login"
+    },
+    "note": null
+  },
+  "auth.checkEmail": {
+    "method": "POST",
+    "path": "/auth/check-email",
+    "request": {
+      "email": "fe-demo-f76392@techies.vn"
+    },
+    "status": 200,
+    "response": {
+      "email": "fe-demo-f76392@techies.vn",
+      "exists": true
+    },
+    "note": null
+  },
+  "auth.checkEmail.unknown": {
+    "method": "POST",
+    "path": "/auth/check-email",
+    "request": {
+      "email": "ghost@techies.vn"
+    },
+    "status": 200,
+    "response": {
+      "email": "ghost@techies.vn",
+      "exists": false
+    },
+    "note": null
+  },
+  "user.me": {
+    "method": "GET",
+    "path": "/users/me",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "2e2f4fb7-93f9-4992-8993-db768538dfca",
+      "email": "fe-demo-f76392@techies.vn",
+      "fullName": "Nguyen Van A",
+      "phone": "0901234567",
+      "avatarUrl": null
+    },
+    "note": null
+  },
+  "user.update": {
+    "method": "PUT",
+    "path": "/users/me",
+    "request": {
+      "fullName": "Nguyen Van B",
+      "phone": "0909999999"
+    },
+    "status": 200,
+    "response": {
+      "id": "2e2f4fb7-93f9-4992-8993-db768538dfca",
+      "email": "fe-demo-f76392@techies.vn",
+      "fullName": "Nguyen Van B",
+      "phone": "0909999999",
+      "avatarUrl": null
+    },
+    "note": null
+  },
+  "user.unauthenticated": {
+    "method": "GET",
+    "path": "/users/me",
+    "request": null,
+    "status": 401,
+    "response": {
+      "timestamp": "2026-09-26T04:44:08.678656382Z",
+      "status": 401,
+      "code": "UNAUTHENTICATED",
+      "message": "Authentication required",
+      "path": "/api/users/me"
+    },
+    "note": null
+  },
+  "avatar.upload": {
+    "method": "POST",
+    "path": "/users/me/avatar",
+    "request": null,
+    "status": 204,
+    "response": null,
+    "note": "multipart/form-data, field name 'file'"
+  },
+  "avatar.userWithAvatar": {
+    "method": "GET",
+    "path": "/users/me",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "2e2f4fb7-93f9-4992-8993-db768538dfca",
+      "email": "fe-demo-f76392@techies.vn",
+      "fullName": "Nguyen Van B",
+      "phone": "0909999999",
+      "avatarUrl": "/users/2e2f4fb7-93f9-4992-8993-db768538dfca/avatar"
+    },
+    "note": "avatarUrl is populated once an image exists"
+  },
+  "avatar.rejectDisguised": {
+    "method": "POST",
+    "path": "/users/me/avatar",
+    "request": null,
+    "status": 400,
+    "response": {
+      "timestamp": "2026-09-26T04:44:08.707096215Z",
+      "status": 400,
+      "code": "UNSUPPORTED_IMAGE_TYPE",
+      "message": "Only PNG and JPEG images are accepted (received 'evil.png')",
+      "path": "/users/me/avatar"
+    },
+    "note": "a non-image uploaded as image/png is refused on its bytes"
+  },
+  "avatar.rejectGif": {
+    "method": "POST",
+    "path": "/users/me/avatar",
+    "request": null,
+    "status": 400,
+    "response": {
+      "timestamp": "2026-09-26T04:44:08.717771591Z",
+      "status": 400,
+      "code": "UNSUPPORTED_IMAGE_TYPE",
+      "message": "Only PNG and JPEG images are accepted (received 'me.gif')",
+      "path": "/users/me/avatar"
+    },
+    "note": null
+  },
+  "address.create": {
+    "method": "POST",
+    "path": "/addresses",
+    "request": {
+      "recipientName": "Nguyen Van B",
+      "phone": "0907654321",
+      "line1": "12 Nguyen Hue",
+      "ward": "Ben Nghe",
+      "district": "Quan 1",
+      "province": "Ho Chi Minh",
+      "isDefault": true
+    },
+    "status": 201,
+    "response": {
+      "id": "9505ce65-5d96-43c5-b0f4-fe3b279a1c98",
+      "recipientName": "Nguyen Van B",
+      "phone": "0907654321",
+      "line1": "12 Nguyen Hue",
+      "ward": "Ben Nghe",
+      "district": "Quan 1",
+      "province": "Ho Chi Minh",
+      "isDefault": true
+    },
+    "note": null
+  },
+  "address.list": {
+    "method": "GET",
+    "path": "/addresses",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "id": "9505ce65-5d96-43c5-b0f4-fe3b279a1c98",
+        "recipientName": "Nguyen Van B",
+        "phone": "0907654321",
+        "line1": "12 Nguyen Hue",
+        "ward": "Ben Nghe",
+        "district": "Quan 1",
+        "province": "Ho Chi Minh",
+        "isDefault": true
+      }
+    ],
+    "note": null
+  },
+  "catalog.categories": {
+    "method": "GET",
+    "path": "/categories",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "id": "621a9347-0b52-58d5-ba30-9c524079231d",
+        "name": "Điện thoại",
+        "slug": "dien-thoai",
+        "imageUrl": "https://picsum.photos/seed/dien-thoai/400",
+        "displayOrder": 1
+      },
+      {
+        "id": "1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b",
+        "name": "Laptop",
+        "slug": "laptop",
+        "imageUrl": "https://picsum.photos/seed/laptop/400",
+        "displayOrder": 2
+      },
+      {
+        "id": "155c3f45-7376-54b8-8fe4-9859afd0cd8e",
+        "name": "Máy tính bảng",
+        "slug": "tablet",
+        "imageUrl": "https://picsum.photos/seed/tablet/400",
+        "displayOrder": 3
+      },
+      {
+        "id": "3a8e7aee-9455-52a3-be9a-3790e375821a",
+        "name": "Tai nghe",
+        "slug": "tai-nghe",
+        "imageUrl": "https://picsum.photos/seed/tai-nghe/400",
+        "displayOrder": 4
+      },
+      {
+        "id": "5e8b4230-0d61-5f2b-a468-5499e8e7331b",
+        "name": "Đồng hồ thông minh",
+        "slug": "dong-ho-thong-minh",
+        "imageUrl": "https://picsum.photos/seed/dong-ho-thong-minh/400",
+        "displayOrder": 5
+      },
+      {
+        "id": "cec6d4cc-9d78-55d8-aaf7-35d3bcf87a9f",
+        "name": "Phụ kiện",
+        "slug": "phu-kien",
+        "imageUrl": "https://picsum.photos/seed/phu-kien/400",
+        "displayOrder": 6
+      }
+    ],
+    "note": null
+  },
+  "catalog.products": {
+    "method": "GET",
+    "path": "/products?size=2",
+    "request": null,
+    "status": 200,
+    "response": {
+      "content": [
+        {
+          "id": "e0404394-59b0-5044-af93-6a93adc3af39",
+          "name": "iPhone 15 128GB",
+          "slug": "iphone-15-128gb",
+          "price": 22990000.0,
+          "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
+          "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
+          "categoryName": "Điện thoại"
+        },
+        {
+          "id": "1f8d1d18-6b82-542e-bcca-e7485fe03e0d",
+          "name": "iPhone 15 Pro Max 256GB",
+          "slug": "iphone-15-pro-max-256gb",
+          "price": 31990000.0,
+          "thumbnailUrl": "https://picsum.photos/seed/iphone-15-pro-max-256gb/600",
+          "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
+          "categoryName": "Điện thoại"
+        }
+      ],
+      "page": 0,
+      "size": 2,
+      "totalElements": 40,
+      "totalPages": 20
+    },
+    "note": null
+  },
+  "catalog.search": {
+    "method": "GET",
+    "path": "/products?keyword=iphone&size=2",
+    "request": null,
+    "status": 200,
+    "response": {
+      "content": [
+        {
+          "id": "1f8d1d18-6b82-542e-bcca-e7485fe03e0d",
+          "name": "iPhone 15 Pro Max 256GB",
+          "slug": "iphone-15-pro-max-256gb",
+          "price": 31990000.0,
+          "thumbnailUrl": "https://picsum.photos/seed/iphone-15-pro-max-256gb/600",
+          "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
+          "categoryName": "Điện thoại"
+        },
+        {
+          "id": "e0404394-59b0-5044-af93-6a93adc3af39",
+          "name": "iPhone 15 128GB",
+          "slug": "iphone-15-128gb",
+          "price": 22990000.0,
+          "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
+          "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
+          "categoryName": "Điện thoại"
+        }
+      ],
+      "page": 0,
+      "size": 2,
+      "totalElements": 2,
+      "totalPages": 1
+    },
+    "note": null
+  },
+  "catalog.detail": {
+    "method": "GET",
+    "path": "/products/e0404394-59b0-5044-af93-6a93adc3af39",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "e0404394-59b0-5044-af93-6a93adc3af39",
+      "name": "iPhone 15 128GB",
+      "slug": "iphone-15-128gb",
+      "description": "iPhone 15 128GB - hàng chính hãng, bảo hành 12 tháng tại Techies.",
+      "price": 22990000.0,
+      "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
+      "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
+      "categoryName": "Điện thoại",
+      "images": [
+        "https://picsum.photos/seed/iphone-15-128gb-1/800",
+        "https://picsum.photos/seed/iphone-15-128gb-2/800"
+      ]
+    },
+    "note": null
+  },
+  "catalog.detail.missing": {
+    "method": "GET",
+    "path": "/products/13513ede-7503-4bde-964a-d7a02a75e5bb",
+    "request": null,
+    "status": 404,
+    "response": {
+      "timestamp": "2026-09-26T04:44:08.961372799Z",
+      "status": 404,
+      "code": "PRODUCT_NOT_FOUND",
+      "message": "Product not found",
+      "path": "/products/13513ede-7503-4bde-964a-d7a02a75e5bb"
+    },
+    "note": null
+  },
+  "stock.get": {
+    "method": "GET",
+    "path": "/stock/e0404394-59b0-5044-af93-6a93adc3af39",
+    "request": null,
+    "status": 200,
+    "response": {
+      "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
+      "available": 90,
+      "inStock": true
+    },
+    "note": null
+  },
+  "cart.empty": {
+    "method": "GET",
+    "path": "/cart",
+    "request": null,
+    "status": 200,
+    "response": {
+      "items": [],
+      "subtotal": 0,
+      "itemCount": 0
+    },
+    "note": null
+  },
+  "cart.add": {
+    "method": "POST",
+    "path": "/cart/items",
+    "request": {
+      "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
+      "quantity": 2
+    },
+    "status": 201,
+    "response": {
+      "items": [
+        {
+          "id": "25c2e474-9c45-4e72-a3da-3108d0b736c2",
+          "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
+          "name": "iPhone 15 128GB",
+          "unitPrice": 22990000.0,
+          "quantity": 2,
+          "lineTotal": 45980000.0,
+          "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
+          "available": 90
+        }
+      ],
+      "subtotal": 45980000.0,
+      "itemCount": 1
+    },
+    "note": null
+  },
+  "cart.update": {
+    "method": "PUT",
+    "path": "/cart/items/25c2e474-9c45-4e72-a3da-3108d0b736c2",
+    "request": {
+      "quantity": 1
+    },
+    "status": 200,
+    "response": {
+      "items": [
+        {
+          "id": "25c2e474-9c45-4e72-a3da-3108d0b736c2",
+          "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
+          "name": "iPhone 15 128GB",
+          "unitPrice": 22990000.0,
+          "quantity": 1,
+          "lineTotal": 22990000.0,
+          "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
+          "available": 90
+        }
+      ],
+      "subtotal": 22990000.0,
+      "itemCount": 1
+    },
+    "note": null
+  },
+  "cart.view": {
+    "method": "GET",
+    "path": "/cart",
+    "request": null,
+    "status": 200,
+    "response": {
+      "items": [
+        {
+          "id": "25c2e474-9c45-4e72-a3da-3108d0b736c2",
+          "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
+          "name": "iPhone 15 128GB",
+          "unitPrice": 22990000.0,
+          "quantity": 1,
+          "lineTotal": 22990000.0,
+          "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
+          "available": 90
+        }
+      ],
+      "subtotal": 22990000.0,
+      "itemCount": 1
+    },
+    "note": null
+  },
+  "checkout.success": {
+    "method": "POST",
+    "path": "/checkout",
+    "request": {
+      "addressId": "9505ce65-5d96-43c5-b0f4-fe3b279a1c98",
+      "paymentMethod": "MOCK_CARD",
+      "simulatePayment": "SUCCESS"
+    },
+    "status": 200,
+    "response": {
+      "order": {
+        "id": "08af219a-f203-4dc3-8280-8d57e6167238",
+        "orderRef": "ORD-20260926-0001",
+        "status": "CONFIRMED",
+        "failureCode": null,
+        "subtotal": 22990000.0,
+        "shippingFee": 0.0,
+        "total": 22990000.0,
+        "paymentMethod": "MOCK_CARD",
+        "paymentStatus": "PAID",
+        "shippingAddress": {
+          "recipientName": "Nguyen Van B",
+          "phone": "0907654321",
+          "line1": "12 Nguyen Hue",
+          "ward": "Ben Nghe",
+          "district": "Quan 1",
+          "province": "Ho Chi Minh"
+        },
+        "items": [
+          {
+            "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
+            "productName": "iPhone 15 128GB",
+            "unitPrice": 22990000.0,
+            "quantity": 1,
+            "lineTotal": 22990000.0
+          }
+        ],
+        "createdAt": "2026-09-26T04:44:09.650898Z"
+      },
+      "message": "Order placed successfully"
+    },
+    "note": "HTTP 200, order.status = CONFIRMED"
+  },
+  "checkout.declined": {
+    "method": "POST",
+    "path": "/checkout",
+    "request": {
+      "addressId": "9505ce65-5d96-43c5-b0f4-fe3b279a1c98",
+      "paymentMethod": "MOCK_CARD",
+      "simulatePayment": "DECLINED"
+    },
+    "status": 200,
+    "response": {
+      "order": {
+        "id": "3f162668-2964-4b7a-b356-ef474a115b7c",
+        "orderRef": "ORD-20260926-0002",
+        "status": "FAILED",
+        "failureCode": "PAYMENT_FAILED",
+        "subtotal": 22990000.0,
+        "shippingFee": 0.0,
+        "total": 22990000.0,
+        "paymentMethod": "MOCK_CARD",
+        "paymentStatus": "DECLINED",
+        "shippingAddress": {
+          "recipientName": "Nguyen Van B",
+          "phone": "0907654321",
+          "line1": "12 Nguyen Hue",
+          "ward": "Ben Nghe",
+          "district": "Quan 1",
+          "province": "Ho Chi Minh"
+        },
+        "items": [
+          {
+            "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
+            "productName": "iPhone 15 128GB",
+            "unitPrice": 22990000.0,
+            "quantity": 1,
+            "lineTotal": 22990000.0
+          }
+        ],
+        "createdAt": "2026-09-26T04:44:10.215802Z"
+      },
+      "message": "Payment was declined, your cart has been kept"
+    },
+    "note": "HTTP 200 but order.status = FAILED -- read the body, not the status code"
+  },
+  "checkout.outOfStock": {
+    "method": "POST",
+    "path": "/checkout",
+    "request": {
+      "addressId": "9505ce65-5d96-43c5-b0f4-fe3b279a1c98",
+      "paymentMethod": "COD"
+    },
+    "status": 200,
+    "response": {
+      "order": {
+        "id": "832c2a40-e452-4035-9681-38c535f583d2",
+        "orderRef": "ORD-20260926-0003",
+        "status": "FAILED",
+        "failureCode": "OUT_OF_STOCK",
+        "subtotal": 36980000.0,
+        "shippingFee": 0.0,
+        "total": 36980000.0,
+        "paymentMethod": "COD",
+        "paymentStatus": "PENDING",
+        "shippingAddress": {
+          "recipientName": "Nguyen Van B",
+          "phone": "0907654321",
+          "line1": "12 Nguyen Hue",
+          "ward": "Ben Nghe",
+          "district": "Quan 1",
+          "province": "Ho Chi Minh"
+        },
+        "items": [
+          {
+            "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
+            "productName": "iPhone 15 128GB",
+            "unitPrice": 22990000.0,
+            "quantity": 1,
+            "lineTotal": 22990000.0
+          },
+          {
+            "productId": "b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8",
+            "productName": "MSI Modern 14 C13M",
+            "unitPrice": 13990000.0,
+            "quantity": 1,
+            "lineTotal": 13990000.0
+          }
+        ],
+        "createdAt": "2026-09-26T04:44:10.550676Z"
+      },
+      "message": "Some items are no longer in stock"
+    },
+    "note": "HTTP 200, order.status = FAILED, failureCode = OUT_OF_STOCK"
+  },
+  "orders.list": {
+    "method": "GET",
+    "path": "/orders",
+    "request": null,
+    "status": 200,
+    "response": {
+      "content": [
+        {
+          "id": "832c2a40-e452-4035-9681-38c535f583d2",
+          "orderRef": "ORD-20260926-0003",
+          "status": "FAILED",
+          "failureCode": "OUT_OF_STOCK",
+          "total": 36980000.0,
+          "itemCount": 2,
+          "createdAt": "2026-09-26T04:44:10.550676Z"
+        },
+        {
+          "id": "3f162668-2964-4b7a-b356-ef474a115b7c",
+          "orderRef": "ORD-20260926-0002",
+          "status": "FAILED",
+          "failureCode": "PAYMENT_FAILED",
+          "total": 22990000.0,
+          "itemCount": 1,
+          "createdAt": "2026-09-26T04:44:10.215802Z"
+        },
+        {
+          "id": "08af219a-f203-4dc3-8280-8d57e6167238",
+          "orderRef": "ORD-20260926-0001",
+          "status": "CONFIRMED",
+          "failureCode": null,
+          "total": 22990000.0,
+          "itemCount": 1,
+          "createdAt": "2026-09-26T04:44:09.650898Z"
+        }
+      ],
+      "page": 0,
+      "size": 20,
+      "totalElements": 3,
+      "totalPages": 1
+    },
+    "note": null
+  },
+  "orders.detail": {
+    "method": "GET",
+    "path": "/orders/08af219a-f203-4dc3-8280-8d57e6167238",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "08af219a-f203-4dc3-8280-8d57e6167238",
+      "orderRef": "ORD-20260926-0001",
+      "status": "CONFIRMED",
+      "failureCode": null,
+      "subtotal": 22990000.0,
+      "shippingFee": 0.0,
+      "total": 22990000.0,
+      "paymentMethod": "MOCK_CARD",
+      "paymentStatus": "PAID",
+      "shippingAddress": {
+        "recipientName": "Nguyen Van B",
+        "phone": "0907654321",
+        "line1": "12 Nguyen Hue",
+        "ward": "Ben Nghe",
+        "district": "Quan 1",
+        "province": "Ho Chi Minh"
+      },
+      "items": [
+        {
+          "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
+          "productName": "iPhone 15 128GB",
+          "unitPrice": 22990000.0,
+          "quantity": 1,
+          "lineTotal": 22990000.0
+        }
+      ],
+      "createdAt": "2026-09-26T04:44:09.650898Z"
+    },
+    "note": null
+  },
+  "orders.cancel": {
+    "method": "POST",
+    "path": "/orders/08af219a-f203-4dc3-8280-8d57e6167238/cancel",
+    "request": null,
+    "status": 200,
+    "response": {
+      "id": "08af219a-f203-4dc3-8280-8d57e6167238",
+      "orderRef": "ORD-20260926-0001",
+      "status": "CANCELLED",
+      "failureCode": null,
+      "subtotal": 22990000.0,
+      "shippingFee": 0.0,
+      "total": 22990000.0,
+      "paymentMethod": "MOCK_CARD",
+      "paymentStatus": "REFUNDED",
+      "shippingAddress": {
+        "recipientName": "Nguyen Van B",
+        "phone": "0907654321",
+        "line1": "12 Nguyen Hue",
+        "ward": "Ben Nghe",
+        "district": "Quan 1",
+        "province": "Ho Chi Minh"
+      },
+      "items": [
+        {
+          "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
+          "productName": "iPhone 15 128GB",
+          "unitPrice": 22990000.0,
+          "quantity": 1,
+          "lineTotal": 22990000.0
+        }
+      ],
+      "createdAt": "2026-09-26T04:44:09.650898Z"
+    },
+    "note": null
+  },
+  "orders.cancel.again": {
+    "method": "POST",
+    "path": "/orders/08af219a-f203-4dc3-8280-8d57e6167238/cancel",
+    "request": null,
+    "status": 409,
+    "response": {
+      "timestamp": "2026-09-26T04:44:10.653824133Z",
+      "status": 409,
+      "code": "ORDER_NOT_CANCELLABLE",
+      "message": "An order in status CANCELLED cannot be cancelled",
+      "path": "/orders/08af219a-f203-4dc3-8280-8d57e6167238/cancel"
+    },
+    "note": "cancelling twice is refused"
+  }
+}

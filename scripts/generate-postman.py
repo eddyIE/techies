@@ -227,6 +227,25 @@ def main():
                     {"currentPassword": "{{password}}", "newPassword": "{{password}}"},
                     desc="400 if currentPassword is wrong. Returns 204.\n\n"
                          "Sets the same password on purpose so later requests keep working.")),
+                item("Upload profile image", {
+                    "method": "POST",
+                    "header": [{"key": "ngrok-skip-browser-warning", "value": "true"}],
+                    "url": url("/users/me/avatar"),
+                    "description": ("PNG or JPEG, 2MB max. Pick a file for the `file` form "
+                                    "field before sending.\n\nThe format is decided by the "
+                                    "file's BYTES, not its name — renaming a GIF to .png is "
+                                    "rejected with UNSUPPORTED_IMAGE_TYPE."),
+                    "body": {"mode": "formdata", "formdata": [
+                        {"key": "file", "type": "file", "src": [],
+                         "description": "PNG or JPEG, 2MB maximum"}]},
+                }, ex("avatar.upload", "204 No Content")
+                   + ex("avatar.rejectDisguised", "400 Not really an image")
+                   + ex("avatar.rejectGif", "400 Unsupported format")),
+                item("Get profile image", request("GET", "/users/{{userId}}/avatar", auth=False,
+                    desc="Public — no token. Returns the image bytes, or 404 when the user has "
+                         "no image. Android image libraries load this directly.")),
+                item("Delete profile image", request("DELETE", "/users/me/avatar",
+                    desc="Returns 204, or 404 when there was no image.")),
                 item("List addresses", request("GET", "/addresses",
                     desc="Default first, then newest. Preselect the first at checkout."),
                     ex("address.list", "200 OK")),

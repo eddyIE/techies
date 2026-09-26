@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -49,6 +50,20 @@ public class GlobalExceptionHandler {
 
         return respond(ErrorCode.VALIDATION_ERROR, ApiError.of(ErrorCode.VALIDATION_ERROR,
                 "Request validation failed", request.getRequestURI(), fieldErrors));
+    }
+
+    /**
+     * A path variable that will not convert — a non-UUID where a UUID is expected, say —
+     * is the caller's mistake, not a server fault. Without this it reaches the catch-all
+     * and is reported as a 500.
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ApiError> handleTypeMismatch(MethodArgumentTypeMismatchException ex,
+                                                       HttpServletRequest request) {
+        String detail = "'" + ex.getName() + "' has an invalid value";
+        logProblem(request, ErrorCode.VALIDATION_ERROR, detail, ex);
+        return respond(ErrorCode.VALIDATION_ERROR,
+                ApiError.of(ErrorCode.VALIDATION_ERROR, detail, request.getRequestURI()));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)

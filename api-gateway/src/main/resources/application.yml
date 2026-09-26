@@ -108,6 +108,9 @@ techies:
   jwt:
     secret: ${JWT_SECRET:change-me-to-a-long-random-string-at-least-32-bytes}
   public-paths:
+    # Profile images are loaded directly by an image library on the device, which cannot
+    # easily attach a bearer token. GET only: uploading and deleting stay authenticated.
+    - "GET:/api/users/*/avatar"
     - /api/auth/**
     - /api/categories/**
     - /api/products/**

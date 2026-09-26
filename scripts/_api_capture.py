@@ -43,6 +43,41 @@ call("user.me", "GET", "/users/me", token=token)
 call("user.update", "PUT", "/users/me", {"fullName": "Nguyen Van B", "phone": "0909999999"}, token)
 call("user.unauthenticated", "GET", "/users/me")
 
+# --- avatar ---------------------------------------------------------------
+# A real 1x1 PNG, so the captured examples show genuine responses.
+import base64, urllib.parse
+PNG = base64.b64decode(
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==")
+
+
+def upload_avatar(key, data, content_type, filename, note=None):
+    boundary = "----techiesdocs"
+    body = (
+        f"--{boundary}\r\n"
+        f'Content-Disposition: form-data; name="file"; filename="{filename}"\r\n'
+        f"Content-Type: {content_type}\r\n\r\n"
+    ).encode() + data + f"\r\n--{boundary}--\r\n".encode()
+    req = urllib.request.Request(API + "/users/me/avatar", method="POST", data=body)
+    req.add_header("Content-Type", f"multipart/form-data; boundary={boundary}")
+    req.add_header("Authorization", "Bearer " + token)
+    try:
+        with urllib.request.urlopen(req, timeout=20) as r:
+            status, payload = r.status, None
+    except urllib.error.HTTPError as e:
+        raw = e.read().decode()
+        status, payload = e.code, (json.loads(raw) if raw.strip() else None)
+    captured[key] = {"method": "POST", "path": "/users/me/avatar", "request": None,
+                     "status": status, "response": payload, "note": note}
+
+
+upload_avatar("avatar.upload", PNG, "image/png", "profile.png",
+              note="multipart/form-data, field name 'file'")
+call("avatar.userWithAvatar", "GET", "/users/me", token=token,
+     note="avatarUrl is populated once an image exists")
+upload_avatar("avatar.rejectDisguised", b"#!/bin/sh\nrm -rf /\n", "image/png", "evil.png",
+              note="a non-image uploaded as image/png is refused on its bytes")
+upload_avatar("avatar.rejectGif", b"GIF89a" + b"\x00" * 100, "image/gif", "me.gif")
+
 # --- address --------------------------------------------------------------
 _, addr = call("address.create", "POST", "/addresses",
     {"recipientName": "Nguyen Van B", "phone": "0907654321", "line1": "12 Nguyen Hue",

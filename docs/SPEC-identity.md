@@ -44,6 +44,7 @@ Public (no JWT):
 | POST | `/auth/login` | email, password | 200 `{accessToken, tokenType, expiresIn, user}` |
 | POST | `/auth/check-email` | email | 200 `{email, exists}` |
 | POST | `/auth/reset-password` | email, newPassword | 204 — 404 `ACCOUNT_NOT_FOUND` if no such account |
+| GET | `/users/{id}/avatar` | — | 200 image bytes — 404 if none. Public so image loaders can fetch it |
 
 Authenticated:
 
@@ -53,6 +54,8 @@ Authenticated:
 | GET | `/users/{id}` | 200 — 403 unless `{id}` is the caller (sheet row 6 asked for `/user/:id`) |
 | PUT | `/users/me` | 200 — updates fullName, phone only |
 | PUT | `/users/me/password` | 204 — body: currentPassword, newPassword |
+| POST | `/users/me/avatar` | 204 — multipart, field `file`. PNG/JPEG, 2MB max |
+| DELETE | `/users/me/avatar` | 204 — 404 if none |
 | GET | `/addresses` | 200 list, default address first |
 | POST | `/addresses` | 201 |
 | PUT | `/addresses/{id}` | 200 |
@@ -85,6 +88,12 @@ Internal (called by `order` only, not routed publicly by the gateway):
   oversight — and `docs/EXTENSIONS.md` records what a real implementation needs.
 - Both reset endpoints are rate-limit-free, consistent with the rest of the project.
 
+- **Profile image format is decided by the file's leading bytes**, never by the filename or
+  the declared `Content-Type`, both of which the client controls. A declared type that
+  disagrees with the bytes is refused rather than stored.
+- 2MB limit, enforced in the validator and again by a `CHECK` constraint on the table.
+- Uploading replaces any existing image; there is no version history.
+
 ## Acceptance Criteria
 
 - [ ] Register → login → `GET /users/me` returns the registered user.
@@ -99,3 +108,8 @@ Internal (called by `order` only, not routed publicly by the gateway):
 - [ ] `reset-password` succeeds with only email + newPassword, and the new password logs in.
 - [ ] Creating an address with `isDefault=true` clears the previous default.
 - [ ] `password_hash` never appears in any response body or log line.
+- [ ] A shell script named `evil.png` and uploaded as `image/png` is refused.
+- [ ] A real JPEG uploaded as `image/png` is refused.
+- [ ] Exactly 2MB is accepted; one byte more returns 413.
+- [ ] `GET /users/{id}/avatar` needs no token, while POST and DELETE do.
+- [ ] `avatarUrl` is null until an image exists, then points at the public path.

@@ -39,7 +39,8 @@ class JwtAuthenticationFilterTest {
     void setUp() {
         filter = new JwtAuthenticationFilter(
                 new GatewayProperties(new GatewayProperties.Jwt(SECRET),
-                        List.of("/api/auth/**", "/api/products/**", "/api/stock/**")),
+                        List.of("/api/auth/**", "/api/products/**", "/api/stock/**",
+                                "GET:/api/users/*/avatar")),
                 new ObjectMapper());
 
         forwarded = new AtomicReference<>();
@@ -198,6 +199,52 @@ class JwtAuthenticationFilterTest {
     void nonBearerSchemeRejected() {
         MockServerWebExchange exchange = exchange(MockServerHttpRequest.get("/api/cart")
                 .header(HttpHeaders.AUTHORIZATION, "Basic dXNlcjpwYXNz").build());
+
+        filter.filter(exchange, chain).block();
+
+        assertThat(forwarded.get()).isNull();
+        assertThat(exchange.getResponse().getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    @DisplayName("GET on an avatar is public, so an image loader can fetch it without a token")
+    void avatarGetIsPublic() {
+        MockServerWebExchange exchange = exchange(
+                MockServerHttpRequest.get("/api/users/" + UUID.randomUUID() + "/avatar").build());
+
+        filter.filter(exchange, chain).block();
+
+        assertThat(forwarded.get()).as("forwarded without a token").isNotNull();
+    }
+
+    @Test
+    @DisplayName("but POSTing an avatar still requires a token — the method-scoped rule holds")
+    void avatarUploadStillRequiresAuth() {
+        MockServerWebExchange exchange = exchange(
+                MockServerHttpRequest.post("/api/users/me/avatar").build());
+
+        filter.filter(exchange, chain).block();
+
+        assertThat(forwarded.get()).as("upload must not be public").isNull();
+        assertThat(exchange.getResponse().getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    @DisplayName("and DELETE on an avatar requires a token too")
+    void avatarDeleteStillRequiresAuth() {
+        MockServerWebExchange exchange = exchange(
+                MockServerHttpRequest.delete("/api/users/me/avatar").build());
+
+        filter.filter(exchange, chain).block();
+
+        assertThat(forwarded.get()).isNull();
+        assertThat(exchange.getResponse().getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    @DisplayName("the method-scoped rule does not accidentally open the rest of /users")
+    void otherUserRoutesStayProtected() {
+        MockServerWebExchange exchange = exchange(MockServerHttpRequest.get("/api/users/me").build());
 
         filter.filter(exchange, chain).block();
 

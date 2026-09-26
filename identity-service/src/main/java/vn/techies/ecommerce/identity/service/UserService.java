@@ -10,6 +10,7 @@ import vn.techies.ecommerce.identity.api.dto.AuthDtos.UserResponse;
 import vn.techies.ecommerce.identity.api.dto.UserDtos.ChangePasswordRequest;
 import vn.techies.ecommerce.identity.api.dto.UserDtos.UpdateProfileRequest;
 import vn.techies.ecommerce.identity.domain.User;
+import vn.techies.ecommerce.identity.repository.UserAvatarRepository;
 import vn.techies.ecommerce.identity.repository.UserRepository;
 
 import java.util.UUID;
@@ -19,11 +20,12 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository users;
+    private final UserAvatarRepository avatars;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public UserResponse get(UUID userId) {
-        return AuthService.toResponse(load(userId));
+        return AuthService.toResponse(load(userId), avatars.existsByUserId(userId));
     }
 
     /**
@@ -46,7 +48,7 @@ public class UserService {
         user.setFullName(request.fullName());
         user.setPhone(request.phone());
         user.touch();
-        return AuthService.toResponse(user);
+        return AuthService.toResponse(user, avatars.existsByUserId(userId));
     }
 
     @Transactional

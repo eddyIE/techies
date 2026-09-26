@@ -99,6 +99,57 @@ Every response carries an `X-Request-Id` header. Log it, and quote it in the bug
 
 ---
 
+### Profile image
+
+`POST /users/me/avatar` · Bearer · **multipart/form-data**, field name `file` · responds `204`
+
+PNG or JPEG, **2 MB maximum**. Uploading again replaces the previous image.
+
+```java
+// OkHttp / Retrofit
+RequestBody part = RequestBody.create(imageFile, MediaType.parse("image/png"));
+MultipartBody.Part file = MultipartBody.Part.createFormData("file", "profile.png", part);
+api.uploadAvatar(file);   // @Multipart @POST("users/me/avatar")
+```
+
+**The format is decided by the file's bytes, not its name or its Content-Type.** A file
+whose content is not really PNG or JPEG is rejected with `UNSUPPORTED_IMAGE_TYPE`, even
+if it is called `photo.png` and uploaded as `image/png`. Renaming a GIF will not work.
+
+| Failure | HTTP | `code` |
+|---|---|---|
+| Not a PNG or JPEG | 400 | `UNSUPPORTED_IMAGE_TYPE` |
+| Declared type disagrees with the bytes | 400 | `UNSUPPORTED_IMAGE_TYPE` |
+| Larger than 2 MB | 413 | `FILE_TOO_LARGE` |
+| Empty file | 400 | `VALIDATION_ERROR` |
+
+`GET /users/{id}/avatar` · **Public, no token** · responds `200` with the image bytes
+
+Deliberately public so an image library can load it in one line:
+
+```java
+Glide.with(context)
+     .load(BuildConfig.API_BASE_URL + user.avatarUrl)
+     .into(profileImageView);
+```
+
+404 when the user has no image, so render your placeholder on 404 rather than expecting
+an empty 200.
+
+`DELETE /users/me/avatar` · Bearer · responds `204`, or 404 if there was no image.
+
+### avatarUrl on the user object
+
+`GET /users/me` and the login response both carry `avatarUrl`:
+
+- `null` when no image has been uploaded — show your placeholder.
+- otherwise a path **relative to the API base URL**, e.g. `/users/<id>/avatar`.
+
+Join it to your own base: `BuildConfig.API_BASE_URL + user.avatarUrl`. It is relative on
+purpose, so the same response works against localhost, the emulator and the shared URL
+without the server needing to know which one you are on.
+
+
 ---
 
 ## Android client notes
@@ -174,7 +225,7 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "email": "fe-demo-3ba734@techies.vn",
+  "email": "fe-demo-741481@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -185,8 +236,8 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "userId": "a8231e57-5dad-4b23-89a5-dd7888464a44",
-  "email": "fe-demo-3ba734@techies.vn"
+  "userId": "f3e1a012-66e1-43a4-9f50-8cbdf2d74ad6",
+  "email": "fe-demo-741481@techies.vn"
 }
 ```
 
@@ -201,7 +252,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "email": "fe-demo-3ba734@techies.vn",
+  "email": "fe-demo-741481@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -212,7 +263,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "timestamp": "2026-09-23T04:40:49.660624877Z",
+  "timestamp": "2026-09-26T04:44:28.301170377Z",
   "status": 409,
   "code": "EMAIL_ALREADY_EXISTS",
   "message": "An account with this email already exists",
@@ -242,15 +293,15 @@ Shows the `fieldErrors` map you bind to form fields.
 
 ```json
 {
-  "timestamp": "2026-09-23T04:40:49.668167627Z",
+  "timestamp": "2026-09-26T04:44:28.308277377Z",
   "status": 400,
   "code": "VALIDATION_ERROR",
   "message": "Request validation failed",
   "path": "/auth/register",
   "fieldErrors": {
+    "phone": "must be 9-11 digits",
     "email": "must be a well-formed email address",
-    "fullName": "must not be blank",
-    "phone": "must be 9-11 digits"
+    "fullName": "must not be blank"
   }
 }
 ```
@@ -268,7 +319,7 @@ Returns the token plus the user, so Login need not call `/users/me` after.
 
 ```json
 {
-  "email": "fe-demo-3ba734@techies.vn",
+  "email": "fe-demo-741481@techies.vn",
   "password": "password1"
 }
 ```
@@ -281,10 +332,11 @@ Returns the token plus the user, so Login need not call `/users/me` after.
   "tokenType": "Bearer",
   "expiresIn": 2592000,
   "user": {
-    "id": "a8231e57-5dad-4b23-89a5-dd7888464a44",
-    "email": "fe-demo-3ba734@techies.vn",
+    "id": "f3e1a012-66e1-43a4-9f50-8cbdf2d74ad6",
+    "email": "fe-demo-741481@techies.vn",
     "fullName": "Nguyen Van A",
-    "phone": "0901234567"
+    "phone": "0901234567",
+    "avatarUrl": null
   }
 }
 ```
@@ -300,7 +352,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "email": "fe-demo-3ba734@techies.vn",
+  "email": "fe-demo-741481@techies.vn",
   "password": "wrongpassword1"
 }
 ```
@@ -309,7 +361,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "timestamp": "2026-09-23T04:40:49.854455210Z",
+  "timestamp": "2026-09-26T04:44:28.478962586Z",
   "status": 401,
   "code": "INVALID_CREDENTIALS",
   "message": "Email or password is incorrect",
@@ -328,7 +380,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-3ba734@techies.vn"
+  "email": "fe-demo-741481@techies.vn"
 }
 ```
 
@@ -336,7 +388,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-3ba734@techies.vn",
+  "email": "fe-demo-741481@techies.vn",
   "exists": true
 }
 ```
@@ -395,10 +447,11 @@ For the Profile screen.
 
 ```json
 {
-  "id": "a8231e57-5dad-4b23-89a5-dd7888464a44",
-  "email": "fe-demo-3ba734@techies.vn",
+  "id": "f3e1a012-66e1-43a4-9f50-8cbdf2d74ad6",
+  "email": "fe-demo-741481@techies.vn",
   "fullName": "Nguyen Van A",
-  "phone": "0901234567"
+  "phone": "0901234567",
+  "avatarUrl": null
 }
 ```
 
@@ -422,10 +475,11 @@ Name and phone only. Email cannot change — it is the login identifier.
 
 ```json
 {
-  "id": "a8231e57-5dad-4b23-89a5-dd7888464a44",
-  "email": "fe-demo-3ba734@techies.vn",
+  "id": "f3e1a012-66e1-43a4-9f50-8cbdf2d74ad6",
+  "email": "fe-demo-741481@techies.vn",
   "fullName": "Nguyen Van B",
-  "phone": "0909999999"
+  "phone": "0909999999",
+  "avatarUrl": null
 }
 ```
 
@@ -440,7 +494,7 @@ What the app gets when the token is missing or expired.
 
 ```json
 {
-  "timestamp": "2026-09-23T04:40:49.886540127Z",
+  "timestamp": "2026-09-26T04:44:28.514864961Z",
   "status": 401,
   "code": "UNAUTHENTICATED",
   "message": "Authentication required",
@@ -485,7 +539,7 @@ The user's first address becomes the default automatically, so Checkout always h
 
 ```json
 {
-  "id": "187b94dc-c71e-4e6d-881b-9a45cc221b3b",
+  "id": "a0903eaa-9622-41c2-afd1-15f60c1e4d29",
   "recipientName": "Nguyen Van B",
   "phone": "0907654321",
   "line1": "12 Nguyen Hue",
@@ -508,7 +562,7 @@ Default first, then newest. Use the first entry to preselect at Checkout.
 ```json
 [
   {
-    "id": "187b94dc-c71e-4e6d-881b-9a45cc221b3b",
+    "id": "a0903eaa-9622-41c2-afd1-15f60c1e4d29",
     "recipientName": "Nguyen Van B",
     "phone": "0907654321",
     "line1": "12 Nguyen Hue",
@@ -701,7 +755,7 @@ Includes the description and image gallery.
 
 ### Product detail — gone
 
-`GET /products/bb51560a-06bd-4bb7-af3a-4c6146358e50` · **Public — no token** · responds `404`
+`GET /products/0793f849-66eb-42fb-a5e1-731a6d3a8ef5` · **Public — no token** · responds `404`
 
 Unknown or delisted products return 404.
 
@@ -709,11 +763,11 @@ Unknown or delisted products return 404.
 
 ```json
 {
-  "timestamp": "2026-09-23T04:40:49.943080044Z",
+  "timestamp": "2026-09-26T04:44:28.610707377Z",
   "status": 404,
   "code": "PRODUCT_NOT_FOUND",
   "message": "Product not found",
-  "path": "/products/bb51560a-06bd-4bb7-af3a-4c6146358e50"
+  "path": "/products/0793f849-66eb-42fb-a5e1-731a6d3a8ef5"
 }
 ```
 
@@ -779,7 +833,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "3974b57a-31b0-4fc3-bb2a-2aae9a6c1806",
+      "id": "6151f262-23d9-44b6-9ba6-aebf587d936b",
       "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
       "name": "iPhone 15 128GB",
       "unitPrice": 22990000.0,
@@ -797,7 +851,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 
 ### Change quantity
 
-`PUT /cart/items/3974b57a-31b0-4fc3-bb2a-2aae9a6c1806` · **Bearer token required** · responds `200`
+`PUT /cart/items/6151f262-23d9-44b6-9ba6-aebf587d936b` · **Bearer token required** · responds `200`
 
 `quantity: 0` removes the line. `DELETE /cart/items/{itemId}` does the same and returns `204`.
 
@@ -815,7 +869,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "3974b57a-31b0-4fc3-bb2a-2aae9a6c1806",
+      "id": "6151f262-23d9-44b6-9ba6-aebf587d936b",
       "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
       "name": "iPhone 15 128GB",
       "unitPrice": 22990000.0,
@@ -847,7 +901,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "3974b57a-31b0-4fc3-bb2a-2aae9a6c1806",
+      "id": "6151f262-23d9-44b6-9ba6-aebf587d936b",
       "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
       "name": "iPhone 15 128GB",
       "unitPrice": 22990000.0,
@@ -908,7 +962,7 @@ the user can fix the problem and retry. Do not clear it client-side.
 
 ```json
 {
-  "addressId": "187b94dc-c71e-4e6d-881b-9a45cc221b3b",
+  "addressId": "a0903eaa-9622-41c2-afd1-15f60c1e4d29",
   "paymentMethod": "MOCK_CARD",
   "simulatePayment": "SUCCESS"
 }
@@ -919,8 +973,8 @@ the user can fix the problem and retry. Do not clear it client-side.
 ```json
 {
   "order": {
-    "id": "ebc08162-2060-4842-8e1a-f05094ae168c",
-    "orderRef": "ORD-20260923-0025",
+    "id": "5cc03990-1acc-42f4-a3df-6ec7dd6f6f8e",
+    "orderRef": "ORD-20260926-0004",
     "status": "CONFIRMED",
     "failureCode": null,
     "subtotal": 22990000.0,
@@ -945,7 +999,7 @@ the user can fix the problem and retry. Do not clear it client-side.
         "lineTotal": 22990000.0
       }
     ],
-    "createdAt": "2026-09-23T04:40:50.033096Z"
+    "createdAt": "2026-09-26T04:44:28.713596Z"
   },
   "message": "Order placed successfully"
 }
@@ -962,7 +1016,7 @@ the user can fix the problem and retry. Do not clear it client-side.
 
 ```json
 {
-  "addressId": "187b94dc-c71e-4e6d-881b-9a45cc221b3b",
+  "addressId": "a0903eaa-9622-41c2-afd1-15f60c1e4d29",
   "paymentMethod": "MOCK_CARD",
   "simulatePayment": "DECLINED"
 }
@@ -973,8 +1027,8 @@ the user can fix the problem and retry. Do not clear it client-side.
 ```json
 {
   "order": {
-    "id": "19dbe1ba-02df-4e95-8116-2a5f3001bc0e",
-    "orderRef": "ORD-20260923-0026",
+    "id": "f574cdf2-1303-4107-b9cc-e7c5574a41a5",
+    "orderRef": "ORD-20260926-0005",
     "status": "FAILED",
     "failureCode": "PAYMENT_FAILED",
     "subtotal": 22990000.0,
@@ -999,7 +1053,7 @@ the user can fix the problem and retry. Do not clear it client-side.
         "lineTotal": 22990000.0
       }
     ],
-    "createdAt": "2026-09-23T04:40:50.331811Z"
+    "createdAt": "2026-09-26T04:44:29.022222Z"
   },
   "message": "Payment was declined, your cart has been kept"
 }
@@ -1016,7 +1070,7 @@ No payment was attempted. Refresh the cart to see what is unavailable.
 
 ```json
 {
-  "addressId": "187b94dc-c71e-4e6d-881b-9a45cc221b3b",
+  "addressId": "a0903eaa-9622-41c2-afd1-15f60c1e4d29",
   "paymentMethod": "COD"
 }
 ```
@@ -1026,8 +1080,8 @@ No payment was attempted. Refresh the cart to see what is unavailable.
 ```json
 {
   "order": {
-    "id": "ead0c8cd-3b53-4e9c-87c8-5834979dbb1f",
-    "orderRef": "ORD-20260923-0027",
+    "id": "45abf378-e93f-466d-8f83-4bbb871c20c8",
+    "orderRef": "ORD-20260926-0006",
     "status": "FAILED",
     "failureCode": "OUT_OF_STOCK",
     "subtotal": 36980000.0,
@@ -1059,7 +1113,7 @@ No payment was attempted. Refresh the cart to see what is unavailable.
         "lineTotal": 13990000.0
       }
     ],
-    "createdAt": "2026-09-23T04:40:50.650351Z"
+    "createdAt": "2026-09-26T04:44:29.339647Z"
   },
   "message": "Some items are no longer in stock"
 }
@@ -1082,31 +1136,31 @@ Newest first. Optional `?status=CONFIRMED|FAILED|CANCELLED`, plus `page` and `si
 {
   "content": [
     {
-      "id": "ead0c8cd-3b53-4e9c-87c8-5834979dbb1f",
-      "orderRef": "ORD-20260923-0027",
+      "id": "45abf378-e93f-466d-8f83-4bbb871c20c8",
+      "orderRef": "ORD-20260926-0006",
       "status": "FAILED",
       "failureCode": "OUT_OF_STOCK",
       "total": 36980000.0,
       "itemCount": 2,
-      "createdAt": "2026-09-23T04:40:50.650351Z"
+      "createdAt": "2026-09-26T04:44:29.339647Z"
     },
     {
-      "id": "19dbe1ba-02df-4e95-8116-2a5f3001bc0e",
-      "orderRef": "ORD-20260923-0026",
+      "id": "f574cdf2-1303-4107-b9cc-e7c5574a41a5",
+      "orderRef": "ORD-20260926-0005",
       "status": "FAILED",
       "failureCode": "PAYMENT_FAILED",
       "total": 22990000.0,
       "itemCount": 1,
-      "createdAt": "2026-09-23T04:40:50.331811Z"
+      "createdAt": "2026-09-26T04:44:29.022222Z"
     },
     {
-      "id": "ebc08162-2060-4842-8e1a-f05094ae168c",
-      "orderRef": "ORD-20260923-0025",
+      "id": "5cc03990-1acc-42f4-a3df-6ec7dd6f6f8e",
+      "orderRef": "ORD-20260926-0004",
       "status": "CONFIRMED",
       "failureCode": null,
       "total": 22990000.0,
       "itemCount": 1,
-      "createdAt": "2026-09-23T04:40:50.033096Z"
+      "createdAt": "2026-09-26T04:44:28.713596Z"
     }
   ],
   "page": 0,
@@ -1119,7 +1173,7 @@ Newest first. Optional `?status=CONFIRMED|FAILED|CANCELLED`, plus `page` and `si
 
 ### Order detail
 
-`GET /orders/ebc08162-2060-4842-8e1a-f05094ae168c` · **Bearer token required** · responds `200`
+`GET /orders/5cc03990-1acc-42f4-a3df-6ec7dd6f6f8e` · **Bearer token required** · responds `200`
 
 Prices and the shipping address are snapshots taken at checkout — a later catalog price change never alters a past order. Another user's order returns 403.
 
@@ -1127,8 +1181,8 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
 
 ```json
 {
-  "id": "ebc08162-2060-4842-8e1a-f05094ae168c",
-  "orderRef": "ORD-20260923-0025",
+  "id": "5cc03990-1acc-42f4-a3df-6ec7dd6f6f8e",
+  "orderRef": "ORD-20260926-0004",
   "status": "CONFIRMED",
   "failureCode": null,
   "subtotal": 22990000.0,
@@ -1153,14 +1207,14 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
       "lineTotal": 22990000.0
     }
   ],
-  "createdAt": "2026-09-23T04:40:50.033096Z"
+  "createdAt": "2026-09-26T04:44:28.713596Z"
 }
 ```
 
 
 ### Cancel order
 
-`POST /orders/ebc08162-2060-4842-8e1a-f05094ae168c/cancel` · **Bearer token required** · responds `200`
+`POST /orders/5cc03990-1acc-42f4-a3df-6ec7dd6f6f8e/cancel` · **Bearer token required** · responds `200`
 
 Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunded.
 
@@ -1168,8 +1222,8 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
 
 ```json
 {
-  "id": "ebc08162-2060-4842-8e1a-f05094ae168c",
-  "orderRef": "ORD-20260923-0025",
+  "id": "5cc03990-1acc-42f4-a3df-6ec7dd6f6f8e",
+  "orderRef": "ORD-20260926-0004",
   "status": "CANCELLED",
   "failureCode": null,
   "subtotal": 22990000.0,
@@ -1194,14 +1248,14 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
       "lineTotal": 22990000.0
     }
   ],
-  "createdAt": "2026-09-23T04:40:50.033096Z"
+  "createdAt": "2026-09-26T04:44:28.713596Z"
 }
 ```
 
 
 ### Cancel — not allowed
 
-`POST /orders/ebc08162-2060-4842-8e1a-f05094ae168c/cancel` · **Bearer token required** · responds `409`
+`POST /orders/5cc03990-1acc-42f4-a3df-6ec7dd6f6f8e/cancel` · **Bearer token required** · responds `409`
 
 Show the Cancel button only when `status == "CONFIRMED"`.
 
@@ -1209,11 +1263,11 @@ Show the Cancel button only when `status == "CONFIRMED"`.
 
 ```json
 {
-  "timestamp": "2026-09-23T04:40:50.709935586Z",
+  "timestamp": "2026-09-26T04:44:29.422059961Z",
   "status": 409,
   "code": "ORDER_NOT_CANCELLABLE",
   "message": "An order in status CANCELLED cannot be cancelled",
-  "path": "/orders/ebc08162-2060-4842-8e1a-f05094ae168c/cancel"
+  "path": "/orders/5cc03990-1acc-42f4-a3df-6ec7dd6f6f8e/cancel"
 }
 ```
 

@@ -14,6 +14,7 @@ import vn.techies.ecommerce.identity.api.dto.AuthDtos.RegisterResponse;
 import vn.techies.ecommerce.identity.api.dto.AuthDtos.ResetPasswordRequest;
 import vn.techies.ecommerce.identity.api.dto.AuthDtos.UserResponse;
 import vn.techies.ecommerce.identity.domain.User;
+import vn.techies.ecommerce.identity.repository.UserAvatarRepository;
 import vn.techies.ecommerce.identity.repository.UserRepository;
 
 @Service
@@ -21,6 +22,7 @@ import vn.techies.ecommerce.identity.repository.UserRepository;
 public class AuthService {
 
     private final UserRepository users;
+    private final UserAvatarRepository avatars;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
@@ -48,7 +50,8 @@ public class AuthService {
                 .orElseThrow(() -> new ApiException(ErrorCode.INVALID_CREDENTIALS,
                         "Email or password is incorrect"));
 
-        return new LoginResponse(jwtService.issue(user), "Bearer", jwtService.ttlSeconds(), toResponse(user));
+        return new LoginResponse(jwtService.issue(user), "Bearer", jwtService.ttlSeconds(),
+                toResponse(user, avatars.existsByUserId(user.getId())));
     }
 
     @Transactional(readOnly = true)
@@ -70,7 +73,8 @@ public class AuthService {
         user.touch();
     }
 
-    static UserResponse toResponse(User user) {
-        return new UserResponse(user.getId(), user.getEmail(), user.getFullName(), user.getPhone());
+    public static UserResponse toResponse(User user, boolean hasAvatar) {
+        return new UserResponse(user.getId(), user.getEmail(), user.getFullName(), user.getPhone(),
+                hasAvatar ? "/users/" + user.getId() + "/avatar" : null);
     }
 }

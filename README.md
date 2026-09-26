@@ -19,6 +19,7 @@ flowchart TB
         catalog["<b>catalog-service</b> :8082<br/>categories · products<br/>search"]
         inventory["<b>inventory-service</b> :8083<br/>stock truth<br/>deduct / restore"]
         order["<b>order-service</b> :8084<br/>cart · orders<br/><b>CHECKOUT SAGA</b>"]
+        ai["<b>ai-service</b> :8085<br/>product assistant<br/>Gemini + tool calling"]
     end
 
     subgraph pg["PostgreSQL 16 — one container, one private schema per service"]
@@ -36,10 +37,12 @@ flowchart TB
     gw --> catalog
     gw --> inventory
     gw --> order
+    gw --> ai
 
     order -. "address snapshot" .-> identity
     order -. "price snapshot" .-> catalog
     order -. "deduct / restore" .-> inventory
+    ai -. "product + search" .-> catalog
 
     identity --- sid
     catalog --- scat
@@ -52,10 +55,13 @@ flowchart TB
     classDef saga stroke:#c2410c,stroke-width:3px
     classDef edge stroke:#1d4ed8,stroke-width:2px
     class order saga
+    class ai svc
     class gw edge
 
-    %% Edges 5-7 are the checkout saga's service-to-service calls.
-    linkStyle 5,6,7 stroke:#c2410c,stroke-width:2px
+    %% The checkout saga's service-to-service calls. These indices count EVERY edge above,
+    %% in source order, so inserting an edge earlier silently recolours the wrong ones —
+    %% re-count after any change to the arrows above.
+    linkStyle 6,7,8 stroke:#c2410c,stroke-width:2px
 ```
 
 > A PNG of this diagram for slides or a written report is at
@@ -240,6 +246,7 @@ Not routed by the gateway, and unreachable from the host: `/internal/**` on any 
 | `docs/API.md` | **API reference for the mobile team** — generated from real responses |
 | `docs/SECURITY-NOTES.md` | What the deployment does and does not protect against |
 | `docs/postman/` | **Importable Postman collection** with real saved examples |
+| `ai-service/` | Gemini-backed product assistant, streamed over SSE |
 
 ## Working in this repo
 

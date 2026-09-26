@@ -14,7 +14,6 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 OUT_DIR="docs/images"
 SCALE="${SCALE:-3}"        # 3x for print; override with SCALE=1 for a quick check
-WIDTH="${WIDTH:-1600}"
 mkdir -p "$OUT_DIR"
 
 TMP="$(mktemp -d)"
@@ -46,7 +45,7 @@ while IFS=$'\t' read -r name src; do
   npx -y @mermaid-js/mermaid-cli \
       -i "$TMP/$name.mmd" \
       -o "$OUT_DIR/$name.png" \
-      -b white -w "$WIDTH" -s "$SCALE" 2>&1 | grep -vE "^$" | tail -3
+      -b white -s "$SCALE" 2>&1 | grep -vE "^$" | tail -3
 done < "$TMP/manifest.txt"
 
 echo

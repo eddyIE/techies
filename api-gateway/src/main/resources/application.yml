@@ -80,6 +80,19 @@ spring:
               filters:
                 - StripPrefix=1
 
+            # Server-sent events. The global 10s response timeout would cut a streamed
+            # reply mid-sentence, so this route gets its own, matched to the AI service's
+            # own ceiling.
+            - id: ai
+              uri: lb://ai-service
+              predicates:
+                - Path=/api/ai/**
+              filters:
+                - StripPrefix=1
+              metadata:
+                response-timeout: 90000
+                connect-timeout: 3000
+
           httpclient:
             connect-timeout: 2000
             response-timeout: 10s

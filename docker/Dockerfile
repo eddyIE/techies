@@ -15,6 +15,7 @@ COPY identity-service/pom.xml identity-service/
 COPY catalog-service/pom.xml catalog-service/
 COPY inventory-service/pom.xml inventory-service/
 COPY order-service/pom.xml order-service/
+COPY ai-service/pom.xml ai-service/
 RUN mvn -B -q dependency:go-offline -DskipTests || true
 
 COPY . .

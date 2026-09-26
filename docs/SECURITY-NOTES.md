@@ -52,6 +52,29 @@ Consequences to respect while the tunnel is up:
 
 The fix is a short-lived reset token, roughly 15 lines, described in `docs/EXTENSIONS.md`.
 
+## The AI assistant sends data to Google
+
+The product assistant calls the Gemini API, so two things leave your infrastructure:
+
+- **Product data** — name, price, category and description from your own catalogue.
+- **Whatever the customer types** into the chat.
+
+No account data goes with it: the assistant is given a product and the conversation, never the
+user's name, email, cart or order history. The request is authenticated so usage is tied to an
+account, but the user's identity is not forwarded to Google.
+
+One detail worth stating: the tool round trip chains with `previous_interaction_id`, which
+requires `store: true`, so **Google retains the interaction** on their side. We store nothing —
+the app holds the conversation and discards it when the popup closes.
+
+Tell demo users not to type anything personal into the chat. `GEMINI_API_KEY` lives in `.env`,
+which is gitignored; a leaked key is someone else spending your quota, not a data breach.
+
+**Quota is a denial-of-service surface.** The free tier allows 20 requests per day and a turn
+that searches costs two, so roughly ten searching turns exhaust it. Authentication ties abuse
+to an account, but one logged-in user can still empty the day's quota in a minute. A per-user
+cap is the obvious next step if this is ever left running unattended.
+
 ## Other accepted limitations
 
 | | |

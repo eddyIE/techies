@@ -1,0 +1,53 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: ai-service
+  # No database: this service stores nothing. Chat history lives in the app and is resent
+  # each turn, then discarded when the popup closes.
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+spring.cloud.openfeign.client.config:
+  default:
+    connectTimeout: 2000
+    readTimeout: 5000
+
+techies:
+  gemini:
+    api-key: ${GEMINI_API_KEY:}
+    base-url: https://generativelanguage.googleapis.com/v1beta/interactions
+    model: gemini-3.8-flash
+    # Wall-clock ceiling for one streamed reply, including the tool round trip.
+    timeout-seconds: 60
+    # Conversation turns kept per request. The app resends history each turn, so this caps
+    # both token spend and how much a client can push into a prompt.
+    max-history-messages: 10
+    # Cards shown in the chat. Three fits a phone popup; the reply states the true total and
+    # the app links to the product list screen for the rest.
+    max-products: 3
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  info:
+    title: Techies AI API
+    description: Product assistant chat, streamed over SSE
+    version: 1.0.0

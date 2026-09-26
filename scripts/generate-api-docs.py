@@ -219,6 +219,85 @@ def main():
     w(textwrap.dedent("""\
         ---
 
+        ## AI product assistant (SSE)
+
+        `POST /ai/chat` · Bearer · **Server-Sent Events** · `Content-Type: text/event-stream`
+
+        ```json
+        { "productId": "<uuid>",
+          "messages": [ {"role": "user", "content": "Sản phẩm này có tốt không?"} ] }
+        ```
+
+        Stateless: the app keeps the conversation and resends it each turn, capped at 20
+        messages and 2000 characters each. Nothing is stored server-side, so closing the popup
+        discards it. Product facts are fetched from the catalogue by `productId` — the client
+        never supplies them, so it cannot put invented prices into the prompt.
+
+        ### Events
+
+        | Event | Payload | What the app does |
+        |---|---|---|
+        | `token` | `{"text": "..."}` | Append to the reply, in order |
+        | `tool_start` | `{"tool": "...", "message": "Đang tìm sản phẩm…"}` | Show a searching indicator |
+        | `products` | `{"total", "query", "products": [...]}` | Render cards; link "see all" to the product list |
+        | `done` | `{"finishReason": "stop"}` | Close the stream |
+        | `error` | `{"code", "message"}` | Show the message inline |
+
+        ```
+        event: token
+        data: {"text":"Dạ, iPhone 15 Pro Max 256GB "}
+
+        event: tool_start
+        data: {"tool":"search_products","message":"Đang tìm sản phẩm…"}
+
+        event: products
+        data: {"total":2,"query":{"keyword":null,"categoryId":"...","maxPrice":3000000,"sort":"PRICE_ASC"},
+               "products":[{"id":"...","name":"SoundPEATS Air4 Pro","price":1490000.00,"thumbnailUrl":"..."}]}
+
+        event: done
+        data: {"finishReason":"stop"}
+        ```
+
+        ### Three things that will catch you out
+
+        **`products.total` can exceed the cards shown.** Only 3 are returned, to fit a phone
+        popup. Render the cards, then a "Xem tất cả {total} sản phẩm" button that opens the
+        product list screen with `query` applied — that screen already does paging and filters.
+
+        **Tapping a card should push a new screen, not replace the current one.** Replacing the
+        PDP closes the popup and loses the conversation.
+
+        **Errors can arrive after a 200.** Once streaming starts the status cannot change, so a
+        failure becomes an `error` event. Handle both: a non-200 with the usual JSON envelope
+        *before* streaming, and an `error` event *during* it. `code` is `RATE_LIMITED`,
+        `SERVICE_UNAVAILABLE`, `PRODUCT_NOT_FOUND` or `INTERNAL_ERROR`.
+
+        > **Quota.** The assistant runs on Gemini's free tier: **20 requests per day**, and a
+        > turn that searches costs two. Expect `RATE_LIMITED` in normal use and make the chat
+        > button degrade gracefully — nothing else on the product page depends on it.
+
+        ### Android
+
+        Retrofit does not do SSE. Use OkHttp's `EventSource`:
+
+        ```java
+        EventSources.createFactory(client).newEventSource(request, new EventSourceListener() {
+            @Override public void onEvent(EventSource es, String id, String type, String data) {
+                switch (type) {
+                    case "token":      appendToBubble(gson.fromJson(data, TokenEvent.class).text); break;
+                    case "tool_start": showSearchingIndicator(); break;
+                    case "products":   renderProductCards(gson.fromJson(data, ProductsEvent.class)); break;
+                    case "error":      showInlineError(gson.fromJson(data, ErrorEvent.class)); break;
+                }
+            }
+        });
+        ```
+
+        """))
+
+    w(textwrap.dedent("""\
+        ---
+
         ## Android client notes
 
         Two things that break Android clients against this API, both with unhelpful errors.

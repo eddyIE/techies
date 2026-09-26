@@ -121,6 +121,26 @@ services:
       timeout: 3s
       retries: 30
 
+  ai-service:
+    <<: *service-base
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        MODULE: ai-service
+    container_name: techies-ai
+    environment:
+      <<: *service-env
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    depends_on:
+      discovery-server: {condition: service_healthy}
+      catalog-service: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8085/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
   # The only port published to the host. Everything else is reachable only on this network,
   # which is what makes the gateway's X-User-Id injection trustworthy (docs/SPEC-gateway.md).
   api-gateway:
@@ -144,6 +164,7 @@ services:
       catalog-service: {condition: service_healthy}
       inventory-service: {condition: service_healthy}
       order-service: {condition: service_healthy}
+      ai-service: {condition: service_healthy}
 
 volumes:
   pgdata:

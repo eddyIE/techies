@@ -51,8 +51,17 @@ PENDING ───┤ stock deducted + payment paid  ├──► CONFIRMED ─�
    └── downstream unreachable ────► FAILED (failure_code = SERVICE_UNAVAILABLE) [stock restored]
 ```
 
-`FAILED` and `CANCELLED` are terminal. There is no SHIPPED/DELIVERED — no admin site exists to
-drive those transitions, so modelling them would be dead code.
+`COMPLETED`, `FAILED` and `CANCELLED` are terminal.
+
+**`COMPLETED` is accepted but never set by the API.** With no management app there is no actor
+to move an order on from `CONFIRMED`, so the transition has no trigger. It exists so the
+lifecycle can be shown end to end in a demo, so filtering by it behaves, and so a row written
+directly — or by a future admin tool — is not rejected by the constraint. It is treated as
+terminal: cancelling a `COMPLETED` order returns 409, which matters because its stock was
+already deducted and must not be returned twice.
+
+There is still no `SHIPPED`/`DELIVERED`: those need a fulfilment process that does not exist
+here, and unreachable states that look like features are worse than absent ones.
 
 ## Endpoints
 

@@ -1,0 +1,9 @@
+event:tool_start
+data:{"tool":"search_products","message":"Đang tìm sản phẩm…"}
+
+event:products
+data:{"total":2,"query":{"keyword":null,"categoryId":"3a8e7aee-9455-52a3-be9a-3790e375821a","minPrice":null,"maxPrice":3000000,"sort":"PRICE_ASC"},"products":[{"id":"08f2421a-f186-5270-be82-390e8f6376fe","name":"SoundPEATS Air4 Pro","price":1490000.00,"thumbnailUrl":"https://picsum.photos/seed/soundpeats-air4-pro/600"},{"id":"513f03f9-8a1c-5813-9feb-2cae892e82a9","name":"JBL Tune 770NC","price":2290000.00,"thumbnailUrl":"https://picsum.photos/seed/jbl-tune-770nc/600"}]}
+
+event:error
+data:{"code":"SERVICE_UNAVAILABLE","message":"Trợ lý tạm thời không khả dụng. Vui lòng thử lại sau."}
+

@@ -9,7 +9,7 @@ In Postman: **Import** → drop in all three files.
 
 | File | |
 |---|---|
-| `techies.postman_collection.json` | 27 requests in 7 folders, 29 saved example responses |
+| `techies.postman_collection.json` | 32 requests in 8 folders, 34 saved example responses |
 | `techies-local.postman_environment.json` | `baseUrl` = `http://localhost:8080/api` |
 | `techies-shared.postman_environment.json` | `baseUrl` = the public ngrok URL |
 
@@ -45,4 +45,22 @@ demonstrates the duplicate-email path. Change the `email` variable for a fresh a
 the same password back, so the collection stays re-runnable instead of locking itself out.
 
 **Destructive requests run last.** Deleting the address before checkout would break it, so
-folder 7 holds those.
+folder 8 holds those.
+
+## The AI assistant folder is skipped by default
+
+Folder **7. AI assistant** is skipped during a collection run unless you set the collection
+variable `RUN_AI` to `true`.
+
+The assistant runs on Gemini's free tier: **20 requests per day**, and a turn that searches
+costs two. Without the guard, every Newman run would spend 2-4 of them and the feature would
+stop working by the afternoon. Verified: a default run never reaches `/ai/chat`.
+
+To actually exercise it, set `RUN_AI` to `true` and send the request on its own rather than
+through the Runner.
+
+**Postman renders the raw SSE stream**, not parsed events, so the reply arrives as
+`event:`/`data:` lines rather than a formatted response. For a readable view use `curl -N`.
+The saved examples are real captured streams, including one that ends in a quota `error`
+after the product cards were emitted — which is exactly what a mid-stream failure looks like
+to the app.

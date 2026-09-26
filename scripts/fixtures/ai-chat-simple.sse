@@ -1,0 +1,18 @@
+event:token
+data:{"text":"Dạ, iPhone 15 Pro Max 256"}
+
+event:token
+data:{"text":"GB hiện có giá là 31.990.000 VND và đang còn hàng tại Techies"}
+
+event:token
+data:{"text":" ạ. Sản phẩm là hàng chính hãng, được bảo hành 12 tháng"}
+
+event:token
+data:{"text":" bạn"}
+
+event:token
+data:{"text":" nhé!"}
+
+event:done
+data:{"finishReason":"stop"}
+

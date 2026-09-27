@@ -302,7 +302,7 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "email": "fe-demo-1f621c@techies.vn",
+  "email": "fe-demo-fc08d4@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -313,8 +313,8 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "userId": "0785d965-4a93-4295-8505-7c3fcb8efdae",
-  "email": "fe-demo-1f621c@techies.vn"
+  "userId": "1cbee4ab-1aeb-446b-9e9f-343495db5beb",
+  "email": "fe-demo-fc08d4@techies.vn"
 }
 ```
 
@@ -329,7 +329,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "email": "fe-demo-1f621c@techies.vn",
+  "email": "fe-demo-fc08d4@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -340,7 +340,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "timestamp": "2026-09-27T08:51:52.474183717Z",
+  "timestamp": "2026-09-27T10:54:20.108693972Z",
   "status": 409,
   "code": "EMAIL_ALREADY_EXISTS",
   "message": "An account with this email already exists",
@@ -370,7 +370,7 @@ Shows the `fieldErrors` map you bind to form fields.
 
 ```json
 {
-  "timestamp": "2026-09-27T08:51:52.478554925Z",
+  "timestamp": "2026-09-27T10:54:20.115082180Z",
   "status": 400,
   "code": "VALIDATION_ERROR",
   "message": "Request validation failed",
@@ -396,7 +396,7 @@ Returns the token plus the user, so Login need not call `/users/me` after.
 
 ```json
 {
-  "email": "fe-demo-1f621c@techies.vn",
+  "email": "fe-demo-fc08d4@techies.vn",
   "password": "password1"
 }
 ```
@@ -409,8 +409,8 @@ Returns the token plus the user, so Login need not call `/users/me` after.
   "tokenType": "Bearer",
   "expiresIn": 2592000,
   "user": {
-    "id": "0785d965-4a93-4295-8505-7c3fcb8efdae",
-    "email": "fe-demo-1f621c@techies.vn",
+    "id": "1cbee4ab-1aeb-446b-9e9f-343495db5beb",
+    "email": "fe-demo-fc08d4@techies.vn",
     "fullName": "Nguyen Van A",
     "phone": "0901234567",
     "avatarUrl": null
@@ -429,7 +429,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "email": "fe-demo-1f621c@techies.vn",
+  "email": "fe-demo-fc08d4@techies.vn",
   "password": "wrongpassword1"
 }
 ```
@@ -438,7 +438,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "timestamp": "2026-09-27T08:51:52.639232925Z",
+  "timestamp": "2026-09-27T10:54:20.289896555Z",
   "status": 401,
   "code": "INVALID_CREDENTIALS",
   "message": "Email or password is incorrect",
@@ -457,7 +457,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-1f621c@techies.vn"
+  "email": "fe-demo-fc08d4@techies.vn"
 }
 ```
 
@@ -465,7 +465,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-1f621c@techies.vn",
+  "email": "fe-demo-fc08d4@techies.vn",
   "exists": true
 }
 ```
@@ -524,8 +524,8 @@ For the Profile screen.
 
 ```json
 {
-  "id": "0785d965-4a93-4295-8505-7c3fcb8efdae",
-  "email": "fe-demo-1f621c@techies.vn",
+  "id": "1cbee4ab-1aeb-446b-9e9f-343495db5beb",
+  "email": "fe-demo-fc08d4@techies.vn",
   "fullName": "Nguyen Van A",
   "phone": "0901234567",
   "avatarUrl": null
@@ -552,8 +552,8 @@ Name and phone only. Email cannot change — it is the login identifier.
 
 ```json
 {
-  "id": "0785d965-4a93-4295-8505-7c3fcb8efdae",
-  "email": "fe-demo-1f621c@techies.vn",
+  "id": "1cbee4ab-1aeb-446b-9e9f-343495db5beb",
+  "email": "fe-demo-fc08d4@techies.vn",
   "fullName": "Nguyen Van B",
   "phone": "0909999999",
   "avatarUrl": null
@@ -571,7 +571,7 @@ What the app gets when the token is missing or expired.
 
 ```json
 {
-  "timestamp": "2026-09-27T08:51:52.667926092Z",
+  "timestamp": "2026-09-27T10:54:20.319218847Z",
   "status": 401,
   "code": "UNAUTHENTICATED",
   "message": "Authentication required",
@@ -616,7 +616,7 @@ The user's first address becomes the default automatically, so Checkout always h
 
 ```json
 {
-  "id": "6d544fc9-df21-46b6-819f-6747331d5121",
+  "id": "aa6d0254-b850-4be6-aa16-8d5104c56c91",
   "recipientName": "Nguyen Van B",
   "phone": "0907654321",
   "line1": "12 Nguyen Hue",
@@ -639,7 +639,7 @@ Default first, then newest. Use the first entry to preselect at Checkout.
 ```json
 [
   {
-    "id": "6d544fc9-df21-46b6-819f-6747331d5121",
+    "id": "aa6d0254-b850-4be6-aa16-8d5104c56c91",
     "recipientName": "Nguyen Van B",
     "phone": "0907654321",
     "line1": "12 Nguyen Hue",
@@ -674,45 +674,40 @@ For the Home screen. Ordered by `displayOrder`.
     "id": "621a9347-0b52-58d5-ba30-9c524079231d",
     "name": "Điện thoại",
     "slug": "dien-thoai",
-    "imageUrl": "https://placehold.co/400x400/1e293b/ffffff/png?text=%C4%90i%E1%BB%87n+tho%E1%BA%A1i",
+    "imageUrl": "https://cdn.tgdd.vn/Products/Images/42/305658/iphone-15-pro-max-blue-thumbnew-600x600.jpg",
     "displayOrder": 1
   },
   {
     "id": "1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b",
     "name": "Laptop",
     "slug": "laptop",
-    "imageUrl": "https://placehold.co/400x400/312e81/ffffff/png?text=Laptop",
+    "imageUrl": "https://www.apple.com/newsroom/images/2023/10/apple-unveils-new-macbook-pro-featuring-m3-chips/article/Apple-MacBook-Pro-top-view-231030_big.jpg.large_2x.jpg",
     "displayOrder": 2
   },
   {
     "id": "155c3f45-7376-54b8-8fe4-9859afd0cd8e",
     "name": "Máy tính bảng",
     "slug": "tablet",
-    "imageUrl": "https://placehold.co/400x400/134e4a/ffffff/png?text=M%C3%A1y+t%C3%ADnh+b%E1%BA%A3ng",
+    "imageUrl": "https://cdn.tgdd.vn/Products/Images/522/325513/ipad-pro-11-inch-m4-wifi-sliver-thumb-600x600.jpg",
     "displayOrder": 3
   },
   {
     "id": "3a8e7aee-9455-52a3-be9a-3790e375821a",
     "name": "Tai nghe",
     "slug": "tai-nghe",
-    "imageUrl": "https://placehold.co/400x400/7c2d12/ffffff/png?text=Tai+nghe",
+    "imageUrl": "https://images.ctfassets.net/javen7msabdh/7Jo3yt8L1EKkGWPe8gK8tK/ba408004ee0cd7fc35126aba4ead321a/major-v-cream-front-desktop-1.jpeg?w=1200&fm=jpg&q=85",
     "displayOrder": 4
   },
   {
     "id": "5e8b4230-0d61-5f2b-a468-5499e8e7331b",
     "name": "Đồng hồ thông minh",
     "slug": "dong-ho-thong-minh",
-    "imageUrl": "https://placehold.co/400x400/4a044e/ffffff/png?text=%C4%90%E1%BB%93ng+h%E1%BB%93+th%C3%B4ng+minh",
+    "imageUrl": "https://cdn.tgdd.vn/Products/Images/7077/310858/samsung-galaxy-watch6-classic-47-mm-bac-ksp-600x600.jpg",
     "displayOrder": 5
   },
   {
-    "id": "cec6d4cc-9d78-55d8-aaf7-35d3bcf87a9f",
-    "name": "Phụ kiện",
-    "slug": "phu-kien",
-    "imageUrl": "https://placehold.co/400x400/374151/ffffff/png?text=Ph%E1%BB%A5+ki%E1%BB%87n",
-    "displayOrder": 6
-  }
-]
+  ...
+}
 ```
 
 
@@ -740,20 +735,20 @@ Searching "điện thoại" will not return all phones; use `categoryId` for tha
 {
   "content": [
     {
-      "id": "e0404394-59b0-5044-af93-6a93adc3af39",
-      "name": "iPhone 15 128GB",
-      "slug": "iphone-15-128gb",
-      "price": 22990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB",
-      "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
-      "categoryName": "Điện thoại"
+      "id": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+      "name": "MacBook Air M3 13 inch 8GB/256GB",
+      "slug": "macbook-air-m3-13",
+      "price": 27990000.0,
+      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
+      "categoryId": "1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b",
+      "categoryName": "Laptop"
     },
     {
-      "id": "1f8d1d18-6b82-542e-bcca-e7485fe03e0d",
-      "name": "iPhone 15 Pro Max 256GB",
-      "slug": "iphone-15-pro-max-256gb",
-      "price": 31990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+Pro+Max+256GB",
+      "id": "9dc2c272-0914-54de-b46b-62ca7e689523",
+      "name": "vivo V30e 5G",
+      "slug": "vivo-v30e",
+      "price": 8990000.0,
+      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=vivo+V30e+5G",
       "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
       "categoryName": "Điện thoại"
     }
@@ -782,7 +777,7 @@ Same endpoint with `keyword`. There is no separate search route.
       "name": "iPhone 15 Pro Max 256GB",
       "slug": "iphone-15-pro-max-256gb",
       "price": 31990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+Pro+Max+256GB",
+      "thumbnailUrl": "https://cdn.tgdd.vn/Products/Images/42/305658/iphone-15-pro-max-blue-thumbnew-600x600.jpg",
       "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
       "categoryName": "Điện thoại"
     },
@@ -791,7 +786,7 @@ Same endpoint with `keyword`. There is no separate search route.
       "name": "iPhone 15 128GB",
       "slug": "iphone-15-128gb",
       "price": 22990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB",
+      "thumbnailUrl": "https://cdn.tgdd.vn/Products/Images/42/281570/iphone-15-xanh-thumb-600x600.jpg",
       "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
       "categoryName": "Điện thoại"
     }
@@ -806,7 +801,7 @@ Same endpoint with `keyword`. There is no separate search route.
 
 ### Product detail
 
-`GET /products/e0404394-59b0-5044-af93-6a93adc3af39` · **Public — no token** · responds `200`
+`GET /products/717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a` · **Public — no token** · responds `200`
 
 Includes the description and image gallery.
 
@@ -814,17 +809,17 @@ Includes the description and image gallery.
 
 ```json
 {
-  "id": "e0404394-59b0-5044-af93-6a93adc3af39",
-  "name": "iPhone 15 128GB",
-  "slug": "iphone-15-128gb",
-  "description": "iPhone 15 128GB - hàng chính hãng, bảo hành 12 tháng tại Techies.",
-  "price": 22990000.0,
-  "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB",
-  "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
-  "categoryName": "Điện thoại",
+  "id": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+  "name": "MacBook Air M3 13 inch 8GB/256GB",
+  "slug": "macbook-air-m3-13",
+  "description": "MacBook Air M3 13 inch 8GB/256GB - hàng chính hãng, bảo hành 12 tháng tại Techies.",
+  "price": 27990000.0,
+  "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
+  "categoryId": "1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b",
+  "categoryName": "Laptop",
   "images": [
-    "https://placehold.co/800x800/1e293b/ffffff/png?text=iPhone+15+128GB+%281%2F2%29",
-    "https://placehold.co/800x800/1e293b/ffffff/png?text=iPhone+15+128GB+%282%2F2%29"
+    "https://placehold.co/800x800/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB+%281%2F2%29",
+    "https://placehold.co/800x800/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB+%282%2F2%29"
   ]
 }
 ```
@@ -832,7 +827,7 @@ Includes the description and image gallery.
 
 ### Product detail — gone
 
-`GET /products/013b999c-3628-4a50-91c9-fe9eedc5ca54` · **Public — no token** · responds `404`
+`GET /products/77dcfac4-1a6d-4562-85da-7c5ec32d3b92` · **Public — no token** · responds `404`
 
 Unknown or delisted products return 404.
 
@@ -840,18 +835,18 @@ Unknown or delisted products return 404.
 
 ```json
 {
-  "timestamp": "2026-09-27T08:51:52.763342009Z",
+  "timestamp": "2026-09-27T10:54:20.540658889Z",
   "status": 404,
   "code": "PRODUCT_NOT_FOUND",
   "message": "Product not found",
-  "path": "/products/013b999c-3628-4a50-91c9-fe9eedc5ca54"
+  "path": "/products/77dcfac4-1a6d-4562-85da-7c5ec32d3b92"
 }
 ```
 
 
 ### Stock for a product
 
-`GET /stock/e0404394-59b0-5044-af93-6a93adc3af39` · **Public — no token** · responds `200`
+`GET /stock/717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a` · **Public — no token** · responds `200`
 
 For the in-stock badge on Product Detail. This is the only public stock endpoint.
 
@@ -859,8 +854,8 @@ For the in-stock badge on Product Detail. This is the only public stock endpoint
 
 ```json
 {
-  "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-  "available": 87,
+  "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+  "available": 51,
   "inStock": true
 }
 ```
@@ -899,7 +894,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 
 ```json
 {
-  "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
+  "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
   "quantity": 2
 }
 ```
@@ -910,17 +905,17 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "54a1ddcb-07ea-4e7c-befa-c82f2472658e",
-      "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-      "name": "iPhone 15 128GB",
-      "unitPrice": 22990000.0,
+      "id": "9b6fea20-4092-44c4-9f15-f1d5fd360e50",
+      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+      "name": "MacBook Air M3 13 inch 8GB/256GB",
+      "unitPrice": 27990000.0,
       "quantity": 2,
-      "lineTotal": 45980000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB",
-      "available": 87
+      "lineTotal": 55980000.0,
+      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
+      "available": 51
     }
   ],
-  "subtotal": 45980000.0,
+  "subtotal": 55980000.0,
   "itemCount": 1
 }
 ```
@@ -928,7 +923,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 
 ### Change quantity
 
-`PUT /cart/items/54a1ddcb-07ea-4e7c-befa-c82f2472658e` · **Bearer token required** · responds `200`
+`PUT /cart/items/9b6fea20-4092-44c4-9f15-f1d5fd360e50` · **Bearer token required** · responds `200`
 
 `quantity: 0` removes the line. `DELETE /cart/items/{itemId}` does the same and returns `204`.
 
@@ -946,17 +941,17 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "54a1ddcb-07ea-4e7c-befa-c82f2472658e",
-      "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-      "name": "iPhone 15 128GB",
-      "unitPrice": 22990000.0,
+      "id": "9b6fea20-4092-44c4-9f15-f1d5fd360e50",
+      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+      "name": "MacBook Air M3 13 inch 8GB/256GB",
+      "unitPrice": 27990000.0,
       "quantity": 1,
-      "lineTotal": 22990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB",
-      "available": 87
+      "lineTotal": 27990000.0,
+      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
+      "available": 51
     }
   ],
-  "subtotal": 22990000.0,
+  "subtotal": 27990000.0,
   "itemCount": 1
 }
 ```
@@ -978,17 +973,17 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "54a1ddcb-07ea-4e7c-befa-c82f2472658e",
-      "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-      "name": "iPhone 15 128GB",
-      "unitPrice": 22990000.0,
+      "id": "9b6fea20-4092-44c4-9f15-f1d5fd360e50",
+      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+      "name": "MacBook Air M3 13 inch 8GB/256GB",
+      "unitPrice": 27990000.0,
       "quantity": 1,
-      "lineTotal": 22990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB",
-      "available": 87
+      "lineTotal": 27990000.0,
+      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
+      "available": 51
     }
   ],
-  "subtotal": 22990000.0,
+  "subtotal": 27990000.0,
   "itemCount": 1
 }
 ```
@@ -1052,7 +1047,7 @@ the user can fix the problem and retry. Do not clear it client-side.
 
 ```json
 {
-  "addressId": "6d544fc9-df21-46b6-819f-6747331d5121",
+  "addressId": "aa6d0254-b850-4be6-aa16-8d5104c56c91",
   "paymentMethod": "MOCK_CARD",
   "simulatePayment": "SUCCESS"
 }
@@ -1063,13 +1058,13 @@ the user can fix the problem and retry. Do not clear it client-side.
 ```json
 {
   "order": {
-    "id": "8dc4df25-fd3f-490b-b18e-5a1510a6ca95",
-    "orderRef": "ORD-20260927-0014",
+    "id": "f462abaf-d90b-4274-a271-eedd51aa0184",
+    "orderRef": "ORD-20260927-0020",
     "status": "CONFIRMED",
     "failureCode": null,
-    "subtotal": 22990000.0,
+    "subtotal": 27990000.0,
     "shippingFee": 0.0,
-    "total": 22990000.0,
+    "total": 27990000.0,
     "paymentMethod": "MOCK_CARD",
     "paymentStatus": "PAID",
     "shippingAddress": {
@@ -1082,15 +1077,15 @@ the user can fix the problem and retry. Do not clear it client-side.
     },
     "items": [
       {
-        "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-        "productName": "iPhone 15 128GB",
-        "unitPrice": 22990000.0,
+        "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+        "productName": "MacBook Air M3 13 inch 8GB/256GB",
+        "unitPrice": 27990000.0,
         "quantity": 1,
-        "lineTotal": 22990000.0,
-        "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB"
+        "lineTotal": 27990000.0,
+        "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
       }
     ],
-    "createdAt": "2026-09-27T08:51:52.847747Z"
+    "createdAt": "2026-09-27T10:54:20.730428Z"
   },
   "message": "Order placed successfully"
 }
@@ -1107,7 +1102,7 @@ the user can fix the problem and retry. Do not clear it client-side.
 
 ```json
 {
-  "addressId": "6d544fc9-df21-46b6-819f-6747331d5121",
+  "addressId": "aa6d0254-b850-4be6-aa16-8d5104c56c91",
   "paymentMethod": "MOCK_CARD",
   "simulatePayment": "DECLINED"
 }
@@ -1118,13 +1113,13 @@ the user can fix the problem and retry. Do not clear it client-side.
 ```json
 {
   "order": {
-    "id": "f4cbf0e5-0543-4531-8944-a01dbac38fd4",
-    "orderRef": "ORD-20260927-0015",
+    "id": "699df364-16d6-47cd-ad6d-eac03e7b7f41",
+    "orderRef": "ORD-20260927-0021",
     "status": "FAILED",
     "failureCode": "PAYMENT_FAILED",
-    "subtotal": 22990000.0,
+    "subtotal": 27990000.0,
     "shippingFee": 0.0,
-    "total": 22990000.0,
+    "total": 27990000.0,
     "paymentMethod": "MOCK_CARD",
     "paymentStatus": "DECLINED",
     "shippingAddress": {
@@ -1137,15 +1132,15 @@ the user can fix the problem and retry. Do not clear it client-side.
     },
     "items": [
       {
-        "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-        "productName": "iPhone 15 128GB",
-        "unitPrice": 22990000.0,
+        "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+        "productName": "MacBook Air M3 13 inch 8GB/256GB",
+        "unitPrice": 27990000.0,
         "quantity": 1,
-        "lineTotal": 22990000.0,
-        "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB"
+        "lineTotal": 27990000.0,
+        "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
       }
     ],
-    "createdAt": "2026-09-27T08:51:53.149816Z"
+    "createdAt": "2026-09-27T10:54:21.052152Z"
   },
   "message": "Payment was declined, your cart has been kept"
 }
@@ -1162,7 +1157,7 @@ No payment was attempted. Refresh the cart to see what is unavailable.
 
 ```json
 {
-  "addressId": "6d544fc9-df21-46b6-819f-6747331d5121",
+  "addressId": "aa6d0254-b850-4be6-aa16-8d5104c56c91",
   "paymentMethod": "COD"
 }
 ```
@@ -1172,13 +1167,13 @@ No payment was attempted. Refresh the cart to see what is unavailable.
 ```json
 {
   "order": {
-    "id": "06c5509f-f324-4be6-a0be-4486ecf063b1",
-    "orderRef": "ORD-20260927-0016",
+    "id": "e65ba3db-e721-40ba-9a1d-7f07b55cf142",
+    "orderRef": "ORD-20260927-0022",
     "status": "FAILED",
     "failureCode": "OUT_OF_STOCK",
-    "subtotal": 36980000.0,
+    "subtotal": 41980000.0,
     "shippingFee": 0.0,
-    "total": 36980000.0,
+    "total": 41980000.0,
     "paymentMethod": "COD",
     "paymentStatus": "PENDING",
     "shippingAddress": {
@@ -1191,12 +1186,12 @@ No payment was attempted. Refresh the cart to see what is unavailable.
     },
     "items": [
       {
-        "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-        "productName": "iPhone 15 128GB",
-        "unitPrice": 22990000.0,
+        "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+        "productName": "MacBook Air M3 13 inch 8GB/256GB",
+        "unitPrice": 27990000.0,
         "quantity": 1,
-        "lineTotal": 22990000.0,
-        "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB"
+        "lineTotal": 27990000.0,
+        "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
       },
       {
         "productId": "b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8",
@@ -1207,7 +1202,7 @@ No payment was attempted. Refresh the cart to see what is unavailable.
         "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M"
       }
     ],
-    "createdAt": "2026-09-27T08:51:53.479732Z"
+    "createdAt": "2026-09-27T10:54:21.375110Z"
   },
   "message": "Some items are no longer in stock"
 }
@@ -1230,31 +1225,31 @@ Newest first. Optional `?status=CONFIRMED|FAILED|CANCELLED`, plus `page` and `si
 {
   "content": [
     {
-      "id": "06c5509f-f324-4be6-a0be-4486ecf063b1",
-      "orderRef": "ORD-20260927-0016",
+      "id": "e65ba3db-e721-40ba-9a1d-7f07b55cf142",
+      "orderRef": "ORD-20260927-0022",
       "status": "FAILED",
       "failureCode": "OUT_OF_STOCK",
-      "total": 36980000.0,
+      "total": 41980000.0,
       "itemCount": 2,
-      "createdAt": "2026-09-27T08:51:53.479732Z"
+      "createdAt": "2026-09-27T10:54:21.375110Z"
     },
     {
-      "id": "f4cbf0e5-0543-4531-8944-a01dbac38fd4",
-      "orderRef": "ORD-20260927-0015",
+      "id": "699df364-16d6-47cd-ad6d-eac03e7b7f41",
+      "orderRef": "ORD-20260927-0021",
       "status": "FAILED",
       "failureCode": "PAYMENT_FAILED",
-      "total": 22990000.0,
+      "total": 27990000.0,
       "itemCount": 1,
-      "createdAt": "2026-09-27T08:51:53.149816Z"
+      "createdAt": "2026-09-27T10:54:21.052152Z"
     },
     {
-      "id": "8dc4df25-fd3f-490b-b18e-5a1510a6ca95",
-      "orderRef": "ORD-20260927-0014",
+      "id": "f462abaf-d90b-4274-a271-eedd51aa0184",
+      "orderRef": "ORD-20260927-0020",
       "status": "CONFIRMED",
       "failureCode": null,
-      "total": 22990000.0,
+      "total": 27990000.0,
       "itemCount": 1,
-      "createdAt": "2026-09-27T08:51:52.847747Z"
+      "createdAt": "2026-09-27T10:54:20.730428Z"
     }
   ],
   "page": 0,
@@ -1267,7 +1262,7 @@ Newest first. Optional `?status=CONFIRMED|FAILED|CANCELLED`, plus `page` and `si
 
 ### Order detail
 
-`GET /orders/8dc4df25-fd3f-490b-b18e-5a1510a6ca95` · **Bearer token required** · responds `200`
+`GET /orders/f462abaf-d90b-4274-a271-eedd51aa0184` · **Bearer token required** · responds `200`
 
 Prices and the shipping address are snapshots taken at checkout — a later catalog price change never alters a past order. Another user's order returns 403.
 
@@ -1275,13 +1270,13 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
 
 ```json
 {
-  "id": "8dc4df25-fd3f-490b-b18e-5a1510a6ca95",
-  "orderRef": "ORD-20260927-0014",
+  "id": "f462abaf-d90b-4274-a271-eedd51aa0184",
+  "orderRef": "ORD-20260927-0020",
   "status": "CONFIRMED",
   "failureCode": null,
-  "subtotal": 22990000.0,
+  "subtotal": 27990000.0,
   "shippingFee": 0.0,
-  "total": 22990000.0,
+  "total": 27990000.0,
   "paymentMethod": "MOCK_CARD",
   "paymentStatus": "PAID",
   "shippingAddress": {
@@ -1294,22 +1289,22 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
   },
   "items": [
     {
-      "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-      "productName": "iPhone 15 128GB",
-      "unitPrice": 22990000.0,
+      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+      "productName": "MacBook Air M3 13 inch 8GB/256GB",
+      "unitPrice": 27990000.0,
       "quantity": 1,
-      "lineTotal": 22990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB"
+      "lineTotal": 27990000.0,
+      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
     }
   ],
-  "createdAt": "2026-09-27T08:51:52.847747Z"
+  "createdAt": "2026-09-27T10:54:20.730428Z"
 }
 ```
 
 
 ### Cancel order
 
-`POST /orders/8dc4df25-fd3f-490b-b18e-5a1510a6ca95/cancel` · **Bearer token required** · responds `200`
+`POST /orders/f462abaf-d90b-4274-a271-eedd51aa0184/cancel` · **Bearer token required** · responds `200`
 
 Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunded.
 
@@ -1317,13 +1312,13 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
 
 ```json
 {
-  "id": "8dc4df25-fd3f-490b-b18e-5a1510a6ca95",
-  "orderRef": "ORD-20260927-0014",
+  "id": "f462abaf-d90b-4274-a271-eedd51aa0184",
+  "orderRef": "ORD-20260927-0020",
   "status": "CANCELLED",
   "failureCode": null,
-  "subtotal": 22990000.0,
+  "subtotal": 27990000.0,
   "shippingFee": 0.0,
-  "total": 22990000.0,
+  "total": 27990000.0,
   "paymentMethod": "MOCK_CARD",
   "paymentStatus": "REFUNDED",
   "shippingAddress": {
@@ -1336,22 +1331,22 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
   },
   "items": [
     {
-      "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-      "productName": "iPhone 15 128GB",
-      "unitPrice": 22990000.0,
+      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+      "productName": "MacBook Air M3 13 inch 8GB/256GB",
+      "unitPrice": 27990000.0,
       "quantity": 1,
-      "lineTotal": 22990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB"
+      "lineTotal": 27990000.0,
+      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
     }
   ],
-  "createdAt": "2026-09-27T08:51:52.847747Z"
+  "createdAt": "2026-09-27T10:54:20.730428Z"
 }
 ```
 
 
 ### Cancel — not allowed
 
-`POST /orders/8dc4df25-fd3f-490b-b18e-5a1510a6ca95/cancel` · **Bearer token required** · responds `409`
+`POST /orders/f462abaf-d90b-4274-a271-eedd51aa0184/cancel` · **Bearer token required** · responds `409`
 
 Show the Cancel button only when `status == "CONFIRMED"`.
 
@@ -1359,11 +1354,11 @@ Show the Cancel button only when `status == "CONFIRMED"`.
 
 ```json
 {
-  "timestamp": "2026-09-27T08:51:53.547553801Z",
+  "timestamp": "2026-09-27T10:54:21.458736666Z",
   "status": 409,
   "code": "ORDER_NOT_CANCELLABLE",
   "message": "An order in status CANCELLED cannot be cancelled",
-  "path": "/orders/8dc4df25-fd3f-490b-b18e-5a1510a6ca95/cancel"
+  "path": "/orders/f462abaf-d90b-4274-a271-eedd51aa0184/cancel"
 }
 ```
 

@@ -66,11 +66,27 @@ Internal (called by `order` at checkout):
 ## Seed Data
 
 Delivered as `V2__seed_catalog.sql`. Minimum: **6 categories**, **40 products** spread across
-them, realistic Vietnamese names and VND prices, and generated `placehold.co` images that
-render the product's own name in a colour per category, so no binary assets enter the repo and
-the picture always matches the product. An earlier version used `picsum.photos`, which returns
-an unrelated photograph per seed — a phone illustrated with a mountain. Product UUIDs are **fixed literals**, not
+them, realistic Vietnamese names and VND prices. Product UUIDs are **fixed literals**, not
 generated — `inventory` seeds stock against these same IDs, and the demo script references them.
+
+Images arrived in three passes. `V2` used `picsum.photos`, which returns an unrelated
+photograph per seed, so a phone could be illustrated with a mountain. `V3` replaced those with
+generated `placehold.co` images rendering each product's own name in a colour per category, so
+the picture always matched the product and no binary assets entered the repo. `V4` then
+hotlinks a real photograph from the manufacturer or a retailer that sells the product, for the
+18 of 42 products where the exact model could be confirmed.
+
+Confirming the model is the hard part and the reason for the other 24. The catalogue is
+2023-24 hardware, so shops and manufacturers have since moved to later generations: a search
+for the AirPods Pro 2 page now lands on AirPods Pro 3, and the laptop listings lead with M5
+MacBooks. `V4` therefore accepts a URL only when the source page's own product name carries
+the exact model and the URL returns real image bytes; anything looser silently ships the wrong
+generation. The products that fail that test keep their `V3` placeholder, which at least names
+the product correctly.
+
+These images are hotlinked and remain their publishers' copyright, used here for a
+non-published university demo. They are outside our control, so a URL can rotate or start
+refusing hotlinks, and that image 404s until `V4` is regenerated.
 
 Shared fixed IDs live in `docs/SEED-IDS.md` so catalog and inventory migrations cannot drift.
 

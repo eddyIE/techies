@@ -126,7 +126,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-b5436d@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-aa5826@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -143,7 +143,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"userId\": \"19d494be-402e-48fb-a43d-75d587fae3b5\",\n  \"email\": \"fe-demo-b5436d@techies.vn\"\n}"
+              "body": "{\n  \"userId\": \"288bce39-44ac-42d4-8166-53637bd6f92a\",\n  \"email\": \"fe-demo-aa5826@techies.vn\"\n}"
             },
             {
               "name": "409 Email already exists",
@@ -172,7 +172,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-b5436d@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-aa5826@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -189,7 +189,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T08:51:53.779532009Z\",\n  \"status\": 409,\n  \"code\": \"EMAIL_ALREADY_EXISTS\",\n  \"message\": \"An account with this email already exists\",\n  \"path\": \"/auth/register\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:21.682836666Z\",\n  \"status\": 409,\n  \"code\": \"EMAIL_ALREADY_EXISTS\",\n  \"message\": \"An account with this email already exists\",\n  \"path\": \"/auth/register\"\n}"
             },
             {
               "name": "400 Validation error",
@@ -235,7 +235,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T08:51:53.784109801Z\",\n  \"status\": 400,\n  \"code\": \"VALIDATION_ERROR\",\n  \"message\": \"Request validation failed\",\n  \"path\": \"/auth/register\",\n  \"fieldErrors\": {\n    \"phone\": \"must be 9-11 digits\",\n    \"fullName\": \"must not be blank\",\n    \"email\": \"must be a well-formed email address\"\n  }\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:21.686626916Z\",\n  \"status\": 400,\n  \"code\": \"VALIDATION_ERROR\",\n  \"message\": \"Request validation failed\",\n  \"path\": \"/auth/register\",\n  \"fieldErrors\": {\n    \"phone\": \"must be 9-11 digits\",\n    \"email\": \"must be a well-formed email address\",\n    \"fullName\": \"must not be blank\"\n  }\n}"
             }
           ]
         },
@@ -305,7 +305,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-b5436d@techies.vn\",\n  \"password\": \"password1\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-aa5826@techies.vn\",\n  \"password\": \"password1\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -322,7 +322,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"accessToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxOWQ0OTRiZS00MDJlLTQ4ZmItYTQzZC03NWQ1ODdmYWUzYjUiLCJlbWFpbCI6ImZlLWRlbW8tYjU0MzZkQHRlY2hpZXMudm4iLCJpYXQiOjE3OTA0OTkxMTMsImV4cCI6MTc5MzA5MTExM30.ZudNbAlLS2_KMWow3wDUvcwvbseve5GY2tj029JgYfimv3ntSdQIR8siDCBcp67h\",\n  \"tokenType\": \"Bearer\",\n  \"expiresIn\": 2592000,\n  \"user\": {\n    \"id\": \"19d494be-402e-48fb-a43d-75d587fae3b5\",\n    \"email\": \"fe-demo-b5436d@techies.vn\",\n    \"fullName\": \"Nguyen Van A\",\n    \"phone\": \"0901234567\",\n    \"avatarUrl\": null\n  }\n}"
+              "body": "{\n  \"accessToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIyODhiY2UzOS00NGFjLTQyZDQtODE2Ni01MzYzN2JkNmY5MmEiLCJlbWFpbCI6ImZlLWRlbW8tYWE1ODI2QHRlY2hpZXMudm4iLCJpYXQiOjE3OTA1MDY0NjEsImV4cCI6MTc5MzA5ODQ2MX0.PVMHwCx7FvHRMBi07U-Vh-eXSsFWJblBFP9rub2IGXDs8wSI15I_RcKpHkQS8GZ4\",\n  \"tokenType\": \"Bearer\",\n  \"expiresIn\": 2592000,\n  \"user\": {\n    \"id\": \"288bce39-44ac-42d4-8166-53637bd6f92a\",\n    \"email\": \"fe-demo-aa5826@techies.vn\",\n    \"fullName\": \"Nguyen Van A\",\n    \"phone\": \"0901234567\",\n    \"avatarUrl\": null\n  }\n}"
             },
             {
               "name": "401 Invalid credentials",
@@ -351,7 +351,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-b5436d@techies.vn\",\n  \"password\": \"wrongpassword1\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-aa5826@techies.vn\",\n  \"password\": \"wrongpassword1\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -368,7 +368,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T08:51:53.946670801Z\",\n  \"status\": 401,\n  \"code\": \"INVALID_CREDENTIALS\",\n  \"message\": \"Email or password is incorrect\",\n  \"path\": \"/auth/login\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:21.846060167Z\",\n  \"status\": 401,\n  \"code\": \"INVALID_CREDENTIALS\",\n  \"message\": \"Email or password is incorrect\",\n  \"path\": \"/auth/login\"\n}"
             }
           ],
           "event": [
@@ -454,7 +454,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-b5436d@techies.vn\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-aa5826@techies.vn\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -471,7 +471,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"email\": \"fe-demo-b5436d@techies.vn\",\n  \"exists\": true\n}"
+              "body": "{\n  \"email\": \"fe-demo-aa5826@techies.vn\",\n  \"exists\": true\n}"
             },
             {
               "name": "200 not registered",
@@ -629,7 +629,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"id\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n    \"name\": \"Điện thoại\",\n    \"slug\": \"dien-thoai\",\n    \"imageUrl\": \"https://placehold.co/400x400/1e293b/ffffff/png?text=%C4%90i%E1%BB%87n+tho%E1%BA%A1i\",\n    \"displayOrder\": 1\n  },\n  {\n    \"id\": \"1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b\",\n    \"name\": \"Laptop\",\n    \"slug\": \"laptop\",\n    \"imageUrl\": \"https://placehold.co/400x400/312e81/ffffff/png?text=Laptop\",\n    \"displayOrder\": 2\n  },\n  {\n    \"id\": \"155c3f45-7376-54b8-8fe4-9859afd0cd8e\",\n    \"name\": \"Máy tính bảng\",\n    \"slug\": \"tablet\",\n    \"imageUrl\": \"https://placehold.co/400x400/134e4a/ffffff/png?text=M%C3%A1y+t%C3%ADnh+b%E1%BA%A3ng\",\n    \"displayOrder\": 3\n  },\n  {\n    \"id\": \"3a8e7aee-9455-52a3-be9a-3790e375821a\",\n    \"name\": \"Tai nghe\",\n    \"slug\": \"tai-nghe\",\n    \"imageUrl\": \"https://placehold.co/400x400/7c2d12/ffffff/png?text=Tai+nghe\",\n    \"displayOrder\": 4\n  },\n  {\n    \"id\": \"5e8b4230-0d61-5f2b-a468-5499e8e7331b\",\n    \"name\": \"Đồng hồ thông minh\",\n    \"slug\": \"dong-ho-thong-minh\",\n    \"imageUrl\": \"https://placehold.co/400x400/4a044e/ffffff/png?text=%C4%90%E1%BB%93ng+h%E1%BB%93+th%C3%B4ng+minh\",\n    \"displayOrder\": 5\n  },\n  {\n    \"id\": \"cec6d4cc-9d78-55d8-aaf7-35d3bcf87a9f\",\n    \"name\": \"Phụ kiện\",\n    \"slug\": \"phu-kien\",\n    \"imageUrl\": \"https://placehold.co/400x400/374151/ffffff/png?text=Ph%E1%BB%A5+ki%E1%BB%87n\",\n    \"displayOrder\": 6\n  }\n]"
+              "body": "[\n  {\n    \"id\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n    \"name\": \"Điện thoại\",\n    \"slug\": \"dien-thoai\",\n    \"imageUrl\": \"https://cdn.tgdd.vn/Products/Images/42/305658/iphone-15-pro-max-blue-thumbnew-600x600.jpg\",\n    \"displayOrder\": 1\n  },\n  {\n    \"id\": \"1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b\",\n    \"name\": \"Laptop\",\n    \"slug\": \"laptop\",\n    \"imageUrl\": \"https://www.apple.com/newsroom/images/2023/10/apple-unveils-new-macbook-pro-featuring-m3-chips/article/Apple-MacBook-Pro-top-view-231030_big.jpg.large_2x.jpg\",\n    \"displayOrder\": 2\n  },\n  {\n    \"id\": \"155c3f45-7376-54b8-8fe4-9859afd0cd8e\",\n    \"name\": \"Máy tính bảng\",\n    \"slug\": \"tablet\",\n    \"imageUrl\": \"https://cdn.tgdd.vn/Products/Images/522/325513/ipad-pro-11-inch-m4-wifi-sliver-thumb-600x600.jpg\",\n    \"displayOrder\": 3\n  },\n  {\n    \"id\": \"3a8e7aee-9455-52a3-be9a-3790e375821a\",\n    \"name\": \"Tai nghe\",\n    \"slug\": \"tai-nghe\",\n    \"imageUrl\": \"https://images.ctfassets.net/javen7msabdh/7Jo3yt8L1EKkGWPe8gK8tK/ba408004ee0cd7fc35126aba4ead321a/major-v-cream-front-desktop-1.jpeg?w=1200&fm=jpg&q=85\",\n    \"displayOrder\": 4\n  },\n  {\n    \"id\": \"5e8b4230-0d61-5f2b-a468-5499e8e7331b\",\n    \"name\": \"Đồng hồ thông minh\",\n    \"slug\": \"dong-ho-thong-minh\",\n    \"imageUrl\": \"https://cdn.tgdd.vn/Products/Images/7077/310858/samsung-galaxy-watch6-classic-47-mm-bac-ksp-600x600.jpg\",\n    \"displayOrder\": 5\n  },\n  {\n    \"id\": \"cec6d4cc-9d78-55d8-aaf7-35d3bcf87a9f\",\n    \"name\": \"Phụ kiện\",\n    \"slug\": \"phu-kien\",\n    \"imageUrl\": \"https://cdn.shopify.com/s/files/1/0493/9834/9974/products/A2663111-Anker_715_Charger_Nano_II_65W.png?v=1767756360\",\n    \"displayOrder\": 6\n  }\n]"
             }
           ]
         },
@@ -716,7 +716,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"content\": [\n    {\n      \"id\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"slug\": \"iphone-15-128gb\",\n      \"price\": 22990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    },\n    {\n      \"id\": \"1f8d1d18-6b82-542e-bcca-e7485fe03e0d\",\n      \"name\": \"iPhone 15 Pro Max 256GB\",\n      \"slug\": \"iphone-15-pro-max-256gb\",\n      \"price\": 31990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+Pro+Max+256GB\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 2,\n  \"totalElements\": 40,\n  \"totalPages\": 20\n}"
+              "body": "{\n  \"content\": [\n    {\n      \"id\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"name\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"slug\": \"macbook-air-m3-13\",\n      \"price\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\",\n      \"categoryId\": \"1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b\",\n      \"categoryName\": \"Laptop\"\n    },\n    {\n      \"id\": \"9dc2c272-0914-54de-b46b-62ca7e689523\",\n      \"name\": \"vivo V30e 5G\",\n      \"slug\": \"vivo-v30e\",\n      \"price\": 8990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=vivo+V30e+5G\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 2,\n  \"totalElements\": 40,\n  \"totalPages\": 20\n}"
             }
           ],
           "event": [
@@ -819,7 +819,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"content\": [\n    {\n      \"id\": \"1f8d1d18-6b82-542e-bcca-e7485fe03e0d\",\n      \"name\": \"iPhone 15 Pro Max 256GB\",\n      \"slug\": \"iphone-15-pro-max-256gb\",\n      \"price\": 31990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+Pro+Max+256GB\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    },\n    {\n      \"id\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"slug\": \"iphone-15-128gb\",\n      \"price\": 22990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 2,\n  \"totalElements\": 2,\n  \"totalPages\": 1\n}"
+              "body": "{\n  \"content\": [\n    {\n      \"id\": \"1f8d1d18-6b82-542e-bcca-e7485fe03e0d\",\n      \"name\": \"iPhone 15 Pro Max 256GB\",\n      \"slug\": \"iphone-15-pro-max-256gb\",\n      \"price\": 31990000.0,\n      \"thumbnailUrl\": \"https://cdn.tgdd.vn/Products/Images/42/305658/iphone-15-pro-max-blue-thumbnew-600x600.jpg\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    },\n    {\n      \"id\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"slug\": \"iphone-15-128gb\",\n      \"price\": 22990000.0,\n      \"thumbnailUrl\": \"https://cdn.tgdd.vn/Products/Images/42/281570/iphone-15-xanh-thumb-600x600.jpg\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 2,\n  \"totalElements\": 2,\n  \"totalPages\": 1\n}"
             }
           ]
         },
@@ -868,13 +868,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/products/e0404394-59b0-5044-af93-6a93adc3af39",
+                  "raw": "{{baseUrl}}/products/717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "products",
-                    "e0404394-59b0-5044-af93-6a93adc3af39"
+                    "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a"
                   ]
                 },
                 "description": ""
@@ -888,7 +888,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n  \"name\": \"iPhone 15 128GB\",\n  \"slug\": \"iphone-15-128gb\",\n  \"description\": \"iPhone 15 128GB - hàng chính hãng, bảo hành 12 tháng tại Techies.\",\n  \"price\": 22990000.0,\n  \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\",\n  \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n  \"categoryName\": \"Điện thoại\",\n  \"images\": [\n    \"https://placehold.co/800x800/1e293b/ffffff/png?text=iPhone+15+128GB+%281%2F2%29\",\n    \"https://placehold.co/800x800/1e293b/ffffff/png?text=iPhone+15+128GB+%282%2F2%29\"\n  ]\n}"
+              "body": "{\n  \"id\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n  \"name\": \"MacBook Air M3 13 inch 8GB/256GB\",\n  \"slug\": \"macbook-air-m3-13\",\n  \"description\": \"MacBook Air M3 13 inch 8GB/256GB - hàng chính hãng, bảo hành 12 tháng tại Techies.\",\n  \"price\": 27990000.0,\n  \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\",\n  \"categoryId\": \"1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b\",\n  \"categoryName\": \"Laptop\",\n  \"images\": [\n    \"https://placehold.co/800x800/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB+%281%2F2%29\",\n    \"https://placehold.co/800x800/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB+%282%2F2%29\"\n  ]\n}"
             },
             {
               "name": "404 Not found",
@@ -905,13 +905,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/products/25ba91eb-930a-449e-b665-9aa01e844759",
+                  "raw": "{{baseUrl}}/products/89132d19-d2a6-4026-8054-b88ef77631ab",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "products",
-                    "25ba91eb-930a-449e-b665-9aa01e844759"
+                    "89132d19-d2a6-4026-8054-b88ef77631ab"
                   ]
                 },
                 "description": ""
@@ -925,7 +925,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T08:51:54.034304634Z\",\n  \"status\": 404,\n  \"code\": \"PRODUCT_NOT_FOUND\",\n  \"message\": \"Product not found\",\n  \"path\": \"/products/25ba91eb-930a-449e-b665-9aa01e844759\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:21.942926875Z\",\n  \"status\": 404,\n  \"code\": \"PRODUCT_NOT_FOUND\",\n  \"message\": \"Product not found\",\n  \"path\": \"/products/89132d19-d2a6-4026-8054-b88ef77631ab\"\n}"
             }
           ]
         },
@@ -974,13 +974,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/stock/e0404394-59b0-5044-af93-6a93adc3af39",
+                  "raw": "{{baseUrl}}/stock/717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "stock",
-                    "e0404394-59b0-5044-af93-6a93adc3af39"
+                    "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a"
                   ]
                 },
                 "description": ""
@@ -994,7 +994,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n  \"available\": 87,\n  \"inStock\": true\n}"
+              "body": "{\n  \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n  \"available\": 51,\n  \"inStock\": true\n}"
             }
           ]
         }
@@ -1065,7 +1065,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"19d494be-402e-48fb-a43d-75d587fae3b5\",\n  \"email\": \"fe-demo-b5436d@techies.vn\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\",\n  \"avatarUrl\": null\n}"
+              "body": "{\n  \"id\": \"288bce39-44ac-42d4-8166-53637bd6f92a\",\n  \"email\": \"fe-demo-aa5826@techies.vn\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\",\n  \"avatarUrl\": null\n}"
             },
             {
               "name": "401 No token",
@@ -1102,7 +1102,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T08:51:53.967581218Z\",\n  \"status\": 401,\n  \"code\": \"UNAUTHENTICATED\",\n  \"message\": \"Authentication required\",\n  \"path\": \"/api/users/me\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:21.871113417Z\",\n  \"status\": 401,\n  \"code\": \"UNAUTHENTICATED\",\n  \"message\": \"Authentication required\",\n  \"path\": \"/api/users/me\"\n}"
             }
           ]
         },
@@ -1186,7 +1186,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"19d494be-402e-48fb-a43d-75d587fae3b5\",\n  \"email\": \"fe-demo-b5436d@techies.vn\",\n  \"fullName\": \"Nguyen Van B\",\n  \"phone\": \"0909999999\",\n  \"avatarUrl\": null\n}"
+              "body": "{\n  \"id\": \"288bce39-44ac-42d4-8166-53637bd6f92a\",\n  \"email\": \"fe-demo-aa5826@techies.vn\",\n  \"fullName\": \"Nguyen Van B\",\n  \"phone\": \"0909999999\",\n  \"avatarUrl\": null\n}"
             }
           ]
         },
@@ -1337,7 +1337,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T08:51:53.983115593Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'evil.png')\",\n  \"path\": \"/users/me/avatar\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:21.888510875Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'evil.png')\",\n  \"path\": \"/users/me/avatar\"\n}"
             },
             {
               "name": "400 Unsupported format",
@@ -1375,7 +1375,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T08:51:53.988090551Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'me.gif')\",\n  \"path\": \"/users/me/avatar\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:21.894487042Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'me.gif')\",\n  \"path\": \"/users/me/avatar\"\n}"
             }
           ]
         },
@@ -1500,7 +1500,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"id\": \"c0586dc6-4945-45a8-a219-b0ab0165c714\",\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\",\n    \"isDefault\": true\n  }\n]"
+              "body": "[\n  {\n    \"id\": \"8db31dbf-0b55-464e-8dcf-c9b4698e5556\",\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\",\n    \"isDefault\": true\n  }\n]"
             }
           ]
         },
@@ -1582,7 +1582,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"c0586dc6-4945-45a8-a219-b0ab0165c714\",\n  \"recipientName\": \"Nguyen Van B\",\n  \"phone\": \"0907654321\",\n  \"line1\": \"12 Nguyen Hue\",\n  \"ward\": \"Ben Nghe\",\n  \"district\": \"Quan 1\",\n  \"province\": \"Ho Chi Minh\",\n  \"isDefault\": true\n}"
+              "body": "{\n  \"id\": \"8db31dbf-0b55-464e-8dcf-c9b4698e5556\",\n  \"recipientName\": \"Nguyen Van B\",\n  \"phone\": \"0907654321\",\n  \"line1\": \"12 Nguyen Hue\",\n  \"ward\": \"Ben Nghe\",\n  \"district\": \"Quan 1\",\n  \"province\": \"Ho Chi Minh\",\n  \"isDefault\": true\n}"
             }
           ],
           "event": [
@@ -1704,7 +1704,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"id\": \"24f9fa60-8c5b-4b79-b321-f6a62e6c8c5f\",\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 22990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\",\n      \"available\": 87\n    }\n  ],\n  \"subtotal\": 22990000.0,\n  \"itemCount\": 1\n}"
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"f0ad86f3-3b03-4775-abb5-767850290d98\",\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"name\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\",\n      \"available\": 51\n    }\n  ],\n  \"subtotal\": 27990000.0,\n  \"itemCount\": 1\n}"
             },
             {
               "name": "200 Empty",
@@ -1807,7 +1807,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n  \"quantity\": 2\n}",
+                  "raw": "{\n  \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n  \"quantity\": 2\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1824,7 +1824,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"id\": \"24f9fa60-8c5b-4b79-b321-f6a62e6c8c5f\",\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 2,\n      \"lineTotal\": 45980000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\",\n      \"available\": 87\n    }\n  ],\n  \"subtotal\": 45980000.0,\n  \"itemCount\": 1\n}"
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"f0ad86f3-3b03-4775-abb5-767850290d98\",\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"name\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 2,\n      \"lineTotal\": 55980000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\",\n      \"available\": 51\n    }\n  ],\n  \"subtotal\": 55980000.0,\n  \"itemCount\": 1\n}"
             }
           ],
           "event": [
@@ -1895,14 +1895,14 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/cart/items/24f9fa60-8c5b-4b79-b321-f6a62e6c8c5f",
+                  "raw": "{{baseUrl}}/cart/items/f0ad86f3-3b03-4775-abb5-767850290d98",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "cart",
                     "items",
-                    "24f9fa60-8c5b-4b79-b321-f6a62e6c8c5f"
+                    "f0ad86f3-3b03-4775-abb5-767850290d98"
                   ]
                 },
                 "description": "",
@@ -1925,7 +1925,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"id\": \"24f9fa60-8c5b-4b79-b321-f6a62e6c8c5f\",\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 22990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\",\n      \"available\": 87\n    }\n  ],\n  \"subtotal\": 22990000.0,\n  \"itemCount\": 1\n}"
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"f0ad86f3-3b03-4775-abb5-767850290d98\",\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"name\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\",\n      \"available\": 51\n    }\n  ],\n  \"subtotal\": 27990000.0,\n  \"itemCount\": 1\n}"
             }
           ]
         }
@@ -1995,7 +1995,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"addressId\": \"c0586dc6-4945-45a8-a219-b0ab0165c714\",\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"simulatePayment\": \"SUCCESS\"\n}",
+                  "raw": "{\n  \"addressId\": \"8db31dbf-0b55-464e-8dcf-c9b4698e5556\",\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"simulatePayment\": \"SUCCESS\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2012,7 +2012,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"99bd1ad2-6b3a-4909-b665-a27bdbc5bf20\",\n    \"orderRef\": \"ORD-20260927-0017\",\n    \"status\": \"CONFIRMED\",\n    \"failureCode\": null,\n    \"subtotal\": 22990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 22990000.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"PAID\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n        \"productName\": \"iPhone 15 128GB\",\n        \"unitPrice\": 22990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 22990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\"\n      }\n    ],\n    \"createdAt\": \"2026-09-27T08:51:54.115374Z\"\n  },\n  \"message\": \"Order placed successfully\"\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"8c16d0c4-d204-4eda-ba8b-76a4567e4d50\",\n    \"orderRef\": \"ORD-20260927-0023\",\n    \"status\": \"CONFIRMED\",\n    \"failureCode\": null,\n    \"subtotal\": 27990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 27990000.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"PAID\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n        \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n        \"unitPrice\": 27990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 27990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n      }\n    ],\n    \"createdAt\": \"2026-09-27T10:54:22.019297Z\"\n  },\n  \"message\": \"Order placed successfully\"\n}"
             }
           ],
           "event": [
@@ -2111,7 +2111,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"addressId\": \"c0586dc6-4945-45a8-a219-b0ab0165c714\",\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"simulatePayment\": \"DECLINED\"\n}",
+                  "raw": "{\n  \"addressId\": \"8db31dbf-0b55-464e-8dcf-c9b4698e5556\",\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"simulatePayment\": \"DECLINED\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2128,7 +2128,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"d1528a8b-9bf8-46a2-a3b6-007bfe15096b\",\n    \"orderRef\": \"ORD-20260927-0018\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"PAYMENT_FAILED\",\n    \"subtotal\": 22990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 22990000.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"DECLINED\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n        \"productName\": \"iPhone 15 128GB\",\n        \"unitPrice\": 22990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 22990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\"\n      }\n    ],\n    \"createdAt\": \"2026-09-27T08:51:54.406566Z\"\n  },\n  \"message\": \"Payment was declined, your cart has been kept\"\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"1539149c-5081-417c-885a-6194dedd25ef\",\n    \"orderRef\": \"ORD-20260927-0024\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"PAYMENT_FAILED\",\n    \"subtotal\": 27990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 27990000.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"DECLINED\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n        \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n        \"unitPrice\": 27990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 27990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n      }\n    ],\n    \"createdAt\": \"2026-09-27T10:54:22.293115Z\"\n  },\n  \"message\": \"Payment was declined, your cart has been kept\"\n}"
             }
           ],
           "event": [
@@ -2213,7 +2213,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"addressId\": \"c0586dc6-4945-45a8-a219-b0ab0165c714\",\n  \"paymentMethod\": \"COD\"\n}",
+                  "raw": "{\n  \"addressId\": \"8db31dbf-0b55-464e-8dcf-c9b4698e5556\",\n  \"paymentMethod\": \"COD\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2230,7 +2230,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"624ddae9-9550-494f-80ba-387a63636659\",\n    \"orderRef\": \"ORD-20260927-0019\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"OUT_OF_STOCK\",\n    \"subtotal\": 36980000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 36980000.0,\n    \"paymentMethod\": \"COD\",\n    \"paymentStatus\": \"PENDING\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n        \"productName\": \"iPhone 15 128GB\",\n        \"unitPrice\": 22990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 22990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\"\n      },\n      {\n        \"productId\": \"b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8\",\n        \"productName\": \"MSI Modern 14 C13M\",\n        \"unitPrice\": 13990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 13990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M\"\n      }\n    ],\n    \"createdAt\": \"2026-09-27T08:51:54.729158Z\"\n  },\n  \"message\": \"Some items are no longer in stock\"\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"bca9c017-1884-4827-bc72-18323eba278b\",\n    \"orderRef\": \"ORD-20260927-0025\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"OUT_OF_STOCK\",\n    \"subtotal\": 41980000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 41980000.0,\n    \"paymentMethod\": \"COD\",\n    \"paymentStatus\": \"PENDING\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n        \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n        \"unitPrice\": 27990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 27990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n      },\n      {\n        \"productId\": \"b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8\",\n        \"productName\": \"MSI Modern 14 C13M\",\n        \"unitPrice\": 13990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 13990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M\"\n      }\n    ],\n    \"createdAt\": \"2026-09-27T10:54:22.608285Z\"\n  },\n  \"message\": \"Some items are no longer in stock\"\n}"
             }
           ],
           "event": [
@@ -2389,7 +2389,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"content\": [\n    {\n      \"id\": \"624ddae9-9550-494f-80ba-387a63636659\",\n      \"orderRef\": \"ORD-20260927-0019\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"OUT_OF_STOCK\",\n      \"total\": 36980000.0,\n      \"itemCount\": 2,\n      \"createdAt\": \"2026-09-27T08:51:54.729158Z\"\n    },\n    {\n      \"id\": \"d1528a8b-9bf8-46a2-a3b6-007bfe15096b\",\n      \"orderRef\": \"ORD-20260927-0018\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"PAYMENT_FAILED\",\n      \"total\": 22990000.0,\n      \"itemCount\": 1,\n      \"createdAt\": \"2026-09-27T08:51:54.406566Z\"\n    },\n    {\n      \"id\": \"99bd1ad2-6b3a-4909-b665-a27bdbc5bf20\",\n      \"orderRef\": \"ORD-20260927-0017\",\n      \"status\": \"CONFIRMED\",\n      \"failureCode\": null,\n      \"total\": 22990000.0,\n      \"itemCount\": 1,\n      \"createdAt\": \"2026-09-27T08:51:54.115374Z\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 20,\n  \"totalElements\": 3,\n  \"totalPages\": 1\n}"
+              "body": "{\n  \"content\": [\n    {\n      \"id\": \"bca9c017-1884-4827-bc72-18323eba278b\",\n      \"orderRef\": \"ORD-20260927-0025\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"OUT_OF_STOCK\",\n      \"total\": 41980000.0,\n      \"itemCount\": 2,\n      \"createdAt\": \"2026-09-27T10:54:22.608285Z\"\n    },\n    {\n      \"id\": \"1539149c-5081-417c-885a-6194dedd25ef\",\n      \"orderRef\": \"ORD-20260927-0024\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"PAYMENT_FAILED\",\n      \"total\": 27990000.0,\n      \"itemCount\": 1,\n      \"createdAt\": \"2026-09-27T10:54:22.293115Z\"\n    },\n    {\n      \"id\": \"8c16d0c4-d204-4eda-ba8b-76a4567e4d50\",\n      \"orderRef\": \"ORD-20260927-0023\",\n      \"status\": \"CONFIRMED\",\n      \"failureCode\": null,\n      \"total\": 27990000.0,\n      \"itemCount\": 1,\n      \"createdAt\": \"2026-09-27T10:54:22.019297Z\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 20,\n  \"totalElements\": 3,\n  \"totalPages\": 1\n}"
             }
           ],
           "event": [
@@ -2454,13 +2454,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/99bd1ad2-6b3a-4909-b665-a27bdbc5bf20",
+                  "raw": "{{baseUrl}}/orders/8c16d0c4-d204-4eda-ba8b-76a4567e4d50",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "99bd1ad2-6b3a-4909-b665-a27bdbc5bf20"
+                    "8c16d0c4-d204-4eda-ba8b-76a4567e4d50"
                   ]
                 },
                 "description": ""
@@ -2474,7 +2474,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"99bd1ad2-6b3a-4909-b665-a27bdbc5bf20\",\n  \"orderRef\": \"ORD-20260927-0017\",\n  \"status\": \"CONFIRMED\",\n  \"failureCode\": null,\n  \"subtotal\": 22990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 22990000.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"PAID\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"productName\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 22990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\"\n    }\n  ],\n  \"createdAt\": \"2026-09-27T08:51:54.115374Z\"\n}"
+              "body": "{\n  \"id\": \"8c16d0c4-d204-4eda-ba8b-76a4567e4d50\",\n  \"orderRef\": \"ORD-20260927-0023\",\n  \"status\": \"CONFIRMED\",\n  \"failureCode\": null,\n  \"subtotal\": 27990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 27990000.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"PAID\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n    }\n  ],\n  \"createdAt\": \"2026-09-27T10:54:22.019297Z\"\n}"
             }
           ]
         },
@@ -2521,13 +2521,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/99bd1ad2-6b3a-4909-b665-a27bdbc5bf20/cancel",
+                  "raw": "{{baseUrl}}/orders/8c16d0c4-d204-4eda-ba8b-76a4567e4d50/cancel",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "99bd1ad2-6b3a-4909-b665-a27bdbc5bf20",
+                    "8c16d0c4-d204-4eda-ba8b-76a4567e4d50",
                     "cancel"
                   ]
                 },
@@ -2542,7 +2542,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"99bd1ad2-6b3a-4909-b665-a27bdbc5bf20\",\n  \"orderRef\": \"ORD-20260927-0017\",\n  \"status\": \"CANCELLED\",\n  \"failureCode\": null,\n  \"subtotal\": 22990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 22990000.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"REFUNDED\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"productName\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 22990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\"\n    }\n  ],\n  \"createdAt\": \"2026-09-27T08:51:54.115374Z\"\n}"
+              "body": "{\n  \"id\": \"8c16d0c4-d204-4eda-ba8b-76a4567e4d50\",\n  \"orderRef\": \"ORD-20260927-0023\",\n  \"status\": \"CANCELLED\",\n  \"failureCode\": null,\n  \"subtotal\": 27990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 27990000.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"REFUNDED\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n    }\n  ],\n  \"createdAt\": \"2026-09-27T10:54:22.019297Z\"\n}"
             },
             {
               "name": "409 Not cancellable",
@@ -2559,13 +2559,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/99bd1ad2-6b3a-4909-b665-a27bdbc5bf20/cancel",
+                  "raw": "{{baseUrl}}/orders/8c16d0c4-d204-4eda-ba8b-76a4567e4d50/cancel",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "99bd1ad2-6b3a-4909-b665-a27bdbc5bf20",
+                    "8c16d0c4-d204-4eda-ba8b-76a4567e4d50",
                     "cancel"
                   ]
                 },
@@ -2580,7 +2580,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T08:51:54.792942093Z\",\n  \"status\": 409,\n  \"code\": \"ORDER_NOT_CANCELLABLE\",\n  \"message\": \"An order in status CANCELLED cannot be cancelled\",\n  \"path\": \"/orders/99bd1ad2-6b3a-4909-b665-a27bdbc5bf20/cancel\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:22.662101917Z\",\n  \"status\": 409,\n  \"code\": \"ORDER_NOT_CANCELLABLE\",\n  \"message\": \"An order in status CANCELLED cannot be cancelled\",\n  \"path\": \"/orders/8c16d0c4-d204-4eda-ba8b-76a4567e4d50/cancel\"\n}"
             }
           ]
         }

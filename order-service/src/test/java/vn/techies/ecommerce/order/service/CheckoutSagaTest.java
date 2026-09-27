@@ -268,6 +268,34 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     }
 
     @Test
+    @DisplayName("the product image is snapshotted onto the order line at checkout")
+    void snapshotsProductImage() {
+        fillCart();
+
+        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS));
+        var detail = orderService.detail(order.getId(), userId);
+
+        assertThat(detail.items()).extracting("thumbnailUrl")
+                .containsExactlyInAnyOrder("thumb-a", "thumb-b");
+    }
+
+    @Test
+    @DisplayName("a later catalog image change does not alter an existing order")
+    void orderImagesAreSnapshots() {
+        fillCart();
+        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS));
+
+        // The catalogue replaces its imagery afterwards.
+        given(catalogClient.batch(any())).willReturn(List.of(
+                new CatalogClient.ProductSnapshot(PRODUCT_A, "Sản phẩm A", PRICE_A, "NEW-thumb-a", true),
+                new CatalogClient.ProductSnapshot(PRODUCT_B, "Sản phẩm B", PRICE_B, "NEW-thumb-b", true)));
+
+        assertThat(orderService.detail(order.getId(), userId).items())
+                .extracting("thumbnailUrl")
+                .containsExactlyInAnyOrder("thumb-a", "thumb-b");
+    }
+
+    @Test
     @DisplayName("a later catalog price change does not alter an existing order")
     void orderPricesAreSnapshots() {
         fillCart();

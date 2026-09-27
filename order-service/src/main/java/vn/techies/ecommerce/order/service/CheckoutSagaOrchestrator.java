@@ -204,7 +204,8 @@ public class CheckoutSagaOrchestrator {
 
         for (CartLine line : lines) {
             CatalogClient.ProductSnapshot product = products.get(line.productId());
-            order.addItem(line.productId(), product.name(), product.price(), line.quantity());
+            order.addItem(line.productId(), product.name(), product.price(), line.quantity(),
+                    product.thumbnailUrl());
         }
         return orderWriter.save(order);
     }

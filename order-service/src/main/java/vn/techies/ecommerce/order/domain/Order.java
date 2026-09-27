@@ -91,8 +91,9 @@ public class Order {
         return order;
     }
 
-    public void addItem(UUID productId, String productName, BigDecimal unitPrice, int quantity) {
-        items.add(OrderItem.create(this, productId, productName, unitPrice, quantity));
+    public void addItem(UUID productId, String productName, BigDecimal unitPrice, int quantity,
+                        String thumbnailUrl) {
+        items.add(OrderItem.create(this, productId, productName, unitPrice, quantity, thumbnailUrl));
     }
 
     public void confirm() {

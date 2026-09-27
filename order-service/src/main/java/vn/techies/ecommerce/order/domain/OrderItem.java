@@ -44,8 +44,12 @@ public class OrderItem {
     @Column(name = "line_total", nullable = false, precision = 19, scale = 2)
     private BigDecimal lineTotal;
 
+    /** Snapshot, like the name and price. Null on orders placed before this was stored. */
+    @Column(name = "thumbnail_url", length = 500)
+    private String thumbnailUrl;
+
     static OrderItem create(Order order, UUID productId, String productName,
-                            BigDecimal unitPrice, int quantity) {
+                            BigDecimal unitPrice, int quantity, String thumbnailUrl) {
         OrderItem item = new OrderItem();
         item.id = UUID.randomUUID();
         item.order = order;
@@ -54,6 +58,7 @@ public class OrderItem {
         item.unitPrice = unitPrice;
         item.quantity = quantity;
         item.lineTotal = unitPrice.multiply(BigDecimal.valueOf(quantity));
+        item.thumbnailUrl = thumbnailUrl;
         return item;
     }
 }

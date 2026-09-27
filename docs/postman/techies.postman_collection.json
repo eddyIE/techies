@@ -126,7 +126,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-0ceadc@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-5ff6ee@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -143,7 +143,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"userId\": \"cf81bbde-af7c-4fd8-a9b1-362b9b0fa1d9\",\n  \"email\": \"fe-demo-0ceadc@techies.vn\"\n}"
+              "body": "{\n  \"userId\": \"b1caedc0-495a-46bf-a706-92ba1fc2fad3\",\n  \"email\": \"fe-demo-5ff6ee@techies.vn\"\n}"
             },
             {
               "name": "409 Email already exists",
@@ -172,7 +172,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-0ceadc@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-5ff6ee@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -189,7 +189,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-26T11:18:08.572333425Z\",\n  \"status\": 409,\n  \"code\": \"EMAIL_ALREADY_EXISTS\",\n  \"message\": \"An account with this email already exists\",\n  \"path\": \"/auth/register\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T08:02:48.136000757Z\",\n  \"status\": 409,\n  \"code\": \"EMAIL_ALREADY_EXISTS\",\n  \"message\": \"An account with this email already exists\",\n  \"path\": \"/auth/register\"\n}"
             },
             {
               "name": "400 Validation error",
@@ -235,7 +235,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-26T11:18:08.578459050Z\",\n  \"status\": 400,\n  \"code\": \"VALIDATION_ERROR\",\n  \"message\": \"Request validation failed\",\n  \"path\": \"/auth/register\",\n  \"fieldErrors\": {\n    \"fullName\": \"must not be blank\",\n    \"phone\": \"must be 9-11 digits\",\n    \"email\": \"must be a well-formed email address\"\n  }\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T08:02:48.143110465Z\",\n  \"status\": 400,\n  \"code\": \"VALIDATION_ERROR\",\n  \"message\": \"Request validation failed\",\n  \"path\": \"/auth/register\",\n  \"fieldErrors\": {\n    \"phone\": \"must be 9-11 digits\",\n    \"fullName\": \"must not be blank\",\n    \"email\": \"must be a well-formed email address\"\n  }\n}"
             }
           ]
         },
@@ -305,7 +305,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-0ceadc@techies.vn\",\n  \"password\": \"password1\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-5ff6ee@techies.vn\",\n  \"password\": \"password1\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -322,7 +322,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"accessToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJjZjgxYmJkZS1hZjdjLTRmZDgtYTliMS0zNjJiOWIwZmExZDkiLCJlbWFpbCI6ImZlLWRlbW8tMGNlYWRjQHRlY2hpZXMudm4iLCJpYXQiOjE3OTA0MjE0ODgsImV4cCI6MTc5MzAxMzQ4OH0.noPmFyR5bDVWZHrqfvGUUE7G4b4iH_yRa6W7tAIPAnP1G_ykSvLCzktDDM_Uawk5\",\n  \"tokenType\": \"Bearer\",\n  \"expiresIn\": 2592000,\n  \"user\": {\n    \"id\": \"cf81bbde-af7c-4fd8-a9b1-362b9b0fa1d9\",\n    \"email\": \"fe-demo-0ceadc@techies.vn\",\n    \"fullName\": \"Nguyen Van A\",\n    \"phone\": \"0901234567\",\n    \"avatarUrl\": null\n  }\n}"
+              "body": "{\n  \"accessToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJiMWNhZWRjMC00OTVhLTQ2YmYtYTcwNi05MmJhMWZjMmZhZDMiLCJlbWFpbCI6ImZlLWRlbW8tNWZmNmVlQHRlY2hpZXMudm4iLCJpYXQiOjE3OTA0OTYxNjgsImV4cCI6MTc5MzA4ODE2OH0.SAXytd6Vg6e0ShgJUs6SVBbp_SoccRhizwiRIZ0yE7IxHzmzRcyX5YWVVHN75pna\",\n  \"tokenType\": \"Bearer\",\n  \"expiresIn\": 2592000,\n  \"user\": {\n    \"id\": \"b1caedc0-495a-46bf-a706-92ba1fc2fad3\",\n    \"email\": \"fe-demo-5ff6ee@techies.vn\",\n    \"fullName\": \"Nguyen Van A\",\n    \"phone\": \"0901234567\",\n    \"avatarUrl\": null\n  }\n}"
             },
             {
               "name": "401 Invalid credentials",
@@ -351,7 +351,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-0ceadc@techies.vn\",\n  \"password\": \"wrongpassword1\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-5ff6ee@techies.vn\",\n  \"password\": \"wrongpassword1\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -368,7 +368,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-26T11:18:08.742895717Z\",\n  \"status\": 401,\n  \"code\": \"INVALID_CREDENTIALS\",\n  \"message\": \"Email or password is incorrect\",\n  \"path\": \"/auth/login\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T08:02:48.311920007Z\",\n  \"status\": 401,\n  \"code\": \"INVALID_CREDENTIALS\",\n  \"message\": \"Email or password is incorrect\",\n  \"path\": \"/auth/login\"\n}"
             }
           ],
           "event": [
@@ -454,7 +454,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-0ceadc@techies.vn\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-5ff6ee@techies.vn\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -471,7 +471,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"email\": \"fe-demo-0ceadc@techies.vn\",\n  \"exists\": true\n}"
+              "body": "{\n  \"email\": \"fe-demo-5ff6ee@techies.vn\",\n  \"exists\": true\n}"
             },
             {
               "name": "200 not registered",
@@ -629,7 +629,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"id\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n    \"name\": \"Điện thoại\",\n    \"slug\": \"dien-thoai\",\n    \"imageUrl\": \"https://picsum.photos/seed/dien-thoai/400\",\n    \"displayOrder\": 1\n  },\n  {\n    \"id\": \"1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b\",\n    \"name\": \"Laptop\",\n    \"slug\": \"laptop\",\n    \"imageUrl\": \"https://picsum.photos/seed/laptop/400\",\n    \"displayOrder\": 2\n  },\n  {\n    \"id\": \"155c3f45-7376-54b8-8fe4-9859afd0cd8e\",\n    \"name\": \"Máy tính bảng\",\n    \"slug\": \"tablet\",\n    \"imageUrl\": \"https://picsum.photos/seed/tablet/400\",\n    \"displayOrder\": 3\n  },\n  {\n    \"id\": \"3a8e7aee-9455-52a3-be9a-3790e375821a\",\n    \"name\": \"Tai nghe\",\n    \"slug\": \"tai-nghe\",\n    \"imageUrl\": \"https://picsum.photos/seed/tai-nghe/400\",\n    \"displayOrder\": 4\n  },\n  {\n    \"id\": \"5e8b4230-0d61-5f2b-a468-5499e8e7331b\",\n    \"name\": \"Đồng hồ thông minh\",\n    \"slug\": \"dong-ho-thong-minh\",\n    \"imageUrl\": \"https://picsum.photos/seed/dong-ho-thong-minh/400\",\n    \"displayOrder\": 5\n  },\n  {\n    \"id\": \"cec6d4cc-9d78-55d8-aaf7-35d3bcf87a9f\",\n    \"name\": \"Phụ kiện\",\n    \"slug\": \"phu-kien\",\n    \"imageUrl\": \"https://picsum.photos/seed/phu-kien/400\",\n    \"displayOrder\": 6\n  }\n]"
+              "body": "[\n  {\n    \"id\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n    \"name\": \"Điện thoại\",\n    \"slug\": \"dien-thoai\",\n    \"imageUrl\": \"https://placehold.co/400x400/1e293b/ffffff/png?text=%C4%90i%E1%BB%87n+tho%E1%BA%A1i\",\n    \"displayOrder\": 1\n  },\n  {\n    \"id\": \"1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b\",\n    \"name\": \"Laptop\",\n    \"slug\": \"laptop\",\n    \"imageUrl\": \"https://placehold.co/400x400/312e81/ffffff/png?text=Laptop\",\n    \"displayOrder\": 2\n  },\n  {\n    \"id\": \"155c3f45-7376-54b8-8fe4-9859afd0cd8e\",\n    \"name\": \"Máy tính bảng\",\n    \"slug\": \"tablet\",\n    \"imageUrl\": \"https://placehold.co/400x400/134e4a/ffffff/png?text=M%C3%A1y+t%C3%ADnh+b%E1%BA%A3ng\",\n    \"displayOrder\": 3\n  },\n  {\n    \"id\": \"3a8e7aee-9455-52a3-be9a-3790e375821a\",\n    \"name\": \"Tai nghe\",\n    \"slug\": \"tai-nghe\",\n    \"imageUrl\": \"https://placehold.co/400x400/7c2d12/ffffff/png?text=Tai+nghe\",\n    \"displayOrder\": 4\n  },\n  {\n    \"id\": \"5e8b4230-0d61-5f2b-a468-5499e8e7331b\",\n    \"name\": \"Đồng hồ thông minh\",\n    \"slug\": \"dong-ho-thong-minh\",\n    \"imageUrl\": \"https://placehold.co/400x400/4a044e/ffffff/png?text=%C4%90%E1%BB%93ng+h%E1%BB%93+th%C3%B4ng+minh\",\n    \"displayOrder\": 5\n  },\n  {\n    \"id\": \"cec6d4cc-9d78-55d8-aaf7-35d3bcf87a9f\",\n    \"name\": \"Phụ kiện\",\n    \"slug\": \"phu-kien\",\n    \"imageUrl\": \"https://placehold.co/400x400/374151/ffffff/png?text=Ph%E1%BB%A5+ki%E1%BB%87n\",\n    \"displayOrder\": 6\n  }\n]"
             }
           ]
         },
@@ -716,7 +716,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"content\": [\n    {\n      \"id\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"slug\": \"iphone-15-128gb\",\n      \"price\": 22990000.0,\n      \"thumbnailUrl\": \"https://picsum.photos/seed/iphone-15-128gb/600\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    },\n    {\n      \"id\": \"1f8d1d18-6b82-542e-bcca-e7485fe03e0d\",\n      \"name\": \"iPhone 15 Pro Max 256GB\",\n      \"slug\": \"iphone-15-pro-max-256gb\",\n      \"price\": 31990000.0,\n      \"thumbnailUrl\": \"https://picsum.photos/seed/iphone-15-pro-max-256gb/600\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 2,\n  \"totalElements\": 40,\n  \"totalPages\": 20\n}"
+              "body": "{\n  \"content\": [\n    {\n      \"id\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"slug\": \"iphone-15-128gb\",\n      \"price\": 22990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    },\n    {\n      \"id\": \"1f8d1d18-6b82-542e-bcca-e7485fe03e0d\",\n      \"name\": \"iPhone 15 Pro Max 256GB\",\n      \"slug\": \"iphone-15-pro-max-256gb\",\n      \"price\": 31990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+Pro+Max+256GB\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 2,\n  \"totalElements\": 40,\n  \"totalPages\": 20\n}"
             }
           ],
           "event": [
@@ -819,7 +819,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"content\": [\n    {\n      \"id\": \"1f8d1d18-6b82-542e-bcca-e7485fe03e0d\",\n      \"name\": \"iPhone 15 Pro Max 256GB\",\n      \"slug\": \"iphone-15-pro-max-256gb\",\n      \"price\": 31990000.0,\n      \"thumbnailUrl\": \"https://picsum.photos/seed/iphone-15-pro-max-256gb/600\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    },\n    {\n      \"id\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"slug\": \"iphone-15-128gb\",\n      \"price\": 22990000.0,\n      \"thumbnailUrl\": \"https://picsum.photos/seed/iphone-15-128gb/600\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 2,\n  \"totalElements\": 2,\n  \"totalPages\": 1\n}"
+              "body": "{\n  \"content\": [\n    {\n      \"id\": \"1f8d1d18-6b82-542e-bcca-e7485fe03e0d\",\n      \"name\": \"iPhone 15 Pro Max 256GB\",\n      \"slug\": \"iphone-15-pro-max-256gb\",\n      \"price\": 31990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+Pro+Max+256GB\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    },\n    {\n      \"id\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"slug\": \"iphone-15-128gb\",\n      \"price\": 22990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\",\n      \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n      \"categoryName\": \"Điện thoại\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 2,\n  \"totalElements\": 2,\n  \"totalPages\": 1\n}"
             }
           ]
         },
@@ -888,7 +888,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n  \"name\": \"iPhone 15 128GB\",\n  \"slug\": \"iphone-15-128gb\",\n  \"description\": \"iPhone 15 128GB - hàng chính hãng, bảo hành 12 tháng tại Techies.\",\n  \"price\": 22990000.0,\n  \"thumbnailUrl\": \"https://picsum.photos/seed/iphone-15-128gb/600\",\n  \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n  \"categoryName\": \"Điện thoại\",\n  \"images\": [\n    \"https://picsum.photos/seed/iphone-15-128gb-1/800\",\n    \"https://picsum.photos/seed/iphone-15-128gb-2/800\"\n  ]\n}"
+              "body": "{\n  \"id\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n  \"name\": \"iPhone 15 128GB\",\n  \"slug\": \"iphone-15-128gb\",\n  \"description\": \"iPhone 15 128GB - hàng chính hãng, bảo hành 12 tháng tại Techies.\",\n  \"price\": 22990000.0,\n  \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\",\n  \"categoryId\": \"621a9347-0b52-58d5-ba30-9c524079231d\",\n  \"categoryName\": \"Điện thoại\",\n  \"images\": [\n    \"https://placehold.co/800x800/1e293b/ffffff/png?text=iPhone+15+128GB+%281%2F2%29\",\n    \"https://placehold.co/800x800/1e293b/ffffff/png?text=iPhone+15+128GB+%282%2F2%29\"\n  ]\n}"
             },
             {
               "name": "404 Not found",
@@ -905,13 +905,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/products/f1578af2-167a-478b-8a05-4597f7bdd284",
+                  "raw": "{{baseUrl}}/products/f880de7c-6fb1-4939-ba37-f3e6d1e026ac",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "products",
-                    "f1578af2-167a-478b-8a05-4597f7bdd284"
+                    "f880de7c-6fb1-4939-ba37-f3e6d1e026ac"
                   ]
                 },
                 "description": ""
@@ -925,7 +925,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-26T11:18:08.858646842Z\",\n  \"status\": 404,\n  \"code\": \"PRODUCT_NOT_FOUND\",\n  \"message\": \"Product not found\",\n  \"path\": \"/products/f1578af2-167a-478b-8a05-4597f7bdd284\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T08:02:48.458842465Z\",\n  \"status\": 404,\n  \"code\": \"PRODUCT_NOT_FOUND\",\n  \"message\": \"Product not found\",\n  \"path\": \"/products/f880de7c-6fb1-4939-ba37-f3e6d1e026ac\"\n}"
             }
           ]
         },
@@ -1065,7 +1065,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"cf81bbde-af7c-4fd8-a9b1-362b9b0fa1d9\",\n  \"email\": \"fe-demo-0ceadc@techies.vn\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\",\n  \"avatarUrl\": null\n}"
+              "body": "{\n  \"id\": \"b1caedc0-495a-46bf-a706-92ba1fc2fad3\",\n  \"email\": \"fe-demo-5ff6ee@techies.vn\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\",\n  \"avatarUrl\": null\n}"
             },
             {
               "name": "401 No token",
@@ -1102,7 +1102,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-26T11:18:08.775232259Z\",\n  \"status\": 401,\n  \"code\": \"UNAUTHENTICATED\",\n  \"message\": \"Authentication required\",\n  \"path\": \"/api/users/me\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T08:02:48.346351132Z\",\n  \"status\": 401,\n  \"code\": \"UNAUTHENTICATED\",\n  \"message\": \"Authentication required\",\n  \"path\": \"/api/users/me\"\n}"
             }
           ]
         },
@@ -1186,7 +1186,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"cf81bbde-af7c-4fd8-a9b1-362b9b0fa1d9\",\n  \"email\": \"fe-demo-0ceadc@techies.vn\",\n  \"fullName\": \"Nguyen Van B\",\n  \"phone\": \"0909999999\",\n  \"avatarUrl\": null\n}"
+              "body": "{\n  \"id\": \"b1caedc0-495a-46bf-a706-92ba1fc2fad3\",\n  \"email\": \"fe-demo-5ff6ee@techies.vn\",\n  \"fullName\": \"Nguyen Van B\",\n  \"phone\": \"0909999999\",\n  \"avatarUrl\": null\n}"
             }
           ]
         },
@@ -1337,7 +1337,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-26T11:18:08.797314884Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'evil.png')\",\n  \"path\": \"/users/me/avatar\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T08:02:48.373218882Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'evil.png')\",\n  \"path\": \"/users/me/avatar\"\n}"
             },
             {
               "name": "400 Unsupported format",
@@ -1375,7 +1375,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-26T11:18:08.804608134Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'me.gif')\",\n  \"path\": \"/users/me/avatar\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T08:02:48.379512424Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'me.gif')\",\n  \"path\": \"/users/me/avatar\"\n}"
             }
           ]
         },
@@ -1500,7 +1500,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"id\": \"cab9e339-1ef9-4c50-a938-cd965d731165\",\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\",\n    \"isDefault\": true\n  }\n]"
+              "body": "[\n  {\n    \"id\": \"fb5fe2e8-2018-437b-a41e-92dc86c94aa4\",\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\",\n    \"isDefault\": true\n  }\n]"
             }
           ]
         },
@@ -1582,7 +1582,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"cab9e339-1ef9-4c50-a938-cd965d731165\",\n  \"recipientName\": \"Nguyen Van B\",\n  \"phone\": \"0907654321\",\n  \"line1\": \"12 Nguyen Hue\",\n  \"ward\": \"Ben Nghe\",\n  \"district\": \"Quan 1\",\n  \"province\": \"Ho Chi Minh\",\n  \"isDefault\": true\n}"
+              "body": "{\n  \"id\": \"fb5fe2e8-2018-437b-a41e-92dc86c94aa4\",\n  \"recipientName\": \"Nguyen Van B\",\n  \"phone\": \"0907654321\",\n  \"line1\": \"12 Nguyen Hue\",\n  \"ward\": \"Ben Nghe\",\n  \"district\": \"Quan 1\",\n  \"province\": \"Ho Chi Minh\",\n  \"isDefault\": true\n}"
             }
           ],
           "event": [
@@ -1704,7 +1704,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"id\": \"867f5b1b-63b0-4a7f-9f96-ad58b0a68650\",\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 22990000.0,\n      \"thumbnailUrl\": \"https://picsum.photos/seed/iphone-15-128gb/600\",\n      \"available\": 90\n    }\n  ],\n  \"subtotal\": 22990000.0,\n  \"itemCount\": 1\n}"
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"efe71144-828c-45b6-8e11-863b090bec57\",\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 22990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\",\n      \"available\": 90\n    }\n  ],\n  \"subtotal\": 22990000.0,\n  \"itemCount\": 1\n}"
             },
             {
               "name": "200 Empty",
@@ -1824,7 +1824,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"id\": \"867f5b1b-63b0-4a7f-9f96-ad58b0a68650\",\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 2,\n      \"lineTotal\": 45980000.0,\n      \"thumbnailUrl\": \"https://picsum.photos/seed/iphone-15-128gb/600\",\n      \"available\": 90\n    }\n  ],\n  \"subtotal\": 45980000.0,\n  \"itemCount\": 1\n}"
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"efe71144-828c-45b6-8e11-863b090bec57\",\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 2,\n      \"lineTotal\": 45980000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\",\n      \"available\": 90\n    }\n  ],\n  \"subtotal\": 45980000.0,\n  \"itemCount\": 1\n}"
             }
           ],
           "event": [
@@ -1895,14 +1895,14 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/cart/items/867f5b1b-63b0-4a7f-9f96-ad58b0a68650",
+                  "raw": "{{baseUrl}}/cart/items/efe71144-828c-45b6-8e11-863b090bec57",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "cart",
                     "items",
-                    "867f5b1b-63b0-4a7f-9f96-ad58b0a68650"
+                    "efe71144-828c-45b6-8e11-863b090bec57"
                   ]
                 },
                 "description": "",
@@ -1925,7 +1925,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"id\": \"867f5b1b-63b0-4a7f-9f96-ad58b0a68650\",\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 22990000.0,\n      \"thumbnailUrl\": \"https://picsum.photos/seed/iphone-15-128gb/600\",\n      \"available\": 90\n    }\n  ],\n  \"subtotal\": 22990000.0,\n  \"itemCount\": 1\n}"
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"efe71144-828c-45b6-8e11-863b090bec57\",\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"name\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 22990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\",\n      \"available\": 90\n    }\n  ],\n  \"subtotal\": 22990000.0,\n  \"itemCount\": 1\n}"
             }
           ]
         }
@@ -1995,7 +1995,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"addressId\": \"cab9e339-1ef9-4c50-a938-cd965d731165\",\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"simulatePayment\": \"SUCCESS\"\n}",
+                  "raw": "{\n  \"addressId\": \"fb5fe2e8-2018-437b-a41e-92dc86c94aa4\",\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"simulatePayment\": \"SUCCESS\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2012,7 +2012,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"91b01d23-4a4e-4b8e-b84a-9f7845bfc4e1\",\n    \"orderRef\": \"ORD-20260926-0023\",\n    \"status\": \"CONFIRMED\",\n    \"failureCode\": null,\n    \"subtotal\": 22990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 22990000.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"PAID\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n        \"productName\": \"iPhone 15 128GB\",\n        \"unitPrice\": 22990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 22990000.0\n      }\n    ],\n    \"createdAt\": \"2026-09-26T11:18:08.983927Z\"\n  },\n  \"message\": \"Order placed successfully\"\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"ec2ee8da-0831-4c2c-b621-2cf5039494d8\",\n    \"orderRef\": \"ORD-20260927-0005\",\n    \"status\": \"CONFIRMED\",\n    \"failureCode\": null,\n    \"subtotal\": 22990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 22990000.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"PAID\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n        \"productName\": \"iPhone 15 128GB\",\n        \"unitPrice\": 22990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 22990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\"\n      }\n    ],\n    \"createdAt\": \"2026-09-27T08:02:48.585588Z\"\n  },\n  \"message\": \"Order placed successfully\"\n}"
             }
           ],
           "event": [
@@ -2111,7 +2111,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"addressId\": \"cab9e339-1ef9-4c50-a938-cd965d731165\",\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"simulatePayment\": \"DECLINED\"\n}",
+                  "raw": "{\n  \"addressId\": \"fb5fe2e8-2018-437b-a41e-92dc86c94aa4\",\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"simulatePayment\": \"DECLINED\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2128,7 +2128,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"daf1746c-510b-4750-b867-5a442a0f7fb3\",\n    \"orderRef\": \"ORD-20260926-0024\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"PAYMENT_FAILED\",\n    \"subtotal\": 22990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 22990000.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"DECLINED\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n        \"productName\": \"iPhone 15 128GB\",\n        \"unitPrice\": 22990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 22990000.0\n      }\n    ],\n    \"createdAt\": \"2026-09-26T11:18:09.271342Z\"\n  },\n  \"message\": \"Payment was declined, your cart has been kept\"\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"13b49ddd-a871-4416-b2a7-769823a691ac\",\n    \"orderRef\": \"ORD-20260927-0006\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"PAYMENT_FAILED\",\n    \"subtotal\": 22990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 22990000.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"DECLINED\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n        \"productName\": \"iPhone 15 128GB\",\n        \"unitPrice\": 22990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 22990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\"\n      }\n    ],\n    \"createdAt\": \"2026-09-27T08:02:48.931623Z\"\n  },\n  \"message\": \"Payment was declined, your cart has been kept\"\n}"
             }
           ],
           "event": [
@@ -2213,7 +2213,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"addressId\": \"cab9e339-1ef9-4c50-a938-cd965d731165\",\n  \"paymentMethod\": \"COD\"\n}",
+                  "raw": "{\n  \"addressId\": \"fb5fe2e8-2018-437b-a41e-92dc86c94aa4\",\n  \"paymentMethod\": \"COD\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2230,7 +2230,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"cd8c6a5f-1e9c-4c74-b77a-c440530e0cf3\",\n    \"orderRef\": \"ORD-20260926-0025\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"OUT_OF_STOCK\",\n    \"subtotal\": 36980000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 36980000.0,\n    \"paymentMethod\": \"COD\",\n    \"paymentStatus\": \"PENDING\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n        \"productName\": \"iPhone 15 128GB\",\n        \"unitPrice\": 22990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 22990000.0\n      },\n      {\n        \"productId\": \"b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8\",\n        \"productName\": \"MSI Modern 14 C13M\",\n        \"unitPrice\": 13990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 13990000.0\n      }\n    ],\n    \"createdAt\": \"2026-09-26T11:18:09.590029Z\"\n  },\n  \"message\": \"Some items are no longer in stock\"\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"d5ac7e4e-674f-4cc8-8ae2-6dd14630dd10\",\n    \"orderRef\": \"ORD-20260927-0007\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"OUT_OF_STOCK\",\n    \"subtotal\": 36980000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 36980000.0,\n    \"paymentMethod\": \"COD\",\n    \"paymentStatus\": \"PENDING\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n        \"productName\": \"iPhone 15 128GB\",\n        \"unitPrice\": 22990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 22990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\"\n      },\n      {\n        \"productId\": \"b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8\",\n        \"productName\": \"MSI Modern 14 C13M\",\n        \"unitPrice\": 13990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 13990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M\"\n      }\n    ],\n    \"createdAt\": \"2026-09-27T08:02:49.264863Z\"\n  },\n  \"message\": \"Some items are no longer in stock\"\n}"
             }
           ],
           "event": [
@@ -2389,7 +2389,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"content\": [\n    {\n      \"id\": \"cd8c6a5f-1e9c-4c74-b77a-c440530e0cf3\",\n      \"orderRef\": \"ORD-20260926-0025\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"OUT_OF_STOCK\",\n      \"total\": 36980000.0,\n      \"itemCount\": 2,\n      \"createdAt\": \"2026-09-26T11:18:09.590029Z\"\n    },\n    {\n      \"id\": \"daf1746c-510b-4750-b867-5a442a0f7fb3\",\n      \"orderRef\": \"ORD-20260926-0024\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"PAYMENT_FAILED\",\n      \"total\": 22990000.0,\n      \"itemCount\": 1,\n      \"createdAt\": \"2026-09-26T11:18:09.271342Z\"\n    },\n    {\n      \"id\": \"91b01d23-4a4e-4b8e-b84a-9f7845bfc4e1\",\n      \"orderRef\": \"ORD-20260926-0023\",\n      \"status\": \"CONFIRMED\",\n      \"failureCode\": null,\n      \"total\": 22990000.0,\n      \"itemCount\": 1,\n      \"createdAt\": \"2026-09-26T11:18:08.983927Z\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 20,\n  \"totalElements\": 3,\n  \"totalPages\": 1\n}"
+              "body": "{\n  \"content\": [\n    {\n      \"id\": \"d5ac7e4e-674f-4cc8-8ae2-6dd14630dd10\",\n      \"orderRef\": \"ORD-20260927-0007\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"OUT_OF_STOCK\",\n      \"total\": 36980000.0,\n      \"itemCount\": 2,\n      \"createdAt\": \"2026-09-27T08:02:49.264863Z\"\n    },\n    {\n      \"id\": \"13b49ddd-a871-4416-b2a7-769823a691ac\",\n      \"orderRef\": \"ORD-20260927-0006\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"PAYMENT_FAILED\",\n      \"total\": 22990000.0,\n      \"itemCount\": 1,\n      \"createdAt\": \"2026-09-27T08:02:48.931623Z\"\n    },\n    {\n      \"id\": \"ec2ee8da-0831-4c2c-b621-2cf5039494d8\",\n      \"orderRef\": \"ORD-20260927-0005\",\n      \"status\": \"CONFIRMED\",\n      \"failureCode\": null,\n      \"total\": 22990000.0,\n      \"itemCount\": 1,\n      \"createdAt\": \"2026-09-27T08:02:48.585588Z\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 20,\n  \"totalElements\": 3,\n  \"totalPages\": 1\n}"
             }
           ],
           "event": [
@@ -2454,13 +2454,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/91b01d23-4a4e-4b8e-b84a-9f7845bfc4e1",
+                  "raw": "{{baseUrl}}/orders/ec2ee8da-0831-4c2c-b621-2cf5039494d8",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "91b01d23-4a4e-4b8e-b84a-9f7845bfc4e1"
+                    "ec2ee8da-0831-4c2c-b621-2cf5039494d8"
                   ]
                 },
                 "description": ""
@@ -2474,7 +2474,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"91b01d23-4a4e-4b8e-b84a-9f7845bfc4e1\",\n  \"orderRef\": \"ORD-20260926-0023\",\n  \"status\": \"CONFIRMED\",\n  \"failureCode\": null,\n  \"subtotal\": 22990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 22990000.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"PAID\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"productName\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 22990000.0\n    }\n  ],\n  \"createdAt\": \"2026-09-26T11:18:08.983927Z\"\n}"
+              "body": "{\n  \"id\": \"ec2ee8da-0831-4c2c-b621-2cf5039494d8\",\n  \"orderRef\": \"ORD-20260927-0005\",\n  \"status\": \"CONFIRMED\",\n  \"failureCode\": null,\n  \"subtotal\": 22990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 22990000.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"PAID\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"productName\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 22990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\"\n    }\n  ],\n  \"createdAt\": \"2026-09-27T08:02:48.585588Z\"\n}"
             }
           ]
         },
@@ -2521,13 +2521,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/91b01d23-4a4e-4b8e-b84a-9f7845bfc4e1/cancel",
+                  "raw": "{{baseUrl}}/orders/ec2ee8da-0831-4c2c-b621-2cf5039494d8/cancel",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "91b01d23-4a4e-4b8e-b84a-9f7845bfc4e1",
+                    "ec2ee8da-0831-4c2c-b621-2cf5039494d8",
                     "cancel"
                   ]
                 },
@@ -2542,7 +2542,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"91b01d23-4a4e-4b8e-b84a-9f7845bfc4e1\",\n  \"orderRef\": \"ORD-20260926-0023\",\n  \"status\": \"CANCELLED\",\n  \"failureCode\": null,\n  \"subtotal\": 22990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 22990000.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"REFUNDED\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"productName\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 22990000.0\n    }\n  ],\n  \"createdAt\": \"2026-09-26T11:18:08.983927Z\"\n}"
+              "body": "{\n  \"id\": \"ec2ee8da-0831-4c2c-b621-2cf5039494d8\",\n  \"orderRef\": \"ORD-20260927-0005\",\n  \"status\": \"CANCELLED\",\n  \"failureCode\": null,\n  \"subtotal\": 22990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 22990000.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"REFUNDED\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"productId\": \"e0404394-59b0-5044-af93-6a93adc3af39\",\n      \"productName\": \"iPhone 15 128GB\",\n      \"unitPrice\": 22990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 22990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB\"\n    }\n  ],\n  \"createdAt\": \"2026-09-27T08:02:48.585588Z\"\n}"
             },
             {
               "name": "409 Not cancellable",
@@ -2559,13 +2559,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/91b01d23-4a4e-4b8e-b84a-9f7845bfc4e1/cancel",
+                  "raw": "{{baseUrl}}/orders/ec2ee8da-0831-4c2c-b621-2cf5039494d8/cancel",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "91b01d23-4a4e-4b8e-b84a-9f7845bfc4e1",
+                    "ec2ee8da-0831-4c2c-b621-2cf5039494d8",
                     "cancel"
                   ]
                 },
@@ -2580,7 +2580,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-26T11:18:09.650520467Z\",\n  \"status\": 409,\n  \"code\": \"ORDER_NOT_CANCELLABLE\",\n  \"message\": \"An order in status CANCELLED cannot be cancelled\",\n  \"path\": \"/orders/91b01d23-4a4e-4b8e-b84a-9f7845bfc4e1/cancel\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-27T08:02:49.352887424Z\",\n  \"status\": 409,\n  \"code\": \"ORDER_NOT_CANCELLABLE\",\n  \"message\": \"An order in status CANCELLED cannot be cancelled\",\n  \"path\": \"/orders/ec2ee8da-0831-4c2c-b621-2cf5039494d8/cancel\"\n}"
             }
           ]
         }

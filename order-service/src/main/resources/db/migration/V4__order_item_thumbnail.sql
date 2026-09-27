@@ -1,0 +1,11 @@
+-- Snapshot the product image on the order line.
+--
+-- Name and price are already snapshots, and the image belongs with them: an order should keep
+-- showing what the customer actually bought, even if the catalogue image changes later. The
+-- checkout saga already receives the thumbnail in its product snapshot, so nothing new is
+-- fetched.
+--
+-- Nullable, and existing rows stay NULL. Backfilling would mean reading catalog.products from
+-- the orders schema, and no service reads another's schema (docs/SPEC.md, Boundaries). Older
+-- orders simply render the app's placeholder.
+ALTER TABLE order_items ADD COLUMN thumbnail_url VARCHAR(500);

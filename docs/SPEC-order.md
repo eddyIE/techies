@@ -32,8 +32,11 @@ snapshotted only at checkout.
 | payment_status | varchar | `PENDING` \| `PAID` \| `DECLINED` |
 | created_at, updated_at | timestamptz | |
 
-**order_items** — id, order_id FK, product_id, product_name, unit_price, quantity, line_total.
-Name and price are **snapshots**: a later price change must not alter a past order.
+**order_items** — id, order_id FK, product_id, product_name, unit_price, quantity, line_total,
+thumbnail_url. Name, price and image are **snapshots**: a later change in the catalogue must
+not alter a past order. `thumbnail_url` is null on orders placed before it was recorded —
+backfilling would mean reading `catalog.products` from the orders schema, which the service
+boundary forbids.
 
 **saga_steps** — id, order_id FK, step_name, status (`STARTED`/`SUCCESS`/`FAILED`/`COMPENSATED`),
 detail (text), created_at. Written at every saga step. This table exists so the saga can be

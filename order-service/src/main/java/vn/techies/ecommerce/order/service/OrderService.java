@@ -122,6 +122,7 @@ public class OrderService {
 
     private static OrderItemResponse toItemResponse(OrderItem item) {
         return new OrderItemResponse(item.getProductId(), item.getProductName(),
-                item.getUnitPrice(), item.getQuantity(), item.getLineTotal());
+                item.getUnitPrice(), item.getQuantity(), item.getLineTotal(),
+                item.getThumbnailUrl());
     }
 }

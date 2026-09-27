@@ -31,8 +31,12 @@ public final class OrderDtos {
                                           String ward, String district, String province) {
     }
 
+    /**
+     * @param thumbnailUrl the product image as it was at checkout, or null for orders placed
+     *                     before this was recorded — render a placeholder in that case.
+     */
     public record OrderItemResponse(UUID productId, String productName, BigDecimal unitPrice,
-                                    int quantity, BigDecimal lineTotal) {
+                                    int quantity, BigDecimal lineTotal, String thumbnailUrl) {
     }
 
     public record OrderResponse(UUID id, String orderRef, OrderStatus status, FailureCode failureCode,

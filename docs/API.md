@@ -302,7 +302,7 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "email": "fe-demo-e2ac11@techies.vn",
+  "email": "fe-demo-baf263@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -313,8 +313,8 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "userId": "72899f28-2e95-4efd-bb4b-8e60f8ee784d",
-  "email": "fe-demo-e2ac11@techies.vn"
+  "userId": "b315edfb-f638-4599-8fc5-4fb4ec90c012",
+  "email": "fe-demo-baf263@techies.vn"
 }
 ```
 
@@ -329,7 +329,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "email": "fe-demo-e2ac11@techies.vn",
+  "email": "fe-demo-baf263@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -340,7 +340,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "timestamp": "2026-09-26T15:13:35.971640751Z",
+  "timestamp": "2026-09-27T08:01:54.980230510Z",
   "status": 409,
   "code": "EMAIL_ALREADY_EXISTS",
   "message": "An account with this email already exists",
@@ -370,15 +370,15 @@ Shows the `fieldErrors` map you bind to form fields.
 
 ```json
 {
-  "timestamp": "2026-09-26T15:13:36.209416001Z",
+  "timestamp": "2026-09-27T08:01:54.990204593Z",
   "status": 400,
   "code": "VALIDATION_ERROR",
   "message": "Request validation failed",
   "path": "/auth/register",
   "fieldErrors": {
+    "phone": "must be 9-11 digits",
     "email": "must be a well-formed email address",
-    "fullName": "must not be blank",
-    "phone": "must be 9-11 digits"
+    "fullName": "must not be blank"
   }
 }
 ```
@@ -396,7 +396,7 @@ Returns the token plus the user, so Login need not call `/users/me` after.
 
 ```json
 {
-  "email": "fe-demo-e2ac11@techies.vn",
+  "email": "fe-demo-baf263@techies.vn",
   "password": "password1"
 }
 ```
@@ -409,8 +409,8 @@ Returns the token plus the user, so Login need not call `/users/me` after.
   "tokenType": "Bearer",
   "expiresIn": 2592000,
   "user": {
-    "id": "72899f28-2e95-4efd-bb4b-8e60f8ee784d",
-    "email": "fe-demo-e2ac11@techies.vn",
+    "id": "b315edfb-f638-4599-8fc5-4fb4ec90c012",
+    "email": "fe-demo-baf263@techies.vn",
     "fullName": "Nguyen Van A",
     "phone": "0901234567",
     "avatarUrl": null
@@ -429,7 +429,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "email": "fe-demo-e2ac11@techies.vn",
+  "email": "fe-demo-baf263@techies.vn",
   "password": "wrongpassword1"
 }
 ```
@@ -438,7 +438,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "timestamp": "2026-09-26T15:13:37.294066127Z",
+  "timestamp": "2026-09-27T08:01:55.157981552Z",
   "status": 401,
   "code": "INVALID_CREDENTIALS",
   "message": "Email or password is incorrect",
@@ -457,7 +457,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-e2ac11@techies.vn"
+  "email": "fe-demo-baf263@techies.vn"
 }
 ```
 
@@ -465,7 +465,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-e2ac11@techies.vn",
+  "email": "fe-demo-baf263@techies.vn",
   "exists": true
 }
 ```
@@ -524,8 +524,8 @@ For the Profile screen.
 
 ```json
 {
-  "id": "72899f28-2e95-4efd-bb4b-8e60f8ee784d",
-  "email": "fe-demo-e2ac11@techies.vn",
+  "id": "b315edfb-f638-4599-8fc5-4fb4ec90c012",
+  "email": "fe-demo-baf263@techies.vn",
   "fullName": "Nguyen Van A",
   "phone": "0901234567",
   "avatarUrl": null
@@ -552,8 +552,8 @@ Name and phone only. Email cannot change — it is the login identifier.
 
 ```json
 {
-  "id": "72899f28-2e95-4efd-bb4b-8e60f8ee784d",
-  "email": "fe-demo-e2ac11@techies.vn",
+  "id": "b315edfb-f638-4599-8fc5-4fb4ec90c012",
+  "email": "fe-demo-baf263@techies.vn",
   "fullName": "Nguyen Van B",
   "phone": "0909999999",
   "avatarUrl": null
@@ -571,7 +571,7 @@ What the app gets when the token is missing or expired.
 
 ```json
 {
-  "timestamp": "2026-09-26T15:13:38.245363627Z",
+  "timestamp": "2026-09-27T08:01:55.192204427Z",
   "status": 401,
   "code": "UNAUTHENTICATED",
   "message": "Authentication required",
@@ -616,7 +616,7 @@ The user's first address becomes the default automatically, so Checkout always h
 
 ```json
 {
-  "id": "2ac81117-1456-40c0-8be5-316b75390507",
+  "id": "08ff108d-84be-47af-b61d-448f59b79b8d",
   "recipientName": "Nguyen Van B",
   "phone": "0907654321",
   "line1": "12 Nguyen Hue",
@@ -639,7 +639,7 @@ Default first, then newest. Use the first entry to preselect at Checkout.
 ```json
 [
   {
-    "id": "2ac81117-1456-40c0-8be5-316b75390507",
+    "id": "08ff108d-84be-47af-b61d-448f59b79b8d",
     "recipientName": "Nguyen Van B",
     "phone": "0907654321",
     "line1": "12 Nguyen Hue",
@@ -674,42 +674,42 @@ For the Home screen. Ordered by `displayOrder`.
     "id": "621a9347-0b52-58d5-ba30-9c524079231d",
     "name": "Điện thoại",
     "slug": "dien-thoai",
-    "imageUrl": "https://picsum.photos/seed/dien-thoai/400",
+    "imageUrl": "https://placehold.co/400x400/1e293b/ffffff/png?text=%C4%90i%E1%BB%87n+tho%E1%BA%A1i",
     "displayOrder": 1
   },
   {
     "id": "1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b",
     "name": "Laptop",
     "slug": "laptop",
-    "imageUrl": "https://picsum.photos/seed/laptop/400",
+    "imageUrl": "https://placehold.co/400x400/312e81/ffffff/png?text=Laptop",
     "displayOrder": 2
   },
   {
     "id": "155c3f45-7376-54b8-8fe4-9859afd0cd8e",
     "name": "Máy tính bảng",
     "slug": "tablet",
-    "imageUrl": "https://picsum.photos/seed/tablet/400",
+    "imageUrl": "https://placehold.co/400x400/134e4a/ffffff/png?text=M%C3%A1y+t%C3%ADnh+b%E1%BA%A3ng",
     "displayOrder": 3
   },
   {
     "id": "3a8e7aee-9455-52a3-be9a-3790e375821a",
     "name": "Tai nghe",
     "slug": "tai-nghe",
-    "imageUrl": "https://picsum.photos/seed/tai-nghe/400",
+    "imageUrl": "https://placehold.co/400x400/7c2d12/ffffff/png?text=Tai+nghe",
     "displayOrder": 4
   },
   {
     "id": "5e8b4230-0d61-5f2b-a468-5499e8e7331b",
     "name": "Đồng hồ thông minh",
     "slug": "dong-ho-thong-minh",
-    "imageUrl": "https://picsum.photos/seed/dong-ho-thong-minh/400",
+    "imageUrl": "https://placehold.co/400x400/4a044e/ffffff/png?text=%C4%90%E1%BB%93ng+h%E1%BB%93+th%C3%B4ng+minh",
     "displayOrder": 5
   },
   {
     "id": "cec6d4cc-9d78-55d8-aaf7-35d3bcf87a9f",
     "name": "Phụ kiện",
     "slug": "phu-kien",
-    "imageUrl": "https://picsum.photos/seed/phu-kien/400",
+    "imageUrl": "https://placehold.co/400x400/374151/ffffff/png?text=Ph%E1%BB%A5+ki%E1%BB%87n",
     "displayOrder": 6
   }
 ]
@@ -744,7 +744,7 @@ Searching "điện thoại" will not return all phones; use `categoryId` for tha
       "name": "iPhone 15 128GB",
       "slug": "iphone-15-128gb",
       "price": 22990000.0,
-      "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
+      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB",
       "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
       "categoryName": "Điện thoại"
     },
@@ -753,7 +753,7 @@ Searching "điện thoại" will not return all phones; use `categoryId` for tha
       "name": "iPhone 15 Pro Max 256GB",
       "slug": "iphone-15-pro-max-256gb",
       "price": 31990000.0,
-      "thumbnailUrl": "https://picsum.photos/seed/iphone-15-pro-max-256gb/600",
+      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+Pro+Max+256GB",
       "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
       "categoryName": "Điện thoại"
     }
@@ -782,7 +782,7 @@ Same endpoint with `keyword`. There is no separate search route.
       "name": "iPhone 15 Pro Max 256GB",
       "slug": "iphone-15-pro-max-256gb",
       "price": 31990000.0,
-      "thumbnailUrl": "https://picsum.photos/seed/iphone-15-pro-max-256gb/600",
+      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+Pro+Max+256GB",
       "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
       "categoryName": "Điện thoại"
     },
@@ -791,7 +791,7 @@ Same endpoint with `keyword`. There is no separate search route.
       "name": "iPhone 15 128GB",
       "slug": "iphone-15-128gb",
       "price": 22990000.0,
-      "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
+      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB",
       "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
       "categoryName": "Điện thoại"
     }
@@ -819,12 +819,12 @@ Includes the description and image gallery.
   "slug": "iphone-15-128gb",
   "description": "iPhone 15 128GB - hàng chính hãng, bảo hành 12 tháng tại Techies.",
   "price": 22990000.0,
-  "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
+  "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB",
   "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
   "categoryName": "Điện thoại",
   "images": [
-    "https://picsum.photos/seed/iphone-15-128gb-1/800",
-    "https://picsum.photos/seed/iphone-15-128gb-2/800"
+    "https://placehold.co/800x800/1e293b/ffffff/png?text=iPhone+15+128GB+%281%2F2%29",
+    "https://placehold.co/800x800/1e293b/ffffff/png?text=iPhone+15+128GB+%282%2F2%29"
   ]
 }
 ```
@@ -832,7 +832,7 @@ Includes the description and image gallery.
 
 ### Product detail — gone
 
-`GET /products/a7753aff-ab13-4807-89e8-3721b7b9d00a` · **Public — no token** · responds `404`
+`GET /products/3b6aa966-1432-4a95-ac29-e8d581f3329e` · **Public — no token** · responds `404`
 
 Unknown or delisted products return 404.
 
@@ -840,11 +840,11 @@ Unknown or delisted products return 404.
 
 ```json
 {
-  "timestamp": "2026-09-26T15:13:40.445131587Z",
+  "timestamp": "2026-09-27T08:01:55.295001135Z",
   "status": 404,
   "code": "PRODUCT_NOT_FOUND",
   "message": "Product not found",
-  "path": "/products/a7753aff-ab13-4807-89e8-3721b7b9d00a"
+  "path": "/products/3b6aa966-1432-4a95-ac29-e8d581f3329e"
 }
 ```
 
@@ -910,13 +910,13 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "0f819890-1c43-4fb3-ac9e-947ec7c3a790",
+      "id": "ce01cc92-aa5c-4151-8025-2c723c53a171",
       "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
       "name": "iPhone 15 128GB",
       "unitPrice": 22990000.0,
       "quantity": 2,
       "lineTotal": 45980000.0,
-      "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
+      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB",
       "available": 90
     }
   ],
@@ -928,7 +928,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 
 ### Change quantity
 
-`PUT /cart/items/0f819890-1c43-4fb3-ac9e-947ec7c3a790` · **Bearer token required** · responds `200`
+`PUT /cart/items/ce01cc92-aa5c-4151-8025-2c723c53a171` · **Bearer token required** · responds `200`
 
 `quantity: 0` removes the line. `DELETE /cart/items/{itemId}` does the same and returns `204`.
 
@@ -946,13 +946,13 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "0f819890-1c43-4fb3-ac9e-947ec7c3a790",
+      "id": "ce01cc92-aa5c-4151-8025-2c723c53a171",
       "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
       "name": "iPhone 15 128GB",
       "unitPrice": 22990000.0,
       "quantity": 1,
       "lineTotal": 22990000.0,
-      "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
+      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB",
       "available": 90
     }
   ],
@@ -978,13 +978,13 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "0f819890-1c43-4fb3-ac9e-947ec7c3a790",
+      "id": "ce01cc92-aa5c-4151-8025-2c723c53a171",
       "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
       "name": "iPhone 15 128GB",
       "unitPrice": 22990000.0,
       "quantity": 1,
       "lineTotal": 22990000.0,
-      "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
+      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB",
       "available": 90
     }
   ],
@@ -1039,7 +1039,7 @@ the user can fix the problem and retry. Do not clear it client-side.
 
 ```json
 {
-  "addressId": "2ac81117-1456-40c0-8be5-316b75390507",
+  "addressId": "08ff108d-84be-47af-b61d-448f59b79b8d",
   "paymentMethod": "MOCK_CARD",
   "simulatePayment": "SUCCESS"
 }
@@ -1050,8 +1050,8 @@ the user can fix the problem and retry. Do not clear it client-side.
 ```json
 {
   "order": {
-    "id": "4eac1ad2-d7cc-45f9-8680-838d6da70448",
-    "orderRef": "ORD-20260926-0043",
+    "id": "ee34df53-e390-4a82-b53c-dbcf0e5a287c",
+    "orderRef": "ORD-20260927-0002",
     "status": "CONFIRMED",
     "failureCode": null,
     "subtotal": 22990000.0,
@@ -1073,10 +1073,11 @@ the user can fix the problem and retry. Do not clear it client-side.
         "productName": "iPhone 15 128GB",
         "unitPrice": 22990000.0,
         "quantity": 1,
-        "lineTotal": 22990000.0
+        "lineTotal": 22990000.0,
+        "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB"
       }
     ],
-    "createdAt": "2026-09-26T15:13:42.916349Z"
+    "createdAt": "2026-09-27T08:01:55.417574Z"
   },
   "message": "Order placed successfully"
 }
@@ -1093,7 +1094,7 @@ the user can fix the problem and retry. Do not clear it client-side.
 
 ```json
 {
-  "addressId": "2ac81117-1456-40c0-8be5-316b75390507",
+  "addressId": "08ff108d-84be-47af-b61d-448f59b79b8d",
   "paymentMethod": "MOCK_CARD",
   "simulatePayment": "DECLINED"
 }
@@ -1104,8 +1105,8 @@ the user can fix the problem and retry. Do not clear it client-side.
 ```json
 {
   "order": {
-    "id": "d5052650-1c79-4f30-b632-fdbf392b1e4a",
-    "orderRef": "ORD-20260926-0044",
+    "id": "ad25dfcd-92bb-4432-8f15-bbb80072a7c1",
+    "orderRef": "ORD-20260927-0003",
     "status": "FAILED",
     "failureCode": "PAYMENT_FAILED",
     "subtotal": 22990000.0,
@@ -1127,10 +1128,11 @@ the user can fix the problem and retry. Do not clear it client-side.
         "productName": "iPhone 15 128GB",
         "unitPrice": 22990000.0,
         "quantity": 1,
-        "lineTotal": 22990000.0
+        "lineTotal": 22990000.0,
+        "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB"
       }
     ],
-    "createdAt": "2026-09-26T15:13:45.084979Z"
+    "createdAt": "2026-09-27T08:01:55.725473Z"
   },
   "message": "Payment was declined, your cart has been kept"
 }
@@ -1147,7 +1149,7 @@ No payment was attempted. Refresh the cart to see what is unavailable.
 
 ```json
 {
-  "addressId": "2ac81117-1456-40c0-8be5-316b75390507",
+  "addressId": "08ff108d-84be-47af-b61d-448f59b79b8d",
   "paymentMethod": "COD"
 }
 ```
@@ -1157,8 +1159,8 @@ No payment was attempted. Refresh the cart to see what is unavailable.
 ```json
 {
   "order": {
-    "id": "d278417f-9ff7-47cd-9c6c-3c5febf027d0",
-    "orderRef": "ORD-20260926-0045",
+    "id": "5f2104a5-2a7f-49f3-ad25-af9fb6f756b6",
+    "orderRef": "ORD-20260927-0004",
     "status": "FAILED",
     "failureCode": "OUT_OF_STOCK",
     "subtotal": 36980000.0,
@@ -1180,17 +1182,19 @@ No payment was attempted. Refresh the cart to see what is unavailable.
         "productName": "iPhone 15 128GB",
         "unitPrice": 22990000.0,
         "quantity": 1,
-        "lineTotal": 22990000.0
+        "lineTotal": 22990000.0,
+        "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB"
       },
       {
         "productId": "b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8",
         "productName": "MSI Modern 14 C13M",
         "unitPrice": 13990000.0,
         "quantity": 1,
-        "lineTotal": 13990000.0
+        "lineTotal": 13990000.0,
+        "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M"
       }
     ],
-    "createdAt": "2026-09-26T15:13:47.924463Z"
+    "createdAt": "2026-09-27T08:01:56.072730Z"
   },
   "message": "Some items are no longer in stock"
 }
@@ -1213,31 +1217,31 @@ Newest first. Optional `?status=CONFIRMED|FAILED|CANCELLED`, plus `page` and `si
 {
   "content": [
     {
-      "id": "d278417f-9ff7-47cd-9c6c-3c5febf027d0",
-      "orderRef": "ORD-20260926-0045",
+      "id": "5f2104a5-2a7f-49f3-ad25-af9fb6f756b6",
+      "orderRef": "ORD-20260927-0004",
       "status": "FAILED",
       "failureCode": "OUT_OF_STOCK",
       "total": 36980000.0,
       "itemCount": 2,
-      "createdAt": "2026-09-26T15:13:47.924463Z"
+      "createdAt": "2026-09-27T08:01:56.072730Z"
     },
     {
-      "id": "d5052650-1c79-4f30-b632-fdbf392b1e4a",
-      "orderRef": "ORD-20260926-0044",
+      "id": "ad25dfcd-92bb-4432-8f15-bbb80072a7c1",
+      "orderRef": "ORD-20260927-0003",
       "status": "FAILED",
       "failureCode": "PAYMENT_FAILED",
       "total": 22990000.0,
       "itemCount": 1,
-      "createdAt": "2026-09-26T15:13:45.084979Z"
+      "createdAt": "2026-09-27T08:01:55.725473Z"
     },
     {
-      "id": "4eac1ad2-d7cc-45f9-8680-838d6da70448",
-      "orderRef": "ORD-20260926-0043",
+      "id": "ee34df53-e390-4a82-b53c-dbcf0e5a287c",
+      "orderRef": "ORD-20260927-0002",
       "status": "CONFIRMED",
       "failureCode": null,
       "total": 22990000.0,
       "itemCount": 1,
-      "createdAt": "2026-09-26T15:13:42.916349Z"
+      "createdAt": "2026-09-27T08:01:55.417574Z"
     }
   ],
   "page": 0,
@@ -1250,7 +1254,7 @@ Newest first. Optional `?status=CONFIRMED|FAILED|CANCELLED`, plus `page` and `si
 
 ### Order detail
 
-`GET /orders/4eac1ad2-d7cc-45f9-8680-838d6da70448` · **Bearer token required** · responds `200`
+`GET /orders/ee34df53-e390-4a82-b53c-dbcf0e5a287c` · **Bearer token required** · responds `200`
 
 Prices and the shipping address are snapshots taken at checkout — a later catalog price change never alters a past order. Another user's order returns 403.
 
@@ -1258,8 +1262,8 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
 
 ```json
 {
-  "id": "4eac1ad2-d7cc-45f9-8680-838d6da70448",
-  "orderRef": "ORD-20260926-0043",
+  "id": "ee34df53-e390-4a82-b53c-dbcf0e5a287c",
+  "orderRef": "ORD-20260927-0002",
   "status": "CONFIRMED",
   "failureCode": null,
   "subtotal": 22990000.0,
@@ -1281,17 +1285,18 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
       "productName": "iPhone 15 128GB",
       "unitPrice": 22990000.0,
       "quantity": 1,
-      "lineTotal": 22990000.0
+      "lineTotal": 22990000.0,
+      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB"
     }
   ],
-  "createdAt": "2026-09-26T15:13:42.916349Z"
+  "createdAt": "2026-09-27T08:01:55.417574Z"
 }
 ```
 
 
 ### Cancel order
 
-`POST /orders/4eac1ad2-d7cc-45f9-8680-838d6da70448/cancel` · **Bearer token required** · responds `200`
+`POST /orders/ee34df53-e390-4a82-b53c-dbcf0e5a287c/cancel` · **Bearer token required** · responds `200`
 
 Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunded.
 
@@ -1299,8 +1304,8 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
 
 ```json
 {
-  "id": "4eac1ad2-d7cc-45f9-8680-838d6da70448",
-  "orderRef": "ORD-20260926-0043",
+  "id": "ee34df53-e390-4a82-b53c-dbcf0e5a287c",
+  "orderRef": "ORD-20260927-0002",
   "status": "CANCELLED",
   "failureCode": null,
   "subtotal": 22990000.0,
@@ -1322,17 +1327,18 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
       "productName": "iPhone 15 128GB",
       "unitPrice": 22990000.0,
       "quantity": 1,
-      "lineTotal": 22990000.0
+      "lineTotal": 22990000.0,
+      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=iPhone+15+128GB"
     }
   ],
-  "createdAt": "2026-09-26T15:13:42.916349Z"
+  "createdAt": "2026-09-27T08:01:55.417574Z"
 }
 ```
 
 
 ### Cancel — not allowed
 
-`POST /orders/4eac1ad2-d7cc-45f9-8680-838d6da70448/cancel` · **Bearer token required** · responds `409`
+`POST /orders/ee34df53-e390-4a82-b53c-dbcf0e5a287c/cancel` · **Bearer token required** · responds `409`
 
 Show the Cancel button only when `status == "CONFIRMED"`.
 
@@ -1340,11 +1346,11 @@ Show the Cancel button only when `status == "CONFIRMED"`.
 
 ```json
 {
-  "timestamp": "2026-09-26T15:13:50.462892466Z",
+  "timestamp": "2026-09-27T08:01:56.179726427Z",
   "status": 409,
   "code": "ORDER_NOT_CANCELLABLE",
   "message": "An order in status CANCELLED cannot be cancelled",
-  "path": "/orders/4eac1ad2-d7cc-45f9-8680-838d6da70448/cancel"
+  "path": "/orders/ee34df53-e390-4a82-b53c-dbcf0e5a287c/cancel"
 }
 ```
 

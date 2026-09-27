@@ -66,8 +66,10 @@ Internal (called by `order` at checkout):
 ## Seed Data
 
 Delivered as `V2__seed_catalog.sql`. Minimum: **6 categories**, **40 products** spread across
-them, realistic Vietnamese names and VND prices, `https://picsum.photos/seed/{slug}/600` as
-image URLs so no binary assets enter the repo. Product UUIDs are **fixed literals**, not
+them, realistic Vietnamese names and VND prices, and generated `placehold.co` images that
+render the product's own name in a colour per category, so no binary assets enter the repo and
+the picture always matches the product. An earlier version used `picsum.photos`, which returns
+an unrelated photograph per seed — a phone illustrated with a mountain. Product UUIDs are **fixed literals**, not
 generated — `inventory` seeds stock against these same IDs, and the demo script references them.
 
 Shared fixed IDs live in `docs/SEED-IDS.md` so catalog and inventory migrations cannot drift.

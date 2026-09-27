@@ -489,6 +489,19 @@ def main():
         | `addressId` | From `GET /addresses` |
         | `paymentMethod` | `COD` (always succeeds) or `MOCK_CARD` |
         | `simulatePayment` | Optional, `MOCK_CARD` only: `SUCCESS` (default), `DECLINED`, `TIMEOUT` |
+        | `cartItemIds` | Optional array of cart line ids — see below |
+
+        **Buying part of the cart.** For the cart screen's per-line selection, send the ids of
+        the ticked lines in `cartItemIds`. Only those are bought and only those are removed;
+        the rest stay in the cart. Omit the field (or send `null`) to buy everything, which is
+        what the whole-cart Checkout button does.
+
+        | Selection | Result |
+        |---|---|
+        | omitted / `null` | whole cart |
+        | `["<id>", ...]` | only those lines |
+        | `[]` | `400 VALIDATION_ERROR` — asks to buy nothing |
+        | an id not in the cart | `404 NOT_FOUND` — nothing is bought |
 
         `simulatePayment` exists so the app can demo both branches on demand. There is no real
         payment provider.

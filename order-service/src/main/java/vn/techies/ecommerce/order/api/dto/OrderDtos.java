@@ -1,6 +1,7 @@
 package vn.techies.ecommerce.order.api.dto;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import vn.techies.ecommerce.order.domain.FailureCode;
 import vn.techies.ecommerce.order.domain.OrderStatus;
 import vn.techies.ecommerce.order.domain.PaymentMethod;
@@ -21,10 +22,19 @@ public final class OrderDtos {
      * @param simulatePayment demo control for MOCK_CARD only, so both branches of the Order
      *                        Flow can be shown without restarting anything. Ignored for COD.
      */
+    /**
+     * @param cartItemIds the cart lines to buy, for the cart screen's per-line selection.
+     *                    Omit or send null to check out the whole cart, which is what every
+     *                    existing client does. An empty array is rejected: it asks to buy
+     *                    nothing, which is a client bug rather than a whole-cart checkout.
+     *                    Only the selected lines are removed on success; the rest stay.
+     */
     public record CheckoutRequest(
             @NotNull UUID addressId,
             @NotNull PaymentMethod paymentMethod,
-            PaymentSimulation simulatePayment) {
+            PaymentSimulation simulatePayment,
+            @Size(min = 1, message = "select at least one item, or omit the field for the whole cart")
+            List<UUID> cartItemIds) {
     }
 
     public record ShippingAddressResponse(String recipientName, String phone, String line1,

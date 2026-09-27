@@ -98,7 +98,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     }
 
     private CheckoutRequest checkoutWith(PaymentSimulation simulation) {
-        return new CheckoutRequest(addressId, PaymentMethod.MOCK_CARD, simulation);
+        return new CheckoutRequest(addressId, PaymentMethod.MOCK_CARD, simulation, null);
     }
 
     private List<SagaStep> trail(Order order) {
@@ -261,7 +261,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     void codAlwaysSucceeds() {
         fillCart();
 
-        Order order = saga.checkout(userId, new CheckoutRequest(addressId, PaymentMethod.COD, null));
+        Order order = saga.checkout(userId, new CheckoutRequest(addressId, PaymentMethod.COD, null, null));
 
         assertThat(order.getStatus()).isEqualTo(OrderStatus.CONFIRMED);
         assertThat(order.getPaymentStatus()).isEqualTo(PaymentStatus.PAID);
@@ -324,6 +324,66 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         assertThat(order.getSubtotal()).isEqualByComparingTo("150000.00");
         assertThat(order.getShippingFee()).isEqualByComparingTo("30000");
         assertThat(order.getTotal()).isEqualByComparingTo("180000.00");
+    }
+
+    @Test
+    @DisplayName("PARTIAL CHECKOUT: only the selected line is bought, the rest stays in the cart")
+    void checksOutOnlySelectedItems() {
+        fillCart();
+        var cart = cartService.view(userId);
+        assertThat(cart.items()).hasSize(2);
+        UUID chosen = cart.items().get(0).id();
+        UUID chosenProduct = cart.items().get(0).productId();
+
+        Order order = saga.checkout(userId, new CheckoutRequest(
+                addressId, PaymentMethod.MOCK_CARD, PaymentSimulation.SUCCESS, List.of(chosen)));
+
+        assertThat(order.getStatus()).isEqualTo(OrderStatus.CONFIRMED);
+        assertThat(orderService.detail(order.getId(), userId).items())
+                .as("the order holds only the chosen product")
+                .extracting("productId").containsExactly(chosenProduct);
+
+        var remaining = cartService.view(userId);
+        assertThat(remaining.items()).as("the unselected line survives").hasSize(1);
+        assertThat(remaining.items().get(0).id()).isNotEqualTo(chosen);
+    }
+
+    @Test
+    @DisplayName("omitting the selection still buys the whole cart, so existing clients are unaffected")
+    void nullSelectionBuysEverything() {
+        fillCart();
+
+        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS));
+
+        assertThat(orderService.detail(order.getId(), userId).items()).hasSize(2);
+        assertThat(cartService.view(userId).items()).isEmpty();
+    }
+
+    @Test
+    @DisplayName("selecting an item that is not in the cart is refused, not silently dropped")
+    void rejectsUnknownCartItem() {
+        fillCart();
+
+        assertThatThrownBy(() -> saga.checkout(userId, new CheckoutRequest(
+                addressId, PaymentMethod.COD, null, List.of(UUID.randomUUID()))))
+                .isInstanceOf(ApiException.class)
+                .extracting(e -> ((ApiException) e).code())
+                .isEqualTo(ErrorCode.NOT_FOUND);
+
+        assertThat(cartService.view(userId).items()).as("nothing was bought").hasSize(2);
+    }
+
+    @Test
+    @DisplayName("a failed partial checkout leaves the whole cart untouched, so it can be retried")
+    void failedPartialCheckoutKeepsTheCart() {
+        fillCart();
+        UUID chosen = cartService.view(userId).items().get(0).id();
+
+        Order order = saga.checkout(userId, new CheckoutRequest(
+                addressId, PaymentMethod.MOCK_CARD, PaymentSimulation.DECLINED, List.of(chosen)));
+
+        assertThat(order.getStatus()).isEqualTo(OrderStatus.FAILED);
+        assertThat(cartService.view(userId).items()).hasSize(2);
     }
 
     @Test

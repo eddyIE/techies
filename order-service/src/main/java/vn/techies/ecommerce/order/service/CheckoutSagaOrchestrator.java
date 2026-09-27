@@ -58,7 +58,8 @@ public class CheckoutSagaOrchestrator {
 
     public Order checkout(UUID userId, CheckoutRequest request) {
         // ---- Step 1: cart ----------------------------------------------------------------
-        List<CartLine> lines = loadCartLines(userId);
+        // Either the whole cart, or just the lines the customer ticked on the cart screen.
+        List<CartLine> lines = loadCartLines(userId, request.cartItemIds());
 
         // ---- Step 2: address snapshot ----------------------------------------------------
         ShippingAddress address = snapshotAddress(request.addressId(), userId);
@@ -110,7 +111,9 @@ public class CheckoutSagaOrchestrator {
 
         // ---- Step 7: confirm and clear the cart ------------------------------------------
         Order confirmed = confirmOrder(order.getId());
-        cartService.clear(userId);
+        // Remove only what was bought. A partial checkout must leave the unselected lines in
+        // the cart, and clearing everything would silently discard them.
+        cartService.removeItems(userId, lines.stream().map(CartLine::itemId).toList());
         record(confirmed, "7-CONFIRM_ORDER", SagaStepStatus.SUCCESS, "cart cleared");
 
         log.info("Order {} confirmed for user {}", confirmed.getOrderRef(), userId);
@@ -138,14 +141,14 @@ public class CheckoutSagaOrchestrator {
 
     // ---- individual steps ----------------------------------------------------------------
 
-    private List<CartLine> loadCartLines(UUID userId) {
-        List<CartService.CartLineSnapshot> snapshot = cartService.lineSnapshot(userId);
+    private List<CartLine> loadCartLines(UUID userId, List<UUID> selectedItemIds) {
+        List<CartService.CartLineSnapshot> snapshot = cartService.lineSnapshot(userId, selectedItemIds);
         if (snapshot.isEmpty()) {
             throw new ApiException(ErrorCode.EMPTY_CART, "Your cart is empty");
         }
         List<CartLine> lines = new ArrayList<>();
         for (CartService.CartLineSnapshot line : snapshot) {
-            lines.add(new CartLine(line.productId(), line.quantity()));
+            lines.add(new CartLine(line.itemId(), line.productId(), line.quantity()));
         }
         return lines;
     }
@@ -228,6 +231,6 @@ public class CheckoutSagaOrchestrator {
         return message.contains("INSUFFICIENT_STOCK") || message.contains("409");
     }
 
-    private record CartLine(UUID productId, int quantity) {
+    private record CartLine(UUID itemId, UUID productId, int quantity) {
     }
 }

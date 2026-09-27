@@ -17,9 +17,13 @@ import vn.techies.ecommerce.order.domain.CartItem;
 import vn.techies.ecommerce.order.repository.CartRepository;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -46,15 +50,55 @@ public class CartService {
      */
     @Transactional(readOnly = true)
     public List<CartLineSnapshot> lineSnapshot(UUID userId) {
-        return carts.findByUserId(userId)
-                .map(cart -> cart.getItems().stream()
-                        .map(i -> new CartLineSnapshot(i.getProductId(), i.getQuantity()))
-                        .toList())
-                .orElseGet(List::of);
+        return lineSnapshot(userId, null);
     }
 
-    /** A cart line, detached from Hibernate. */
-    public record CartLineSnapshot(UUID productId, int quantity) {
+    /**
+     * @param selectedItemIds the lines to include, or null for all of them. Every id must be
+     *                        in this user's cart: a selection naming something absent is a
+     *                        404 rather than a silently smaller order, because quietly
+     *                        dropping an item the customer chose is worse than refusing.
+     */
+    @Transactional(readOnly = true)
+    public List<CartLineSnapshot> lineSnapshot(UUID userId, Collection<UUID> selectedItemIds) {
+        List<CartItem> items = carts.findByUserId(userId)
+                .map(Cart::getItems)
+                .orElseGet(List::of);
+
+        if (selectedItemIds == null) {
+            return items.stream()
+                    .map(i -> new CartLineSnapshot(i.getId(), i.getProductId(), i.getQuantity()))
+                    .toList();
+        }
+
+        Set<UUID> wanted = new LinkedHashSet<>(selectedItemIds);   // tolerate duplicates
+        Map<UUID, CartItem> byId = new LinkedHashMap<>();
+        items.forEach(i -> byId.put(i.getId(), i));
+
+        List<UUID> missing = wanted.stream().filter(id -> !byId.containsKey(id)).toList();
+        if (!missing.isEmpty()) {
+            throw new ApiException(ErrorCode.NOT_FOUND,
+                    "These items are not in your cart: " + missing);
+        }
+
+        return wanted.stream()
+                .map(byId::get)
+                .map(i -> new CartLineSnapshot(i.getId(), i.getProductId(), i.getQuantity()))
+                .toList();
+    }
+
+    /** Removes only the given lines, leaving the rest of the cart intact. */
+    @Transactional
+    public void removeItems(UUID userId, Collection<UUID> itemIds) {
+        carts.findByUserId(userId).ifPresent(cart -> {
+            Set<UUID> toRemove = new LinkedHashSet<>(itemIds);
+            cart.getItems().removeIf(item -> toRemove.contains(item.getId()));
+            cart.touch();
+        });
+    }
+
+    /** A cart line, detached from Hibernate. {@code itemId} identifies the line to remove. */
+    public record CartLineSnapshot(UUID itemId, UUID productId, int quantity) {
     }
 
     @Transactional

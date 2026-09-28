@@ -246,6 +246,7 @@ Not routed by the gateway, and unreachable from the host: `/internal/**` on any 
 | `docs/API.md` | **API reference for the mobile team** — generated from real responses |
 | `docs/SECURITY-NOTES.md` | What the deployment does and does not protect against |
 | `docs/postman/` | **Importable Postman collection** with real saved examples |
+| `scripts/rebuild.sh` | Rebuild a service and **wait until Docker reports it healthy** — use this instead of a bare `docker compose up -d --build` |
 | `ai-service/` | Gemini-backed product assistant, streamed over SSE, with catalogue search and web grounding |
 
 ## Working in this repo

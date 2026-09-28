@@ -302,7 +302,7 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "email": "fe-demo-fc08d4@techies.vn",
+  "email": "fe-demo-571225@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -313,8 +313,8 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "userId": "1cbee4ab-1aeb-446b-9e9f-343495db5beb",
-  "email": "fe-demo-fc08d4@techies.vn"
+  "userId": "88d5d42e-dad5-4958-a69d-de30eca7ca58",
+  "email": "fe-demo-571225@techies.vn"
 }
 ```
 
@@ -329,7 +329,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "email": "fe-demo-fc08d4@techies.vn",
+  "email": "fe-demo-571225@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -340,7 +340,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "timestamp": "2026-09-27T10:54:20.108693972Z",
+  "timestamp": "2026-09-28T17:02:56.790309262Z",
   "status": 409,
   "code": "EMAIL_ALREADY_EXISTS",
   "message": "An account with this email already exists",
@@ -370,14 +370,14 @@ Shows the `fieldErrors` map you bind to form fields.
 
 ```json
 {
-  "timestamp": "2026-09-27T10:54:20.115082180Z",
+  "timestamp": "2026-09-28T17:02:56.810762887Z",
   "status": 400,
   "code": "VALIDATION_ERROR",
   "message": "Request validation failed",
   "path": "/auth/register",
   "fieldErrors": {
-    "phone": "must be 9-11 digits",
     "email": "must be a well-formed email address",
+    "phone": "must be 9-11 digits",
     "fullName": "must not be blank"
   }
 }
@@ -396,7 +396,7 @@ Returns the token plus the user, so Login need not call `/users/me` after.
 
 ```json
 {
-  "email": "fe-demo-fc08d4@techies.vn",
+  "email": "fe-demo-571225@techies.vn",
   "password": "password1"
 }
 ```
@@ -409,8 +409,8 @@ Returns the token plus the user, so Login need not call `/users/me` after.
   "tokenType": "Bearer",
   "expiresIn": 2592000,
   "user": {
-    "id": "1cbee4ab-1aeb-446b-9e9f-343495db5beb",
-    "email": "fe-demo-fc08d4@techies.vn",
+    "id": "88d5d42e-dad5-4958-a69d-de30eca7ca58",
+    "email": "fe-demo-571225@techies.vn",
     "fullName": "Nguyen Van A",
     "phone": "0901234567",
     "avatarUrl": null
@@ -429,7 +429,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "email": "fe-demo-fc08d4@techies.vn",
+  "email": "fe-demo-571225@techies.vn",
   "password": "wrongpassword1"
 }
 ```
@@ -438,7 +438,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "timestamp": "2026-09-27T10:54:20.289896555Z",
+  "timestamp": "2026-09-28T17:02:56.982403887Z",
   "status": 401,
   "code": "INVALID_CREDENTIALS",
   "message": "Email or password is incorrect",
@@ -457,7 +457,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-fc08d4@techies.vn"
+  "email": "fe-demo-571225@techies.vn"
 }
 ```
 
@@ -465,7 +465,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-fc08d4@techies.vn",
+  "email": "fe-demo-571225@techies.vn",
   "exists": true
 }
 ```
@@ -524,8 +524,8 @@ For the Profile screen.
 
 ```json
 {
-  "id": "1cbee4ab-1aeb-446b-9e9f-343495db5beb",
-  "email": "fe-demo-fc08d4@techies.vn",
+  "id": "88d5d42e-dad5-4958-a69d-de30eca7ca58",
+  "email": "fe-demo-571225@techies.vn",
   "fullName": "Nguyen Van A",
   "phone": "0901234567",
   "avatarUrl": null
@@ -552,8 +552,8 @@ Name and phone only. Email cannot change — it is the login identifier.
 
 ```json
 {
-  "id": "1cbee4ab-1aeb-446b-9e9f-343495db5beb",
-  "email": "fe-demo-fc08d4@techies.vn",
+  "id": "88d5d42e-dad5-4958-a69d-de30eca7ca58",
+  "email": "fe-demo-571225@techies.vn",
   "fullName": "Nguyen Van B",
   "phone": "0909999999",
   "avatarUrl": null
@@ -571,7 +571,7 @@ What the app gets when the token is missing or expired.
 
 ```json
 {
-  "timestamp": "2026-09-27T10:54:20.319218847Z",
+  "timestamp": "2026-09-28T17:02:57.026119720Z",
   "status": 401,
   "code": "UNAUTHENTICATED",
   "message": "Authentication required",
@@ -616,7 +616,7 @@ The user's first address becomes the default automatically, so Checkout always h
 
 ```json
 {
-  "id": "aa6d0254-b850-4be6-aa16-8d5104c56c91",
+  "id": "232fa5af-7175-4b4c-b04d-6004117a4e93",
   "recipientName": "Nguyen Van B",
   "phone": "0907654321",
   "line1": "12 Nguyen Hue",
@@ -639,7 +639,7 @@ Default first, then newest. Use the first entry to preselect at Checkout.
 ```json
 [
   {
-    "id": "aa6d0254-b850-4be6-aa16-8d5104c56c91",
+    "id": "232fa5af-7175-4b4c-b04d-6004117a4e93",
     "recipientName": "Nguyen Van B",
     "phone": "0907654321",
     "line1": "12 Nguyen Hue",
@@ -827,7 +827,7 @@ Includes the description and image gallery.
 
 ### Product detail — gone
 
-`GET /products/77dcfac4-1a6d-4562-85da-7c5ec32d3b92` · **Public — no token** · responds `404`
+`GET /products/3d2e9540-f11b-4121-9908-1b90b4e7b090` · **Public — no token** · responds `404`
 
 Unknown or delisted products return 404.
 
@@ -835,11 +835,11 @@ Unknown or delisted products return 404.
 
 ```json
 {
-  "timestamp": "2026-09-27T10:54:20.540658889Z",
+  "timestamp": "2026-09-28T17:02:57.254166929Z",
   "status": 404,
   "code": "PRODUCT_NOT_FOUND",
   "message": "Product not found",
-  "path": "/products/77dcfac4-1a6d-4562-85da-7c5ec32d3b92"
+  "path": "/products/3d2e9540-f11b-4121-9908-1b90b4e7b090"
 }
 ```
 
@@ -905,7 +905,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "9b6fea20-4092-44c4-9f15-f1d5fd360e50",
+      "id": "090469b6-5494-4bd7-a729-ef53de82f006",
       "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
       "name": "MacBook Air M3 13 inch 8GB/256GB",
       "unitPrice": 27990000.0,
@@ -923,7 +923,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 
 ### Change quantity
 
-`PUT /cart/items/9b6fea20-4092-44c4-9f15-f1d5fd360e50` · **Bearer token required** · responds `200`
+`PUT /cart/items/090469b6-5494-4bd7-a729-ef53de82f006` · **Bearer token required** · responds `200`
 
 `quantity: 0` removes the line. `DELETE /cart/items/{itemId}` does the same and returns `204`.
 
@@ -941,7 +941,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "9b6fea20-4092-44c4-9f15-f1d5fd360e50",
+      "id": "090469b6-5494-4bd7-a729-ef53de82f006",
       "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
       "name": "MacBook Air M3 13 inch 8GB/256GB",
       "unitPrice": 27990000.0,
@@ -973,7 +973,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "9b6fea20-4092-44c4-9f15-f1d5fd360e50",
+      "id": "090469b6-5494-4bd7-a729-ef53de82f006",
       "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
       "name": "MacBook Air M3 13 inch 8GB/256GB",
       "unitPrice": 27990000.0,
@@ -993,17 +993,27 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 
 ## Checkout — read this before implementing it
 
+**Placing an order and paying for it are two calls.** `POST /checkout` takes the stock
+and stops; the app then takes the customer to the payment screen and reports the
+outcome to `POST /orders/{id}/payment`. COD is the exception and is confirmed
+immediately, because there is nothing to settle before delivery.
+
+```
+POST /checkout            -> order.status = AWAITING_PAYMENT  (stock held, cart kept)
+     [customer pays in the app]
+POST /orders/{id}/payment -> order.status = CONFIRMED  or  FAILED
+```
+
 `POST /checkout` **returns HTTP 200 even when the order fails.**
 
 ```json
-{ "addressId": "<uuid>", "paymentMethod": "MOCK_CARD", "simulatePayment": "SUCCESS" }
+{ "addressId": "<uuid>", "paymentMethod": "MOCK_CARD" }
 ```
 
 | Field | Values |
 |---|---|
 | `addressId` | From `GET /addresses` |
-| `paymentMethod` | `COD` (always succeeds) or `MOCK_CARD` |
-| `simulatePayment` | Optional, `MOCK_CARD` only: `SUCCESS` (default), `DECLINED`, `TIMEOUT` |
+| `paymentMethod` | `COD` (confirmed at once) or `MOCK_CARD` (waits for payment) |
 | `cartItemIds` | Optional array of cart line ids — see below |
 
 **Buying part of the cart.** For the cart screen's per-line selection, send the ids of
@@ -1018,13 +1028,11 @@ what the whole-cart Checkout button does.
 | `[]` | `400 VALIDATION_ERROR` — asks to buy nothing |
 | an id not in the cart | `404 NOT_FOUND` — nothing is bought |
 
-`simulatePayment` exists so the app can demo both branches on demand. There is no real
-payment provider.
-
 **Branch on `order.status`, not on the HTTP status:**
 
 | `order.status` | `failureCode` | Screen |
 |---|---|---|
+| `AWAITING_PAYMENT` | `null` | Payment screen — settle, then report the result |
 | `CONFIRMED` | `null` | Order Success (CART-03) |
 | `FAILED` | `PAYMENT_FAILED` | Order Failed (CART-04) → back to Checkout |
 | `FAILED` | `OUT_OF_STOCK` | Order Failed, refresh the cart |
@@ -1033,23 +1041,48 @@ payment provider.
 A 4xx here means the request never became an order at all (`EMPTY_CART`,
 `ADDRESS_NOT_FOUND`, `PRODUCT_UNAVAILABLE`) — those are input problems, not failed orders.
 
-**The cart is cleared only on success.** After a failure the items are still there, so
-the user can fix the problem and retry. Do not clear it client-side.
+**The cart is cleared only on a successful payment.** While the order is
+`AWAITING_PAYMENT`, and after any failure, the items are still there so the user can
+retry. Do not clear it client-side.
+
+---
+
+## Reporting the payment
+
+`POST /orders/{id}/payment` finishes an `AWAITING_PAYMENT` order.
+
+```json
+{ "result": "SUCCESS", "transactionRef": "TXN-DEMO-0001" }
+```
+
+| Field | Values |
+|---|---|
+| `result` | `SUCCESS` confirms the order, `FAILED` releases its stock |
+| `transactionRef` | The provider's transaction id, up to 64 chars. Send it on success |
+| `failureReason` | Optional free text, up to 200 chars, recorded on failure |
+
+**It is idempotent.** Reporting the same result again returns the same order, so a
+retry after a dropped connection is safe. Reporting the opposite of a settled order is
+`409 ORDER_NOT_PAYABLE` — a paid order is undone with `/cancel`, and a failed one has
+already given its stock back. A COD order is `409` too: there is nothing to pay now.
+
+**Do not leave an order awaiting payment.** Stock is held from the moment it is placed, so a
+checkout nobody pays for is expired after 15 minutes and its stock returned. Report
+`FAILED` as soon as the customer backs out rather than waiting for that sweep.
 
 
-### Checkout — success
+### Checkout — awaiting payment
 
 `POST /checkout` · **Bearer token required** · responds `200`
 
-`status: CONFIRMED`. The cart is now empty and stock is reduced.
+`status: AWAITING_PAYMENT`. Stock is held and the cart is kept. Take the customer to the payment screen, then report the outcome.
 
 **Request**
 
 ```json
 {
-  "addressId": "aa6d0254-b850-4be6-aa16-8d5104c56c91",
-  "paymentMethod": "MOCK_CARD",
-  "simulatePayment": "SUCCESS"
+  "addressId": "232fa5af-7175-4b4c-b04d-6004117a4e93",
+  "paymentMethod": "MOCK_CARD"
 }
 ```
 
@@ -1058,15 +1091,16 @@ the user can fix the problem and retry. Do not clear it client-side.
 ```json
 {
   "order": {
-    "id": "f462abaf-d90b-4274-a271-eedd51aa0184",
-    "orderRef": "ORD-20260927-0020",
-    "status": "CONFIRMED",
+    "id": "6ed36c04-5197-4efb-bf5d-9561ea4d121a",
+    "orderRef": "ORD-20260928-0001",
+    "status": "AWAITING_PAYMENT",
     "failureCode": null,
     "subtotal": 27990000.0,
     "shippingFee": 0.0,
     "total": 27990000.0,
     "paymentMethod": "MOCK_CARD",
-    "paymentStatus": "PAID",
+    "paymentStatus": "PENDING",
+    "paymentRef": null,
     "shippingAddress": {
       "recipientName": "Nguyen Van B",
       "phone": "0907654321",
@@ -1085,26 +1119,25 @@ the user can fix the problem and retry. Do not clear it client-side.
         "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
       }
     ],
-    "createdAt": "2026-09-27T10:54:20.730428Z"
+    "createdAt": "2026-09-28T17:02:57.810630Z"
   },
-  "message": "Order placed successfully"
+  "message": "Order placed, complete the payment to confirm it"
 }
 ```
 
 
-### Checkout — payment declined
+### Payment — success
 
-`POST /checkout` · **Bearer token required** · responds `200`
+`POST /orders/6ed36c04-5197-4efb-bf5d-9561ea4d121a/payment` · **Bearer token required** · responds `200`
 
-**HTTP 200 with a FAILED order.** Stock that was taken has been returned automatically, and the cart is intact for a retry.
+`status: CONFIRMED`. The cart is now empty and the stock is sold.
 
 **Request**
 
 ```json
 {
-  "addressId": "aa6d0254-b850-4be6-aa16-8d5104c56c91",
-  "paymentMethod": "MOCK_CARD",
-  "simulatePayment": "DECLINED"
+  "result": "SUCCESS",
+  "transactionRef": "TXN-DEMO-0001"
 }
 ```
 
@@ -1112,37 +1145,87 @@ the user can fix the problem and retry. Do not clear it client-side.
 
 ```json
 {
-  "order": {
-    "id": "699df364-16d6-47cd-ad6d-eac03e7b7f41",
-    "orderRef": "ORD-20260927-0021",
-    "status": "FAILED",
-    "failureCode": "PAYMENT_FAILED",
-    "subtotal": 27990000.0,
-    "shippingFee": 0.0,
-    "total": 27990000.0,
-    "paymentMethod": "MOCK_CARD",
-    "paymentStatus": "DECLINED",
-    "shippingAddress": {
-      "recipientName": "Nguyen Van B",
-      "phone": "0907654321",
-      "line1": "12 Nguyen Hue",
-      "ward": "Ben Nghe",
-      "district": "Quan 1",
-      "province": "Ho Chi Minh"
-    },
-    "items": [
-      {
-        "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-        "productName": "MacBook Air M3 13 inch 8GB/256GB",
-        "unitPrice": 27990000.0,
-        "quantity": 1,
-        "lineTotal": 27990000.0,
-        "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
-      }
-    ],
-    "createdAt": "2026-09-27T10:54:21.052152Z"
+  "id": "6ed36c04-5197-4efb-bf5d-9561ea4d121a",
+  "orderRef": "ORD-20260928-0001",
+  "status": "CONFIRMED",
+  "failureCode": null,
+  "subtotal": 27990000.0,
+  "shippingFee": 0.0,
+  "total": 27990000.0,
+  "paymentMethod": "MOCK_CARD",
+  "paymentStatus": "PAID",
+  "paymentRef": "TXN-DEMO-0001",
+  "shippingAddress": {
+    "recipientName": "Nguyen Van B",
+    "phone": "0907654321",
+    "line1": "12 Nguyen Hue",
+    "ward": "Ben Nghe",
+    "district": "Quan 1",
+    "province": "Ho Chi Minh"
   },
-  "message": "Payment was declined, your cart has been kept"
+  "items": [
+    {
+      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+      "productName": "MacBook Air M3 13 inch 8GB/256GB",
+      "unitPrice": 27990000.0,
+      "quantity": 1,
+      "lineTotal": 27990000.0,
+      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+    }
+  ],
+  "createdAt": "2026-09-28T17:02:57.810630Z"
+}
+```
+
+
+### Payment — failed
+
+`POST /orders/87c09e92-f82d-4467-b56d-8b57f454b5b8/payment` · **Bearer token required** · responds `200`
+
+**HTTP 200 with a FAILED order.** Stock that was held has been returned automatically, and the cart is intact for a retry.
+
+**Request**
+
+```json
+{
+  "result": "FAILED",
+  "failureReason": "Card declined by issuer"
+}
+```
+
+**Response**
+
+```json
+{
+  "id": "87c09e92-f82d-4467-b56d-8b57f454b5b8",
+  "orderRef": "ORD-20260928-0002",
+  "status": "FAILED",
+  "failureCode": "PAYMENT_FAILED",
+  "subtotal": 27990000.0,
+  "shippingFee": 0.0,
+  "total": 27990000.0,
+  "paymentMethod": "MOCK_CARD",
+  "paymentStatus": "DECLINED",
+  "paymentRef": null,
+  "shippingAddress": {
+    "recipientName": "Nguyen Van B",
+    "phone": "0907654321",
+    "line1": "12 Nguyen Hue",
+    "ward": "Ben Nghe",
+    "district": "Quan 1",
+    "province": "Ho Chi Minh"
+  },
+  "items": [
+    {
+      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+      "productName": "MacBook Air M3 13 inch 8GB/256GB",
+      "unitPrice": 27990000.0,
+      "quantity": 1,
+      "lineTotal": 27990000.0,
+      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+    }
+  ],
+  "createdAt": "2026-09-28T17:02:58.160565Z"
 }
 ```
 
@@ -1151,13 +1234,13 @@ the user can fix the problem and retry. Do not clear it client-side.
 
 `POST /checkout` · **Bearer token required** · responds `200`
 
-No payment was attempted. Refresh the cart to see what is unavailable.
+The order never reached the payment step. Refresh the cart to see what is unavailable.
 
 **Request**
 
 ```json
 {
-  "addressId": "aa6d0254-b850-4be6-aa16-8d5104c56c91",
+  "addressId": "232fa5af-7175-4b4c-b04d-6004117a4e93",
   "paymentMethod": "COD"
 }
 ```
@@ -1167,8 +1250,8 @@ No payment was attempted. Refresh the cart to see what is unavailable.
 ```json
 {
   "order": {
-    "id": "e65ba3db-e721-40ba-9a1d-7f07b55cf142",
-    "orderRef": "ORD-20260927-0022",
+    "id": "7f63cb2b-96ec-44b6-95e6-a5da22e0154a",
+    "orderRef": "ORD-20260928-0003",
     "status": "FAILED",
     "failureCode": "OUT_OF_STOCK",
     "subtotal": 41980000.0,
@@ -1176,6 +1259,7 @@ No payment was attempted. Refresh the cart to see what is unavailable.
     "total": 41980000.0,
     "paymentMethod": "COD",
     "paymentStatus": "PENDING",
+    "paymentRef": null,
     "shippingAddress": {
       "recipientName": "Nguyen Van B",
       "phone": "0907654321",
@@ -1186,23 +1270,23 @@ No payment was attempted. Refresh the cart to see what is unavailable.
     },
     "items": [
       {
-        "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-        "productName": "MacBook Air M3 13 inch 8GB/256GB",
-        "unitPrice": 27990000.0,
-        "quantity": 1,
-        "lineTotal": 27990000.0,
-        "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
-      },
-      {
         "productId": "b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8",
         "productName": "MSI Modern 14 C13M",
         "unitPrice": 13990000.0,
         "quantity": 1,
         "lineTotal": 13990000.0,
         "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M"
+      },
+      {
+        "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+        "productName": "MacBook Air M3 13 inch 8GB/256GB",
+        "unitPrice": 27990000.0,
+        "quantity": 1,
+        "lineTotal": 27990000.0,
+        "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
       }
     ],
-    "createdAt": "2026-09-27T10:54:21.375110Z"
+    "createdAt": "2026-09-28T17:02:58.348580Z"
   },
   "message": "Some items are no longer in stock"
 }
@@ -1217,7 +1301,7 @@ No payment was attempted. Refresh the cart to see what is unavailable.
 
 `GET /orders` · **Bearer token required** · responds `200`
 
-Newest first. Optional `?status=CONFIRMED|FAILED|CANCELLED`, plus `page` and `size`.
+Newest first. Optional `?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED`, plus `page` and `size`.
 
 **Response**
 
@@ -1225,31 +1309,31 @@ Newest first. Optional `?status=CONFIRMED|FAILED|CANCELLED`, plus `page` and `si
 {
   "content": [
     {
-      "id": "e65ba3db-e721-40ba-9a1d-7f07b55cf142",
-      "orderRef": "ORD-20260927-0022",
+      "id": "7f63cb2b-96ec-44b6-95e6-a5da22e0154a",
+      "orderRef": "ORD-20260928-0003",
       "status": "FAILED",
       "failureCode": "OUT_OF_STOCK",
       "total": 41980000.0,
       "itemCount": 2,
-      "createdAt": "2026-09-27T10:54:21.375110Z"
+      "createdAt": "2026-09-28T17:02:58.348580Z"
     },
     {
-      "id": "699df364-16d6-47cd-ad6d-eac03e7b7f41",
-      "orderRef": "ORD-20260927-0021",
+      "id": "87c09e92-f82d-4467-b56d-8b57f454b5b8",
+      "orderRef": "ORD-20260928-0002",
       "status": "FAILED",
       "failureCode": "PAYMENT_FAILED",
       "total": 27990000.0,
       "itemCount": 1,
-      "createdAt": "2026-09-27T10:54:21.052152Z"
+      "createdAt": "2026-09-28T17:02:58.160565Z"
     },
     {
-      "id": "f462abaf-d90b-4274-a271-eedd51aa0184",
-      "orderRef": "ORD-20260927-0020",
+      "id": "6ed36c04-5197-4efb-bf5d-9561ea4d121a",
+      "orderRef": "ORD-20260928-0001",
       "status": "CONFIRMED",
       "failureCode": null,
       "total": 27990000.0,
       "itemCount": 1,
-      "createdAt": "2026-09-27T10:54:20.730428Z"
+      "createdAt": "2026-09-28T17:02:57.810630Z"
     }
   ],
   "page": 0,
@@ -1262,7 +1346,7 @@ Newest first. Optional `?status=CONFIRMED|FAILED|CANCELLED`, plus `page` and `si
 
 ### Order detail
 
-`GET /orders/f462abaf-d90b-4274-a271-eedd51aa0184` · **Bearer token required** · responds `200`
+`GET /orders/6ed36c04-5197-4efb-bf5d-9561ea4d121a` · **Bearer token required** · responds `200`
 
 Prices and the shipping address are snapshots taken at checkout — a later catalog price change never alters a past order. Another user's order returns 403.
 
@@ -1270,8 +1354,8 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
 
 ```json
 {
-  "id": "f462abaf-d90b-4274-a271-eedd51aa0184",
-  "orderRef": "ORD-20260927-0020",
+  "id": "6ed36c04-5197-4efb-bf5d-9561ea4d121a",
+  "orderRef": "ORD-20260928-0001",
   "status": "CONFIRMED",
   "failureCode": null,
   "subtotal": 27990000.0,
@@ -1279,6 +1363,7 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
   "total": 27990000.0,
   "paymentMethod": "MOCK_CARD",
   "paymentStatus": "PAID",
+  "paymentRef": "TXN-DEMO-0001",
   "shippingAddress": {
     "recipientName": "Nguyen Van B",
     "phone": "0907654321",
@@ -1297,14 +1382,14 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
       "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
     }
   ],
-  "createdAt": "2026-09-27T10:54:20.730428Z"
+  "createdAt": "2026-09-28T17:02:57.810630Z"
 }
 ```
 
 
 ### Cancel order
 
-`POST /orders/f462abaf-d90b-4274-a271-eedd51aa0184/cancel` · **Bearer token required** · responds `200`
+`POST /orders/6ed36c04-5197-4efb-bf5d-9561ea4d121a/cancel` · **Bearer token required** · responds `200`
 
 Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunded.
 
@@ -1312,8 +1397,8 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
 
 ```json
 {
-  "id": "f462abaf-d90b-4274-a271-eedd51aa0184",
-  "orderRef": "ORD-20260927-0020",
+  "id": "6ed36c04-5197-4efb-bf5d-9561ea4d121a",
+  "orderRef": "ORD-20260928-0001",
   "status": "CANCELLED",
   "failureCode": null,
   "subtotal": 27990000.0,
@@ -1321,6 +1406,7 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
   "total": 27990000.0,
   "paymentMethod": "MOCK_CARD",
   "paymentStatus": "REFUNDED",
+  "paymentRef": "TXN-DEMO-0001",
   "shippingAddress": {
     "recipientName": "Nguyen Van B",
     "phone": "0907654321",
@@ -1339,14 +1425,14 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
       "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
     }
   ],
-  "createdAt": "2026-09-27T10:54:20.730428Z"
+  "createdAt": "2026-09-28T17:02:57.810630Z"
 }
 ```
 
 
 ### Cancel — not allowed
 
-`POST /orders/f462abaf-d90b-4274-a271-eedd51aa0184/cancel` · **Bearer token required** · responds `409`
+`POST /orders/6ed36c04-5197-4efb-bf5d-9561ea4d121a/cancel` · **Bearer token required** · responds `409`
 
 Show the Cancel button only when `status == "CONFIRMED"`.
 
@@ -1354,11 +1440,11 @@ Show the Cancel button only when `status == "CONFIRMED"`.
 
 ```json
 {
-  "timestamp": "2026-09-27T10:54:21.458736666Z",
+  "timestamp": "2026-09-28T17:02:58.454681138Z",
   "status": 409,
   "code": "ORDER_NOT_CANCELLABLE",
   "message": "An order in status CANCELLED cannot be cancelled",
-  "path": "/orders/f462abaf-d90b-4274-a271-eedd51aa0184/cancel"
+  "path": "/orders/6ed36c04-5197-4efb-bf5d-9561ea4d121a/cancel"
 }
 ```
 

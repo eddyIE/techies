@@ -126,7 +126,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-aa5826@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-52e328@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -143,7 +143,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"userId\": \"288bce39-44ac-42d4-8166-53637bd6f92a\",\n  \"email\": \"fe-demo-aa5826@techies.vn\"\n}"
+              "body": "{\n  \"userId\": \"9b483ab6-bbb4-46f5-8dfd-19603dbf1d7c\",\n  \"email\": \"fe-demo-52e328@techies.vn\"\n}"
             },
             {
               "name": "409 Email already exists",
@@ -172,7 +172,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-aa5826@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-52e328@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -189,7 +189,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:21.682836666Z\",\n  \"status\": 409,\n  \"code\": \"EMAIL_ALREADY_EXISTS\",\n  \"message\": \"An account with this email already exists\",\n  \"path\": \"/auth/register\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-28T17:02:58.693975013Z\",\n  \"status\": 409,\n  \"code\": \"EMAIL_ALREADY_EXISTS\",\n  \"message\": \"An account with this email already exists\",\n  \"path\": \"/auth/register\"\n}"
             },
             {
               "name": "400 Validation error",
@@ -235,7 +235,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:21.686626916Z\",\n  \"status\": 400,\n  \"code\": \"VALIDATION_ERROR\",\n  \"message\": \"Request validation failed\",\n  \"path\": \"/auth/register\",\n  \"fieldErrors\": {\n    \"phone\": \"must be 9-11 digits\",\n    \"email\": \"must be a well-formed email address\",\n    \"fullName\": \"must not be blank\"\n  }\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-28T17:02:58.699031679Z\",\n  \"status\": 400,\n  \"code\": \"VALIDATION_ERROR\",\n  \"message\": \"Request validation failed\",\n  \"path\": \"/auth/register\",\n  \"fieldErrors\": {\n    \"fullName\": \"must not be blank\",\n    \"phone\": \"must be 9-11 digits\",\n    \"email\": \"must be a well-formed email address\"\n  }\n}"
             }
           ]
         },
@@ -305,7 +305,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-aa5826@techies.vn\",\n  \"password\": \"password1\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-52e328@techies.vn\",\n  \"password\": \"password1\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -322,7 +322,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"accessToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIyODhiY2UzOS00NGFjLTQyZDQtODE2Ni01MzYzN2JkNmY5MmEiLCJlbWFpbCI6ImZlLWRlbW8tYWE1ODI2QHRlY2hpZXMudm4iLCJpYXQiOjE3OTA1MDY0NjEsImV4cCI6MTc5MzA5ODQ2MX0.PVMHwCx7FvHRMBi07U-Vh-eXSsFWJblBFP9rub2IGXDs8wSI15I_RcKpHkQS8GZ4\",\n  \"tokenType\": \"Bearer\",\n  \"expiresIn\": 2592000,\n  \"user\": {\n    \"id\": \"288bce39-44ac-42d4-8166-53637bd6f92a\",\n    \"email\": \"fe-demo-aa5826@techies.vn\",\n    \"fullName\": \"Nguyen Van A\",\n    \"phone\": \"0901234567\",\n    \"avatarUrl\": null\n  }\n}"
+              "body": "{\n  \"accessToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI5YjQ4M2FiNi1iYmI0LTQ2ZjUtOGRmZC0xOTYwM2RiZjFkN2MiLCJlbWFpbCI6ImZlLWRlbW8tNTJlMzI4QHRlY2hpZXMudm4iLCJpYXQiOjE3OTA2MTQ5NzgsImV4cCI6MTc5MzIwNjk3OH0.7SAx1rOJXKZSjgX2TbnVVJenbZIDeLXOaj95sM0svdjsVx55T5Uap3yrSbZ5Y-Rw\",\n  \"tokenType\": \"Bearer\",\n  \"expiresIn\": 2592000,\n  \"user\": {\n    \"id\": \"9b483ab6-bbb4-46f5-8dfd-19603dbf1d7c\",\n    \"email\": \"fe-demo-52e328@techies.vn\",\n    \"fullName\": \"Nguyen Van A\",\n    \"phone\": \"0901234567\",\n    \"avatarUrl\": null\n  }\n}"
             },
             {
               "name": "401 Invalid credentials",
@@ -351,7 +351,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-aa5826@techies.vn\",\n  \"password\": \"wrongpassword1\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-52e328@techies.vn\",\n  \"password\": \"wrongpassword1\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -368,7 +368,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:21.846060167Z\",\n  \"status\": 401,\n  \"code\": \"INVALID_CREDENTIALS\",\n  \"message\": \"Email or password is incorrect\",\n  \"path\": \"/auth/login\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-28T17:02:58.873540179Z\",\n  \"status\": 401,\n  \"code\": \"INVALID_CREDENTIALS\",\n  \"message\": \"Email or password is incorrect\",\n  \"path\": \"/auth/login\"\n}"
             }
           ],
           "event": [
@@ -454,7 +454,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-aa5826@techies.vn\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-52e328@techies.vn\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -471,7 +471,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"email\": \"fe-demo-aa5826@techies.vn\",\n  \"exists\": true\n}"
+              "body": "{\n  \"email\": \"fe-demo-52e328@techies.vn\",\n  \"exists\": true\n}"
             },
             {
               "name": "200 not registered",
@@ -905,13 +905,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/products/89132d19-d2a6-4026-8054-b88ef77631ab",
+                  "raw": "{{baseUrl}}/products/6fb2bff5-ea2b-437c-b755-bce4586be1d6",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "products",
-                    "89132d19-d2a6-4026-8054-b88ef77631ab"
+                    "6fb2bff5-ea2b-437c-b755-bce4586be1d6"
                   ]
                 },
                 "description": ""
@@ -925,7 +925,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:21.942926875Z\",\n  \"status\": 404,\n  \"code\": \"PRODUCT_NOT_FOUND\",\n  \"message\": \"Product not found\",\n  \"path\": \"/products/89132d19-d2a6-4026-8054-b88ef77631ab\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-28T17:02:58.966785221Z\",\n  \"status\": 404,\n  \"code\": \"PRODUCT_NOT_FOUND\",\n  \"message\": \"Product not found\",\n  \"path\": \"/products/6fb2bff5-ea2b-437c-b755-bce4586be1d6\"\n}"
             }
           ]
         },
@@ -1065,7 +1065,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"288bce39-44ac-42d4-8166-53637bd6f92a\",\n  \"email\": \"fe-demo-aa5826@techies.vn\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\",\n  \"avatarUrl\": null\n}"
+              "body": "{\n  \"id\": \"9b483ab6-bbb4-46f5-8dfd-19603dbf1d7c\",\n  \"email\": \"fe-demo-52e328@techies.vn\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\",\n  \"avatarUrl\": null\n}"
             },
             {
               "name": "401 No token",
@@ -1102,7 +1102,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:21.871113417Z\",\n  \"status\": 401,\n  \"code\": \"UNAUTHENTICATED\",\n  \"message\": \"Authentication required\",\n  \"path\": \"/api/users/me\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-28T17:02:58.899959179Z\",\n  \"status\": 401,\n  \"code\": \"UNAUTHENTICATED\",\n  \"message\": \"Authentication required\",\n  \"path\": \"/api/users/me\"\n}"
             }
           ]
         },
@@ -1186,7 +1186,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"288bce39-44ac-42d4-8166-53637bd6f92a\",\n  \"email\": \"fe-demo-aa5826@techies.vn\",\n  \"fullName\": \"Nguyen Van B\",\n  \"phone\": \"0909999999\",\n  \"avatarUrl\": null\n}"
+              "body": "{\n  \"id\": \"9b483ab6-bbb4-46f5-8dfd-19603dbf1d7c\",\n  \"email\": \"fe-demo-52e328@techies.vn\",\n  \"fullName\": \"Nguyen Van B\",\n  \"phone\": \"0909999999\",\n  \"avatarUrl\": null\n}"
             }
           ]
         },
@@ -1337,7 +1337,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:21.888510875Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'evil.png')\",\n  \"path\": \"/users/me/avatar\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-28T17:02:58.916873096Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'evil.png')\",\n  \"path\": \"/users/me/avatar\"\n}"
             },
             {
               "name": "400 Unsupported format",
@@ -1375,7 +1375,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:21.894487042Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'me.gif')\",\n  \"path\": \"/users/me/avatar\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-28T17:02:58.923243888Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'me.gif')\",\n  \"path\": \"/users/me/avatar\"\n}"
             }
           ]
         },
@@ -1500,7 +1500,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"id\": \"8db31dbf-0b55-464e-8dcf-c9b4698e5556\",\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\",\n    \"isDefault\": true\n  }\n]"
+              "body": "[\n  {\n    \"id\": \"295956e9-201e-4f0c-9c53-2097437cf497\",\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\",\n    \"isDefault\": true\n  }\n]"
             }
           ]
         },
@@ -1582,7 +1582,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"8db31dbf-0b55-464e-8dcf-c9b4698e5556\",\n  \"recipientName\": \"Nguyen Van B\",\n  \"phone\": \"0907654321\",\n  \"line1\": \"12 Nguyen Hue\",\n  \"ward\": \"Ben Nghe\",\n  \"district\": \"Quan 1\",\n  \"province\": \"Ho Chi Minh\",\n  \"isDefault\": true\n}"
+              "body": "{\n  \"id\": \"295956e9-201e-4f0c-9c53-2097437cf497\",\n  \"recipientName\": \"Nguyen Van B\",\n  \"phone\": \"0907654321\",\n  \"line1\": \"12 Nguyen Hue\",\n  \"ward\": \"Ben Nghe\",\n  \"district\": \"Quan 1\",\n  \"province\": \"Ho Chi Minh\",\n  \"isDefault\": true\n}"
             }
           ],
           "event": [
@@ -1704,7 +1704,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"id\": \"f0ad86f3-3b03-4775-abb5-767850290d98\",\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"name\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\",\n      \"available\": 51\n    }\n  ],\n  \"subtotal\": 27990000.0,\n  \"itemCount\": 1\n}"
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"80bd36ef-5568-4529-9b88-58dc37958d8d\",\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"name\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\",\n      \"available\": 51\n    }\n  ],\n  \"subtotal\": 27990000.0,\n  \"itemCount\": 1\n}"
             },
             {
               "name": "200 Empty",
@@ -1824,7 +1824,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"id\": \"f0ad86f3-3b03-4775-abb5-767850290d98\",\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"name\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 2,\n      \"lineTotal\": 55980000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\",\n      \"available\": 51\n    }\n  ],\n  \"subtotal\": 55980000.0,\n  \"itemCount\": 1\n}"
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"80bd36ef-5568-4529-9b88-58dc37958d8d\",\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"name\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 2,\n      \"lineTotal\": 55980000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\",\n      \"available\": 51\n    }\n  ],\n  \"subtotal\": 55980000.0,\n  \"itemCount\": 1\n}"
             }
           ],
           "event": [
@@ -1895,14 +1895,14 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/cart/items/f0ad86f3-3b03-4775-abb5-767850290d98",
+                  "raw": "{{baseUrl}}/cart/items/80bd36ef-5568-4529-9b88-58dc37958d8d",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "cart",
                     "items",
-                    "f0ad86f3-3b03-4775-abb5-767850290d98"
+                    "80bd36ef-5568-4529-9b88-58dc37958d8d"
                   ]
                 },
                 "description": "",
@@ -1925,17 +1925,17 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"id\": \"f0ad86f3-3b03-4775-abb5-767850290d98\",\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"name\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\",\n      \"available\": 51\n    }\n  ],\n  \"subtotal\": 27990000.0,\n  \"itemCount\": 1\n}"
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"80bd36ef-5568-4529-9b88-58dc37958d8d\",\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"name\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\",\n      \"available\": 51\n    }\n  ],\n  \"subtotal\": 27990000.0,\n  \"itemCount\": 1\n}"
             }
           ]
         }
       ]
     },
     {
-      "name": "5. Checkout",
+      "name": "5. Checkout & payment",
       "item": [
         {
-          "name": "Checkout — success",
+          "name": "Checkout — awaiting payment",
           "request": {
             "method": "POST",
             "header": [
@@ -1957,10 +1957,10 @@
                 "checkout"
               ]
             },
-            "description": "Returns 200 with order.status = CONFIRMED. Stock is deducted and the cart cleared.",
+            "description": "Returns 200 with order.status = AWAITING_PAYMENT. Stock is held and the cart is KEPT; the app now takes the customer to pay and reports the outcome below.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"addressId\": \"{{addressId}}\",\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"simulatePayment\": \"SUCCESS\"\n}",
+              "raw": "{\n  \"addressId\": \"{{addressId}}\",\n  \"paymentMethod\": \"MOCK_CARD\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1970,7 +1970,7 @@
           },
           "response": [
             {
-              "name": "200 CONFIRMED",
+              "name": "200 AWAITING_PAYMENT",
               "originalRequest": {
                 "method": "POST",
                 "header": [
@@ -1995,7 +1995,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"addressId\": \"8db31dbf-0b55-464e-8dcf-c9b4698e5556\",\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"simulatePayment\": \"SUCCESS\"\n}",
+                  "raw": "{\n  \"addressId\": \"295956e9-201e-4f0c-9c53-2097437cf497\",\n  \"paymentMethod\": \"MOCK_CARD\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2012,7 +2012,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"8c16d0c4-d204-4eda-ba8b-76a4567e4d50\",\n    \"orderRef\": \"ORD-20260927-0023\",\n    \"status\": \"CONFIRMED\",\n    \"failureCode\": null,\n    \"subtotal\": 27990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 27990000.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"PAID\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n        \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n        \"unitPrice\": 27990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 27990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n      }\n    ],\n    \"createdAt\": \"2026-09-27T10:54:22.019297Z\"\n  },\n  \"message\": \"Order placed successfully\"\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"2bb914ca-f314-4ad4-9f8a-7023b41a0458\",\n    \"orderRef\": \"ORD-20260928-0004\",\n    \"status\": \"AWAITING_PAYMENT\",\n    \"failureCode\": null,\n    \"subtotal\": 27990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 27990000.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"PENDING\",\n    \"paymentRef\": null,\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n        \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n        \"unitPrice\": 27990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 27990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n      }\n    ],\n    \"createdAt\": \"2026-09-28T17:02:59.059426Z\"\n  },\n  \"message\": \"Order placed, complete the payment to confirm it\"\n}"
             }
           ],
           "event": [
@@ -2051,7 +2051,93 @@
           ]
         },
         {
-          "name": "Checkout — payment declined",
+          "name": "Payment — success",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "ngrok-skip-browser-warning",
+                "value": "true"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}/payment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders",
+                "{{orderId}}",
+                "payment"
+              ]
+            },
+            "description": "Confirms the order and clears what was bought. Idempotent: sending it again returns the same order.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"result\": \"SUCCESS\",\n  \"transactionRef\": \"TXN-DEMO-0001\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "200 CONFIRMED",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "ngrok-skip-browser-warning",
+                    "value": "true"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/orders/2bb914ca-f314-4ad4-9f8a-7023b41a0458/payment",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders",
+                    "2bb914ca-f314-4ad4-9f8a-7023b41a0458",
+                    "payment"
+                  ]
+                },
+                "description": "",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"result\": \"SUCCESS\",\n  \"transactionRef\": \"TXN-DEMO-0001\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"2bb914ca-f314-4ad4-9f8a-7023b41a0458\",\n  \"orderRef\": \"ORD-20260928-0004\",\n  \"status\": \"CONFIRMED\",\n  \"failureCode\": null,\n  \"subtotal\": 27990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 27990000.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"PAID\",\n  \"paymentRef\": \"TXN-DEMO-0001\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n    }\n  ],\n  \"createdAt\": \"2026-09-28T17:02:59.059426Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Checkout — then declined",
           "request": {
             "method": "POST",
             "header": [
@@ -2073,10 +2159,10 @@
                 "checkout"
               ]
             },
-            "description": "HTTP 200 but order.status = FAILED, failureCode = PAYMENT_FAILED. Stock is restored automatically and the cart is KEPT so the user can retry.",
+            "description": "Place a second order so the declined branch has something to fail.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"addressId\": \"{{addressId}}\",\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"simulatePayment\": \"DECLINED\"\n}",
+              "raw": "{\n  \"addressId\": \"{{addressId}}\",\n  \"paymentMethod\": \"MOCK_CARD\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2086,7 +2172,7 @@
           },
           "response": [
             {
-              "name": "200 FAILED (PAYMENT_FAILED)",
+              "name": "200 AWAITING_PAYMENT",
               "originalRequest": {
                 "method": "POST",
                 "header": [
@@ -2111,7 +2197,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"addressId\": \"8db31dbf-0b55-464e-8dcf-c9b4698e5556\",\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"simulatePayment\": \"DECLINED\"\n}",
+                  "raw": "{\n  \"addressId\": \"295956e9-201e-4f0c-9c53-2097437cf497\",\n  \"paymentMethod\": \"MOCK_CARD\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2128,7 +2214,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"1539149c-5081-417c-885a-6194dedd25ef\",\n    \"orderRef\": \"ORD-20260927-0024\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"PAYMENT_FAILED\",\n    \"subtotal\": 27990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 27990000.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"DECLINED\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n        \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n        \"unitPrice\": 27990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 27990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n      }\n    ],\n    \"createdAt\": \"2026-09-27T10:54:22.293115Z\"\n  },\n  \"message\": \"Payment was declined, your cart has been kept\"\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"c2fe2767-2107-43a4-a6ae-ab6e3778e0f5\",\n    \"orderRef\": \"ORD-20260928-0005\",\n    \"status\": \"AWAITING_PAYMENT\",\n    \"failureCode\": null,\n    \"subtotal\": 27990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 27990000.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"PENDING\",\n    \"paymentRef\": null,\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n        \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n        \"unitPrice\": 27990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 27990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n      }\n    ],\n    \"createdAt\": \"2026-09-28T17:02:59.184910Z\"\n  },\n  \"message\": \"Order placed, complete the payment to confirm it\"\n}"
             }
           ],
           "event": [
@@ -2149,6 +2235,106 @@
                   "}, (err, res) => console.log('cart primed:', err ? err.message : res.code));"
                 ]
               }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "const value = body.order.id;",
+                  "if (value) {",
+                  "    pm.collectionVariables.set('orderId', value);",
+                  "    console.log('orderId =', value);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Payment — failed",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "ngrok-skip-browser-warning",
+                "value": "true"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}/payment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders",
+                "{{orderId}}",
+                "payment"
+              ]
+            },
+            "description": "order.status = FAILED, failureCode = PAYMENT_FAILED. Stock is restored automatically and the cart is KEPT so the user can retry.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"result\": \"FAILED\",\n  \"failureReason\": \"Card declined by issuer\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "200 FAILED (PAYMENT_FAILED)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "ngrok-skip-browser-warning",
+                    "value": "true"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/orders/c2fe2767-2107-43a4-a6ae-ab6e3778e0f5/payment",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders",
+                    "c2fe2767-2107-43a4-a6ae-ab6e3778e0f5",
+                    "payment"
+                  ]
+                },
+                "description": "",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"result\": \"FAILED\",\n  \"failureReason\": \"Card declined by issuer\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"c2fe2767-2107-43a4-a6ae-ab6e3778e0f5\",\n  \"orderRef\": \"ORD-20260928-0005\",\n  \"status\": \"FAILED\",\n  \"failureCode\": \"PAYMENT_FAILED\",\n  \"subtotal\": 27990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 27990000.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"DECLINED\",\n  \"paymentRef\": null,\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n    }\n  ],\n  \"createdAt\": \"2026-09-28T17:02:59.184910Z\"\n}"
             }
           ]
         },
@@ -2175,7 +2361,7 @@
                 "checkout"
               ]
             },
-            "description": "failureCode = OUT_OF_STOCK. No payment is attempted.",
+            "description": "failureCode = OUT_OF_STOCK. The order never reaches the payment step.",
             "body": {
               "mode": "raw",
               "raw": "{\n  \"addressId\": \"{{addressId}}\",\n  \"paymentMethod\": \"COD\"\n}",
@@ -2213,7 +2399,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"addressId\": \"8db31dbf-0b55-464e-8dcf-c9b4698e5556\",\n  \"paymentMethod\": \"COD\"\n}",
+                  "raw": "{\n  \"addressId\": \"295956e9-201e-4f0c-9c53-2097437cf497\",\n  \"paymentMethod\": \"COD\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2230,7 +2416,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"bca9c017-1884-4827-bc72-18323eba278b\",\n    \"orderRef\": \"ORD-20260927-0025\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"OUT_OF_STOCK\",\n    \"subtotal\": 41980000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 41980000.0,\n    \"paymentMethod\": \"COD\",\n    \"paymentStatus\": \"PENDING\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n        \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n        \"unitPrice\": 27990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 27990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n      },\n      {\n        \"productId\": \"b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8\",\n        \"productName\": \"MSI Modern 14 C13M\",\n        \"unitPrice\": 13990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 13990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M\"\n      }\n    ],\n    \"createdAt\": \"2026-09-27T10:54:22.608285Z\"\n  },\n  \"message\": \"Some items are no longer in stock\"\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"91ab8b16-f7bc-4c46-bfb7-9ee80deeb33e\",\n    \"orderRef\": \"ORD-20260928-0006\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"OUT_OF_STOCK\",\n    \"subtotal\": 41980000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 41980000.0,\n    \"paymentMethod\": \"COD\",\n    \"paymentStatus\": \"PENDING\",\n    \"paymentRef\": null,\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n        \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n        \"unitPrice\": 27990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 27990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n      },\n      {\n        \"productId\": \"b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8\",\n        \"productName\": \"MSI Modern 14 C13M\",\n        \"unitPrice\": 13990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 13990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M\"\n      }\n    ],\n    \"createdAt\": \"2026-09-28T17:02:59.283293Z\"\n  },\n  \"message\": \"Some items are no longer in stock\"\n}"
             }
           ],
           "event": [
@@ -2281,7 +2467,7 @@
                 "checkout"
               ]
             },
-            "description": "COD always approves; simulatePayment is ignored.",
+            "description": "COD is CONFIRMED straight away: there is nothing to settle before delivery, so it never waits for a payment call.",
             "body": {
               "mode": "raw",
               "raw": "{\n  \"addressId\": \"{{addressId}}\",\n  \"paymentMethod\": \"COD\"\n}",
@@ -2352,7 +2538,7 @@
                 }
               ]
             },
-            "description": "Newest first. Optional ?status=CONFIRMED|FAILED|CANCELLED."
+            "description": "Newest first. Optional ?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED."
           },
           "response": [
             {
@@ -2389,7 +2575,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"content\": [\n    {\n      \"id\": \"bca9c017-1884-4827-bc72-18323eba278b\",\n      \"orderRef\": \"ORD-20260927-0025\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"OUT_OF_STOCK\",\n      \"total\": 41980000.0,\n      \"itemCount\": 2,\n      \"createdAt\": \"2026-09-27T10:54:22.608285Z\"\n    },\n    {\n      \"id\": \"1539149c-5081-417c-885a-6194dedd25ef\",\n      \"orderRef\": \"ORD-20260927-0024\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"PAYMENT_FAILED\",\n      \"total\": 27990000.0,\n      \"itemCount\": 1,\n      \"createdAt\": \"2026-09-27T10:54:22.293115Z\"\n    },\n    {\n      \"id\": \"8c16d0c4-d204-4eda-ba8b-76a4567e4d50\",\n      \"orderRef\": \"ORD-20260927-0023\",\n      \"status\": \"CONFIRMED\",\n      \"failureCode\": null,\n      \"total\": 27990000.0,\n      \"itemCount\": 1,\n      \"createdAt\": \"2026-09-27T10:54:22.019297Z\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 20,\n  \"totalElements\": 3,\n  \"totalPages\": 1\n}"
+              "body": "{\n  \"content\": [\n    {\n      \"id\": \"91ab8b16-f7bc-4c46-bfb7-9ee80deeb33e\",\n      \"orderRef\": \"ORD-20260928-0006\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"OUT_OF_STOCK\",\n      \"total\": 41980000.0,\n      \"itemCount\": 2,\n      \"createdAt\": \"2026-09-28T17:02:59.283293Z\"\n    },\n    {\n      \"id\": \"c2fe2767-2107-43a4-a6ae-ab6e3778e0f5\",\n      \"orderRef\": \"ORD-20260928-0005\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"PAYMENT_FAILED\",\n      \"total\": 27990000.0,\n      \"itemCount\": 1,\n      \"createdAt\": \"2026-09-28T17:02:59.184910Z\"\n    },\n    {\n      \"id\": \"2bb914ca-f314-4ad4-9f8a-7023b41a0458\",\n      \"orderRef\": \"ORD-20260928-0004\",\n      \"status\": \"CONFIRMED\",\n      \"failureCode\": null,\n      \"total\": 27990000.0,\n      \"itemCount\": 1,\n      \"createdAt\": \"2026-09-28T17:02:59.059426Z\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 20,\n  \"totalElements\": 3,\n  \"totalPages\": 1\n}"
             }
           ],
           "event": [
@@ -2454,13 +2640,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/8c16d0c4-d204-4eda-ba8b-76a4567e4d50",
+                  "raw": "{{baseUrl}}/orders/2bb914ca-f314-4ad4-9f8a-7023b41a0458",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "8c16d0c4-d204-4eda-ba8b-76a4567e4d50"
+                    "2bb914ca-f314-4ad4-9f8a-7023b41a0458"
                   ]
                 },
                 "description": ""
@@ -2474,7 +2660,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"8c16d0c4-d204-4eda-ba8b-76a4567e4d50\",\n  \"orderRef\": \"ORD-20260927-0023\",\n  \"status\": \"CONFIRMED\",\n  \"failureCode\": null,\n  \"subtotal\": 27990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 27990000.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"PAID\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n    }\n  ],\n  \"createdAt\": \"2026-09-27T10:54:22.019297Z\"\n}"
+              "body": "{\n  \"id\": \"2bb914ca-f314-4ad4-9f8a-7023b41a0458\",\n  \"orderRef\": \"ORD-20260928-0004\",\n  \"status\": \"CONFIRMED\",\n  \"failureCode\": null,\n  \"subtotal\": 27990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 27990000.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"PAID\",\n  \"paymentRef\": \"TXN-DEMO-0001\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n    }\n  ],\n  \"createdAt\": \"2026-09-28T17:02:59.059426Z\"\n}"
             }
           ]
         },
@@ -2521,13 +2707,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/8c16d0c4-d204-4eda-ba8b-76a4567e4d50/cancel",
+                  "raw": "{{baseUrl}}/orders/2bb914ca-f314-4ad4-9f8a-7023b41a0458/cancel",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "8c16d0c4-d204-4eda-ba8b-76a4567e4d50",
+                    "2bb914ca-f314-4ad4-9f8a-7023b41a0458",
                     "cancel"
                   ]
                 },
@@ -2542,7 +2728,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"8c16d0c4-d204-4eda-ba8b-76a4567e4d50\",\n  \"orderRef\": \"ORD-20260927-0023\",\n  \"status\": \"CANCELLED\",\n  \"failureCode\": null,\n  \"subtotal\": 27990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 27990000.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"REFUNDED\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n    }\n  ],\n  \"createdAt\": \"2026-09-27T10:54:22.019297Z\"\n}"
+              "body": "{\n  \"id\": \"2bb914ca-f314-4ad4-9f8a-7023b41a0458\",\n  \"orderRef\": \"ORD-20260928-0004\",\n  \"status\": \"CANCELLED\",\n  \"failureCode\": null,\n  \"subtotal\": 27990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 27990000.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"REFUNDED\",\n  \"paymentRef\": \"TXN-DEMO-0001\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"productId\": \"717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a\",\n      \"productName\": \"MacBook Air M3 13 inch 8GB/256GB\",\n      \"unitPrice\": 27990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 27990000.0,\n      \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB\"\n    }\n  ],\n  \"createdAt\": \"2026-09-28T17:02:59.059426Z\"\n}"
             },
             {
               "name": "409 Not cancellable",
@@ -2559,13 +2745,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/8c16d0c4-d204-4eda-ba8b-76a4567e4d50/cancel",
+                  "raw": "{{baseUrl}}/orders/2bb914ca-f314-4ad4-9f8a-7023b41a0458/cancel",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "8c16d0c4-d204-4eda-ba8b-76a4567e4d50",
+                    "2bb914ca-f314-4ad4-9f8a-7023b41a0458",
                     "cancel"
                   ]
                 },
@@ -2580,7 +2766,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-09-27T10:54:22.662101917Z\",\n  \"status\": 409,\n  \"code\": \"ORDER_NOT_CANCELLABLE\",\n  \"message\": \"An order in status CANCELLED cannot be cancelled\",\n  \"path\": \"/orders/8c16d0c4-d204-4eda-ba8b-76a4567e4d50/cancel\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-09-28T17:02:59.338518096Z\",\n  \"status\": 409,\n  \"code\": \"ORDER_NOT_CANCELLABLE\",\n  \"message\": \"An order in status CANCELLED cannot be cancelled\",\n  \"path\": \"/orders/2bb914ca-f314-4ad4-9f8a-7023b41a0458/cancel\"\n}"
             }
           ]
         }

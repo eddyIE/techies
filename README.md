@@ -246,7 +246,7 @@ Not routed by the gateway, and unreachable from the host: `/internal/**` on any 
 | `docs/API.md` | **API reference for the mobile team** — generated from real responses |
 | `docs/SECURITY-NOTES.md` | What the deployment does and does not protect against |
 | `docs/postman/` | **Importable Postman collection** with real saved examples |
-| `ai-service/` | Gemini-backed product assistant, streamed over SSE |
+| `ai-service/` | Gemini-backed product assistant, streamed over SSE, with catalogue search and web grounding |
 
 ## Working in this repo
 

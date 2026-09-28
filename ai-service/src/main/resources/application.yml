@@ -41,6 +41,10 @@ techies:
     # Cards shown in the chat. Three fits a phone popup; the reply states the true total and
     # the app links to the product list screen for the rest.
     max-products: 3
+    # Lets the model look up specifications the seeded descriptions do not carry, such as
+    # battery capacity. Store facts (price, stock, warranty, promotions, delivery) are never
+    # answered this way; the system prompt keeps those to our own data.
+    web-search: true
 
 springdoc:
   api-docs:

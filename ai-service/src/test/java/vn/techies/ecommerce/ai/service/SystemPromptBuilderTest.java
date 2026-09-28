@@ -59,6 +59,34 @@ class SystemPromptBuilderTest {
     }
 
     @Test
+    @DisplayName("specifications the catalogue lacks are looked up rather than refused")
+    void groundsMissingSpecifications() {
+        String prompt = builder.build(product(), 1);
+
+        assertThat(prompt).contains("Google Search");
+        assertThat(prompt).contains("dung lượng pin");
+    }
+
+    @Test
+    @DisplayName("a looked-up figure must be labelled as the manufacturer's, not the store's")
+    void labelsGroundedFactsAsReference() {
+        String prompt = builder.build(product(), 1);
+
+        // The phrase wraps across two lines in the text block, so match either side of it.
+        assertThat(prompt).contains("thông số tham khảo");
+        assertThat(prompt).contains("không phải cam kết của cửa hàng");
+    }
+
+    @Test
+    @DisplayName("store facts stay off the internet — the web contradicts our own warranty")
+    void keepsStoreFactsOffTheWeb() {
+        String prompt = builder.build(product(), 1);
+
+        assertThat(prompt).contains("KHÔNG tra trên internet");
+        assertThat(prompt).contains("chính sách riêng của Techies");
+    }
+
+    @Test
     @DisplayName("replies are constrained to short Vietnamese, for a phone popup")
     void constrainsLengthAndLanguage() {
         String prompt = builder.build(product(), 1);

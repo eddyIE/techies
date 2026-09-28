@@ -102,11 +102,10 @@ public class ChatService {
     private void runTurn(String systemPrompt, List<Map<String, Object>> input,
                          List<CatalogClient.Category> categories, ChatListener listener) {
         TurnState pending = new TurnState();
+        List<Map<String, Object>> tools = tools(categories);
 
         gemini.stream(
-                gemini.firstRequest(systemPrompt, input, List.of(
-                        GeminiClient.searchProductsTool(
-                                categories.stream().map(CatalogClient.Category::name).toList()))),
+                gemini.firstRequest(systemPrompt, input, tools),
                 event -> handleEvent(event, listener, pending, node -> {
                     pending.toolRequested = true;
                     pending.callId = node.path("id").asText();
@@ -141,12 +140,29 @@ public class ChatService {
         }
 
         gemini.stream(
-                gemini.toolResultRequest(pending.interactionId, pending.callId, pending.toolName, resultJson),
+                gemini.toolResultRequest(pending.interactionId, pending.callId, pending.toolName,
+                        resultJson, tools),
                 event -> handleEvent(event, listener, pending, node -> { }));
 
         if (!pending.errored) {
             listener.onDone("stop");
         }
+    }
+
+    /**
+     * The tools offered for a turn: our catalogue search, plus Google Search when enabled.
+     *
+     * <p>Only the first is ours to run. Google executes the second itself, which is why a
+     * grounded answer costs no extra round trip here.
+     */
+    private List<Map<String, Object>> tools(List<CatalogClient.Category> categories) {
+        List<Map<String, Object>> tools = new ArrayList<>();
+        tools.add(GeminiClient.searchProductsTool(
+                categories.stream().map(CatalogClient.Category::name).toList()));
+        if (properties.webSearch()) {
+            tools.add(GeminiClient.webSearchTool());
+        }
+        return tools;
     }
 
     /** Maps one Gemini stream event onto the listener. */

@@ -69,14 +69,22 @@ public class GeminiClient {
                 "tools", tools);
     }
 
-    /** Continuation after a tool ran, chained to the interaction that requested it. */
+    /**
+     * Continuation after a tool ran, chained to the interaction that requested it.
+     *
+     * <p>The tools are declared again. Writing the answer is a fresh generation, so a model
+     * that has just been handed search results and is then asked "and how big is its
+     * battery?" still needs web search available to answer it.
+     */
     public Map<String, Object> toolResultRequest(String previousInteractionId, String callId,
-                                                 String toolName, String resultJson) {
+                                                 String toolName, String resultJson,
+                                                 List<Map<String, Object>> tools) {
         return Map.of(
                 "model", properties.model(),
                 "stream", true,
                 "store", true,
                 "previous_interaction_id", previousInteractionId,
+                "tools", tools,
                 "input", List.of(Map.of(
                         "type", "function_result",
                         "call_id", callId,
@@ -150,5 +158,21 @@ public class GeminiClient {
                                         "enum", List.of("NEWEST", "PRICE_ASC", "PRICE_DESC", "NAME_ASC"),
                                         "description", "Sắp xếp. PRICE_ASC khi khách muốn rẻ nhất.")),
                         "required", List.of()));
+    }
+
+    /**
+     * Google Search, run by the provider rather than by us.
+     *
+     * <p>Unlike {@code search_products} this never comes back as a {@code function_call} for
+     * this service to execute: Google performs the search inside the same turn and the reply
+     * simply arrives grounded. So it costs no extra round trip and needs no handling in the
+     * event loop.
+     *
+     * <p>It exists because the seeded product descriptions are one line long, and customers
+     * ask about battery capacity, RAM and screen size. The alternative to grounding is
+     * refusing every such question.
+     */
+    public static Map<String, Object> webSearchTool() {
+        return Map.of("type", "google_search");
     }
 }

@@ -67,6 +67,18 @@ One detail worth stating: the tool round trip chains with `previous_interaction_
 requires `store: true`, so **Google retains the interaction** on their side. We store nothing —
 the app holds the conversation and discards it when the popup closes.
 
+The assistant also has Google Search enabled, so a question about a specification the
+catalogue does not carry becomes a real web search performed by Google. That widens what
+leaves your infrastructure: the search Google runs is derived from the product name and the
+customer's question. Turn it off with `techies.gemini.web-search: false` if that is not
+wanted for a given demo.
+
+Grounding is deliberately limited to **manufacturer facts** — battery, RAM, screen, chip. The
+system prompt forbids answering price, stock, warranty, promotions, returns or delivery from
+the web, because those are Techies' own policy and a plausible web answer that contradicts
+checkout is worse than no answer. That is a prompt-level rule, not an enforced one: it
+constrains a cooperative model, it does not stop a jailbroken one.
+
 Tell demo users not to type anything personal into the chat. `GEMINI_API_KEY` lives in `.env`,
 which is gitignored; a leaked key is someone else spending your quota, not a data breach.
 

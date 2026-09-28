@@ -335,29 +335,36 @@ def main():
                 item("Update quantity", request("PUT", "/cart/items/{{cartItemId}}", {"quantity": 1},
                     desc="quantity 0 removes the line."), ex("cart.update", "200 OK")),
             ]},
-            {"name": "5. Checkout", "item": [
-                item("Checkout — success", request("POST", "/checkout", {
-                    "addressId": "{{addressId}}", "paymentMethod": "MOCK_CARD",
-                    "simulatePayment": "SUCCESS"},
-                    desc="Returns 200 with order.status = CONFIRMED. Stock is deducted and the cart cleared."),
-                    ex("checkout.success", "200 CONFIRMED"), save_var("order.id", "orderId"),
+            {"name": "5. Checkout & payment", "item": [
+                item("Checkout — awaiting payment", request("POST", "/checkout", {
+                    "addressId": "{{addressId}}", "paymentMethod": "MOCK_CARD"},
+                    desc="Returns 200 with order.status = AWAITING_PAYMENT. Stock is held and the cart is KEPT; the app now takes the customer to pay and reports the outcome below."),
+                    ex("checkout.awaitingPayment", "200 AWAITING_PAYMENT"), save_var("order.id", "orderId"),
                     pre=ensure_cart()),
-                item("Checkout — payment declined", request("POST", "/checkout", {
-                    "addressId": "{{addressId}}", "paymentMethod": "MOCK_CARD",
-                    "simulatePayment": "DECLINED"},
-                    desc="HTTP 200 but order.status = FAILED, failureCode = PAYMENT_FAILED. Stock is restored automatically and the cart is KEPT so the user can retry."),
-                    ex("checkout.declined", "200 FAILED (PAYMENT_FAILED)"), pre=ensure_cart()),
+                item("Payment — success", request("POST", "/orders/{{orderId}}/payment", {
+                    "result": "SUCCESS", "transactionRef": "TXN-DEMO-0001"},
+                    desc="Confirms the order and clears what was bought. Idempotent: sending it again returns the same order."),
+                    ex("payment.success", "200 CONFIRMED")),
+                item("Checkout — then declined", request("POST", "/checkout", {
+                    "addressId": "{{addressId}}", "paymentMethod": "MOCK_CARD"},
+                    desc="Place a second order so the declined branch has something to fail."),
+                    ex("checkout.declined", "200 AWAITING_PAYMENT"), save_var("order.id", "orderId"),
+                    pre=ensure_cart()),
+                item("Payment — failed", request("POST", "/orders/{{orderId}}/payment", {
+                    "result": "FAILED", "failureReason": "Card declined by issuer"},
+                    desc="order.status = FAILED, failureCode = PAYMENT_FAILED. Stock is restored automatically and the cart is KEPT so the user can retry."),
+                    ex("payment.failed", "200 FAILED (PAYMENT_FAILED)")),
                 item("Checkout — out of stock", request("POST", "/checkout", {
                     "addressId": "{{addressId}}", "paymentMethod": "COD"},
-                    desc="failureCode = OUT_OF_STOCK. No payment is attempted."),
+                    desc="failureCode = OUT_OF_STOCK. The order never reaches the payment step."),
                     ex("checkout.outOfStock", "200 FAILED (OUT_OF_STOCK)"), pre=find_zero_stock()),
                 item("Checkout — cash on delivery", request("POST", "/checkout", {
                     "addressId": "{{addressId}}", "paymentMethod": "COD"},
-                    desc="COD always approves; simulatePayment is ignored."), pre=ensure_cart()),
+                    desc="COD is CONFIRMED straight away: there is nothing to settle before delivery, so it never waits for a payment call."), pre=ensure_cart()),
             ]},
             {"name": "6. Orders", "item": [
                 item("My orders", request("GET", "/orders?page=0&size=20",
-                    desc="Newest first. Optional ?status=CONFIRMED|FAILED|CANCELLED."),
+                    desc="Newest first. Optional ?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED."),
                     ex("orders.list", "200 OK"), [
                         "const body = pm.response.json();",
                         "// Pick a CONFIRMED order: only those are cancellable, and the newest",

@@ -478,17 +478,27 @@ def main():
 
         ## Checkout — read this before implementing it
 
+        **Placing an order and paying for it are two calls.** `POST /checkout` takes the stock
+        and stops; the app then takes the customer to the payment screen and reports the
+        outcome to `POST /orders/{id}/payment`. COD is the exception and is confirmed
+        immediately, because there is nothing to settle before delivery.
+
+        ```
+        POST /checkout            -> order.status = AWAITING_PAYMENT  (stock held, cart kept)
+             [customer pays in the app]
+        POST /orders/{id}/payment -> order.status = CONFIRMED  or  FAILED
+        ```
+
         `POST /checkout` **returns HTTP 200 even when the order fails.**
 
         ```json
-        { "addressId": "<uuid>", "paymentMethod": "MOCK_CARD", "simulatePayment": "SUCCESS" }
+        { "addressId": "<uuid>", "paymentMethod": "MOCK_CARD" }
         ```
 
         | Field | Values |
         |---|---|
         | `addressId` | From `GET /addresses` |
-        | `paymentMethod` | `COD` (always succeeds) or `MOCK_CARD` |
-        | `simulatePayment` | Optional, `MOCK_CARD` only: `SUCCESS` (default), `DECLINED`, `TIMEOUT` |
+        | `paymentMethod` | `COD` (confirmed at once) or `MOCK_CARD` (waits for payment) |
         | `cartItemIds` | Optional array of cart line ids — see below |
 
         **Buying part of the cart.** For the cart screen's per-line selection, send the ids of
@@ -503,13 +513,11 @@ def main():
         | `[]` | `400 VALIDATION_ERROR` — asks to buy nothing |
         | an id not in the cart | `404 NOT_FOUND` — nothing is bought |
 
-        `simulatePayment` exists so the app can demo both branches on demand. There is no real
-        payment provider.
-
         **Branch on `order.status`, not on the HTTP status:**
 
         | `order.status` | `failureCode` | Screen |
         |---|---|---|
+        | `AWAITING_PAYMENT` | `null` | Payment screen — settle, then report the result |
         | `CONFIRMED` | `null` | Order Success (CART-03) |
         | `FAILED` | `PAYMENT_FAILED` | Order Failed (CART-04) → back to Checkout |
         | `FAILED` | `OUT_OF_STOCK` | Order Failed, refresh the cart |
@@ -518,21 +526,51 @@ def main():
         A 4xx here means the request never became an order at all (`EMPTY_CART`,
         `ADDRESS_NOT_FOUND`, `PRODUCT_UNAVAILABLE`) — those are input problems, not failed orders.
 
-        **The cart is cleared only on success.** After a failure the items are still there, so
-        the user can fix the problem and retry. Do not clear it client-side.
+        **The cart is cleared only on a successful payment.** While the order is
+        `AWAITING_PAYMENT`, and after any failure, the items are still there so the user can
+        retry. Do not clear it client-side.
+
+        ---
+
+        ## Reporting the payment
+
+        `POST /orders/{id}/payment` finishes an `AWAITING_PAYMENT` order.
+
+        ```json
+        { "result": "SUCCESS", "transactionRef": "TXN-DEMO-0001" }
+        ```
+
+        | Field | Values |
+        |---|---|
+        | `result` | `SUCCESS` confirms the order, `FAILED` releases its stock |
+        | `transactionRef` | The provider's transaction id, up to 64 chars. Send it on success |
+        | `failureReason` | Optional free text, up to 200 chars, recorded on failure |
+
+        **It is idempotent.** Reporting the same result again returns the same order, so a
+        retry after a dropped connection is safe. Reporting the opposite of a settled order is
+        `409 ORDER_NOT_PAYABLE` — a paid order is undone with `/cancel`, and a failed one has
+        already given its stock back. A COD order is `409` too: there is nothing to pay now.
+
+        **Do not leave an order awaiting payment.** Stock is held from the moment it is placed, so a
+        checkout nobody pays for is expired after 15 minutes and its stock returned. Report
+        `FAILED` as soon as the customer backs out rather than waiting for that sweep.
 
         """))
-    w(endpoint(cap, "checkout.success", "Checkout — success", auth=True,
-               description="`status: CONFIRMED`. The cart is now empty and stock is reduced."))
-    w(endpoint(cap, "checkout.declined", "Checkout — payment declined", auth=True,
-               description="**HTTP 200 with a FAILED order.** Stock that was taken has been returned "
+    w(endpoint(cap, "checkout.awaitingPayment", "Checkout — awaiting payment", auth=True,
+               description="`status: AWAITING_PAYMENT`. Stock is held and the cart is kept. Take the customer "
+                           "to the payment screen, then report the outcome."))
+    w(endpoint(cap, "payment.success", "Payment — success", auth=True,
+               description="`status: CONFIRMED`. The cart is now empty and the stock is sold."))
+    w(endpoint(cap, "payment.failed", "Payment — failed", auth=True,
+               description="**HTTP 200 with a FAILED order.** Stock that was held has been returned "
                            "automatically, and the cart is intact for a retry."))
     w(endpoint(cap, "checkout.outOfStock", "Checkout — out of stock", auth=True,
-               description="No payment was attempted. Refresh the cart to see what is unavailable."))
+               description="The order never reached the payment step. Refresh the cart to see what "
+                           "is unavailable."))
 
     w("---\n\n## Orders\n")
     w(endpoint(cap, "orders.list", "My orders", auth=True,
-               description="Newest first. Optional `?status=CONFIRMED|FAILED|CANCELLED`, plus `page` and `size`."))
+               description="Newest first. Optional `?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED`, plus `page` and `size`."))
     w(endpoint(cap, "orders.detail", "Order detail", auth=True,
                description="Prices and the shipping address are snapshots taken at checkout — a later "
                            "catalog price change never alters a past order. Another user's order returns 403."))

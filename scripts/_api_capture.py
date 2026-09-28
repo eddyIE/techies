@@ -101,16 +101,23 @@ item_id = cart["items"][0]["id"]
 call("cart.update", "PUT", f"/cart/items/{item_id}", {"quantity": 1}, token)
 call("cart.view", "GET", "/cart", token=token)
 
-# --- checkout: success ----------------------------------------------------
-call("checkout.success", "POST", "/checkout",
-     {"addressId": address_id, "paymentMethod": "MOCK_CARD", "simulatePayment": "SUCCESS"}, token,
-     note="HTTP 200, order.status = CONFIRMED")
+# --- checkout: card orders wait for payment -------------------------------
+_, placed = call("checkout.awaitingPayment", "POST", "/checkout",
+                 {"addressId": address_id, "paymentMethod": "MOCK_CARD"}, token,
+                 note="HTTP 200, order.status = AWAITING_PAYMENT -- stock held, now take the customer to pay")
 
-# --- checkout: declined ---------------------------------------------------
+# --- payment: reported as paid --------------------------------------------
+call("payment.success", "POST", f"/orders/{placed['order']['id']}/payment",
+     {"result": "SUCCESS", "transactionRef": "TXN-DEMO-0001"}, token,
+     note="order.status = CONFIRMED, cart cleared")
+
+# --- payment: reported as failed ------------------------------------------
 call(None, "POST", "/cart/items", {"productId": product["id"], "quantity": 1}, token)
-call("checkout.declined", "POST", "/checkout",
-     {"addressId": address_id, "paymentMethod": "MOCK_CARD", "simulatePayment": "DECLINED"}, token,
-     note="HTTP 200 but order.status = FAILED -- read the body, not the status code")
+_, declined = call("checkout.declined", "POST", "/checkout",
+                   {"addressId": address_id, "paymentMethod": "MOCK_CARD"}, token)
+call("payment.failed", "POST", f"/orders/{declined['order']['id']}/payment",
+     {"result": "FAILED", "failureReason": "Card declined by issuer"}, token,
+     note="stock is returned, order.status = FAILED, the cart is kept for a retry")
 
 # --- checkout: out of stock ----------------------------------------------
 _, dead = call(None, "GET", "/products?keyword=MSI%20Modern&size=1")

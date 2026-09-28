@@ -15,10 +15,12 @@ import vn.techies.ecommerce.order.api.dto.OrderDtos.CheckoutResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderSummary;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PageResponse;
+import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentConfirmationRequest;
 import vn.techies.ecommerce.order.domain.Order;
 import vn.techies.ecommerce.order.domain.OrderStatus;
 import vn.techies.ecommerce.order.service.CheckoutSagaOrchestrator;
 import vn.techies.ecommerce.order.service.OrderService;
+import vn.techies.ecommerce.order.service.PaymentService;
 
 import java.util.UUID;
 
@@ -28,6 +30,7 @@ class OrderController {
 
     private final CheckoutSagaOrchestrator checkoutSaga;
     private final OrderService orderService;
+    private final PaymentService paymentService;
 
     /**
      * Returns 200 even when the order FAILED — the client reads {@code order.status} to decide
@@ -57,6 +60,20 @@ class OrderController {
         return orderService.detail(id, principal.userId());
     }
 
+    /**
+     * Reports the outcome of the payment the app just took the customer through.
+     *
+     * <p>Idempotent: reporting the same outcome again returns the same order. Reporting the
+     * opposite of one already settled is a 409, because that is a different operation — a
+     * paid order is undone with {@code /cancel}, and an expired one has already given its
+     * stock back.
+     */
+    @PostMapping("/orders/{id}/payment")
+    OrderResponse confirmPayment(@CurrentUser UserPrincipal principal, @PathVariable UUID id,
+                                 @Valid @RequestBody PaymentConfirmationRequest request) {
+        return paymentService.confirmPayment(id, principal.userId(), request);
+    }
+
     @PostMapping("/orders/{id}/cancel")
     OrderResponse cancel(@CurrentUser UserPrincipal principal, @PathVariable UUID id) {
         return orderService.cancel(id, principal.userId());
@@ -65,6 +82,7 @@ class OrderController {
     private static String messageFor(Order order) {
         return switch (order.getStatus()) {
             case CONFIRMED -> "Order placed successfully";
+            case AWAITING_PAYMENT -> "Order placed, complete the payment to confirm it";
             case FAILED -> switch (order.getFailureCode()) {
                 case OUT_OF_STOCK -> "Some items are no longer in stock";
                 case PAYMENT_FAILED -> "Payment was declined, your cart has been kept";

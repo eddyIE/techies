@@ -46,6 +46,12 @@ techies:
   shipping:
     flat-fee: 30000
     free-threshold: 500000
+  payment:
+    # How long a placed order may hold stock while the customer pays. Longer than any real
+    # payment takes: expiring someone mid-payment takes the stock back and then refuses the
+    # payment that follows.
+    window-minutes: 15
+    sweep-interval-ms: 60000
 
 springdoc:
   api-docs:

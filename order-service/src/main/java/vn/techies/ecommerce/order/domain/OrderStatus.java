@@ -14,8 +14,26 @@ package vn.techies.ecommerce.order.domain;
  */
 public enum OrderStatus {
 
-    /** Created, before stock and payment have been resolved. Never returned to a client. */
+    /**
+     * Created, before stock and payment have been resolved. Never returned to a client.
+     *
+     * <p>The saga persists the order in this state so a failure still leaves a row to explain
+     * itself, then moves it on within the same request. Nothing rests here.
+     */
     PENDING,
+
+    /**
+     * Stock is held and the order is waiting for the customer to pay.
+     *
+     * <p>This is the state the app sees and acts on: checkout returns it for any method that
+     * has to be settled, the app takes the customer to payment, and
+     * {@code POST /orders/{id}/payment} resolves it. COD never rests here, because there is
+     * nothing to settle before delivery.
+     *
+     * <p>An order left here is holding stock nobody has paid for, so
+     * {@code PendingPaymentSweeper} expires it and puts the stock back.
+     */
+    AWAITING_PAYMENT,
 
     /** Paid and stock deducted. The only status from which an order can be cancelled. */
     CONFIRMED,

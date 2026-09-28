@@ -42,9 +42,17 @@ public class OrderWriter {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Order confirm(UUID orderId) {
+    public Order awaitPayment(UUID orderId) {
         Order order = orders.findById(orderId).orElseThrow();
-        order.confirm();
+        order.awaitPayment();
+        return orders.save(order);
+    }
+
+    /** @param paymentRef the provider's transaction id, or null for COD. */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Order confirm(UUID orderId, String paymentRef) {
+        Order order = orders.findById(orderId).orElseThrow();
+        order.confirm(paymentRef);
         return orders.save(order);
     }
 }

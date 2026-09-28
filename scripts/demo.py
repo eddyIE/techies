@@ -55,26 +55,35 @@ s, stock_before = call("GET", f"/stock/{product['id']}")
 print(f"  [{s}] stock BEFORE checkout = {stock_before['available']}")
 
 print("\n5. CHECKOUT - SUCCESS PATH")
-s, b = call("POST", "/checkout", {"addressId": address_id, "paymentMethod": "MOCK_CARD",
-                                  "simulatePayment": "SUCCESS"}, token)
+s, b = call("POST", "/checkout", {"addressId": address_id, "paymentMethod": "MOCK_CARD"}, token)
 order = b["order"]
 print(f"  [{s}] status={order['status']}  ref={order['orderRef']}  total={order['total']:,.0f}")
 print(f"       message: {b['message']}")
+s, stock_held = call("GET", f"/stock/{product['id']}")
+print(f"  [{s}] stock while awaiting payment = {stock_held['available']}  (held, not yet sold)")
+s, cart = call("GET", "/cart", token=token)
+print(f"  [{s}] cart while awaiting payment = {len(cart['items'])} items (kept until paid)")
+
+s, b = call("POST", f"/orders/{order['id']}/payment",
+            {"result": "SUCCESS", "transactionRef": "TXN-DEMO-0001"}, token)
+print(f"  [{s}] after payment: status={b['status']}  paymentRef={b['paymentRef']}")
 s, stock_after = call("GET", f"/stock/{product['id']}")
 print(f"  [{s}] stock AFTER success  = {stock_after['available']}  (expected {stock_before['available'] - 2})")
 s, cart = call("GET", "/cart", token=token)
 print(f"  [{s}] cart after success   = {len(cart['items'])} items (expected 0, cleared)")
 
-print("\n6. CHECKOUT - PAYMENT DECLINED (COMPENSATION PROOF)")
+print("\n6. PAYMENT DECLINED (COMPENSATION PROOF)")
 call("POST", "/cart/items", {"productId": product["id"], "quantity": 3}, token)
 s, stock_pre = call("GET", f"/stock/{product['id']}")
 print(f"  [{s}] stock BEFORE declined checkout = {stock_pre['available']}")
 
-s, b = call("POST", "/checkout", {"addressId": address_id, "paymentMethod": "MOCK_CARD",
-                                  "simulatePayment": "DECLINED"}, token)
+s, b = call("POST", "/checkout", {"addressId": address_id, "paymentMethod": "MOCK_CARD"}, token)
 order2 = b["order"]
+print(f"  [{s}] placed: status={order2['status']} (stock now held)")
+
+s, order2 = call("POST", f"/orders/{order2['id']}/payment",
+                 {"result": "FAILED", "failureReason": "Card declined by issuer"}, token)
 print(f"  [{s}] status={order2['status']}  failureCode={order2['failureCode']}")
-print(f"       message: {b['message']}")
 
 s, stock_post = call("GET", f"/stock/{product['id']}")
 restored = stock_post["available"] == stock_pre["available"]

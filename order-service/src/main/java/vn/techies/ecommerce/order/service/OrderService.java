@@ -115,6 +115,7 @@ public class OrderService {
         return new OrderResponse(order.getId(), order.getOrderRef(), order.getStatus(),
                 order.getFailureCode(), order.getSubtotal(), order.getShippingFee(),
                 order.getTotal(), order.getPaymentMethod(), order.getPaymentStatus(),
+                order.getPaymentRef(),
                 new ShippingAddressResponse(a.getRecipientName(), a.getPhone(), a.getLine1(),
                         a.getWard(), a.getDistrict(), a.getProvince()),
                 items, order.getCreatedAt());

@@ -62,6 +62,10 @@ public class Order {
     @Column(name = "payment_status", nullable = false, length = 16)
     private PaymentStatus paymentStatus;
 
+    /** The payment provider's transaction id, once the app reports a settled payment. */
+    @Column(name = "payment_ref", length = 64)
+    private String paymentRef;
+
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
@@ -96,9 +100,18 @@ public class Order {
         items.add(OrderItem.create(this, productId, productName, unitPrice, quantity, thumbnailUrl));
     }
 
-    public void confirm() {
+    /** Stock is held; hand the customer over to the payment screen. */
+    public void awaitPayment() {
+        this.status = OrderStatus.AWAITING_PAYMENT;
+        touch();
+    }
+
+    public void confirm(String paymentRef) {
         this.status = OrderStatus.CONFIRMED;
         this.paymentStatus = PaymentStatus.PAID;
+        if (paymentRef != null && !paymentRef.isBlank()) {
+            this.paymentRef = paymentRef;
+        }
         touch();
     }
 
@@ -121,6 +134,14 @@ public class Order {
 
     public boolean isCancellable() {
         return status == OrderStatus.CONFIRMED;
+    }
+
+    /**
+     * Whether this order is still waiting for the customer to pay. COD orders never are:
+     * the saga confirms them and the money moves at the door.
+     */
+    public boolean isAwaitingPayment() {
+        return status == OrderStatus.AWAITING_PAYMENT;
     }
 
     private void touch() {

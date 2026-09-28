@@ -24,7 +24,9 @@ import vn.techies.ecommerce.order.domain.PaymentMethod;
 import vn.techies.ecommerce.order.domain.PaymentStatus;
 import vn.techies.ecommerce.order.domain.SagaStep;
 import vn.techies.ecommerce.order.domain.SagaStepStatus;
-import vn.techies.ecommerce.order.service.payment.PaymentSimulation;
+import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderResponse;
+import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentConfirmationRequest;
+import vn.techies.ecommerce.order.service.payment.PaymentOutcome;
 
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -60,6 +62,8 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     private OrderService orderService;
     @Autowired
     private SagaRecorder sagaRecorder;
+    @Autowired
+    private PaymentService paymentService;
 
     @MockitoBean
     private IdentityClient identityClient;
@@ -97,8 +101,25 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         cartService.add(userId, new AddCartItemRequest(PRODUCT_B, 1));
     }
 
-    private CheckoutRequest checkoutWith(PaymentSimulation simulation) {
-        return new CheckoutRequest(addressId, PaymentMethod.MOCK_CARD, simulation, null);
+    /** A card checkout, which now stops at PENDING for the customer to pay. */
+    private CheckoutRequest card() {
+        return new CheckoutRequest(addressId, PaymentMethod.MOCK_CARD, null);
+    }
+
+    private CheckoutRequest cod() {
+        return new CheckoutRequest(addressId, PaymentMethod.COD, null);
+    }
+
+    /** What the app reports once the customer has paid. */
+    private OrderResponse pay(Order order) {
+        return paymentService.confirmPayment(order.getId(), userId,
+                new PaymentConfirmationRequest(PaymentOutcome.SUCCESS, "TXN-123", null));
+    }
+
+    /** What the app reports when the payment screen ends badly. */
+    private OrderResponse declinePayment(Order order) {
+        return paymentService.confirmPayment(order.getId(), userId,
+                new PaymentConfirmationRequest(PaymentOutcome.FAILED, null, "Card declined"));
     }
 
     private List<SagaStep> trail(Order order) {
@@ -117,14 +138,14 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     }
 
     @Test
-    @DisplayName("happy path: order CONFIRMED, stock deducted, cart cleared, full saga trail")
-    void happyCheckout() {
+    @DisplayName("placing a card order holds stock and waits: AWAITING_PAYMENT, cart kept, trail to payment")
+    void checkoutStopsForPayment() {
         fillCart();
 
-        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS));
+        Order order = saga.checkout(userId, card());
 
-        assertThat(order.getStatus()).isEqualTo(OrderStatus.CONFIRMED);
-        assertThat(order.getPaymentStatus()).isEqualTo(PaymentStatus.PAID);
+        assertThat(order.getStatus()).isEqualTo(OrderStatus.AWAITING_PAYMENT);
+        assertThat(order.getPaymentStatus()).isEqualTo(PaymentStatus.PENDING);
         assertThat(order.getFailureCode()).isNull();
         assertThat(order.getOrderRef()).matches("ORD-\\d{8}-\\d{4}");
 
@@ -133,16 +154,38 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         assertThat(order.getShippingFee()).isEqualByComparingTo("0.00");
         assertThat(order.getTotal()).isEqualByComparingTo("550000.00");
 
+        // Stock is taken up front, so nobody else can buy it while the customer pays.
         verify(inventoryClient).deduct(any());
         verify(inventoryClient, never()).restore(any());
 
-        assertThat(cartService.view(userId).items()).as("cart cleared on success").isEmpty();
+        assertThat(cartService.view(userId).items())
+                .as("cart survives until the payment succeeds, so a decline can be retried")
+                .hasSize(2);
 
         List<SagaStep> steps = trail(order);
         assertThat(steps).extracting(SagaStep::getStepName)
                 .contains("1-LOAD_CART", "2-SNAPSHOT_ADDRESS", "3-SNAPSHOT_PRODUCTS",
-                        "4-PERSIST_ORDER", "5-DEDUCT_STOCK", "6-CHARGE_PAYMENT", "7-CONFIRM_ORDER");
+                        "4-PERSIST_ORDER", "5-DEDUCT_STOCK", "6-CHARGE_PAYMENT");
+        assertThat(steps).extracting(SagaStep::getStepName)
+                .as("the order is not confirmed until it is paid for")
+                .doesNotContain("7-CONFIRM_ORDER");
         assertThat(steps).noneMatch(s -> s.getStatus() == SagaStepStatus.FAILED);
+    }
+
+    @Test
+    @DisplayName("reporting a successful payment confirms the order and clears what was bought")
+    void paymentConfirmsTheOrder() {
+        fillCart();
+        Order order = saga.checkout(userId, card());
+
+        OrderResponse paid = pay(order);
+
+        assertThat(paid.status()).isEqualTo(OrderStatus.CONFIRMED);
+        assertThat(paid.paymentStatus()).isEqualTo(PaymentStatus.PAID);
+        assertThat(paid.paymentRef()).isEqualTo("TXN-123");
+        assertThat(cartService.view(userId).items()).as("cart cleared once paid").isEmpty();
+        assertThat(trail(order)).extracting(SagaStep::getStepName).contains("7-CONFIRM_ORDER");
+        verify(inventoryClient, never()).restore(any());
     }
 
     @Test
@@ -150,11 +193,12 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     void declinedPaymentCompensates() {
         fillCart();
 
-        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.DECLINED));
+        Order order = saga.checkout(userId, card());
+        OrderResponse declined = declinePayment(order);
 
-        assertThat(order.getStatus()).isEqualTo(OrderStatus.FAILED);
-        assertThat(order.getFailureCode()).isEqualTo(FailureCode.PAYMENT_FAILED);
-        assertThat(order.getPaymentStatus()).isEqualTo(PaymentStatus.DECLINED);
+        assertThat(declined.status()).isEqualTo(OrderStatus.FAILED);
+        assertThat(declined.failureCode()).isEqualTo(FailureCode.PAYMENT_FAILED);
+        assertThat(declined.paymentStatus()).isEqualTo(PaymentStatus.DECLINED);
 
         // The compensating transaction ran.
         verify(inventoryClient).deduct(any());
@@ -170,24 +214,12 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     }
 
     @Test
-    @DisplayName("a simulated payment timeout is treated as a decline and compensates identically")
-    void timeoutCompensatesLikeDecline() {
-        fillCart();
-
-        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.TIMEOUT));
-
-        assertThat(order.getStatus()).isEqualTo(OrderStatus.FAILED);
-        assertThat(order.getFailureCode()).isEqualTo(FailureCode.PAYMENT_FAILED);
-        verify(inventoryClient).restore(any());
-    }
-
-    @Test
     @DisplayName("insufficient stock fails the order and never attempts payment")
     void outOfStockSkipsPayment() {
         fillCart();
         willThrow(conflict("{\"code\":\"INSUFFICIENT_STOCK\"}")).given(inventoryClient).deduct(any());
 
-        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS));
+        Order order = saga.checkout(userId, card());
 
         assertThat(order.getStatus()).isEqualTo(OrderStatus.FAILED);
         assertThat(order.getFailureCode()).isEqualTo(FailureCode.OUT_OF_STOCK);
@@ -207,7 +239,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         fillCart();
         willThrow(new RuntimeException("connection refused")).given(inventoryClient).deduct(any());
 
-        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS));
+        Order order = saga.checkout(userId, card());
 
         assertThat(order.getStatus()).isEqualTo(OrderStatus.FAILED);
         assertThat(order.getFailureCode()).isEqualTo(FailureCode.SERVICE_UNAVAILABLE);
@@ -217,7 +249,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     @Test
     @DisplayName("checking out an empty cart creates no order at all")
     void emptyCartCreatesNoOrder() {
-        assertThatThrownBy(() -> saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS)))
+        assertThatThrownBy(() -> saga.checkout(userId, card()))
                 .isInstanceOf(ApiException.class)
                 .extracting(e -> ((ApiException) e).code())
                 .isEqualTo(ErrorCode.EMPTY_CART);
@@ -231,7 +263,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         fillCart();
         willThrow(new RuntimeException("404")).given(identityClient).getAddress(any(), any());
 
-        assertThatThrownBy(() -> saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS)))
+        assertThatThrownBy(() -> saga.checkout(userId, card()))
                 .isInstanceOf(ApiException.class)
                 .extracting(e -> ((ApiException) e).code())
                 .isEqualTo(ErrorCode.ADDRESS_NOT_FOUND);
@@ -248,7 +280,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
                 new CatalogClient.ProductSnapshot(PRODUCT_A, "Sản phẩm A", PRICE_A, "thumb-a", true),
                 new CatalogClient.ProductSnapshot(PRODUCT_B, "Sản phẩm B", PRICE_B, "thumb-b", false)));
 
-        assertThatThrownBy(() -> saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS)))
+        assertThatThrownBy(() -> saga.checkout(userId, card()))
                 .isInstanceOf(ApiException.class)
                 .extracting(e -> ((ApiException) e).code())
                 .isEqualTo(ErrorCode.PRODUCT_UNAVAILABLE);
@@ -261,10 +293,11 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     void codAlwaysSucceeds() {
         fillCart();
 
-        Order order = saga.checkout(userId, new CheckoutRequest(addressId, PaymentMethod.COD, null, null));
+        Order order = saga.checkout(userId, cod());
 
         assertThat(order.getStatus()).isEqualTo(OrderStatus.CONFIRMED);
         assertThat(order.getPaymentStatus()).isEqualTo(PaymentStatus.PAID);
+        assertThat(cartService.view(userId).items()).as("COD clears the cart at once").isEmpty();
     }
 
     @Test
@@ -272,7 +305,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     void snapshotsProductImage() {
         fillCart();
 
-        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS));
+        Order order = saga.checkout(userId, card());
         var detail = orderService.detail(order.getId(), userId);
 
         assertThat(detail.items()).extracting("thumbnailUrl")
@@ -283,7 +316,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     @DisplayName("a later catalog image change does not alter an existing order")
     void orderImagesAreSnapshots() {
         fillCart();
-        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS));
+        Order order = saga.checkout(userId, card());
 
         // The catalogue replaces its imagery afterwards.
         given(catalogClient.batch(any())).willReturn(List.of(
@@ -299,7 +332,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     @DisplayName("a later catalog price change does not alter an existing order")
     void orderPricesAreSnapshots() {
         fillCart();
-        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS));
+        Order order = saga.checkout(userId, card());
         BigDecimal originalTotal = order.getTotal();
 
         // The catalog doubles its prices afterwards.
@@ -319,7 +352,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     void shippingPolicyApplies() {
         cartService.add(userId, new AddCartItemRequest(PRODUCT_A, 1)); // 150000 < 500000
 
-        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS));
+        Order order = saga.checkout(userId, card());
 
         assertThat(order.getSubtotal()).isEqualByComparingTo("150000.00");
         assertThat(order.getShippingFee()).isEqualByComparingTo("30000");
@@ -336,9 +369,10 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         UUID chosenProduct = cart.items().get(0).productId();
 
         Order order = saga.checkout(userId, new CheckoutRequest(
-                addressId, PaymentMethod.MOCK_CARD, PaymentSimulation.SUCCESS, List.of(chosen)));
+                addressId, PaymentMethod.MOCK_CARD, List.of(chosen)));
+        pay(order);
 
-        assertThat(order.getStatus()).isEqualTo(OrderStatus.CONFIRMED);
+        assertThat(orderService.detail(order.getId(), userId).status()).isEqualTo(OrderStatus.CONFIRMED);
         assertThat(orderService.detail(order.getId(), userId).items())
                 .as("the order holds only the chosen product")
                 .extracting("productId").containsExactly(chosenProduct);
@@ -353,7 +387,8 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     void nullSelectionBuysEverything() {
         fillCart();
 
-        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS));
+        Order order = saga.checkout(userId, card());
+        pay(order);
 
         assertThat(orderService.detail(order.getId(), userId).items()).hasSize(2);
         assertThat(cartService.view(userId).items()).isEmpty();
@@ -365,7 +400,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         fillCart();
 
         assertThatThrownBy(() -> saga.checkout(userId, new CheckoutRequest(
-                addressId, PaymentMethod.COD, null, List.of(UUID.randomUUID()))))
+                addressId, PaymentMethod.COD, List.of(UUID.randomUUID()))))
                 .isInstanceOf(ApiException.class)
                 .extracting(e -> ((ApiException) e).code())
                 .isEqualTo(ErrorCode.NOT_FOUND);
@@ -380,9 +415,10 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         UUID chosen = cartService.view(userId).items().get(0).id();
 
         Order order = saga.checkout(userId, new CheckoutRequest(
-                addressId, PaymentMethod.MOCK_CARD, PaymentSimulation.DECLINED, List.of(chosen)));
+                addressId, PaymentMethod.MOCK_CARD, List.of(chosen)));
+        OrderResponse failed = declinePayment(order);
 
-        assertThat(order.getStatus()).isEqualTo(OrderStatus.FAILED);
+        assertThat(failed.status()).isEqualTo(OrderStatus.FAILED);
         assertThat(cartService.view(userId).items()).hasSize(2);
     }
 
@@ -390,7 +426,8 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     @DisplayName("cancelling a confirmed order restores stock and refunds")
     void cancelRestoresStock() {
         fillCart();
-        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS));
+        Order order = saga.checkout(userId, card());
+        pay(order);
 
         var cancelled = orderService.cancel(order.getId(), userId);
 
@@ -403,7 +440,8 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     @DisplayName("cancelling a FAILED order is refused, so stock is never restored twice")
     void cannotCancelFailedOrder() {
         fillCart();
-        Order failed = saga.checkout(userId, checkoutWith(PaymentSimulation.DECLINED));
+        Order failed = saga.checkout(userId, card());
+        declinePayment(failed);
 
         assertThatThrownBy(() -> orderService.cancel(failed.getId(), userId))
                 .isInstanceOf(ApiException.class)
@@ -415,7 +453,8 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     @DisplayName("cancelling twice is refused the second time")
     void cannotCancelTwice() {
         fillCart();
-        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS));
+        Order order = saga.checkout(userId, card());
+        pay(order);
         orderService.cancel(order.getId(), userId);
 
         assertThatThrownBy(() -> orderService.cancel(order.getId(), userId))
@@ -428,7 +467,8 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     @DisplayName("one user cannot read or cancel another user's order")
     void ordersAreScopedToOwner() {
         fillCart();
-        Order order = saga.checkout(userId, checkoutWith(PaymentSimulation.SUCCESS));
+        Order order = saga.checkout(userId, card());
+        pay(order);
         UUID intruder = UUID.randomUUID();
 
         assertThatThrownBy(() -> orderService.detail(order.getId(), intruder))

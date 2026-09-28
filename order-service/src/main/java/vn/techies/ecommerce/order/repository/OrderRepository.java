@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import vn.techies.ecommerce.order.domain.Order;
 import vn.techies.ecommerce.order.domain.OrderStatus;
 
+import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,4 +26,21 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
                             Pageable pageable);
 
     Optional<Order> findByOrderRef(String orderRef);
+
+    /**
+     * Orders still waiting for a payment that started before {@code cutoff}, oldest first.
+     *
+     * <p>Items are fetched eagerly: the sweeper needs the lines to restore their stock and
+     * runs outside any request, so a lazy collection would have nothing to initialise
+     * against. COD needs no exclusion: those orders are confirmed by the saga and never
+     * reach this status.
+     */
+    @Query("""
+            SELECT DISTINCT o FROM Order o
+              LEFT JOIN FETCH o.items
+             WHERE o.status = vn.techies.ecommerce.order.domain.OrderStatus.AWAITING_PAYMENT
+               AND o.createdAt < :cutoff
+             ORDER BY o.createdAt
+            """)
+    List<Order> findExpiredPendingPayments(@Param("cutoff") Instant cutoff);
 }

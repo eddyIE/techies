@@ -97,6 +97,25 @@ public class CartService {
         });
     }
 
+    /**
+     * Removes the lines holding any of these products, leaving the rest of the cart intact.
+     *
+     * <p>Used once a payment succeeds. The cart line ids the checkout saga worked from are
+     * long gone by then — the order records product ids, not cart line ids — and a cart holds
+     * at most one line per product, so the product is enough to find the line again.
+     *
+     * <p>If the customer edited the cart while paying, this removes whatever line now holds
+     * that product. Removing the product they just bought is the right outcome either way.
+     */
+    @Transactional
+    public void removeByProductIds(UUID userId, Collection<UUID> productIds) {
+        carts.findByUserId(userId).ifPresent(cart -> {
+            Set<UUID> toRemove = new LinkedHashSet<>(productIds);
+            cart.getItems().removeIf(item -> toRemove.contains(item.getProductId()));
+            cart.touch();
+        });
+    }
+
     /** A cart line, detached from Hibernate. {@code itemId} identifies the line to remove. */
     public record CartLineSnapshot(UUID itemId, UUID productId, int quantity) {
     }

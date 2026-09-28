@@ -6,7 +6,7 @@ import vn.techies.ecommerce.order.domain.FailureCode;
 import vn.techies.ecommerce.order.domain.OrderStatus;
 import vn.techies.ecommerce.order.domain.PaymentMethod;
 import vn.techies.ecommerce.order.domain.PaymentStatus;
-import vn.techies.ecommerce.order.service.payment.PaymentSimulation;
+import vn.techies.ecommerce.order.service.payment.PaymentOutcome;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -19,10 +19,6 @@ public final class OrderDtos {
     }
 
     /**
-     * @param simulatePayment demo control for MOCK_CARD only, so both branches of the Order
-     *                        Flow can be shown without restarting anything. Ignored for COD.
-     */
-    /**
      * @param cartItemIds the cart lines to buy, for the cart screen's per-line selection.
      *                    Omit or send null to check out the whole cart, which is what every
      *                    existing client does. An empty array is rejected: it asks to buy
@@ -32,9 +28,22 @@ public final class OrderDtos {
     public record CheckoutRequest(
             @NotNull UUID addressId,
             @NotNull PaymentMethod paymentMethod,
-            PaymentSimulation simulatePayment,
             @Size(min = 1, message = "select at least one item, or omit the field for the whole cart")
             List<UUID> cartItemIds) {
+    }
+
+    /**
+     * What the app reports once the customer has finished at the payment screen.
+     *
+     * @param result         SUCCESS confirms the order, FAILED releases its stock.
+     * @param transactionRef the provider's transaction id. Recorded on the order so a payment
+     *                       can be traced back to a real transaction; expected on SUCCESS.
+     * @param failureReason  free text shown in the logs and the saga trail on FAILED.
+     */
+    public record PaymentConfirmationRequest(
+            @NotNull PaymentOutcome result,
+            @Size(max = 64) String transactionRef,
+            @Size(max = 200) String failureReason) {
     }
 
     public record ShippingAddressResponse(String recipientName, String phone, String line1,
@@ -52,7 +61,7 @@ public final class OrderDtos {
     public record OrderResponse(UUID id, String orderRef, OrderStatus status, FailureCode failureCode,
                                 BigDecimal subtotal, BigDecimal shippingFee, BigDecimal total,
                                 PaymentMethod paymentMethod, PaymentStatus paymentStatus,
-                                ShippingAddressResponse shippingAddress,
+                                String paymentRef, ShippingAddressResponse shippingAddress,
                                 List<OrderItemResponse> items, Instant createdAt) {
     }
 

@@ -12,11 +12,10 @@ import vn.techies.ecommerce.order.client.IdentityClient;
 import vn.techies.ecommerce.order.client.InventoryClient;
 import vn.techies.ecommerce.order.domain.FailureCode;
 import vn.techies.ecommerce.order.domain.Order;
+import vn.techies.ecommerce.order.domain.PaymentMethod;
 import vn.techies.ecommerce.order.domain.SagaStepStatus;
 import vn.techies.ecommerce.order.domain.ShippingAddress;
 import vn.techies.ecommerce.order.repository.OrderRefSequence;
-import vn.techies.ecommerce.order.service.payment.PaymentResult;
-import vn.techies.ecommerce.order.service.payment.PaymentSimulator;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -32,9 +31,14 @@ import java.util.UUID;
  * invalid checkout does not litter order history. From step 4 onward every outcome is a
  * persisted order the app can display — including the failures.
  *
- * <p>Step 5 (deduct stock) is the step that must be compensated. If payment then fails, step 6
- * calls inventory's restore to put the stock back, and the order is marked FAILED. That
- * compensating transaction is the reason this project is microservices.
+ * <p>Step 5 (deduct stock) is the step that must be compensated. That compensating
+ * transaction is the reason this project is microservices.
+ *
+ * <p>The saga no longer finishes in one request for a method that has to be settled. Stock is
+ * taken, the order is left AWAITING_PAYMENT, and the customer pays in the app;
+ * {@code PaymentService} then confirms the order or runs the same compensation a failed
+ * charge used to. {@code PendingPaymentSweeper} compensates the orders nobody ever comes back
+ * to. COD still completes inline, because there is nothing to collect before delivery.
  *
  * <p>Deliberately NOT a single @Transactional method: each step commits so that the saga_steps
  * trail survives a failure. A local transaction spanning remote calls would roll the trail
@@ -51,7 +55,6 @@ public class CheckoutSagaOrchestrator {
     private final SagaRecorder sagaRecorder;
     private final OrderRefSequence orderRefSequence;
     private final ShippingPolicy shippingPolicy;
-    private final PaymentSimulator paymentSimulator;
     private final IdentityClient identityClient;
     private final CatalogClient catalogClient;
     private final InventoryClient inventoryClient;
@@ -90,53 +93,32 @@ public class CheckoutSagaOrchestrator {
             return failOrder(order, code);
         }
 
-        // ---- Step 6: payment, with compensation on failure -------------------------------
-        record(order, "6-CHARGE_PAYMENT", SagaStepStatus.STARTED, request.paymentMethod().name());
-        PaymentResult payment;
-        try {
-            payment = paymentSimulator.charge(order.getOrderRef(), order.getTotal(),
-                    request.paymentMethod(), request.simulatePayment());
-        } catch (Exception ex) {
-            record(order, "6-CHARGE_PAYMENT", SagaStepStatus.FAILED, ex.toString());
-            compensate(order, stockLines);
-            return failOrder(order, FailureCode.PAYMENT_FAILED);
+        // ---- Step 6: payment -------------------------------------------------------------
+        // COD settles at the door, so there is nothing to collect and the order is done here.
+        if (request.paymentMethod() == PaymentMethod.COD) {
+            record(order, "6-CHARGE_PAYMENT", SagaStepStatus.SUCCESS, "COD, collected on delivery");
+
+            // ---- Step 7: confirm and clear the cart --------------------------------------
+            Order confirmed = confirmOrder(order.getId(), null);
+            // Remove only what was bought. A partial checkout must leave the unselected lines
+            // in the cart, and clearing everything would silently discard them.
+            cartService.removeItems(userId, lines.stream().map(CartLine::itemId).toList());
+            record(confirmed, "7-CONFIRM_ORDER", SagaStepStatus.SUCCESS, "cart cleared");
+
+            log.info("Order {} confirmed for user {} (COD)", confirmed.getOrderRef(), userId);
+            return confirmed;
         }
 
-        if (!payment.approved()) {
-            record(order, "6-CHARGE_PAYMENT", SagaStepStatus.FAILED, payment.reason());
-            compensate(order, stockLines);
-            return failOrder(order, FailureCode.PAYMENT_FAILED);
-        }
-        record(order, "6-CHARGE_PAYMENT", SagaStepStatus.SUCCESS, payment.reason());
-
-        // ---- Step 7: confirm and clear the cart ------------------------------------------
-        Order confirmed = confirmOrder(order.getId());
-        // Remove only what was bought. A partial checkout must leave the unselected lines in
-        // the cart, and clearing everything would silently discard them.
-        cartService.removeItems(userId, lines.stream().map(CartLine::itemId).toList());
-        record(confirmed, "7-CONFIRM_ORDER", SagaStepStatus.SUCCESS, "cart cleared");
-
-        log.info("Order {} confirmed for user {}", confirmed.getOrderRef(), userId);
-        return confirmed;
-    }
-
-    /**
-     * The compensating transaction. Best-effort but always recorded: if restore itself fails
-     * the order is still marked FAILED and the stranded reference is written to saga_steps, so
-     * it can be replayed by hand. restore is idempotent, so replay is safe.
-     */
-    private void compensate(Order order, List<InventoryClient.StockLine> stockLines) {
-        try {
-            inventoryClient.restore(
-                    new InventoryClient.StockMovementRequest(order.getOrderRef(), stockLines));
-            record(order, "5-DEDUCT_STOCK", SagaStepStatus.COMPENSATED, "stock restored");
-            log.info("Compensated order {}: stock restored", order.getOrderRef());
-        } catch (Exception ex) {
-            record(order, "5-DEDUCT_STOCK", SagaStepStatus.FAILED,
-                    "COMPENSATION FAILED, stock stranded for " + order.getOrderRef() + ": " + ex);
-            log.error("Compensation failed for order {}; stock is stranded and needs a manual "
-                    + "restore replay", order.getOrderRef(), ex);
-        }
+        // Anything that has to be settled stops here, PENDING and holding stock, while the
+        // customer pays in the app. POST /orders/{id}/payment finishes the saga either way:
+        // it confirms the order, or it compensates exactly as a failed charge used to.
+        //
+        // The cart is deliberately NOT cleared yet. A customer whose payment fails should
+        // still have their cart to retry with.
+        record(order, "6-CHARGE_PAYMENT", SagaStepStatus.STARTED, "awaiting customer payment");
+        Order awaiting = orderWriter.awaitPayment(order.getId());
+        log.info("Order {} awaiting payment for user {}", awaiting.getOrderRef(), userId);
+        return awaiting;
     }
 
     // ---- individual steps ----------------------------------------------------------------
@@ -217,8 +199,8 @@ public class CheckoutSagaOrchestrator {
         return orderWriter.fail(order.getId(), code);
     }
 
-    private Order confirmOrder(UUID orderId) {
-        return orderWriter.confirm(orderId);
+    private Order confirmOrder(UUID orderId, String paymentRef) {
+        return orderWriter.confirm(orderId, paymentRef);
     }
 
     private void record(Order order, String step, SagaStepStatus status, String detail) {

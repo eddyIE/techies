@@ -38,9 +38,9 @@ techies:
     # Conversation turns kept per request. The app resends history each turn, so this caps
     # both token spend and how much a client can push into a prompt.
     max-history-messages: 10
-    # Cards shown in the chat. Three fits a phone popup; the reply states the true total and
-    # the app links to the product list screen for the rest.
-    max-products: 3
+    # Cards shown in the chat. The reply states the true total, and the app links to the
+    # product list screen for the rest, so this is a display cap rather than the whole result.
+    max-products: 5
     # Lets the model look up specifications the seeded descriptions do not carry, such as
     # battery capacity. Store facts (price, stock, warranty, promotions, delivery) are never
     # answered this way; the system prompt keeps those to our own data.

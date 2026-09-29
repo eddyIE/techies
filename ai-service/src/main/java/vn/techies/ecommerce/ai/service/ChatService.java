@@ -141,7 +141,7 @@ public class ChatService {
 
         gemini.stream(
                 gemini.toolResultRequest(pending.interactionId, pending.callId, pending.toolName,
-                        resultJson, tools),
+                        resultJson, systemPrompt, tools),
                 event -> handleEvent(event, listener, pending, node -> { }));
 
         if (!pending.errored) {
@@ -255,15 +255,46 @@ public class ChatService {
 
         // The model sees the total as well as the shown items, so it can say "found 12, here
         // are 3" instead of implying three is everything.
+        //
+        // Stock is joined in here and nowhere else in the search path: catalog-service does not
+        // carry it, so without this the assistant happily recommends something sold out — and
+        // "rẻ nhất" sorts the most likely-sold-out item straight to the top. It is given to the
+        // model only; the cards are unchanged, so the app's contract is untouched.
         Map<String, Object> forModel = new LinkedHashMap<>();
         forModel.put("total", page.totalElements());
         forModel.put("shown", cards.size());
         List<Map<String, Object>> items = new ArrayList<>();
         for (ProductCard c : cards) {
-            items.add(Map.of("name", c.name(), "price", c.price()));
+            Map<String, Object> item = new LinkedHashMap<>();
+            item.put("name", c.name());
+            item.put("price", c.price());
+            item.put("stock", stockLabel(c.id()));
+            items.add(item);
         }
         forModel.put("products", items);
+        // Restated here as well as in the system instruction. This payload is the last thing
+        // the model reads before writing, and it is the instruction it was most prone to drop.
+        forModel.put("instruction",
+                "Các sản phẩm này ĐÃ được ứng dụng hiển thị cho khách dưới dạng thẻ bấm được. "
+                        + "KHÔNG liệt kê lại tên/giá, KHÔNG mô tả tính năng. Chỉ nói ngắn gọn "
+                        + "tìm được bao nhiêu mẫu và mời khách hỏi tiếp. Chỉ gợi ý mẫu còn hàng.");
         return json.writeValueAsString(forModel);
+    }
+
+    /**
+     * Whether a searched product can actually be bought, in words the model can repeat.
+     *
+     * <p>At most {@code max-products} of these per search, so the extra calls are few. If
+     * inventory is unreachable the answer is "không rõ" rather than a guess — claiming stock
+     * we cannot verify is the failure this exists to prevent.
+     */
+    private String stockLabel(UUID productId) {
+        try {
+            return inventory.getStock(productId).inStock() ? "còn hàng" : "hết hàng";
+        } catch (Exception ex) {
+            log.debug("Stock unavailable for searched product {}: {}", productId, ex.toString());
+            return "không rõ";
+        }
     }
 
     /** Trims history to the configured limit and maps it to the API's input shape. */

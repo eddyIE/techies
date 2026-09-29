@@ -72,18 +72,22 @@ public class GeminiClient {
     /**
      * Continuation after a tool ran, chained to the interaction that requested it.
      *
-     * <p>The tools are declared again. Writing the answer is a fresh generation, so a model
-     * that has just been handed search results and is then asked "and how big is its
-     * battery?" still needs web search available to answer it.
+     * <p>The system instruction and the tools are both declared again. Chaining on
+     * {@code previous_interaction_id} alone was not enough: the reply written after a search
+     * is a fresh generation, and without the rules restated it re-listed every product,
+     * invented features for them and dropped the pinned pronouns — precisely the turn where
+     * those rules matter most.
      */
     public Map<String, Object> toolResultRequest(String previousInteractionId, String callId,
                                                  String toolName, String resultJson,
+                                                 String systemInstruction,
                                                  List<Map<String, Object>> tools) {
         return Map.of(
                 "model", properties.model(),
                 "stream", true,
                 "store", true,
                 "previous_interaction_id", previousInteractionId,
+                "system_instruction", systemInstruction,
                 "tools", tools,
                 "input", List.of(Map.of(
                         "type", "function_result",

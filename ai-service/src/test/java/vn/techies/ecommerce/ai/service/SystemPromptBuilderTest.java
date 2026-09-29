@@ -120,6 +120,27 @@ class SystemPromptBuilderTest {
     }
 
     @Test
+    @DisplayName("search results are not re-listed: the app already shows them as cards")
+    void doesNotRelistSearchResults() {
+        String prompt = builder.build(product(), 1);
+
+        assertThat(prompt).contains("KHÔNG liệt kê lại");
+        assertThat(prompt).contains("thẻ bấm được");
+    }
+
+    @Test
+    @DisplayName("it may not invent features for searched products, knowing only name and price")
+    void cannotInventFeaturesForSearchResults() {
+        assertThat(builder.build(product(), 1)).contains("KHÔNG bịa thêm tính năng");
+    }
+
+    @Test
+    @DisplayName("only in-stock products are recommended")
+    void recommendsOnlyInStock() {
+        assertThat(builder.build(product(), 1)).contains("Chỉ gợi ý những mẫu đang");
+    }
+
+    @Test
     @DisplayName("replies are constrained to short Vietnamese, for a phone popup")
     void constrainsLengthAndLanguage() {
         String prompt = builder.build(product(), 1);

@@ -44,6 +44,10 @@ techies:
     # Lets the model look up specifications the seeded descriptions do not carry, such as
     # battery capacity. Store facts (price, stock, warranty, promotions, delivery) are never
     # answered this way; the system prompt keeps those to our own data.
+    # Grounding has its own quota, separate from the model's and consumed only when a search
+    # actually runs. On the free tier it is small enough that it took the whole assistant down,
+    # because the system prompt tells the model to look up any specification it lacks. The paid
+    # tier includes 5,000 searches a month, which is far more than this demo will use.
     web-search: true
 
 springdoc:

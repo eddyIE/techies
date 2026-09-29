@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.techies.ecommerce.common.error.ApiException;
 import vn.techies.ecommerce.common.error.ErrorCode;
-import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderResponse;
+import vn.techies.ecommerce.order.api.dto.OrderDtos.CartRestoreResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentConfirmationRequest;
+import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentResultResponse;
 import vn.techies.ecommerce.order.client.InventoryClient;
 import vn.techies.ecommerce.order.domain.FailureCode;
 import vn.techies.ecommerce.order.domain.Order;
-import vn.techies.ecommerce.order.domain.OrderItem;
 import vn.techies.ecommerce.order.domain.OrderStatus;
 import vn.techies.ecommerce.order.domain.PaymentMethod;
 import vn.techies.ecommerce.order.domain.SagaStepStatus;
@@ -52,8 +52,8 @@ public class PaymentService {
     private final SagaRecorder sagaRecorder;
 
     @Transactional
-    public OrderResponse confirmPayment(UUID orderId, UUID userId,
-                                        PaymentConfirmationRequest request) {
+    public PaymentResultResponse confirmPayment(UUID orderId, UUID userId,
+                                                PaymentConfirmationRequest request) {
         Order order = orders.findById(orderId)
                 .orElseThrow(() -> new ApiException(ErrorCode.ORDER_NOT_FOUND, "Order not found"));
         if (!order.getUserId().equals(userId)) {
@@ -69,48 +69,90 @@ public class PaymentService {
         }
 
         return request.result() == PaymentOutcome.SUCCESS
-                ? settle(order, request.transactionRef(), userId)
-                : release(order, request.failureReason());
+                ? settle(order, request.transactionRef())
+                : declined(order, request.failureReason());
     }
 
-    /** The customer paid: confirm the order and take what they bought out of the cart. */
-    private OrderResponse settle(Order order, String transactionRef, UUID userId) {
+    /**
+     * Times out an unpaid order: releases its stock and puts its lines back in the cart.
+     *
+     * <p>Used by {@code PendingPaymentSweeper}. Safe on an order that is no longer awaiting
+     * payment — it does nothing, so a sweep racing a late payment call cannot restore the
+     * same stock twice.
+     */
+    @Transactional
+    public void releaseExpired(UUID orderId, String reason) {
+        Order order = orders.findById(orderId).orElseThrow();
+        if (order.isAwaitingPayment()) {
+            release(order, reason, true);
+        }
+    }
+
+    /**
+     * Releases an unpaid order that the customer has just replaced with a new one.
+     *
+     * <p>Unlike an expiry this does <b>not</b> refill the cart: the checkout that supersedes
+     * it has already emptied those lines into the new order, and putting them back would
+     * duplicate goods the customer is in the middle of buying.
+     */
+    @Transactional
+    public void releaseSuperseded(UUID orderId, String reason) {
+        Order order = orders.findById(orderId).orElseThrow();
+        if (order.isAwaitingPayment()) {
+            release(order, reason, false);
+        }
+    }
+
+    /** The customer paid. The cart was emptied at checkout, so there is nothing to clear. */
+    private PaymentResultResponse settle(Order order, String transactionRef) {
         order.confirm(transactionRef);
         sagaRecorder.record(order.getId(), "6-CHARGE_PAYMENT", SagaStepStatus.SUCCESS,
                 transactionRef == null ? "paid" : "paid, ref " + transactionRef);
-
-        cartService.removeByProductIds(userId,
-                order.getItems().stream().map(OrderItem::getProductId).toList());
-        sagaRecorder.record(order.getId(), "7-CONFIRM_ORDER", SagaStepStatus.SUCCESS,
-                "cart cleared");
+        sagaRecorder.record(order.getId(), "7-CONFIRM_ORDER", SagaStepStatus.SUCCESS, "confirmed");
 
         log.info("Order {} paid and confirmed (ref {})", order.getOrderRef(), transactionRef);
-        return OrderService.toResponse(order);
+        return new PaymentResultResponse(OrderService.toResponse(order), null);
     }
 
-    /** The payment did not happen: give the stock back and fail the order. */
-    private OrderResponse release(Order order, String reason) {
+    /** The payment did not happen: release the stock and hand the lines back to the cart. */
+    private PaymentResultResponse declined(Order order, String reason) {
+        CartService.RestoreSummary restored = release(order, reason, true);
+        return new PaymentResultResponse(OrderService.toResponse(order),
+                new CartRestoreResponse(restored.linesReturned(), restored.unavailable()));
+    }
+
+    /**
+     * The one place an unpaid order is undone. Stock goes back first, so the cart restore's
+     * availability check can see the units this order was holding.
+     */
+    private CartService.RestoreSummary release(Order order, String reason, boolean returnToCart) {
         sagaRecorder.record(order.getId(), "6-CHARGE_PAYMENT", SagaStepStatus.FAILED,
                 reason == null ? "reported as failed by the app" : reason);
         stockCompensator.restore(order.getId(), order.getOrderRef(), stockLines(order));
         order.fail(FailureCode.PAYMENT_FAILED);
-
         log.warn("ORDER FAILED {} -> PAYMENT_FAILED ({})", order.getOrderRef(), reason);
-        return OrderService.toResponse(order);
+
+        if (!returnToCart) {
+            return new CartService.RestoreSummary(0, List.of());
+        }
+        return cartService.restoreFromOrder(order.getUserId(), order.getItems().stream()
+                .map(i -> new CartService.RestoreLine(i.getProductId(), i.getProductName(),
+                        i.getQuantity()))
+                .toList());
     }
 
     /**
      * The order already left PENDING. Repeating the outcome it reached is a no-op; claiming
      * the opposite is refused.
      */
-    private OrderResponse alreadyResolved(Order order, PaymentOutcome reported) {
+    private PaymentResultResponse alreadyResolved(Order order, PaymentOutcome reported) {
         boolean paid = order.getStatus() == OrderStatus.CONFIRMED;
         boolean agrees = (reported == PaymentOutcome.SUCCESS) == paid;
 
         if (agrees) {
             log.debug("Payment for {} reported again as {}, already {}", order.getOrderRef(),
                     reported, order.getStatus());
-            return OrderService.toResponse(order);
+            return new PaymentResultResponse(OrderService.toResponse(order), null);
         }
 
         // The common real case: payment succeeded but the app only reported it after the

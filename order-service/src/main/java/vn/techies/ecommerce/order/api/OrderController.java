@@ -16,6 +16,7 @@ import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderSummary;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PageResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentConfirmationRequest;
+import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentResultResponse;
 import vn.techies.ecommerce.order.domain.Order;
 import vn.techies.ecommerce.order.domain.OrderStatus;
 import vn.techies.ecommerce.order.service.CheckoutSagaOrchestrator;
@@ -67,10 +68,13 @@ class OrderController {
      * opposite of one already settled is a 409, because that is a different operation — a
      * paid order is undone with {@code /cancel}, and an expired one has already given its
      * stock back.
+     *
+     * <p>A failure also hands the order's lines back to the cart, and {@code cartRestore}
+     * says what could not be returned.
      */
     @PostMapping("/orders/{id}/payment")
-    OrderResponse confirmPayment(@CurrentUser UserPrincipal principal, @PathVariable UUID id,
-                                 @Valid @RequestBody PaymentConfirmationRequest request) {
+    PaymentResultResponse confirmPayment(@CurrentUser UserPrincipal principal, @PathVariable UUID id,
+                                         @Valid @RequestBody PaymentConfirmationRequest request) {
         return paymentService.confirmPayment(id, principal.userId(), request);
     }
 

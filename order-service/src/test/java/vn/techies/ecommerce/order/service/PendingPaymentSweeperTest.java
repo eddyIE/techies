@@ -124,6 +124,18 @@ class PendingPaymentSweeperTest extends AbstractPostgresTest {
     }
 
     @Test
+    @DisplayName("expiry also hands the lines back to the cart, so the customer can retry")
+    void expiryRestoresTheCart() {
+        Order order = placeCardOrder();
+        assertThat(cartService.view(userId).items()).isEmpty();
+        ageBy(order, 30);
+
+        sweeper.expireAbandonedPayments();
+
+        assertThat(cartService.view(userId).items()).hasSize(1);
+    }
+
+    @Test
     @DisplayName("sweeping twice restores the stock only once")
     void sweepingIsIdempotent() {
         Order order = placeCardOrder();

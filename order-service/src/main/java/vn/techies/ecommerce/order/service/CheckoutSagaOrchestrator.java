@@ -16,6 +16,7 @@ import vn.techies.ecommerce.order.domain.PaymentMethod;
 import vn.techies.ecommerce.order.domain.SagaStepStatus;
 import vn.techies.ecommerce.order.domain.ShippingAddress;
 import vn.techies.ecommerce.order.repository.OrderRefSequence;
+import vn.techies.ecommerce.order.repository.OrderRepository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -55,6 +56,8 @@ public class CheckoutSagaOrchestrator {
     private final SagaRecorder sagaRecorder;
     private final OrderRefSequence orderRefSequence;
     private final ShippingPolicy shippingPolicy;
+    private final OrderRepository orders;
+    private final PaymentService paymentService;
     private final IdentityClient identityClient;
     private final CatalogClient catalogClient;
     private final InventoryClient inventoryClient;
@@ -77,6 +80,12 @@ public class CheckoutSagaOrchestrator {
         record(order, "3-SNAPSHOT_PRODUCTS", SagaStepStatus.SUCCESS, products.size() + " product(s)");
         record(order, "4-PERSIST_ORDER", SagaStepStatus.SUCCESS, order.getOrderRef());
 
+        // ---- Step 4b: release whatever the customer abandoned --------------------------
+        // They opened the payment screen, went back and checked out again. That earlier order
+        // is still holding its stock, so taking it again here would hold the same goods
+        // twice and can report the customer's own basket as out of stock.
+        releaseAbandonedOrders(userId, order.getOrderRef());
+
         // ---- Step 5: deduct stock (the compensatable step) -------------------------------
         List<InventoryClient.StockLine> stockLines = lines.stream()
                 .map(l -> new InventoryClient.StockLine(l.productId(), l.quantity()))
@@ -93,28 +102,25 @@ public class CheckoutSagaOrchestrator {
             return failOrder(order, code);
         }
 
-        // ---- Step 6: payment -------------------------------------------------------------
+        // ---- Step 6: the goods are now committed to this order ---------------------------
+        // Remove only what was ordered. A partial checkout must leave the unselected lines in
+        // the cart, and clearing everything would silently discard them. If the payment then
+        // fails, PaymentService puts these lines back.
+        cartService.removeItems(userId, lines.stream().map(CartLine::itemId).toList());
+
         // COD settles at the door, so there is nothing to collect and the order is done here.
         if (request.paymentMethod() == PaymentMethod.COD) {
             record(order, "6-CHARGE_PAYMENT", SagaStepStatus.SUCCESS, "COD, collected on delivery");
-
-            // ---- Step 7: confirm and clear the cart --------------------------------------
             Order confirmed = confirmOrder(order.getId(), null);
-            // Remove only what was bought. A partial checkout must leave the unselected lines
-            // in the cart, and clearing everything would silently discard them.
-            cartService.removeItems(userId, lines.stream().map(CartLine::itemId).toList());
             record(confirmed, "7-CONFIRM_ORDER", SagaStepStatus.SUCCESS, "cart cleared");
 
             log.info("Order {} confirmed for user {} (COD)", confirmed.getOrderRef(), userId);
             return confirmed;
         }
 
-        // Anything that has to be settled stops here, PENDING and holding stock, while the
-        // customer pays in the app. POST /orders/{id}/payment finishes the saga either way:
-        // it confirms the order, or it compensates exactly as a failed charge used to.
-        //
-        // The cart is deliberately NOT cleared yet. A customer whose payment fails should
-        // still have their cart to retry with.
+        // Anything that has to be settled stops here, holding stock, while the customer pays
+        // in the app. POST /orders/{id}/payment finishes the saga either way: it confirms the
+        // order, or it releases the stock and returns these lines to the cart.
         record(order, "6-CHARGE_PAYMENT", SagaStepStatus.STARTED, "awaiting customer payment");
         Order awaiting = orderWriter.awaitPayment(order.getId());
         log.info("Order {} awaiting payment for user {}", awaiting.getOrderRef(), userId);
@@ -193,6 +199,13 @@ public class CheckoutSagaOrchestrator {
                     product.thumbnailUrl());
         }
         return orderWriter.save(order);
+    }
+
+    /** Fails this customer's unpaid orders so their stock is available to the new one. */
+    private void releaseAbandonedOrders(UUID userId, String replacedBy) {
+        for (Order stale : orders.findAwaitingPaymentFor(userId)) {
+            paymentService.releaseSuperseded(stale.getId(), "abandoned, replaced by " + replacedBy);
+        }
     }
 
     private Order failOrder(Order order, FailureCode code) {

@@ -46,6 +46,22 @@ public final class OrderDtos {
             @Size(max = 200) String failureReason) {
     }
 
+    /**
+     * @param cartRestore what went back into the cart, or null when nothing was restored
+     *                    (a successful payment, or an outcome reported twice).
+     */
+    public record PaymentResultResponse(OrderResponse order, CartRestoreResponse cartRestore) {
+    }
+
+    /**
+     * @param linesReturned how many of the order's lines went back into the cart.
+     * @param unavailable   the names of the lines that did not, because the product is
+     *                      delisted or someone else bought the stock this order was holding.
+     *                      Show these to the customer: their cart is not what it was.
+     */
+    public record CartRestoreResponse(int linesReturned, List<String> unavailable) {
+    }
+
     public record ShippingAddressResponse(String recipientName, String phone, String line1,
                                           String ward, String district, String province) {
     }

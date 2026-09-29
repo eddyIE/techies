@@ -338,12 +338,12 @@ def main():
             {"name": "5. Checkout & payment", "item": [
                 item("Checkout — awaiting payment", request("POST", "/checkout", {
                     "addressId": "{{addressId}}", "paymentMethod": "MOCK_CARD"},
-                    desc="Returns 200 with order.status = AWAITING_PAYMENT. Stock is held and the cart is KEPT; the app now takes the customer to pay and reports the outcome below."),
+                    desc="Returns 200 with order.status = AWAITING_PAYMENT. Stock is held and the ordered lines leave the cart; the app now takes the customer to pay and reports the outcome below."),
                     ex("checkout.awaitingPayment", "200 AWAITING_PAYMENT"), save_var("order.id", "orderId"),
                     pre=ensure_cart()),
                 item("Payment — success", request("POST", "/orders/{{orderId}}/payment", {
                     "result": "SUCCESS", "transactionRef": "TXN-DEMO-0001"},
-                    desc="Confirms the order and clears what was bought. Idempotent: sending it again returns the same order."),
+                    desc="Confirms the order. The cart was emptied at checkout, so nothing more to clear. Idempotent: sending it again returns the same order."),
                     ex("payment.success", "200 CONFIRMED")),
                 item("Checkout — then declined", request("POST", "/checkout", {
                     "addressId": "{{addressId}}", "paymentMethod": "MOCK_CARD"},
@@ -352,7 +352,7 @@ def main():
                     pre=ensure_cart()),
                 item("Payment — failed", request("POST", "/orders/{{orderId}}/payment", {
                     "result": "FAILED", "failureReason": "Card declined by issuer"},
-                    desc="order.status = FAILED, failureCode = PAYMENT_FAILED. Stock is restored automatically and the cart is KEPT so the user can retry."),
+                    desc="order.status = FAILED, failureCode = PAYMENT_FAILED. Stock is released and the ordered lines go back into the cart; cartRestore names anything that could not be returned."),
                     ex("payment.failed", "200 FAILED (PAYMENT_FAILED)")),
                 item("Checkout — out of stock", request("POST", "/checkout", {
                     "addressId": "{{addressId}}", "paymentMethod": "COD"},

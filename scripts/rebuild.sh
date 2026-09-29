@@ -28,12 +28,15 @@ if [[ $BUILD -eq 1 ]]; then
   ./mvnw -o -q -pl "$(printf '%s,' "$@" | sed 's/,$//')" -DskipTests package 2>&1 | tail -5
 fi
 
+# Build and recreate ONLY the named services. `up --build` also rebuilds and recreates
+# everything they depend_on, which takes Eureka down with them — every other service then
+# loses its registration and the gateway answers 503 for about half a minute. Building
+# first and bringing the service up with --no-deps leaves the rest of the stack alone.
 echo "==> compose up: $*"
 if [[ $BUILD -eq 1 ]]; then
-  docker compose up -d --build "$@" >/dev/null
-else
-  docker compose up -d "$@" >/dev/null
+  docker compose build "$@" >/dev/null
 fi
+docker compose up -d --no-deps "$@" >/dev/null
 
 health() {
   local cid

@@ -24,7 +24,7 @@ import vn.techies.ecommerce.order.domain.PaymentMethod;
 import vn.techies.ecommerce.order.domain.PaymentStatus;
 import vn.techies.ecommerce.order.domain.SagaStep;
 import vn.techies.ecommerce.order.domain.SagaStepStatus;
-import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderResponse;
+import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentResultResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentConfirmationRequest;
 import vn.techies.ecommerce.order.service.payment.PaymentOutcome;
 
@@ -111,13 +111,13 @@ class CheckoutSagaTest extends AbstractPostgresTest {
     }
 
     /** What the app reports once the customer has paid. */
-    private OrderResponse pay(Order order) {
+    private PaymentResultResponse pay(Order order) {
         return paymentService.confirmPayment(order.getId(), userId,
                 new PaymentConfirmationRequest(PaymentOutcome.SUCCESS, "TXN-123", null));
     }
 
     /** What the app reports when the payment screen ends badly. */
-    private OrderResponse declinePayment(Order order) {
+    private PaymentResultResponse declinePayment(Order order) {
         return paymentService.confirmPayment(order.getId(), userId,
                 new PaymentConfirmationRequest(PaymentOutcome.FAILED, null, "Card declined"));
     }
@@ -159,8 +159,8 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         verify(inventoryClient, never()).restore(any());
 
         assertThat(cartService.view(userId).items())
-                .as("cart survives until the payment succeeds, so a decline can be retried")
-                .hasSize(2);
+                .as("the ordered lines are committed to the order, so the cart is emptied now")
+                .isEmpty();
 
         List<SagaStep> steps = trail(order);
         assertThat(steps).extracting(SagaStep::getStepName)
@@ -178,12 +178,12 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         fillCart();
         Order order = saga.checkout(userId, card());
 
-        OrderResponse paid = pay(order);
+        PaymentResultResponse paid = pay(order);
 
-        assertThat(paid.status()).isEqualTo(OrderStatus.CONFIRMED);
-        assertThat(paid.paymentStatus()).isEqualTo(PaymentStatus.PAID);
-        assertThat(paid.paymentRef()).isEqualTo("TXN-123");
-        assertThat(cartService.view(userId).items()).as("cart cleared once paid").isEmpty();
+        assertThat(paid.order().status()).isEqualTo(OrderStatus.CONFIRMED);
+        assertThat(paid.order().paymentStatus()).isEqualTo(PaymentStatus.PAID);
+        assertThat(paid.order().paymentRef()).isEqualTo("TXN-123");
+        assertThat(cartService.view(userId).items()).as("cart stays empty").isEmpty();
         assertThat(trail(order)).extracting(SagaStep::getStepName).contains("7-CONFIRM_ORDER");
         verify(inventoryClient, never()).restore(any());
     }
@@ -194,18 +194,18 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         fillCart();
 
         Order order = saga.checkout(userId, card());
-        OrderResponse declined = declinePayment(order);
+        PaymentResultResponse declined = declinePayment(order);
 
-        assertThat(declined.status()).isEqualTo(OrderStatus.FAILED);
-        assertThat(declined.failureCode()).isEqualTo(FailureCode.PAYMENT_FAILED);
-        assertThat(declined.paymentStatus()).isEqualTo(PaymentStatus.DECLINED);
+        assertThat(declined.order().status()).isEqualTo(OrderStatus.FAILED);
+        assertThat(declined.order().failureCode()).isEqualTo(FailureCode.PAYMENT_FAILED);
+        assertThat(declined.order().paymentStatus()).isEqualTo(PaymentStatus.DECLINED);
 
         // The compensating transaction ran.
         verify(inventoryClient).deduct(any());
         verify(inventoryClient).restore(any());
 
-        // Order Flow loops Payment Result back to Checkout, so the cart must survive.
-        assertThat(cartService.view(userId).items()).as("cart kept for retry").hasSize(2);
+        // Order Flow loops Payment Result back to Checkout, so the lines come back.
+        assertThat(cartService.view(userId).items()).as("cart restored for retry").hasSize(2);
 
         assertThat(trail(order))
                 .filteredOn(s -> s.getStepName().equals("5-DEDUCT_STOCK"))
@@ -416,10 +416,11 @@ class CheckoutSagaTest extends AbstractPostgresTest {
 
         Order order = saga.checkout(userId, new CheckoutRequest(
                 addressId, PaymentMethod.MOCK_CARD, List.of(chosen)));
-        OrderResponse failed = declinePayment(order);
+        PaymentResultResponse failed = declinePayment(order);
 
-        assertThat(failed.status()).isEqualTo(OrderStatus.FAILED);
-        assertThat(cartService.view(userId).items()).hasSize(2);
+        assertThat(failed.order().status()).isEqualTo(OrderStatus.FAILED);
+        assertThat(cartService.view(userId).items())
+                .as("the ordered line is returned, alongside the one never ordered").hasSize(2);
     }
 
     @Test

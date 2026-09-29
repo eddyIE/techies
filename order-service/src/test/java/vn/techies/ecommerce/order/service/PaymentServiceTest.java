@@ -11,7 +11,7 @@ import vn.techies.ecommerce.common.error.ErrorCode;
 import vn.techies.ecommerce.order.AbstractPostgresTest;
 import vn.techies.ecommerce.order.api.dto.CartDtos.AddCartItemRequest;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.CheckoutRequest;
-import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderResponse;
+import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentResultResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentConfirmationRequest;
 import vn.techies.ecommerce.order.client.CatalogClient;
 import vn.techies.ecommerce.order.client.IdentityClient;
@@ -80,7 +80,7 @@ class PaymentServiceTest extends AbstractPostgresTest {
         return saga.checkout(userId, new CheckoutRequest(UUID.randomUUID(), PaymentMethod.MOCK_CARD, null));
     }
 
-    private OrderResponse report(Order order, PaymentOutcome outcome, UUID caller) {
+    private PaymentResultResponse report(Order order, PaymentOutcome outcome, UUID caller) {
         return paymentService.confirmPayment(order.getId(), caller,
                 new PaymentConfirmationRequest(outcome, outcome == PaymentOutcome.SUCCESS ? "TXN-1" : null,
                         outcome == PaymentOutcome.FAILED ? "Card declined" : null));
@@ -91,11 +91,11 @@ class PaymentServiceTest extends AbstractPostgresTest {
     void successConfirms() {
         Order order = placeCardOrder();
 
-        OrderResponse paid = report(order, PaymentOutcome.SUCCESS, userId);
+        PaymentResultResponse paid = report(order, PaymentOutcome.SUCCESS, userId);
 
-        assertThat(paid.status()).isEqualTo(OrderStatus.CONFIRMED);
-        assertThat(paid.paymentStatus()).isEqualTo(PaymentStatus.PAID);
-        assertThat(paid.paymentRef()).isEqualTo("TXN-1");
+        assertThat(paid.order().status()).isEqualTo(OrderStatus.CONFIRMED);
+        assertThat(paid.order().paymentStatus()).isEqualTo(PaymentStatus.PAID);
+        assertThat(paid.order().paymentRef()).isEqualTo("TXN-1");
     }
 
     @Test
@@ -103,10 +103,10 @@ class PaymentServiceTest extends AbstractPostgresTest {
     void failureCompensates() {
         Order order = placeCardOrder();
 
-        OrderResponse failed = report(order, PaymentOutcome.FAILED, userId);
+        PaymentResultResponse failed = report(order, PaymentOutcome.FAILED, userId);
 
-        assertThat(failed.status()).isEqualTo(OrderStatus.FAILED);
-        assertThat(failed.failureCode()).isEqualTo(FailureCode.PAYMENT_FAILED);
+        assertThat(failed.order().status()).isEqualTo(OrderStatus.FAILED);
+        assertThat(failed.order().failureCode()).isEqualTo(FailureCode.PAYMENT_FAILED);
         verify(inventoryClient).restore(any());
     }
 
@@ -126,9 +126,9 @@ class PaymentServiceTest extends AbstractPostgresTest {
         Order order = placeCardOrder();
         report(order, PaymentOutcome.SUCCESS, userId);
 
-        OrderResponse again = report(order, PaymentOutcome.SUCCESS, userId);
+        PaymentResultResponse again = report(order, PaymentOutcome.SUCCESS, userId);
 
-        assertThat(again.status()).isEqualTo(OrderStatus.CONFIRMED);
+        assertThat(again.order().status()).isEqualTo(OrderStatus.CONFIRMED);
         verify(inventoryClient, never()).restore(any());
     }
 
@@ -138,9 +138,9 @@ class PaymentServiceTest extends AbstractPostgresTest {
         Order order = placeCardOrder();
         report(order, PaymentOutcome.FAILED, userId);
 
-        OrderResponse again = report(order, PaymentOutcome.FAILED, userId);
+        PaymentResultResponse again = report(order, PaymentOutcome.FAILED, userId);
 
-        assertThat(again.status()).isEqualTo(OrderStatus.FAILED);
+        assertThat(again.order().status()).isEqualTo(OrderStatus.FAILED);
         verify(inventoryClient, times(1)).restore(any());
     }
 
@@ -178,6 +178,82 @@ class PaymentServiceTest extends AbstractPostgresTest {
                 .isInstanceOf(ApiException.class)
                 .extracting(e -> ((ApiException) e).code())
                 .isEqualTo(ErrorCode.ORDER_NOT_PAYABLE);
+    }
+
+    @Test
+    @DisplayName("a failed payment returns the ordered lines to the cart")
+    void failureReturnsLinesToCart() {
+        Order order = placeCardOrder();
+        assertThat(cartService.view(userId).items()).as("checkout emptied it").isEmpty();
+
+        PaymentResultResponse failed = report(order, PaymentOutcome.FAILED, userId);
+
+        assertThat(cartService.view(userId).items()).hasSize(1);
+        assertThat(failed.cartRestore().linesReturned()).isEqualTo(1);
+        assertThat(failed.cartRestore().unavailable()).isEmpty();
+    }
+
+    @Test
+    @DisplayName("MERGE AND SUM: what they added while paying is not discarded by the restore")
+    void restoreMergesWithTheCurrentCart() {
+        Order order = placeCardOrder();          // 1 unit ordered
+        cartService.add(userId, new AddCartItemRequest(PRODUCT, 2));  // 2 more added meanwhile
+
+        report(order, PaymentOutcome.FAILED, userId);
+
+        assertThat(cartService.view(userId).items())
+                .singleElement()
+                .extracting("quantity").isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("the restored quantity is capped at stock, since someone else may have bought it")
+    void restoreIsCappedAtAvailableStock() {
+        Order order = placeCardOrder();
+        cartService.add(userId, new AddCartItemRequest(PRODUCT, 2));
+        // Only one unit is left by the time the payment fails.
+        given(inventoryClient.getStock(any()))
+                .willReturn(new InventoryClient.StockResponse(PRODUCT, 1, true));
+
+        PaymentResultResponse failed = report(order, PaymentOutcome.FAILED, userId);
+
+        assertThat(cartService.view(userId).items())
+                .as("the cart never shows more than can be bought")
+                .singleElement().extracting("quantity").isEqualTo(2);
+        assertThat(failed.cartRestore().unavailable()).containsExactly("Sản phẩm");
+    }
+
+    @Test
+    @DisplayName("a delisted product is not put back, and is named so the app can say so")
+    void delistedProductIsNotRestored() {
+        Order order = placeCardOrder();
+        given(catalogClient.batch(any())).willReturn(List.of(new CatalogClient.ProductSnapshot(
+                PRODUCT, "Sản phẩm", new BigDecimal("100000.00"), "t", false)));
+
+        PaymentResultResponse failed = report(order, PaymentOutcome.FAILED, userId);
+
+        assertThat(cartService.view(userId).items()).isEmpty();
+        assertThat(failed.cartRestore().unavailable()).containsExactly("Sản phẩm");
+    }
+
+    @Test
+    @DisplayName("backing out of payment and checking out again does not hold the stock twice")
+    void abandonedOrderIsReleasedOnRecheckout() {
+        Order first = placeCardOrder();
+        // The customer navigates back to the cart without paying. The cart still holds the
+        // line, so the Checkout button places a second order for the same goods.
+        cartService.add(userId, new AddCartItemRequest(PRODUCT, 1));
+        Order second = saga.checkout(userId,
+                new CheckoutRequest(UUID.randomUUID(), PaymentMethod.MOCK_CARD, null));
+
+        assertThat(second.getId()).isNotEqualTo(first.getId());
+        assertThat(orderService.detail(first.getId(), userId).status())
+                .as("the abandoned order must not keep holding stock")
+                .isEqualTo(OrderStatus.FAILED);
+        verify(inventoryClient).restore(any());
+        assertThat(cartService.view(userId).items())
+                .as("a superseded order must not refill the cart the new one just emptied")
+                .isEmpty();
     }
 
     @Test

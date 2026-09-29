@@ -17,6 +17,7 @@ import vn.techies.ecommerce.order.domain.CartItem;
 import vn.techies.ecommerce.order.repository.CartRepository;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -98,22 +99,90 @@ public class CartService {
     }
 
     /**
-     * Removes the lines holding any of these products, leaving the rest of the cart intact.
+     * Puts the lines of a failed order back in the cart.
      *
-     * <p>Used once a payment succeeds. The cart line ids the checkout saga worked from are
-     * long gone by then — the order records product ids, not cart line ids — and a cart holds
-     * at most one line per product, so the product is enough to find the line again.
+     * <p>Checkout empties the lines it ordered, so a payment that then fails would otherwise
+     * leave the customer with nothing to retry. Quantities are **merged and summed** with
+     * whatever is in the cart now: they may have added more of the same product while paying,
+     * and overwriting would silently discard that.
      *
-     * <p>If the customer edited the cart while paying, this removes whatever line now holds
-     * that product. Removing the product they just bought is the right outcome either way.
+     * <p>Two things are not put back. A product that has been delisted would sit in the cart
+     * and fail their next checkout with PRODUCT_UNAVAILABLE. And the restored quantity is
+     * capped at what is actually in stock, because while this order was pending someone else
+     * may have bought the units it was holding — that customer got there first, and a cart
+     * line nobody can buy is worse than a short one. Both cases are reported back so the app
+     * can say what did not come back.
+     *
+     * <p>Call this only after the order's stock has been released, so the cap sees the units
+     * this order was holding.
      */
     @Transactional
-    public void removeByProductIds(UUID userId, Collection<UUID> productIds) {
-        carts.findByUserId(userId).ifPresent(cart -> {
-            Set<UUID> toRemove = new LinkedHashSet<>(productIds);
-            cart.getItems().removeIf(item -> toRemove.contains(item.getProductId()));
-            cart.touch();
-        });
+    public RestoreSummary restoreFromOrder(UUID userId, List<RestoreLine> lines) {
+        Cart cart = loadOrCreate(userId);
+        Map<UUID, CatalogClient.ProductSnapshot> products = snapshotOrEmpty(lines);
+
+        int returned = 0;
+        List<String> unavailable = new ArrayList<>();
+
+        for (RestoreLine line : lines) {
+            CatalogClient.ProductSnapshot product = products.get(line.productId());
+            if (product != null && !product.active()) {
+                unavailable.add(line.productName());
+                continue;
+            }
+
+            int existing = cart.findItem(line.productId()).map(CartItem::getQuantity).orElse(0);
+            int wanted = existing + line.quantity();
+            int target = Math.min(wanted, availableFor(line.productId(), wanted));
+
+            if (target <= existing) {
+                unavailable.add(line.productName());
+                continue;
+            }
+            if (existing > 0) {
+                cart.findItem(line.productId()).orElseThrow().setQuantity(target);
+            } else if (cart.getItems().size() >= Cart.MAX_LINES) {
+                unavailable.add(line.productName());
+                continue;
+            } else {
+                cart.addItem(line.productId(), target);
+            }
+            returned++;
+        }
+
+        cart.touch();
+        return new RestoreSummary(returned, List.copyOf(unavailable));
+    }
+
+    /** Catalog being down must not block a restore; an unknown product is treated as fine. */
+    private Map<UUID, CatalogClient.ProductSnapshot> snapshotOrEmpty(List<RestoreLine> lines) {
+        try {
+            Map<UUID, CatalogClient.ProductSnapshot> byId = new HashMap<>();
+            catalogClient.batch(new CatalogClient.BatchRequest(
+                    lines.stream().map(RestoreLine::productId).toList())).forEach(p -> byId.put(p.id(), p));
+            return byId;
+        } catch (Exception ex) {
+            log.debug("Catalog unavailable while restoring a cart: {}", ex.toString());
+            return Map.of();
+        }
+    }
+
+    /** Inventory being down must not block a restore either, so fall back to what was asked. */
+    private int availableFor(UUID productId, int fallback) {
+        try {
+            return inventoryClient.getStock(productId).available();
+        } catch (Exception ex) {
+            log.debug("Stock unavailable while restoring a cart: {}", ex.toString());
+            return fallback;
+        }
+    }
+
+    /** A line of a failed order, ready to go back into the cart. */
+    public record RestoreLine(UUID productId, String productName, int quantity) {
+    }
+
+    /** @param unavailable the names of lines that could not be returned. */
+    public record RestoreSummary(int linesReturned, List<String> unavailable) {
     }
 
     /** A cart line, detached from Hibernate. {@code itemId} identifies the line to remove. */

@@ -484,9 +484,10 @@ def main():
         immediately, because there is nothing to settle before delivery.
 
         ```
-        POST /checkout            -> order.status = AWAITING_PAYMENT  (stock held, cart kept)
+        POST /checkout            -> AWAITING_PAYMENT   stock held, ordered lines REMOVED from the cart
              [customer pays in the app]
-        POST /orders/{id}/payment -> order.status = CONFIRMED  or  FAILED
+        POST /orders/{id}/payment -> CONFIRMED           cart already clean
+                                  -> FAILED              stock released, lines PUT BACK in the cart
         ```
 
         `POST /checkout` **returns HTTP 200 even when the order fails.**
@@ -526,9 +527,10 @@ def main():
         A 4xx here means the request never became an order at all (`EMPTY_CART`,
         `ADDRESS_NOT_FOUND`, `PRODUCT_UNAVAILABLE`) — those are input problems, not failed orders.
 
-        **The cart is cleared only on a successful payment.** While the order is
-        `AWAITING_PAYMENT`, and after any failure, the items are still there so the user can
-        retry. Do not clear it client-side.
+        **The cart is emptied of the ordered lines at checkout**, because those goods are now
+        committed to an order. If the payment then fails — or the window expires — those lines
+        are put back automatically, so the user still has something to retry with. Do not
+        clear or refill it client-side; re-read `GET /cart` after a failure.
 
         ---
 
@@ -546,6 +548,18 @@ def main():
         | `transactionRef` | The provider's transaction id, up to 64 chars. Send it on success |
         | `failureReason` | Optional free text, up to 200 chars, recorded on failure |
 
+        A failure returns `cartRestore`, saying what went back:
+
+        ```json
+        { "order": { ... }, "cartRestore": { "linesReturned": 2, "unavailable": ["Sony WH-1000XM5"] } }
+        ```
+
+        Restored quantities are **merged and summed** with whatever is in the cart now, so
+        anything added while paying is kept. A line is listed in `unavailable`, and not
+        restored, when the product has been delisted or when someone else bought the stock
+        this order was holding — that customer got there first. Show those names: the cart is
+        not what it was. `cartRestore` is `null` on success.
+
         **It is idempotent.** Reporting the same result again returns the same order, so a
         retry after a dropped connection is safe. Reporting the opposite of a settled order is
         `409 ORDER_NOT_PAYABLE` — a paid order is undone with `/cancel`, and a failed one has
@@ -557,13 +571,14 @@ def main():
 
         """))
     w(endpoint(cap, "checkout.awaitingPayment", "Checkout — awaiting payment", auth=True,
-               description="`status: AWAITING_PAYMENT`. Stock is held and the cart is kept. Take the customer "
-                           "to the payment screen, then report the outcome."))
+               description="`status: AWAITING_PAYMENT`. Stock is held and the ordered lines have left "
+                           "the cart. Take the customer to the payment screen, then report the outcome."))
     w(endpoint(cap, "payment.success", "Payment — success", auth=True,
                description="`status: CONFIRMED`. The cart is now empty and the stock is sold."))
     w(endpoint(cap, "payment.failed", "Payment — failed", auth=True,
-               description="**HTTP 200 with a FAILED order.** Stock that was held has been returned "
-                           "automatically, and the cart is intact for a retry."))
+               description="**HTTP 200 with a FAILED order.** Stock that was held has been released, "
+                           "and the ordered lines are back in the cart. Read `cartRestore` for what "
+                           "could not be returned."))
     w(endpoint(cap, "checkout.outOfStock", "Checkout — out of stock", auth=True,
                description="The order never reached the payment step. Refresh the cart to see what "
                            "is unavailable."))

@@ -3,15 +3,15 @@
     "method": "POST",
     "path": "/auth/register",
     "request": {
-      "email": "fe-demo-f76392@techies.vn",
+      "email": "fe-demo-848275@techies.vn",
       "password": "password1",
       "fullName": "Nguyen Van A",
       "phone": "0901234567"
     },
     "status": 201,
     "response": {
-      "userId": "2e2f4fb7-93f9-4992-8993-db768538dfca",
-      "email": "fe-demo-f76392@techies.vn"
+      "userId": "e009ee7d-c1d8-4d5d-9a18-e260d3fc1c17",
+      "email": "fe-demo-848275@techies.vn"
     },
     "note": null
   },
@@ -19,14 +19,14 @@
     "method": "POST",
     "path": "/auth/register",
     "request": {
-      "email": "fe-demo-f76392@techies.vn",
+      "email": "fe-demo-848275@techies.vn",
       "password": "password1",
       "fullName": "Nguyen Van A",
       "phone": "0901234567"
     },
     "status": 409,
     "response": {
-      "timestamp": "2026-09-26T04:44:08.411096924Z",
+      "timestamp": "2026-09-29T08:25:19.536639385Z",
       "status": 409,
       "code": "EMAIL_ALREADY_EXISTS",
       "message": "An account with this email already exists",
@@ -45,7 +45,7 @@
     },
     "status": 400,
     "response": {
-      "timestamp": "2026-09-26T04:44:08.440077340Z",
+      "timestamp": "2026-09-29T08:25:19.545410844Z",
       "status": 400,
       "code": "VALIDATION_ERROR",
       "message": "Request validation failed",
@@ -62,17 +62,17 @@
     "method": "POST",
     "path": "/auth/login",
     "request": {
-      "email": "fe-demo-f76392@techies.vn",
+      "email": "fe-demo-848275@techies.vn",
       "password": "password1"
     },
     "status": 200,
     "response": {
-      "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIyZTJmNGZiNy05M2Y5LTQ5OTItODk5My1kYjc2ODUzOGRmY2EiLCJlbWFpbCI6ImZlLWRlbW8tZjc2MzkyQHRlY2hpZXMudm4iLCJpYXQiOjE3OTAzOTc4NDgsImV4cCI6MTc5Mjk4OTg0OH0.KN444Ps7dur8NT9hHesjjbYrKplFLZVGobBi3qvf3e-rjUP2J1OxdGU6ZmLo-jNe",
+      "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlMDA5ZWU3ZC1jMWQ4LTRkNWQtOWExOC1lMjYwZDNmYzFjMTciLCJlbWFpbCI6ImZlLWRlbW8tODQ4Mjc1QHRlY2hpZXMudm4iLCJpYXQiOjE3OTA2NzAzMTksImV4cCI6MTc5MzI2MjMxOX0._-Y8QVHPI7-p6-lkJRstk38gYJ41HzyS1I9srqF_i53tV_fvxh0eMlouPb75YUEn",
       "tokenType": "Bearer",
       "expiresIn": 2592000,
       "user": {
-        "id": "2e2f4fb7-93f9-4992-8993-db768538dfca",
-        "email": "fe-demo-f76392@techies.vn",
+        "id": "e009ee7d-c1d8-4d5d-9a18-e260d3fc1c17",
+        "email": "fe-demo-848275@techies.vn",
         "fullName": "Nguyen Van A",
         "phone": "0901234567",
         "avatarUrl": null
@@ -84,12 +84,12 @@
     "method": "POST",
     "path": "/auth/login",
     "request": {
-      "email": "fe-demo-f76392@techies.vn",
+      "email": "fe-demo-848275@techies.vn",
       "password": "wrongpassword1"
     },
     "status": 401,
     "response": {
-      "timestamp": "2026-09-26T04:44:08.622859965Z",
+      "timestamp": "2026-09-29T08:25:19.714042635Z",
       "status": 401,
       "code": "INVALID_CREDENTIALS",
       "message": "Email or password is incorrect",
@@ -101,11 +101,11 @@
     "method": "POST",
     "path": "/auth/check-email",
     "request": {
-      "email": "fe-demo-f76392@techies.vn"
+      "email": "fe-demo-848275@techies.vn"
     },
     "status": 200,
     "response": {
-      "email": "fe-demo-f76392@techies.vn",
+      "email": "fe-demo-848275@techies.vn",
       "exists": true
     },
     "note": null
@@ -129,8 +129,8 @@
     "request": null,
     "status": 200,
     "response": {
-      "id": "2e2f4fb7-93f9-4992-8993-db768538dfca",
-      "email": "fe-demo-f76392@techies.vn",
+      "id": "e009ee7d-c1d8-4d5d-9a18-e260d3fc1c17",
+      "email": "fe-demo-848275@techies.vn",
       "fullName": "Nguyen Van A",
       "phone": "0901234567",
       "avatarUrl": null
@@ -146,8 +146,8 @@
     },
     "status": 200,
     "response": {
-      "id": "2e2f4fb7-93f9-4992-8993-db768538dfca",
-      "email": "fe-demo-f76392@techies.vn",
+      "id": "e009ee7d-c1d8-4d5d-9a18-e260d3fc1c17",
+      "email": "fe-demo-848275@techies.vn",
       "fullName": "Nguyen Van B",
       "phone": "0909999999",
       "avatarUrl": null
@@ -160,7 +160,7 @@
     "request": null,
     "status": 401,
     "response": {
-      "timestamp": "2026-09-26T04:44:08.678656382Z",
+      "timestamp": "2026-09-29T08:25:19.742258177Z",
       "status": 401,
       "code": "UNAUTHENTICATED",
       "message": "Authentication required",
@@ -182,11 +182,11 @@
     "request": null,
     "status": 200,
     "response": {
-      "id": "2e2f4fb7-93f9-4992-8993-db768538dfca",
-      "email": "fe-demo-f76392@techies.vn",
+      "id": "e009ee7d-c1d8-4d5d-9a18-e260d3fc1c17",
+      "email": "fe-demo-848275@techies.vn",
       "fullName": "Nguyen Van B",
       "phone": "0909999999",
-      "avatarUrl": "/users/2e2f4fb7-93f9-4992-8993-db768538dfca/avatar"
+      "avatarUrl": "/users/e009ee7d-c1d8-4d5d-9a18-e260d3fc1c17/avatar"
     },
     "note": "avatarUrl is populated once an image exists"
   },
@@ -196,7 +196,7 @@
     "request": null,
     "status": 400,
     "response": {
-      "timestamp": "2026-09-26T04:44:08.707096215Z",
+      "timestamp": "2026-09-29T08:25:19.763963844Z",
       "status": 400,
       "code": "UNSUPPORTED_IMAGE_TYPE",
       "message": "Only PNG and JPEG images are accepted (received 'evil.png')",
@@ -210,7 +210,7 @@
     "request": null,
     "status": 400,
     "response": {
-      "timestamp": "2026-09-26T04:44:08.717771591Z",
+      "timestamp": "2026-09-29T08:25:19.772842010Z",
       "status": 400,
       "code": "UNSUPPORTED_IMAGE_TYPE",
       "message": "Only PNG and JPEG images are accepted (received 'me.gif')",
@@ -232,7 +232,7 @@
     },
     "status": 201,
     "response": {
-      "id": "9505ce65-5d96-43c5-b0f4-fe3b279a1c98",
+      "id": "c1558e29-63f2-43af-823f-a799456cc650",
       "recipientName": "Nguyen Van B",
       "phone": "0907654321",
       "line1": "12 Nguyen Hue",
@@ -250,7 +250,7 @@
     "status": 200,
     "response": [
       {
-        "id": "9505ce65-5d96-43c5-b0f4-fe3b279a1c98",
+        "id": "c1558e29-63f2-43af-823f-a799456cc650",
         "recipientName": "Nguyen Van B",
         "phone": "0907654321",
         "line1": "12 Nguyen Hue",
@@ -272,42 +272,42 @@
         "id": "621a9347-0b52-58d5-ba30-9c524079231d",
         "name": "Điện thoại",
         "slug": "dien-thoai",
-        "imageUrl": "https://picsum.photos/seed/dien-thoai/400",
+        "imageUrl": "https://cdn.tgdd.vn/Products/Images/42/305658/iphone-15-pro-max-blue-thumbnew-600x600.jpg",
         "displayOrder": 1
       },
       {
         "id": "1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b",
         "name": "Laptop",
         "slug": "laptop",
-        "imageUrl": "https://picsum.photos/seed/laptop/400",
+        "imageUrl": "https://www.apple.com/newsroom/images/2023/10/apple-unveils-new-macbook-pro-featuring-m3-chips/article/Apple-MacBook-Pro-top-view-231030_big.jpg.large_2x.jpg",
         "displayOrder": 2
       },
       {
         "id": "155c3f45-7376-54b8-8fe4-9859afd0cd8e",
         "name": "Máy tính bảng",
         "slug": "tablet",
-        "imageUrl": "https://picsum.photos/seed/tablet/400",
+        "imageUrl": "https://cdn.tgdd.vn/Products/Images/522/325513/ipad-pro-11-inch-m4-wifi-sliver-thumb-600x600.jpg",
         "displayOrder": 3
       },
       {
         "id": "3a8e7aee-9455-52a3-be9a-3790e375821a",
         "name": "Tai nghe",
         "slug": "tai-nghe",
-        "imageUrl": "https://picsum.photos/seed/tai-nghe/400",
+        "imageUrl": "https://images.ctfassets.net/javen7msabdh/7Jo3yt8L1EKkGWPe8gK8tK/ba408004ee0cd7fc35126aba4ead321a/major-v-cream-front-desktop-1.jpeg?w=1200&fm=jpg&q=85",
         "displayOrder": 4
       },
       {
         "id": "5e8b4230-0d61-5f2b-a468-5499e8e7331b",
         "name": "Đồng hồ thông minh",
         "slug": "dong-ho-thong-minh",
-        "imageUrl": "https://picsum.photos/seed/dong-ho-thong-minh/400",
+        "imageUrl": "https://cdn.tgdd.vn/Products/Images/7077/310858/samsung-galaxy-watch6-classic-47-mm-bac-ksp-600x600.jpg",
         "displayOrder": 5
       },
       {
         "id": "cec6d4cc-9d78-55d8-aaf7-35d3bcf87a9f",
         "name": "Phụ kiện",
         "slug": "phu-kien",
-        "imageUrl": "https://picsum.photos/seed/phu-kien/400",
+        "imageUrl": "https://cdn.shopify.com/s/files/1/0493/9834/9974/products/A2663111-Anker_715_Charger_Nano_II_65W.png?v=1767756360",
         "displayOrder": 6
       }
     ],
@@ -321,20 +321,20 @@
     "response": {
       "content": [
         {
-          "id": "e0404394-59b0-5044-af93-6a93adc3af39",
-          "name": "iPhone 15 128GB",
-          "slug": "iphone-15-128gb",
-          "price": 22990000.0,
-          "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
-          "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
-          "categoryName": "Điện thoại"
+          "id": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+          "name": "MacBook Air M3 13 inch 8GB/256GB",
+          "slug": "macbook-air-m3-13",
+          "price": 27990000.0,
+          "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
+          "categoryId": "1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b",
+          "categoryName": "Laptop"
         },
         {
-          "id": "1f8d1d18-6b82-542e-bcca-e7485fe03e0d",
-          "name": "iPhone 15 Pro Max 256GB",
-          "slug": "iphone-15-pro-max-256gb",
-          "price": 31990000.0,
-          "thumbnailUrl": "https://picsum.photos/seed/iphone-15-pro-max-256gb/600",
+          "id": "9dc2c272-0914-54de-b46b-62ca7e689523",
+          "name": "vivo V30e 5G",
+          "slug": "vivo-v30e",
+          "price": 8990000.0,
+          "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=vivo+V30e+5G",
           "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
           "categoryName": "Điện thoại"
         }
@@ -358,7 +358,7 @@
           "name": "iPhone 15 Pro Max 256GB",
           "slug": "iphone-15-pro-max-256gb",
           "price": 31990000.0,
-          "thumbnailUrl": "https://picsum.photos/seed/iphone-15-pro-max-256gb/600",
+          "thumbnailUrl": "https://cdn.tgdd.vn/Products/Images/42/305658/iphone-15-pro-max-blue-thumbnew-600x600.jpg",
           "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
           "categoryName": "Điện thoại"
         },
@@ -367,7 +367,7 @@
           "name": "iPhone 15 128GB",
           "slug": "iphone-15-128gb",
           "price": 22990000.0,
-          "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
+          "thumbnailUrl": "https://cdn.tgdd.vn/Products/Images/42/281570/iphone-15-xanh-thumb-600x600.jpg",
           "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
           "categoryName": "Điện thoại"
         }
@@ -381,47 +381,47 @@
   },
   "catalog.detail": {
     "method": "GET",
-    "path": "/products/e0404394-59b0-5044-af93-6a93adc3af39",
+    "path": "/products/717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
     "request": null,
     "status": 200,
     "response": {
-      "id": "e0404394-59b0-5044-af93-6a93adc3af39",
-      "name": "iPhone 15 128GB",
-      "slug": "iphone-15-128gb",
-      "description": "iPhone 15 128GB - hàng chính hãng, bảo hành 12 tháng tại Techies.",
-      "price": 22990000.0,
-      "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
-      "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
-      "categoryName": "Điện thoại",
+      "id": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+      "name": "MacBook Air M3 13 inch 8GB/256GB",
+      "slug": "macbook-air-m3-13",
+      "description": "MacBook Air M3 13 inch 8GB/256GB - hàng chính hãng, bảo hành 12 tháng tại Techies.",
+      "price": 27990000.0,
+      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
+      "categoryId": "1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b",
+      "categoryName": "Laptop",
       "images": [
-        "https://picsum.photos/seed/iphone-15-128gb-1/800",
-        "https://picsum.photos/seed/iphone-15-128gb-2/800"
+        "https://placehold.co/800x800/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB+%281%2F2%29",
+        "https://placehold.co/800x800/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB+%282%2F2%29"
       ]
     },
     "note": null
   },
   "catalog.detail.missing": {
     "method": "GET",
-    "path": "/products/13513ede-7503-4bde-964a-d7a02a75e5bb",
+    "path": "/products/82f55351-ab79-4c75-833f-f9191356f2be",
     "request": null,
     "status": 404,
     "response": {
-      "timestamp": "2026-09-26T04:44:08.961372799Z",
+      "timestamp": "2026-09-29T08:25:19.895416510Z",
       "status": 404,
       "code": "PRODUCT_NOT_FOUND",
       "message": "Product not found",
-      "path": "/products/13513ede-7503-4bde-964a-d7a02a75e5bb"
+      "path": "/products/82f55351-ab79-4c75-833f-f9191356f2be"
     },
     "note": null
   },
   "stock.get": {
     "method": "GET",
-    "path": "/stock/e0404394-59b0-5044-af93-6a93adc3af39",
+    "path": "/stock/717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
     "request": null,
     "status": 200,
     "response": {
-      "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-      "available": 90,
+      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+      "available": 51,
       "inStock": true
     },
     "note": null
@@ -442,31 +442,31 @@
     "method": "POST",
     "path": "/cart/items",
     "request": {
-      "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
+      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
       "quantity": 2
     },
     "status": 201,
     "response": {
       "items": [
         {
-          "id": "25c2e474-9c45-4e72-a3da-3108d0b736c2",
-          "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-          "name": "iPhone 15 128GB",
-          "unitPrice": 22990000.0,
+          "id": "f8360cbc-40d7-4326-8d5d-cf29d63ff04f",
+          "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+          "name": "MacBook Air M3 13 inch 8GB/256GB",
+          "unitPrice": 27990000.0,
           "quantity": 2,
-          "lineTotal": 45980000.0,
-          "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
-          "available": 90
+          "lineTotal": 55980000.0,
+          "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
+          "available": 51
         }
       ],
-      "subtotal": 45980000.0,
+      "subtotal": 55980000.0,
       "itemCount": 1
     },
     "note": null
   },
   "cart.update": {
     "method": "PUT",
-    "path": "/cart/items/25c2e474-9c45-4e72-a3da-3108d0b736c2",
+    "path": "/cart/items/f8360cbc-40d7-4326-8d5d-cf29d63ff04f",
     "request": {
       "quantity": 1
     },
@@ -474,17 +474,17 @@
     "response": {
       "items": [
         {
-          "id": "25c2e474-9c45-4e72-a3da-3108d0b736c2",
-          "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-          "name": "iPhone 15 128GB",
-          "unitPrice": 22990000.0,
+          "id": "f8360cbc-40d7-4326-8d5d-cf29d63ff04f",
+          "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+          "name": "MacBook Air M3 13 inch 8GB/256GB",
+          "unitPrice": 27990000.0,
           "quantity": 1,
-          "lineTotal": 22990000.0,
-          "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
-          "available": 90
+          "lineTotal": 27990000.0,
+          "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
+          "available": 51
         }
       ],
-      "subtotal": 22990000.0,
+      "subtotal": 27990000.0,
       "itemCount": 1
     },
     "note": null
@@ -497,41 +497,41 @@
     "response": {
       "items": [
         {
-          "id": "25c2e474-9c45-4e72-a3da-3108d0b736c2",
-          "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-          "name": "iPhone 15 128GB",
-          "unitPrice": 22990000.0,
+          "id": "f8360cbc-40d7-4326-8d5d-cf29d63ff04f",
+          "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+          "name": "MacBook Air M3 13 inch 8GB/256GB",
+          "unitPrice": 27990000.0,
           "quantity": 1,
-          "lineTotal": 22990000.0,
-          "thumbnailUrl": "https://picsum.photos/seed/iphone-15-128gb/600",
-          "available": 90
+          "lineTotal": 27990000.0,
+          "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
+          "available": 51
         }
       ],
-      "subtotal": 22990000.0,
+      "subtotal": 27990000.0,
       "itemCount": 1
     },
     "note": null
   },
-  "checkout.success": {
+  "checkout.awaitingPayment": {
     "method": "POST",
     "path": "/checkout",
     "request": {
-      "addressId": "9505ce65-5d96-43c5-b0f4-fe3b279a1c98",
-      "paymentMethod": "MOCK_CARD",
-      "simulatePayment": "SUCCESS"
+      "addressId": "c1558e29-63f2-43af-823f-a799456cc650",
+      "paymentMethod": "MOCK_CARD"
     },
     "status": 200,
     "response": {
       "order": {
-        "id": "08af219a-f203-4dc3-8280-8d57e6167238",
-        "orderRef": "ORD-20260926-0001",
-        "status": "CONFIRMED",
+        "id": "d5ba9e58-8152-475c-8abd-c9059a8c6305",
+        "orderRef": "ORD-20260929-0019",
+        "status": "AWAITING_PAYMENT",
         "failureCode": null,
-        "subtotal": 22990000.0,
+        "subtotal": 27990000.0,
         "shippingFee": 0.0,
-        "total": 22990000.0,
+        "total": 27990000.0,
         "paymentMethod": "MOCK_CARD",
-        "paymentStatus": "PAID",
+        "paymentStatus": "PENDING",
+        "paymentRef": null,
         "shippingAddress": {
           "recipientName": "Nguyen Van B",
           "phone": "0907654321",
@@ -542,39 +542,84 @@
         },
         "items": [
           {
-            "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-            "productName": "iPhone 15 128GB",
-            "unitPrice": 22990000.0,
+            "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+            "productName": "MacBook Air M3 13 inch 8GB/256GB",
+            "unitPrice": 27990000.0,
             "quantity": 1,
-            "lineTotal": 22990000.0
+            "lineTotal": 27990000.0,
+            "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
           }
         ],
-        "createdAt": "2026-09-26T04:44:09.650898Z"
+        "createdAt": "2026-09-29T08:25:20.244746Z"
       },
-      "message": "Order placed successfully"
+      "message": "Order placed, complete the payment to confirm it"
     },
-    "note": "HTTP 200, order.status = CONFIRMED"
+    "note": "HTTP 200, order.status = AWAITING_PAYMENT -- stock held, now take the customer to pay"
+  },
+  "payment.success": {
+    "method": "POST",
+    "path": "/orders/d5ba9e58-8152-475c-8abd-c9059a8c6305/payment",
+    "request": {
+      "result": "SUCCESS",
+      "transactionRef": "TXN-DEMO-0001"
+    },
+    "status": 200,
+    "response": {
+      "order": {
+        "id": "d5ba9e58-8152-475c-8abd-c9059a8c6305",
+        "orderRef": "ORD-20260929-0019",
+        "status": "CONFIRMED",
+        "failureCode": null,
+        "subtotal": 27990000.0,
+        "shippingFee": 0.0,
+        "total": 27990000.0,
+        "paymentMethod": "MOCK_CARD",
+        "paymentStatus": "PAID",
+        "paymentRef": "TXN-DEMO-0001",
+        "shippingAddress": {
+          "recipientName": "Nguyen Van B",
+          "phone": "0907654321",
+          "line1": "12 Nguyen Hue",
+          "ward": "Ben Nghe",
+          "district": "Quan 1",
+          "province": "Ho Chi Minh"
+        },
+        "items": [
+          {
+            "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+            "productName": "MacBook Air M3 13 inch 8GB/256GB",
+            "unitPrice": 27990000.0,
+            "quantity": 1,
+            "lineTotal": 27990000.0,
+            "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+          }
+        ],
+        "createdAt": "2026-09-29T08:25:20.244746Z"
+      },
+      "cartRestore": null
+    },
+    "note": "order.status = CONFIRMED, cart cleared"
   },
   "checkout.declined": {
     "method": "POST",
     "path": "/checkout",
     "request": {
-      "addressId": "9505ce65-5d96-43c5-b0f4-fe3b279a1c98",
-      "paymentMethod": "MOCK_CARD",
-      "simulatePayment": "DECLINED"
+      "addressId": "c1558e29-63f2-43af-823f-a799456cc650",
+      "paymentMethod": "MOCK_CARD"
     },
     "status": 200,
     "response": {
       "order": {
-        "id": "3f162668-2964-4b7a-b356-ef474a115b7c",
-        "orderRef": "ORD-20260926-0002",
-        "status": "FAILED",
-        "failureCode": "PAYMENT_FAILED",
-        "subtotal": 22990000.0,
+        "id": "c18176a6-2e7d-4fcc-a045-69b0ccaba3a1",
+        "orderRef": "ORD-20260929-0020",
+        "status": "AWAITING_PAYMENT",
+        "failureCode": null,
+        "subtotal": 27990000.0,
         "shippingFee": 0.0,
-        "total": 22990000.0,
+        "total": 27990000.0,
         "paymentMethod": "MOCK_CARD",
-        "paymentStatus": "DECLINED",
+        "paymentStatus": "PENDING",
+        "paymentRef": null,
         "shippingAddress": {
           "recipientName": "Nguyen Van B",
           "phone": "0907654321",
@@ -585,38 +630,87 @@
         },
         "items": [
           {
-            "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-            "productName": "iPhone 15 128GB",
-            "unitPrice": 22990000.0,
+            "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+            "productName": "MacBook Air M3 13 inch 8GB/256GB",
+            "unitPrice": 27990000.0,
             "quantity": 1,
-            "lineTotal": 22990000.0
+            "lineTotal": 27990000.0,
+            "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
           }
         ],
-        "createdAt": "2026-09-26T04:44:10.215802Z"
+        "createdAt": "2026-09-29T08:25:20.432426Z"
       },
-      "message": "Payment was declined, your cart has been kept"
+      "message": "Order placed, complete the payment to confirm it"
     },
-    "note": "HTTP 200 but order.status = FAILED -- read the body, not the status code"
+    "note": null
+  },
+  "payment.failed": {
+    "method": "POST",
+    "path": "/orders/c18176a6-2e7d-4fcc-a045-69b0ccaba3a1/payment",
+    "request": {
+      "result": "FAILED",
+      "failureReason": "Card declined by issuer"
+    },
+    "status": 200,
+    "response": {
+      "order": {
+        "id": "c18176a6-2e7d-4fcc-a045-69b0ccaba3a1",
+        "orderRef": "ORD-20260929-0020",
+        "status": "FAILED",
+        "failureCode": "PAYMENT_FAILED",
+        "subtotal": 27990000.0,
+        "shippingFee": 0.0,
+        "total": 27990000.0,
+        "paymentMethod": "MOCK_CARD",
+        "paymentStatus": "DECLINED",
+        "paymentRef": null,
+        "shippingAddress": {
+          "recipientName": "Nguyen Van B",
+          "phone": "0907654321",
+          "line1": "12 Nguyen Hue",
+          "ward": "Ben Nghe",
+          "district": "Quan 1",
+          "province": "Ho Chi Minh"
+        },
+        "items": [
+          {
+            "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+            "productName": "MacBook Air M3 13 inch 8GB/256GB",
+            "unitPrice": 27990000.0,
+            "quantity": 1,
+            "lineTotal": 27990000.0,
+            "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+          }
+        ],
+        "createdAt": "2026-09-29T08:25:20.432426Z"
+      },
+      "cartRestore": {
+        "linesReturned": 1,
+        "unavailable": []
+      }
+    },
+    "note": "stock is returned, order.status = FAILED, the cart is kept for a retry"
   },
   "checkout.outOfStock": {
     "method": "POST",
     "path": "/checkout",
     "request": {
-      "addressId": "9505ce65-5d96-43c5-b0f4-fe3b279a1c98",
+      "addressId": "c1558e29-63f2-43af-823f-a799456cc650",
       "paymentMethod": "COD"
     },
     "status": 200,
     "response": {
       "order": {
-        "id": "832c2a40-e452-4035-9681-38c535f583d2",
-        "orderRef": "ORD-20260926-0003",
+        "id": "53c2c085-aabf-4303-9fc5-132e99d66011",
+        "orderRef": "ORD-20260929-0021",
         "status": "FAILED",
         "failureCode": "OUT_OF_STOCK",
-        "subtotal": 36980000.0,
+        "subtotal": 41980000.0,
         "shippingFee": 0.0,
-        "total": 36980000.0,
+        "total": 41980000.0,
         "paymentMethod": "COD",
         "paymentStatus": "PENDING",
+        "paymentRef": null,
         "shippingAddress": {
           "recipientName": "Nguyen Van B",
           "phone": "0907654321",
@@ -627,21 +721,23 @@
         },
         "items": [
           {
-            "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-            "productName": "iPhone 15 128GB",
-            "unitPrice": 22990000.0,
+            "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+            "productName": "MacBook Air M3 13 inch 8GB/256GB",
+            "unitPrice": 27990000.0,
             "quantity": 1,
-            "lineTotal": 22990000.0
+            "lineTotal": 27990000.0,
+            "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
           },
           {
             "productId": "b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8",
             "productName": "MSI Modern 14 C13M",
             "unitPrice": 13990000.0,
             "quantity": 1,
-            "lineTotal": 13990000.0
+            "lineTotal": 13990000.0,
+            "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M"
           }
         ],
-        "createdAt": "2026-09-26T04:44:10.550676Z"
+        "createdAt": "2026-09-29T08:25:20.618184Z"
       },
       "message": "Some items are no longer in stock"
     },
@@ -655,31 +751,31 @@
     "response": {
       "content": [
         {
-          "id": "832c2a40-e452-4035-9681-38c535f583d2",
-          "orderRef": "ORD-20260926-0003",
+          "id": "53c2c085-aabf-4303-9fc5-132e99d66011",
+          "orderRef": "ORD-20260929-0021",
           "status": "FAILED",
           "failureCode": "OUT_OF_STOCK",
-          "total": 36980000.0,
+          "total": 41980000.0,
           "itemCount": 2,
-          "createdAt": "2026-09-26T04:44:10.550676Z"
+          "createdAt": "2026-09-29T08:25:20.618184Z"
         },
         {
-          "id": "3f162668-2964-4b7a-b356-ef474a115b7c",
-          "orderRef": "ORD-20260926-0002",
+          "id": "c18176a6-2e7d-4fcc-a045-69b0ccaba3a1",
+          "orderRef": "ORD-20260929-0020",
           "status": "FAILED",
           "failureCode": "PAYMENT_FAILED",
-          "total": 22990000.0,
+          "total": 27990000.0,
           "itemCount": 1,
-          "createdAt": "2026-09-26T04:44:10.215802Z"
+          "createdAt": "2026-09-29T08:25:20.432426Z"
         },
         {
-          "id": "08af219a-f203-4dc3-8280-8d57e6167238",
-          "orderRef": "ORD-20260926-0001",
+          "id": "d5ba9e58-8152-475c-8abd-c9059a8c6305",
+          "orderRef": "ORD-20260929-0019",
           "status": "CONFIRMED",
           "failureCode": null,
-          "total": 22990000.0,
+          "total": 27990000.0,
           "itemCount": 1,
-          "createdAt": "2026-09-26T04:44:09.650898Z"
+          "createdAt": "2026-09-29T08:25:20.244746Z"
         }
       ],
       "page": 0,
@@ -691,19 +787,20 @@
   },
   "orders.detail": {
     "method": "GET",
-    "path": "/orders/08af219a-f203-4dc3-8280-8d57e6167238",
+    "path": "/orders/d5ba9e58-8152-475c-8abd-c9059a8c6305",
     "request": null,
     "status": 200,
     "response": {
-      "id": "08af219a-f203-4dc3-8280-8d57e6167238",
-      "orderRef": "ORD-20260926-0001",
+      "id": "d5ba9e58-8152-475c-8abd-c9059a8c6305",
+      "orderRef": "ORD-20260929-0019",
       "status": "CONFIRMED",
       "failureCode": null,
-      "subtotal": 22990000.0,
+      "subtotal": 27990000.0,
       "shippingFee": 0.0,
-      "total": 22990000.0,
+      "total": 27990000.0,
       "paymentMethod": "MOCK_CARD",
       "paymentStatus": "PAID",
+      "paymentRef": "TXN-DEMO-0001",
       "shippingAddress": {
         "recipientName": "Nguyen Van B",
         "phone": "0907654321",
@@ -714,32 +811,34 @@
       },
       "items": [
         {
-          "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-          "productName": "iPhone 15 128GB",
-          "unitPrice": 22990000.0,
+          "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+          "productName": "MacBook Air M3 13 inch 8GB/256GB",
+          "unitPrice": 27990000.0,
           "quantity": 1,
-          "lineTotal": 22990000.0
+          "lineTotal": 27990000.0,
+          "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
         }
       ],
-      "createdAt": "2026-09-26T04:44:09.650898Z"
+      "createdAt": "2026-09-29T08:25:20.244746Z"
     },
     "note": null
   },
   "orders.cancel": {
     "method": "POST",
-    "path": "/orders/08af219a-f203-4dc3-8280-8d57e6167238/cancel",
+    "path": "/orders/d5ba9e58-8152-475c-8abd-c9059a8c6305/cancel",
     "request": null,
     "status": 200,
     "response": {
-      "id": "08af219a-f203-4dc3-8280-8d57e6167238",
-      "orderRef": "ORD-20260926-0001",
+      "id": "d5ba9e58-8152-475c-8abd-c9059a8c6305",
+      "orderRef": "ORD-20260929-0019",
       "status": "CANCELLED",
       "failureCode": null,
-      "subtotal": 22990000.0,
+      "subtotal": 27990000.0,
       "shippingFee": 0.0,
-      "total": 22990000.0,
+      "total": 27990000.0,
       "paymentMethod": "MOCK_CARD",
       "paymentStatus": "REFUNDED",
+      "paymentRef": "TXN-DEMO-0001",
       "shippingAddress": {
         "recipientName": "Nguyen Van B",
         "phone": "0907654321",
@@ -750,28 +849,29 @@
       },
       "items": [
         {
-          "productId": "e0404394-59b0-5044-af93-6a93adc3af39",
-          "productName": "iPhone 15 128GB",
-          "unitPrice": 22990000.0,
+          "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+          "productName": "MacBook Air M3 13 inch 8GB/256GB",
+          "unitPrice": 27990000.0,
           "quantity": 1,
-          "lineTotal": 22990000.0
+          "lineTotal": 27990000.0,
+          "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
         }
       ],
-      "createdAt": "2026-09-26T04:44:09.650898Z"
+      "createdAt": "2026-09-29T08:25:20.244746Z"
     },
     "note": null
   },
   "orders.cancel.again": {
     "method": "POST",
-    "path": "/orders/08af219a-f203-4dc3-8280-8d57e6167238/cancel",
+    "path": "/orders/d5ba9e58-8152-475c-8abd-c9059a8c6305/cancel",
     "request": null,
     "status": 409,
     "response": {
-      "timestamp": "2026-09-26T04:44:10.653824133Z",
+      "timestamp": "2026-09-29T08:25:20.872518178Z",
       "status": 409,
       "code": "ORDER_NOT_CANCELLABLE",
       "message": "An order in status CANCELLED cannot be cancelled",
-      "path": "/orders/08af219a-f203-4dc3-8280-8d57e6167238/cancel"
+      "path": "/orders/d5ba9e58-8152-475c-8abd-c9059a8c6305/cancel"
     },
     "note": "cancelling twice is refused"
   }

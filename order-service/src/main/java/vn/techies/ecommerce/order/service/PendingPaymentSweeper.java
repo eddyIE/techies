@@ -37,8 +37,7 @@ public class PendingPaymentSweeper {
     private static final Logger log = LoggerFactory.getLogger(PendingPaymentSweeper.class);
 
     private final OrderRepository orders;
-    private final StockCompensator stockCompensator;
-    private final SagaRecorder sagaRecorder;
+    private final PaymentService paymentService;
 
     @Value("${techies.payment.window-minutes:15}")
     private int windowMinutes;
@@ -64,15 +63,7 @@ public class PendingPaymentSweeper {
     }
 
     private void expire(Order order) {
-        sagaRecorder.record(order.getId(), "6-CHARGE_PAYMENT", SagaStepStatus.FAILED,
+        paymentService.releaseExpired(order.getId(),
                 "payment not completed within " + windowMinutes + " minutes");
-
-        List<InventoryClient.StockLine> lines = order.getItems().stream()
-                .map(i -> new InventoryClient.StockLine(i.getProductId(), i.getQuantity()))
-                .toList();
-        stockCompensator.restore(order.getId(), order.getOrderRef(), lines);
-
-        order.fail(FailureCode.PAYMENT_FAILED);
-        log.warn("ORDER FAILED {} -> PAYMENT_FAILED (payment abandoned)", order.getOrderRef());
     }
 }

@@ -43,4 +43,20 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
              ORDER BY o.createdAt
             """)
     List<Order> findExpiredPendingPayments(@Param("cutoff") Instant cutoff);
+
+    /**
+     * This user's orders that are still waiting to be paid for, with their lines loaded.
+     *
+     * <p>Checking out releases these first. A customer who opens the payment screen, backs
+     * out and taps Checkout again would otherwise place a second order holding the same
+     * stock a second time, and could exhaust the availability of the very product they are
+     * trying to buy.
+     */
+    @Query("""
+            SELECT DISTINCT o FROM Order o
+              LEFT JOIN FETCH o.items
+             WHERE o.userId = :userId
+               AND o.status = vn.techies.ecommerce.order.domain.OrderStatus.AWAITING_PAYMENT
+            """)
+    List<Order> findAwaitingPaymentFor(@Param("userId") UUID userId);
 }

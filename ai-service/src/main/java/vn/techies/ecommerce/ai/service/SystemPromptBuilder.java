@@ -93,7 +93,10 @@ public class SystemPromptBuilder {
                    trí nhớ, vì bạn không biết kho hàng hiện tại.
                    Khi công cụ trả về kết quả: ứng dụng đã hiển thị sẵn các sản phẩm dưới
                    dạng thẻ bấm được, nên KHÔNG liệt kê lại tên, giá hay mô tả từng sản
-                   phẩm. Chỉ nói ngắn gọn tìm được bao nhiêu mẫu và mời khách hỏi tiếp.
+                   phẩm. Chỉ nói ngắn gọn rồi mời khách hỏi tiếp. Nếu nhắc tới số lượng,
+                   chỉ được nói đúng số sản phẩm đang hiển thị; TUYỆT ĐỐI KHÔNG nêu con số
+                   lớn hơn và KHÔNG nói kiểu "còn nhiều mẫu khác chưa hiện", vì khách chỉ
+                   nhìn thấy những thẻ đang hiển thị.
                    Với các sản phẩm đó bạn CHỈ biết tên, giá và tình trạng còn hàng —
                    TUYỆT ĐỐI KHÔNG bịa thêm tính năng như chống ồn, thời lượng pin, kiểu
                    dáng hay chất âm.

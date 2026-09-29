@@ -253,15 +253,17 @@ public class ChatService {
         SearchQuery query = new SearchQuery(keyword, categoryId, minPrice, maxPrice, sort);
         listener.onProducts(new ProductsEvent(page.totalElements(), query, cards));
 
-        // The model sees the total as well as the shown items, so it can say "found 12, here
-        // are 3" instead of implying three is everything.
+        // The model is told only what is on screen, never the wider total. Given both, it
+        // announced "có 8 mẫu" above five cards, which reads as four missing products rather
+        // than a capped display. The true total still goes to the app in the products event,
+        // where it belongs: a "see all" link can state it without the reply contradicting
+        // what the customer is looking at.
         //
         // Stock is joined in here and nowhere else in the search path: catalog-service does not
         // carry it, so without this the assistant happily recommends something sold out — and
         // "rẻ nhất" sorts the most likely-sold-out item straight to the top. It is given to the
         // model only; the cards are unchanged, so the app's contract is untouched.
         Map<String, Object> forModel = new LinkedHashMap<>();
-        forModel.put("total", page.totalElements());
         forModel.put("shown", cards.size());
         List<Map<String, Object>> items = new ArrayList<>();
         for (ProductCard c : cards) {
@@ -276,8 +278,10 @@ public class ChatService {
         // the model reads before writing, and it is the instruction it was most prone to drop.
         forModel.put("instruction",
                 "Các sản phẩm này ĐÃ được ứng dụng hiển thị cho khách dưới dạng thẻ bấm được. "
-                        + "KHÔNG liệt kê lại tên/giá, KHÔNG mô tả tính năng. Chỉ nói ngắn gọn "
-                        + "tìm được bao nhiêu mẫu và mời khách hỏi tiếp. Chỉ gợi ý mẫu còn hàng.");
+                        + "KHÔNG liệt kê lại tên/giá, KHÔNG mô tả tính năng. Chỉ nói về đúng "
+                        + "số sản phẩm đang hiển thị ở trên, TUYỆT ĐỐI KHÔNG nêu một con số "
+                        + "lớn hơn hay nhắc rằng còn mẫu khác chưa hiển thị. Mời khách hỏi "
+                        + "tiếp. Chỉ gợi ý mẫu còn hàng.");
         return json.writeValueAsString(forModel);
     }
 

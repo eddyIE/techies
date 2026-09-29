@@ -135,6 +135,15 @@ class SystemPromptBuilderTest {
     }
 
     @Test
+    @DisplayName("it may not quote a count larger than the cards on screen")
+    void doesNotAnnounceUnshownProducts() {
+        String prompt = builder.build(product(), 1);
+
+        assertThat(prompt).contains("chỉ được nói đúng số sản phẩm đang hiển thị");
+        assertThat(prompt).contains("KHÔNG nêu con số");
+    }
+
+    @Test
     @DisplayName("only in-stock products are recommended")
     void recommendsOnlyInStock() {
         assertThat(builder.build(product(), 1)).contains("Chỉ gợi ý những mẫu đang");

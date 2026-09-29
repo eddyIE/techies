@@ -274,7 +274,7 @@ permanent infrastructure. Put it in `BuildConfig` or a resource string so it can
 without a code edit:
 
 ```gradle
-buildConfigField "String", "API_BASE_URL", ""https://pounce-arise-pacifier.ngrok-free.dev/api/""
+buildConfigField "String", "API_BASE_URL", ""https://your-tunnel.ngrok-free.dev/api/""
 ```
 
 ### Timeouts
@@ -302,7 +302,7 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "email": "fe-demo-f97361@techies.vn",
+  "email": "fe-demo-37b79b@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -313,8 +313,8 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "userId": "a173ff42-99ce-40c3-9a4b-3cfd917ce000",
-  "email": "fe-demo-f97361@techies.vn"
+  "userId": "18d0285f-ab5c-4595-a529-c23954793e7c",
+  "email": "fe-demo-37b79b@techies.vn"
 }
 ```
 
@@ -329,7 +329,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "email": "fe-demo-f97361@techies.vn",
+  "email": "fe-demo-37b79b@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -340,7 +340,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "timestamp": "2026-09-29T08:25:30.619354543Z",
+  "timestamp": "2026-09-29T09:56:29.902893250Z",
   "status": 409,
   "code": "EMAIL_ALREADY_EXISTS",
   "message": "An account with this email already exists",
@@ -370,15 +370,15 @@ Shows the `fieldErrors` map you bind to form fields.
 
 ```json
 {
-  "timestamp": "2026-09-29T08:25:30.627367376Z",
+  "timestamp": "2026-09-29T09:56:29.921565500Z",
   "status": 400,
   "code": "VALIDATION_ERROR",
   "message": "Request validation failed",
   "path": "/auth/register",
   "fieldErrors": {
+    "email": "must be a well-formed email address",
     "phone": "must be 9-11 digits",
-    "fullName": "must not be blank",
-    "email": "must be a well-formed email address"
+    "fullName": "must not be blank"
   }
 }
 ```
@@ -396,7 +396,7 @@ Returns the token plus the user, so Login need not call `/users/me` after.
 
 ```json
 {
-  "email": "fe-demo-f97361@techies.vn",
+  "email": "fe-demo-37b79b@techies.vn",
   "password": "password1"
 }
 ```
@@ -409,8 +409,8 @@ Returns the token plus the user, so Login need not call `/users/me` after.
   "tokenType": "Bearer",
   "expiresIn": 2592000,
   "user": {
-    "id": "a173ff42-99ce-40c3-9a4b-3cfd917ce000",
-    "email": "fe-demo-f97361@techies.vn",
+    "id": "18d0285f-ab5c-4595-a529-c23954793e7c",
+    "email": "fe-demo-37b79b@techies.vn",
     "fullName": "Nguyen Van A",
     "phone": "0901234567",
     "avatarUrl": null
@@ -429,7 +429,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "email": "fe-demo-f97361@techies.vn",
+  "email": "fe-demo-37b79b@techies.vn",
   "password": "wrongpassword1"
 }
 ```
@@ -438,7 +438,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "timestamp": "2026-09-29T08:25:30.799381418Z",
+  "timestamp": "2026-09-29T09:56:30.094282875Z",
   "status": 401,
   "code": "INVALID_CREDENTIALS",
   "message": "Email or password is incorrect",
@@ -457,7 +457,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-f97361@techies.vn"
+  "email": "fe-demo-37b79b@techies.vn"
 }
 ```
 
@@ -465,7 +465,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-f97361@techies.vn",
+  "email": "fe-demo-37b79b@techies.vn",
   "exists": true
 }
 ```
@@ -524,8 +524,8 @@ For the Profile screen.
 
 ```json
 {
-  "id": "a173ff42-99ce-40c3-9a4b-3cfd917ce000",
-  "email": "fe-demo-f97361@techies.vn",
+  "id": "18d0285f-ab5c-4595-a529-c23954793e7c",
+  "email": "fe-demo-37b79b@techies.vn",
   "fullName": "Nguyen Van A",
   "phone": "0901234567",
   "avatarUrl": null
@@ -552,8 +552,8 @@ Name and phone only. Email cannot change — it is the login identifier.
 
 ```json
 {
-  "id": "a173ff42-99ce-40c3-9a4b-3cfd917ce000",
-  "email": "fe-demo-f97361@techies.vn",
+  "id": "18d0285f-ab5c-4595-a529-c23954793e7c",
+  "email": "fe-demo-37b79b@techies.vn",
   "fullName": "Nguyen Van B",
   "phone": "0909999999",
   "avatarUrl": null
@@ -571,7 +571,7 @@ What the app gets when the token is missing or expired.
 
 ```json
 {
-  "timestamp": "2026-09-29T08:25:30.847816793Z",
+  "timestamp": "2026-09-29T09:56:30.126217417Z",
   "status": 401,
   "code": "UNAUTHENTICATED",
   "message": "Authentication required",
@@ -616,7 +616,7 @@ The user's first address becomes the default automatically, so Checkout always h
 
 ```json
 {
-  "id": "52fa36b6-1d12-4a72-83fd-effe5664271a",
+  "id": "669638cb-18eb-40dd-a612-596ea47e623c",
   "recipientName": "Nguyen Van B",
   "phone": "0907654321",
   "line1": "12 Nguyen Hue",
@@ -639,7 +639,7 @@ Default first, then newest. Use the first entry to preselect at Checkout.
 ```json
 [
   {
-    "id": "52fa36b6-1d12-4a72-83fd-effe5664271a",
+    "id": "669638cb-18eb-40dd-a612-596ea47e623c",
     "recipientName": "Nguyen Van B",
     "phone": "0907654321",
     "line1": "12 Nguyen Hue",
@@ -827,7 +827,7 @@ Includes the description and image gallery.
 
 ### Product detail — gone
 
-`GET /products/2d39994e-317d-45d7-a2fa-fa8639a5776a` · **Public — no token** · responds `404`
+`GET /products/ff926c90-72b9-485b-84cc-095671fc81c2` · **Public — no token** · responds `404`
 
 Unknown or delisted products return 404.
 
@@ -835,11 +835,11 @@ Unknown or delisted products return 404.
 
 ```json
 {
-  "timestamp": "2026-09-29T08:25:30.952235376Z",
+  "timestamp": "2026-09-29T09:56:30.344924542Z",
   "status": 404,
   "code": "PRODUCT_NOT_FOUND",
   "message": "Product not found",
-  "path": "/products/2d39994e-317d-45d7-a2fa-fa8639a5776a"
+  "path": "/products/ff926c90-72b9-485b-84cc-095671fc81c2"
 }
 ```
 
@@ -905,7 +905,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "7bc9c0e8-58e8-4d49-b4db-0e2ae55c732b",
+      "id": "e72a7a09-e13c-49f2-8510-d1d999fa45da",
       "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
       "name": "MacBook Air M3 13 inch 8GB/256GB",
       "unitPrice": 27990000.0,
@@ -923,7 +923,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 
 ### Change quantity
 
-`PUT /cart/items/7bc9c0e8-58e8-4d49-b4db-0e2ae55c732b` · **Bearer token required** · responds `200`
+`PUT /cart/items/e72a7a09-e13c-49f2-8510-d1d999fa45da` · **Bearer token required** · responds `200`
 
 `quantity: 0` removes the line. `DELETE /cart/items/{itemId}` does the same and returns `204`.
 
@@ -941,7 +941,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "7bc9c0e8-58e8-4d49-b4db-0e2ae55c732b",
+      "id": "e72a7a09-e13c-49f2-8510-d1d999fa45da",
       "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
       "name": "MacBook Air M3 13 inch 8GB/256GB",
       "unitPrice": 27990000.0,
@@ -973,7 +973,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "7bc9c0e8-58e8-4d49-b4db-0e2ae55c732b",
+      "id": "e72a7a09-e13c-49f2-8510-d1d999fa45da",
       "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
       "name": "MacBook Air M3 13 inch 8GB/256GB",
       "unitPrice": 27990000.0,
@@ -1095,7 +1095,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ```json
 {
-  "addressId": "52fa36b6-1d12-4a72-83fd-effe5664271a",
+  "addressId": "669638cb-18eb-40dd-a612-596ea47e623c",
   "paymentMethod": "MOCK_CARD"
 }
 ```
@@ -1105,8 +1105,8 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "25e21865-68a6-4ca1-a3ea-33e9d5da68a4",
-    "orderRef": "ORD-20260929-0022",
+    "id": "68b4a55f-b8ad-4919-8c82-cca15897da88",
+    "orderRef": "ORD-20260929-0030",
     "status": "AWAITING_PAYMENT",
     "failureCode": null,
     "subtotal": 27990000.0,
@@ -1133,7 +1133,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
         "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
       }
     ],
-    "createdAt": "2026-09-29T08:25:31.117336Z"
+    "createdAt": "2026-09-29T09:56:30.495713Z"
   },
   "message": "Order placed, complete the payment to confirm it"
 }
@@ -1142,7 +1142,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ### Payment — success
 
-`POST /orders/25e21865-68a6-4ca1-a3ea-33e9d5da68a4/payment` · **Bearer token required** · responds `200`
+`POST /orders/68b4a55f-b8ad-4919-8c82-cca15897da88/payment` · **Bearer token required** · responds `200`
 
 `status: CONFIRMED`. The cart is now empty and the stock is sold.
 
@@ -1160,8 +1160,8 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "25e21865-68a6-4ca1-a3ea-33e9d5da68a4",
-    "orderRef": "ORD-20260929-0022",
+    "id": "68b4a55f-b8ad-4919-8c82-cca15897da88",
+    "orderRef": "ORD-20260929-0030",
     "status": "CONFIRMED",
     "failureCode": null,
     "subtotal": 27990000.0,
@@ -1188,7 +1188,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
         "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
       }
     ],
-    "createdAt": "2026-09-29T08:25:31.117336Z"
+    "createdAt": "2026-09-29T09:56:30.495713Z"
   },
   "cartRestore": null
 }
@@ -1197,7 +1197,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ### Payment — failed
 
-`POST /orders/23552deb-9933-4da2-adf6-a8e5b0caee1b/payment` · **Bearer token required** · responds `200`
+`POST /orders/68118b76-28e0-40ee-951f-925912f68eed/payment` · **Bearer token required** · responds `200`
 
 **HTTP 200 with a FAILED order.** Stock that was held has been released, and the ordered lines are back in the cart. Read `cartRestore` for what could not be returned.
 
@@ -1215,8 +1215,8 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "23552deb-9933-4da2-adf6-a8e5b0caee1b",
-    "orderRef": "ORD-20260929-0023",
+    "id": "68118b76-28e0-40ee-951f-925912f68eed",
+    "orderRef": "ORD-20260929-0031",
     "status": "FAILED",
     "failureCode": "PAYMENT_FAILED",
     "subtotal": 27990000.0,
@@ -1243,7 +1243,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
         "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
       }
     ],
-    "createdAt": "2026-09-29T08:25:31.236435Z"
+    "createdAt": "2026-09-29T09:56:30.615633Z"
   },
   "cartRestore": {
     "linesReturned": 1,
@@ -1263,7 +1263,7 @@ The order never reached the payment step. Refresh the cart to see what is unavai
 
 ```json
 {
-  "addressId": "52fa36b6-1d12-4a72-83fd-effe5664271a",
+  "addressId": "669638cb-18eb-40dd-a612-596ea47e623c",
   "paymentMethod": "COD"
 }
 ```
@@ -1273,8 +1273,8 @@ The order never reached the payment step. Refresh the cart to see what is unavai
 ```json
 {
   "order": {
-    "id": "1e771d69-4324-4172-92c5-736acd2d65a7",
-    "orderRef": "ORD-20260929-0024",
+    "id": "b927bde5-79e4-48dd-8d63-13f78ab12db6",
+    "orderRef": "ORD-20260929-0032",
     "status": "FAILED",
     "failureCode": "OUT_OF_STOCK",
     "subtotal": 41980000.0,
@@ -1309,7 +1309,7 @@ The order never reached the payment step. Refresh the cart to see what is unavai
         "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M"
       }
     ],
-    "createdAt": "2026-09-29T08:25:31.366625Z"
+    "createdAt": "2026-09-29T09:56:30.735572Z"
   },
   "message": "Some items are no longer in stock"
 }
@@ -1332,31 +1332,31 @@ Newest first. Optional `?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED`, pl
 {
   "content": [
     {
-      "id": "1e771d69-4324-4172-92c5-736acd2d65a7",
-      "orderRef": "ORD-20260929-0024",
+      "id": "b927bde5-79e4-48dd-8d63-13f78ab12db6",
+      "orderRef": "ORD-20260929-0032",
       "status": "FAILED",
       "failureCode": "OUT_OF_STOCK",
       "total": 41980000.0,
       "itemCount": 2,
-      "createdAt": "2026-09-29T08:25:31.366625Z"
+      "createdAt": "2026-09-29T09:56:30.735572Z"
     },
     {
-      "id": "23552deb-9933-4da2-adf6-a8e5b0caee1b",
-      "orderRef": "ORD-20260929-0023",
+      "id": "68118b76-28e0-40ee-951f-925912f68eed",
+      "orderRef": "ORD-20260929-0031",
       "status": "FAILED",
       "failureCode": "PAYMENT_FAILED",
       "total": 27990000.0,
       "itemCount": 1,
-      "createdAt": "2026-09-29T08:25:31.236435Z"
+      "createdAt": "2026-09-29T09:56:30.615633Z"
     },
     {
-      "id": "25e21865-68a6-4ca1-a3ea-33e9d5da68a4",
-      "orderRef": "ORD-20260929-0022",
+      "id": "68b4a55f-b8ad-4919-8c82-cca15897da88",
+      "orderRef": "ORD-20260929-0030",
       "status": "CONFIRMED",
       "failureCode": null,
       "total": 27990000.0,
       "itemCount": 1,
-      "createdAt": "2026-09-29T08:25:31.117336Z"
+      "createdAt": "2026-09-29T09:56:30.495713Z"
     }
   ],
   "page": 0,
@@ -1369,7 +1369,7 @@ Newest first. Optional `?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED`, pl
 
 ### Order detail
 
-`GET /orders/25e21865-68a6-4ca1-a3ea-33e9d5da68a4` · **Bearer token required** · responds `200`
+`GET /orders/68b4a55f-b8ad-4919-8c82-cca15897da88` · **Bearer token required** · responds `200`
 
 Prices and the shipping address are snapshots taken at checkout — a later catalog price change never alters a past order. Another user's order returns 403.
 
@@ -1377,8 +1377,8 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
 
 ```json
 {
-  "id": "25e21865-68a6-4ca1-a3ea-33e9d5da68a4",
-  "orderRef": "ORD-20260929-0022",
+  "id": "68b4a55f-b8ad-4919-8c82-cca15897da88",
+  "orderRef": "ORD-20260929-0030",
   "status": "CONFIRMED",
   "failureCode": null,
   "subtotal": 27990000.0,
@@ -1405,14 +1405,14 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
       "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
     }
   ],
-  "createdAt": "2026-09-29T08:25:31.117336Z"
+  "createdAt": "2026-09-29T09:56:30.495713Z"
 }
 ```
 
 
 ### Cancel order
 
-`POST /orders/25e21865-68a6-4ca1-a3ea-33e9d5da68a4/cancel` · **Bearer token required** · responds `200`
+`POST /orders/68b4a55f-b8ad-4919-8c82-cca15897da88/cancel` · **Bearer token required** · responds `200`
 
 Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunded.
 
@@ -1420,8 +1420,8 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
 
 ```json
 {
-  "id": "25e21865-68a6-4ca1-a3ea-33e9d5da68a4",
-  "orderRef": "ORD-20260929-0022",
+  "id": "68b4a55f-b8ad-4919-8c82-cca15897da88",
+  "orderRef": "ORD-20260929-0030",
   "status": "CANCELLED",
   "failureCode": null,
   "subtotal": 27990000.0,
@@ -1448,14 +1448,14 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
       "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
     }
   ],
-  "createdAt": "2026-09-29T08:25:31.117336Z"
+  "createdAt": "2026-09-29T09:56:30.495713Z"
 }
 ```
 
 
 ### Cancel — not allowed
 
-`POST /orders/25e21865-68a6-4ca1-a3ea-33e9d5da68a4/cancel` · **Bearer token required** · responds `409`
+`POST /orders/68b4a55f-b8ad-4919-8c82-cca15897da88/cancel` · **Bearer token required** · responds `409`
 
 Show the Cancel button only when `status == "CONFIRMED"`.
 
@@ -1463,11 +1463,11 @@ Show the Cancel button only when `status == "CONFIRMED"`.
 
 ```json
 {
-  "timestamp": "2026-09-29T08:25:31.451847002Z",
+  "timestamp": "2026-09-29T09:56:30.806785584Z",
   "status": 409,
   "code": "ORDER_NOT_CANCELLABLE",
   "message": "An order in status CANCELLED cannot be cancelled",
-  "path": "/orders/25e21865-68a6-4ca1-a3ea-33e9d5da68a4/cancel"
+  "path": "/orders/68b4a55f-b8ad-4919-8c82-cca15897da88/cancel"
 }
 ```
 

@@ -8,7 +8,9 @@ agent:
 endpoints:
   - name: techies-api
     # Stable dev domain: survives agent restarts.
-    url: https://pounce-arise-pacifier.ngrok-free.dev
+    # Reserve a domain in the ngrok dashboard and put it here. Keep the real value out of
+    # git: this file is the example, your working copy is deploy/ngrok.yml (gitignored).
+    url: https://your-tunnel.ngrok-free.dev
     upstream:
       url: 8080
 

@@ -19,7 +19,11 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT_DIR = ROOT / "docs" / "postman"
 TMP = ROOT / ".api-capture-postman.json"
 
-SHARED_URL = "https://pounce-arise-pacifier.ngrok-free.dev/api"
+# The public tunnel host is deliberately NOT committed. It is a live entry point to the
+# running stack, and a URL in a pushed repo is a URL anyone can find. Export
+# TECHIES_PUBLIC_URL before generating to bake the real host into your own copy; without it
+# the committed collection carries a placeholder for the reader to fill in.
+SHARED_URL = os.environ.get("TECHIES_PUBLIC_URL", "https://your-tunnel.ngrok-free.dev").rstrip("/") + "/api"
 LOCAL_URL = "http://localhost:8080/api"
 
 # Saving the token on login is what makes the collection usable without copy-pasting.

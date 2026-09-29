@@ -2,6 +2,7 @@ package vn.techies.ecommerce.ai.service;
 
 import org.springframework.stereotype.Component;
 import vn.techies.ecommerce.ai.client.CatalogClient;
+import vn.techies.ecommerce.ai.config.GeminiProperties;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -28,9 +29,42 @@ public class SystemPromptBuilder {
 
     private static final NumberFormat VND = NumberFormat.getInstance(new Locale("vi", "VN"));
 
+    private static final String LOOKUP_ALLOWED = """
+            THÔNG SỐ KỸ THUẬT CỦA NHÀ SẢN XUẤT — dung lượng pin, RAM, bộ nhớ, màn hình, camera,
+                   chip, kích thước, trọng lượng: nếu phần mô tả ở trên không có, hãy dùng
+                   Google Search với ĐÚNG TÊN SẢN PHẨM ở trên để tra cứu rồi trả lời. Khi trả
+                   lời bằng thông tin tra được, phải nói rõ đây là thông số tham khảo từ nhà
+                   sản xuất, không phải cam kết của cửa hàng.""";
+
+    private static final String LOOKUP_UNAVAILABLE = """
+            THÔNG SỐ KỸ THUẬT CỦA NHÀ SẢN XUẤT — dung lượng pin, RAM, bộ nhớ, màn hình, camera,
+                   chip, kích thước, trọng lượng: bạn KHÔNG có công cụ tra cứu nào. Nếu phần mô
+                   tả ở trên không có thông số khách hỏi, hãy nói thẳng là cửa hàng chưa có
+                   thông tin đó và mời khách liên hệ để được xác nhận. TUYỆT ĐỐI KHÔNG trả lời
+                   bằng trí nhớ của bạn, và KHÔNG gọi con số tự nhớ là "thông số tham khảo".""";
+
+    private static final String NO_GUESSING_SEARCHED = """
+            Nếu tra cứu không ra hoặc các nguồn mâu thuẫn nhau, nói thẳng là bạn không chắc và
+                   mời khách liên hệ cửa hàng. TUYỆT ĐỐI KHÔNG bịa ra con số.""";
+
+    private static final String NO_GUESSING_UNSEARCHED = """
+            Nếu không chắc về bất kỳ con số nào, nói thẳng là bạn không chắc và mời khách liên
+                   hệ cửa hàng. TUYỆT ĐỐI KHÔNG bịa ra con số.""";
+
+    private final GeminiProperties properties;
+
+    public SystemPromptBuilder(GeminiProperties properties) {
+        this.properties = properties;
+    }
+
+
     public String build(CatalogClient.ProductDetail product, Integer availableStock) {
         String stock = availableStock == null ? "không rõ"
                 : availableStock > 0 ? "còn hàng" : "hết hàng";
+        // The rule has to match what the model can actually do. Told to "look it up" with no
+        // search tool attached, it answers from memory instead and still labels the figure a
+        // manufacturer reference -- exactly the invention these rules exist to prevent.
+        boolean canSearch = properties.webSearch();
 
         return """
                 Bạn là trợ lý bán hàng của Techies, một cửa hàng điện tử tại Việt Nam.
@@ -49,13 +83,8 @@ public class SystemPromptBuilder {
                    Nếu ở trên không có, hãy nói thẳng là bạn không có thông tin đó và mời
                    khách liên hệ cửa hàng. TUYỆT ĐỐI KHÔNG tra trên internet và KHÔNG suy
                    đoán, vì đây là chính sách riêng của Techies.
-                2. THÔNG SỐ KỸ THUẬT CỦA NHÀ SẢN XUẤT — dung lượng pin, RAM, bộ nhớ, màn hình,
-                   camera, chip, kích thước, trọng lượng: nếu phần mô tả ở trên không có, hãy
-                   dùng Google Search với ĐÚNG TÊN SẢN PHẨM ở trên để tra cứu rồi trả lời.
-                   Khi trả lời bằng thông tin tra được, phải nói rõ đây là thông số tham khảo
-                   từ nhà sản xuất, không phải cam kết của cửa hàng.
-                3. Nếu tra cứu không ra hoặc các nguồn mâu thuẫn nhau, nói thẳng là bạn không
-                   chắc và mời khách liên hệ cửa hàng. TUYỆT ĐỐI KHÔNG bịa ra con số.
+                2. %s
+                3. %s
                 4. Luôn trả lời bằng tiếng Việt, thân thiện và ngắn gọn: tối đa 2-3 câu.
                    Khách đang xem trên điện thoại.
                 5. Giá luôn bằng VND. Không quy đổi sang ngoại tệ.
@@ -64,11 +93,16 @@ public class SystemPromptBuilder {
                    trí nhớ, vì bạn không biết kho hàng hiện tại.
                 7. Chỉ nói về sản phẩm và cửa hàng Techies. Nếu khách hỏi chuyện ngoài lề,
                    từ chối lịch sự và hướng khách về sản phẩm.
+                8. XƯNG HÔ: luôn tự xưng là "em" và gọi khách là "anh/chị", từ câu đầu tiên
+                   đến hết cuộc trò chuyện. TUYỆT ĐỐI KHÔNG đổi sang "mình", "tôi", "bạn"
+                   hay "quý khách" giữa chừng, kể cả khi khách đổi cách xưng hô.
                 """.formatted(
                 product.name(),
                 VND.format(product.price()),
                 product.categoryName(),
                 stock,
-                product.description());
+                product.description(),
+                canSearch ? LOOKUP_ALLOWED : LOOKUP_UNAVAILABLE,
+                canSearch ? NO_GUESSING_SEARCHED : NO_GUESSING_UNSEARCHED);
     }
 }

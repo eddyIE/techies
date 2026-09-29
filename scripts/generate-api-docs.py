@@ -8,7 +8,13 @@ Regenerate docs/API.md by exercising the running API and capturing real response
 Every example below is a real request and a real response, not hand-written, so the document
 cannot quietly drift from the API. Re-run it whenever an endpoint changes.
 """
-import json, pathlib, re, subprocess, sys, textwrap
+import json, os, pathlib, re, subprocess, sys, textwrap
+
+# The public tunnel host is deliberately NOT committed. It is a live entry point to the
+# running stack, and a URL in a pushed repo is a URL anyone can find. Export
+# TECHIES_PUBLIC_URL before generating to bake the real host into your own copy; without it
+# the committed docs carry a placeholder for the reader to fill in.
+PUBLIC_URL = os.environ.get("TECHIES_PUBLIC_URL", "https://your-tunnel.ngrok-free.dev").rstrip("/")
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CAPTURE = ROOT / "scripts" / "_api_capture.py"
@@ -343,7 +349,7 @@ def main():
         without a code edit:
 
         ```gradle
-        buildConfigField "String", "API_BASE_URL", "\"https://pounce-arise-pacifier.ngrok-free.dev/api/\""
+        buildConfigField "String", "API_BASE_URL", "\"__PUBLIC_URL__/api/\""
         ```
 
         ### Timeouts
@@ -633,7 +639,7 @@ def main():
         Shipping is a flat **30,000 VND**, free at a subtotal of **500,000 VND** or more.
         """))
 
-    OUT.write_text("\n".join(doc), encoding="utf-8")
+    OUT.write_text("\n".join(doc).replace("__PUBLIC_URL__", PUBLIC_URL), encoding="utf-8")
     print(f"wrote {OUT.relative_to(ROOT)} ({len(''.join(doc).splitlines())} lines)")
 
 

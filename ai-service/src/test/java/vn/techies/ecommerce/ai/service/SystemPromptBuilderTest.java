@@ -3,6 +3,7 @@ package vn.techies.ecommerce.ai.service;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import vn.techies.ecommerce.ai.client.CatalogClient;
+import vn.techies.ecommerce.ai.config.GeminiProperties;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,7 +13,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SystemPromptBuilderTest {
 
-    private final SystemPromptBuilder builder = new SystemPromptBuilder();
+    private static SystemPromptBuilder builderWith(boolean webSearch) {
+        return new SystemPromptBuilder(new GeminiProperties("k", "url", "model", 60, 10, 3, webSearch));
+    }
+
+    private final SystemPromptBuilder builder = builderWith(true);
 
     private CatalogClient.ProductDetail product() {
         return new CatalogClient.ProductDetail(UUID.randomUUID(), "iPhone 15 Pro Max 256GB",
@@ -84,6 +89,34 @@ class SystemPromptBuilderTest {
 
         assertThat(prompt).contains("KHÔNG tra trên internet");
         assertThat(prompt).contains("chính sách riêng của Techies");
+    }
+
+    @Test
+    @DisplayName("with search off the model is told it has no lookup, not to look things up")
+    void withoutSearchTheRuleInverts() {
+        String prompt = builderWith(false).build(product(), 1);
+
+        assertThat(prompt).doesNotContain("Google Search");
+        assertThat(prompt).contains("KHÔNG có công cụ tra cứu");
+        // The phrase wraps across two lines in the text block, so match one side of it.
+        assertThat(prompt).contains("bằng trí nhớ của bạn");
+    }
+
+    @Test
+    @DisplayName("with search off it must not dress a remembered number as a manufacturer spec")
+    void withoutSearchItCannotClaimAReference() {
+        assertThat(builderWith(false).build(product(), 1))
+                .contains("KHÔNG gọi con số tự nhớ");
+    }
+
+    @Test
+    @DisplayName("the pronouns are pinned, so the assistant does not drift mid-conversation")
+    void pinsPronouns() {
+        String prompt = builder.build(product(), 1);
+
+        assertThat(prompt).contains("XƯNG HÔ");
+        assertThat(prompt).contains("\"em\"");
+        assertThat(prompt).contains("\"anh/chị\"");
     }
 
     @Test

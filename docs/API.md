@@ -302,7 +302,7 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "email": "fe-demo-37b79b@techies.vn",
+  "email": "fe-demo-4b5964@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -313,8 +313,8 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "userId": "18d0285f-ab5c-4595-a529-c23954793e7c",
-  "email": "fe-demo-37b79b@techies.vn"
+  "userId": "ade5251c-c0c5-4097-929e-71604be45c48",
+  "email": "fe-demo-4b5964@techies.vn"
 }
 ```
 
@@ -329,7 +329,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "email": "fe-demo-37b79b@techies.vn",
+  "email": "fe-demo-4b5964@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -340,7 +340,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "timestamp": "2026-09-29T09:56:29.902893250Z",
+  "timestamp": "2026-09-30T03:49:37.078203965Z",
   "status": 409,
   "code": "EMAIL_ALREADY_EXISTS",
   "message": "An account with this email already exists",
@@ -370,7 +370,7 @@ Shows the `fieldErrors` map you bind to form fields.
 
 ```json
 {
-  "timestamp": "2026-09-29T09:56:29.921565500Z",
+  "timestamp": "2026-09-30T03:49:37.104884465Z",
   "status": 400,
   "code": "VALIDATION_ERROR",
   "message": "Request validation failed",
@@ -396,7 +396,7 @@ Returns the token plus the user, so Login need not call `/users/me` after.
 
 ```json
 {
-  "email": "fe-demo-37b79b@techies.vn",
+  "email": "fe-demo-4b5964@techies.vn",
   "password": "password1"
 }
 ```
@@ -409,8 +409,8 @@ Returns the token plus the user, so Login need not call `/users/me` after.
   "tokenType": "Bearer",
   "expiresIn": 2592000,
   "user": {
-    "id": "18d0285f-ab5c-4595-a529-c23954793e7c",
-    "email": "fe-demo-37b79b@techies.vn",
+    "id": "ade5251c-c0c5-4097-929e-71604be45c48",
+    "email": "fe-demo-4b5964@techies.vn",
     "fullName": "Nguyen Van A",
     "phone": "0901234567",
     "avatarUrl": null
@@ -429,7 +429,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "email": "fe-demo-37b79b@techies.vn",
+  "email": "fe-demo-4b5964@techies.vn",
   "password": "wrongpassword1"
 }
 ```
@@ -438,7 +438,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "timestamp": "2026-09-29T09:56:30.094282875Z",
+  "timestamp": "2026-09-30T03:49:37.375948965Z",
   "status": 401,
   "code": "INVALID_CREDENTIALS",
   "message": "Email or password is incorrect",
@@ -457,7 +457,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-37b79b@techies.vn"
+  "email": "fe-demo-4b5964@techies.vn"
 }
 ```
 
@@ -465,7 +465,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-37b79b@techies.vn",
+  "email": "fe-demo-4b5964@techies.vn",
   "exists": true
 }
 ```
@@ -524,8 +524,8 @@ For the Profile screen.
 
 ```json
 {
-  "id": "18d0285f-ab5c-4595-a529-c23954793e7c",
-  "email": "fe-demo-37b79b@techies.vn",
+  "id": "ade5251c-c0c5-4097-929e-71604be45c48",
+  "email": "fe-demo-4b5964@techies.vn",
   "fullName": "Nguyen Van A",
   "phone": "0901234567",
   "avatarUrl": null
@@ -552,8 +552,8 @@ Name and phone only. Email cannot change — it is the login identifier.
 
 ```json
 {
-  "id": "18d0285f-ab5c-4595-a529-c23954793e7c",
-  "email": "fe-demo-37b79b@techies.vn",
+  "id": "ade5251c-c0c5-4097-929e-71604be45c48",
+  "email": "fe-demo-4b5964@techies.vn",
   "fullName": "Nguyen Van B",
   "phone": "0909999999",
   "avatarUrl": null
@@ -571,7 +571,7 @@ What the app gets when the token is missing or expired.
 
 ```json
 {
-  "timestamp": "2026-09-29T09:56:30.126217417Z",
+  "timestamp": "2026-09-30T03:49:37.528947590Z",
   "status": 401,
   "code": "UNAUTHENTICATED",
   "message": "Authentication required",
@@ -616,7 +616,7 @@ The user's first address becomes the default automatically, so Checkout always h
 
 ```json
 {
-  "id": "669638cb-18eb-40dd-a612-596ea47e623c",
+  "id": "ee2feb7d-eaf6-4386-9c08-51be0f5d5ebd",
   "recipientName": "Nguyen Van B",
   "phone": "0907654321",
   "line1": "12 Nguyen Hue",
@@ -639,7 +639,7 @@ Default first, then newest. Use the first entry to preselect at Checkout.
 ```json
 [
   {
-    "id": "669638cb-18eb-40dd-a612-596ea47e623c",
+    "id": "ee2feb7d-eaf6-4386-9c08-51be0f5d5ebd",
     "recipientName": "Nguyen Van B",
     "phone": "0907654321",
     "line1": "12 Nguyen Hue",
@@ -735,28 +735,28 @@ Searching "điện thoại" will not return all phones; use `categoryId` for tha
 {
   "content": [
     {
-      "id": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-      "name": "MacBook Air M3 13 inch 8GB/256GB",
-      "slug": "macbook-air-m3-13",
-      "price": 27990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
-      "categoryId": "1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b",
-      "categoryName": "Laptop"
+      "id": "759d9034-b058-5375-aa35-cadf437332c3",
+      "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+      "slug": "smart-tivi-samsung-neo-qled-75qn80f-4k-75-inch-2025",
+      "price": 29990000.0,
+      "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+      "categoryId": "13df1ea8-f30d-553f-a03c-7af6c0e0d2f4",
+      "categoryName": "Tivi"
     },
     {
-      "id": "9dc2c272-0914-54de-b46b-62ca7e689523",
-      "name": "vivo V30e 5G",
-      "slug": "vivo-v30e",
-      "price": 8990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=vivo+V30e+5G",
-      "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
-      "categoryName": "Điện thoại"
+      "id": "f02ca688-a95d-5ebe-b6d4-04b5f911504f",
+      "name": "GIÁ TREO TIVI 32 -75 INCH (C3-FG)",
+      "slug": "gia-treo-tivi-north-bayou-c3-fg",
+      "price": 350000.0,
+      "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/i/gia-treo-tivi-north-bayou-c3-fg.png",
+      "categoryId": "13df1ea8-f30d-553f-a03c-7af6c0e0d2f4",
+      "categoryName": "Tivi"
     }
   ],
   "page": 0,
   "size": 2,
-  "totalElements": 40,
-  "totalPages": 20
+  "totalElements": 60,
+  "totalPages": 30
 }
 ```
 
@@ -773,6 +773,15 @@ Same endpoint with `keyword`. There is no separate search route.
 {
   "content": [
     {
+      "id": "07324815-82b1-580d-b763-45dbb73655a4",
+      "name": "iPhone 16 Pro Max 256GB",
+      "slug": "iphone-16-pro-max",
+      "price": 30990000.0,
+      "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-16-pro-max.png",
+      "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
+      "categoryName": "Điện thoại"
+    },
+    {
       "id": "1f8d1d18-6b82-542e-bcca-e7485fe03e0d",
       "name": "iPhone 15 Pro Max 256GB",
       "slug": "iphone-15-pro-max-256gb",
@@ -780,28 +789,19 @@ Same endpoint with `keyword`. There is no separate search route.
       "thumbnailUrl": "https://cdn.tgdd.vn/Products/Images/42/305658/iphone-15-pro-max-blue-thumbnew-600x600.jpg",
       "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
       "categoryName": "Điện thoại"
-    },
-    {
-      "id": "e0404394-59b0-5044-af93-6a93adc3af39",
-      "name": "iPhone 15 128GB",
-      "slug": "iphone-15-128gb",
-      "price": 22990000.0,
-      "thumbnailUrl": "https://cdn.tgdd.vn/Products/Images/42/281570/iphone-15-xanh-thumb-600x600.jpg",
-      "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
-      "categoryName": "Điện thoại"
     }
   ],
   "page": 0,
   "size": 2,
-  "totalElements": 2,
-  "totalPages": 1
+  "totalElements": 3,
+  "totalPages": 2
 }
 ```
 
 
 ### Product detail
 
-`GET /products/717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a` · **Public — no token** · responds `200`
+`GET /products/759d9034-b058-5375-aa35-cadf437332c3` · **Public — no token** · responds `200`
 
 Includes the description and image gallery.
 
@@ -809,25 +809,47 @@ Includes the description and image gallery.
 
 ```json
 {
-  "id": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-  "name": "MacBook Air M3 13 inch 8GB/256GB",
-  "slug": "macbook-air-m3-13",
-  "description": "MacBook Air M3 13 inch 8GB/256GB - hàng chính hãng, bảo hành 12 tháng tại Techies.",
-  "price": 27990000.0,
-  "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
-  "categoryId": "1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b",
-  "categoryName": "Laptop",
+  "id": "759d9034-b058-5375-aa35-cadf437332c3",
+  "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+  "slug": "smart-tivi-samsung-neo-qled-75qn80f-4k-75-inch-2025",
+  "description": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F) - hàng chính hãng, bảo hành 12 tháng tại Techies.",
+  "price": 29990000.0,
+  "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+  "categoryId": "13df1ea8-f30d-553f-a03c-7af6c0e0d2f4",
+  "categoryName": "Tivi",
   "images": [
-    "https://placehold.co/800x800/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB+%281%2F2%29",
-    "https://placehold.co/800x800/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB+%282%2F2%29"
-  ]
+    "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png"
+  ],
+  "specifications": [
+    {
+      "name": "Kích cỡ màn hình",
+      "value": "75 inch"
+    },
+    {
+      "name": "Công nghệ hình ảnh",
+      "value": "HDR 10+ / 4K AI Upscaling / Color Booster Pro / Chế độ Filmmaker / Chế độ EyeComfort / Neo Quantum HDR / Wide Viewing Angle / Real Depth Enhancer / Auto HDR Remastering / Supreme UHD Dimming / Motion Xcelerator 144Hz / Quantum Matrix Technology Core / Công nghệ Quantum Matrix Core"
+    },
+    {
+      "name": "Độ phân giải",
+      "value": "4K"
+    },
+    {
+      "name": "Loại màn hình",
+      "value": "QLED"
+    },
+    {
+      "name": "Tần số quét",
+      "value": "100Hz"
+    },
+    {
+  ...
 }
 ```
 
 
 ### Product detail — gone
 
-`GET /products/ff926c90-72b9-485b-84cc-095671fc81c2` · **Public — no token** · responds `404`
+`GET /products/d9cdaaf9-2d4b-4f9f-95f1-ca5921df7edb` · **Public — no token** · responds `404`
 
 Unknown or delisted products return 404.
 
@@ -835,18 +857,18 @@ Unknown or delisted products return 404.
 
 ```json
 {
-  "timestamp": "2026-09-29T09:56:30.344924542Z",
+  "timestamp": "2026-09-30T03:49:37.956500757Z",
   "status": 404,
   "code": "PRODUCT_NOT_FOUND",
   "message": "Product not found",
-  "path": "/products/ff926c90-72b9-485b-84cc-095671fc81c2"
+  "path": "/products/d9cdaaf9-2d4b-4f9f-95f1-ca5921df7edb"
 }
 ```
 
 
 ### Stock for a product
 
-`GET /stock/717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a` · **Public — no token** · responds `200`
+`GET /stock/759d9034-b058-5375-aa35-cadf437332c3` · **Public — no token** · responds `200`
 
 For the in-stock badge on Product Detail. This is the only public stock endpoint.
 
@@ -854,8 +876,8 @@ For the in-stock badge on Product Detail. This is the only public stock endpoint
 
 ```json
 {
-  "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-  "available": 51,
+  "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+  "available": 40,
   "inStock": true
 }
 ```
@@ -894,7 +916,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 
 ```json
 {
-  "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+  "productId": "759d9034-b058-5375-aa35-cadf437332c3",
   "quantity": 2
 }
 ```
@@ -905,17 +927,17 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "e72a7a09-e13c-49f2-8510-d1d999fa45da",
-      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-      "name": "MacBook Air M3 13 inch 8GB/256GB",
-      "unitPrice": 27990000.0,
+      "id": "35eefb1e-f4d0-4f7f-8bd7-6427930dd68c",
+      "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+      "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+      "unitPrice": 29990000.0,
       "quantity": 2,
-      "lineTotal": 55980000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
-      "available": 51
+      "lineTotal": 59980000.0,
+      "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+      "available": 40
     }
   ],
-  "subtotal": 55980000.0,
+  "subtotal": 59980000.0,
   "itemCount": 1
 }
 ```
@@ -923,7 +945,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 
 ### Change quantity
 
-`PUT /cart/items/e72a7a09-e13c-49f2-8510-d1d999fa45da` · **Bearer token required** · responds `200`
+`PUT /cart/items/35eefb1e-f4d0-4f7f-8bd7-6427930dd68c` · **Bearer token required** · responds `200`
 
 `quantity: 0` removes the line. `DELETE /cart/items/{itemId}` does the same and returns `204`.
 
@@ -941,17 +963,17 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "e72a7a09-e13c-49f2-8510-d1d999fa45da",
-      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-      "name": "MacBook Air M3 13 inch 8GB/256GB",
-      "unitPrice": 27990000.0,
+      "id": "35eefb1e-f4d0-4f7f-8bd7-6427930dd68c",
+      "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+      "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+      "unitPrice": 29990000.0,
       "quantity": 1,
-      "lineTotal": 27990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
-      "available": 51
+      "lineTotal": 29990000.0,
+      "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+      "available": 40
     }
   ],
-  "subtotal": 27990000.0,
+  "subtotal": 29990000.0,
   "itemCount": 1
 }
 ```
@@ -973,17 +995,17 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "e72a7a09-e13c-49f2-8510-d1d999fa45da",
-      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-      "name": "MacBook Air M3 13 inch 8GB/256GB",
-      "unitPrice": 27990000.0,
+      "id": "35eefb1e-f4d0-4f7f-8bd7-6427930dd68c",
+      "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+      "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+      "unitPrice": 29990000.0,
       "quantity": 1,
-      "lineTotal": 27990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
-      "available": 51
+      "lineTotal": 29990000.0,
+      "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+      "available": 40
     }
   ],
-  "subtotal": 27990000.0,
+  "subtotal": 29990000.0,
   "itemCount": 1
 }
 ```
@@ -1095,7 +1117,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ```json
 {
-  "addressId": "669638cb-18eb-40dd-a612-596ea47e623c",
+  "addressId": "ee2feb7d-eaf6-4386-9c08-51be0f5d5ebd",
   "paymentMethod": "MOCK_CARD"
 }
 ```
@@ -1105,13 +1127,13 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "68b4a55f-b8ad-4919-8c82-cca15897da88",
-    "orderRef": "ORD-20260929-0030",
+    "id": "6ad07f58-e3fc-4b7c-ae8a-141074e52fbb",
+    "orderRef": "ORD-20260930-0001",
     "status": "AWAITING_PAYMENT",
     "failureCode": null,
-    "subtotal": 27990000.0,
+    "subtotal": 29990000.0,
     "shippingFee": 0.0,
-    "total": 27990000.0,
+    "total": 29990000.0,
     "paymentMethod": "MOCK_CARD",
     "paymentStatus": "PENDING",
     "paymentRef": null,
@@ -1125,15 +1147,15 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
     },
     "items": [
       {
-        "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-        "productName": "MacBook Air M3 13 inch 8GB/256GB",
-        "unitPrice": 27990000.0,
+        "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+        "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+        "unitPrice": 29990000.0,
         "quantity": 1,
-        "lineTotal": 27990000.0,
-        "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+        "lineTotal": 29990000.0,
+        "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png"
       }
     ],
-    "createdAt": "2026-09-29T09:56:30.495713Z"
+    "createdAt": "2026-09-30T03:49:38.945523Z"
   },
   "message": "Order placed, complete the payment to confirm it"
 }
@@ -1142,7 +1164,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ### Payment — success
 
-`POST /orders/68b4a55f-b8ad-4919-8c82-cca15897da88/payment` · **Bearer token required** · responds `200`
+`POST /orders/6ad07f58-e3fc-4b7c-ae8a-141074e52fbb/payment` · **Bearer token required** · responds `200`
 
 `status: CONFIRMED`. The cart is now empty and the stock is sold.
 
@@ -1160,13 +1182,13 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "68b4a55f-b8ad-4919-8c82-cca15897da88",
-    "orderRef": "ORD-20260929-0030",
+    "id": "6ad07f58-e3fc-4b7c-ae8a-141074e52fbb",
+    "orderRef": "ORD-20260930-0001",
     "status": "CONFIRMED",
     "failureCode": null,
-    "subtotal": 27990000.0,
+    "subtotal": 29990000.0,
     "shippingFee": 0.0,
-    "total": 27990000.0,
+    "total": 29990000.0,
     "paymentMethod": "MOCK_CARD",
     "paymentStatus": "PAID",
     "paymentRef": "TXN-DEMO-0001",
@@ -1180,15 +1202,15 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
     },
     "items": [
       {
-        "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-        "productName": "MacBook Air M3 13 inch 8GB/256GB",
-        "unitPrice": 27990000.0,
+        "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+        "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+        "unitPrice": 29990000.0,
         "quantity": 1,
-        "lineTotal": 27990000.0,
-        "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+        "lineTotal": 29990000.0,
+        "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png"
       }
     ],
-    "createdAt": "2026-09-29T09:56:30.495713Z"
+    "createdAt": "2026-09-30T03:49:38.945523Z"
   },
   "cartRestore": null
 }
@@ -1197,7 +1219,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ### Payment — failed
 
-`POST /orders/68118b76-28e0-40ee-951f-925912f68eed/payment` · **Bearer token required** · responds `200`
+`POST /orders/3c9bc9b8-2061-4984-b07a-ff6b647ace92/payment` · **Bearer token required** · responds `200`
 
 **HTTP 200 with a FAILED order.** Stock that was held has been released, and the ordered lines are back in the cart. Read `cartRestore` for what could not be returned.
 
@@ -1215,13 +1237,13 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "68118b76-28e0-40ee-951f-925912f68eed",
-    "orderRef": "ORD-20260929-0031",
+    "id": "3c9bc9b8-2061-4984-b07a-ff6b647ace92",
+    "orderRef": "ORD-20260930-0002",
     "status": "FAILED",
     "failureCode": "PAYMENT_FAILED",
-    "subtotal": 27990000.0,
+    "subtotal": 29990000.0,
     "shippingFee": 0.0,
-    "total": 27990000.0,
+    "total": 29990000.0,
     "paymentMethod": "MOCK_CARD",
     "paymentStatus": "DECLINED",
     "paymentRef": null,
@@ -1235,15 +1257,15 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
     },
     "items": [
       {
-        "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-        "productName": "MacBook Air M3 13 inch 8GB/256GB",
-        "unitPrice": 27990000.0,
+        "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+        "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+        "unitPrice": 29990000.0,
         "quantity": 1,
-        "lineTotal": 27990000.0,
-        "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+        "lineTotal": 29990000.0,
+        "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png"
       }
     ],
-    "createdAt": "2026-09-29T09:56:30.615633Z"
+    "createdAt": "2026-09-30T03:49:39.329084Z"
   },
   "cartRestore": {
     "linesReturned": 1,
@@ -1263,7 +1285,7 @@ The order never reached the payment step. Refresh the cart to see what is unavai
 
 ```json
 {
-  "addressId": "669638cb-18eb-40dd-a612-596ea47e623c",
+  "addressId": "ee2feb7d-eaf6-4386-9c08-51be0f5d5ebd",
   "paymentMethod": "COD"
 }
 ```
@@ -1273,13 +1295,13 @@ The order never reached the payment step. Refresh the cart to see what is unavai
 ```json
 {
   "order": {
-    "id": "b927bde5-79e4-48dd-8d63-13f78ab12db6",
-    "orderRef": "ORD-20260929-0032",
+    "id": "55ac1c4d-65ab-4752-bbf5-7b44952fccac",
+    "orderRef": "ORD-20260930-0003",
     "status": "FAILED",
     "failureCode": "OUT_OF_STOCK",
-    "subtotal": 41980000.0,
+    "subtotal": 43980000.0,
     "shippingFee": 0.0,
-    "total": 41980000.0,
+    "total": 43980000.0,
     "paymentMethod": "COD",
     "paymentStatus": "PENDING",
     "paymentRef": null,
@@ -1293,12 +1315,12 @@ The order never reached the payment step. Refresh the cart to see what is unavai
     },
     "items": [
       {
-        "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-        "productName": "MacBook Air M3 13 inch 8GB/256GB",
-        "unitPrice": 27990000.0,
+        "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+        "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+        "unitPrice": 29990000.0,
         "quantity": 1,
-        "lineTotal": 27990000.0,
-        "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+        "lineTotal": 29990000.0,
+        "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png"
       },
       {
         "productId": "b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8",
@@ -1309,7 +1331,7 @@ The order never reached the payment step. Refresh the cart to see what is unavai
         "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M"
       }
     ],
-    "createdAt": "2026-09-29T09:56:30.735572Z"
+    "createdAt": "2026-09-30T03:49:39.501136Z"
   },
   "message": "Some items are no longer in stock"
 }
@@ -1332,31 +1354,31 @@ Newest first. Optional `?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED`, pl
 {
   "content": [
     {
-      "id": "b927bde5-79e4-48dd-8d63-13f78ab12db6",
-      "orderRef": "ORD-20260929-0032",
+      "id": "55ac1c4d-65ab-4752-bbf5-7b44952fccac",
+      "orderRef": "ORD-20260930-0003",
       "status": "FAILED",
       "failureCode": "OUT_OF_STOCK",
-      "total": 41980000.0,
+      "total": 43980000.0,
       "itemCount": 2,
-      "createdAt": "2026-09-29T09:56:30.735572Z"
+      "createdAt": "2026-09-30T03:49:39.501136Z"
     },
     {
-      "id": "68118b76-28e0-40ee-951f-925912f68eed",
-      "orderRef": "ORD-20260929-0031",
+      "id": "3c9bc9b8-2061-4984-b07a-ff6b647ace92",
+      "orderRef": "ORD-20260930-0002",
       "status": "FAILED",
       "failureCode": "PAYMENT_FAILED",
-      "total": 27990000.0,
+      "total": 29990000.0,
       "itemCount": 1,
-      "createdAt": "2026-09-29T09:56:30.615633Z"
+      "createdAt": "2026-09-30T03:49:39.329084Z"
     },
     {
-      "id": "68b4a55f-b8ad-4919-8c82-cca15897da88",
-      "orderRef": "ORD-20260929-0030",
+      "id": "6ad07f58-e3fc-4b7c-ae8a-141074e52fbb",
+      "orderRef": "ORD-20260930-0001",
       "status": "CONFIRMED",
       "failureCode": null,
-      "total": 27990000.0,
+      "total": 29990000.0,
       "itemCount": 1,
-      "createdAt": "2026-09-29T09:56:30.495713Z"
+      "createdAt": "2026-09-30T03:49:38.945523Z"
     }
   ],
   "page": 0,
@@ -1369,7 +1391,7 @@ Newest first. Optional `?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED`, pl
 
 ### Order detail
 
-`GET /orders/68b4a55f-b8ad-4919-8c82-cca15897da88` · **Bearer token required** · responds `200`
+`GET /orders/6ad07f58-e3fc-4b7c-ae8a-141074e52fbb` · **Bearer token required** · responds `200`
 
 Prices and the shipping address are snapshots taken at checkout — a later catalog price change never alters a past order. Another user's order returns 403.
 
@@ -1377,13 +1399,13 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
 
 ```json
 {
-  "id": "68b4a55f-b8ad-4919-8c82-cca15897da88",
-  "orderRef": "ORD-20260929-0030",
+  "id": "6ad07f58-e3fc-4b7c-ae8a-141074e52fbb",
+  "orderRef": "ORD-20260930-0001",
   "status": "CONFIRMED",
   "failureCode": null,
-  "subtotal": 27990000.0,
+  "subtotal": 29990000.0,
   "shippingFee": 0.0,
-  "total": 27990000.0,
+  "total": 29990000.0,
   "paymentMethod": "MOCK_CARD",
   "paymentStatus": "PAID",
   "paymentRef": "TXN-DEMO-0001",
@@ -1397,22 +1419,22 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
   },
   "items": [
     {
-      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-      "productName": "MacBook Air M3 13 inch 8GB/256GB",
-      "unitPrice": 27990000.0,
+      "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+      "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+      "unitPrice": 29990000.0,
       "quantity": 1,
-      "lineTotal": 27990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+      "lineTotal": 29990000.0,
+      "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png"
     }
   ],
-  "createdAt": "2026-09-29T09:56:30.495713Z"
+  "createdAt": "2026-09-30T03:49:38.945523Z"
 }
 ```
 
 
 ### Cancel order
 
-`POST /orders/68b4a55f-b8ad-4919-8c82-cca15897da88/cancel` · **Bearer token required** · responds `200`
+`POST /orders/6ad07f58-e3fc-4b7c-ae8a-141074e52fbb/cancel` · **Bearer token required** · responds `200`
 
 Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunded.
 
@@ -1420,13 +1442,13 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
 
 ```json
 {
-  "id": "68b4a55f-b8ad-4919-8c82-cca15897da88",
-  "orderRef": "ORD-20260929-0030",
+  "id": "6ad07f58-e3fc-4b7c-ae8a-141074e52fbb",
+  "orderRef": "ORD-20260930-0001",
   "status": "CANCELLED",
   "failureCode": null,
-  "subtotal": 27990000.0,
+  "subtotal": 29990000.0,
   "shippingFee": 0.0,
-  "total": 27990000.0,
+  "total": 29990000.0,
   "paymentMethod": "MOCK_CARD",
   "paymentStatus": "REFUNDED",
   "paymentRef": "TXN-DEMO-0001",
@@ -1440,22 +1462,22 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
   },
   "items": [
     {
-      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-      "productName": "MacBook Air M3 13 inch 8GB/256GB",
-      "unitPrice": 27990000.0,
+      "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+      "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+      "unitPrice": 29990000.0,
       "quantity": 1,
-      "lineTotal": 27990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+      "lineTotal": 29990000.0,
+      "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png"
     }
   ],
-  "createdAt": "2026-09-29T09:56:30.495713Z"
+  "createdAt": "2026-09-30T03:49:38.945523Z"
 }
 ```
 
 
 ### Cancel — not allowed
 
-`POST /orders/68b4a55f-b8ad-4919-8c82-cca15897da88/cancel` · **Bearer token required** · responds `409`
+`POST /orders/6ad07f58-e3fc-4b7c-ae8a-141074e52fbb/cancel` · **Bearer token required** · responds `409`
 
 Show the Cancel button only when `status == "CONFIRMED"`.
 
@@ -1463,11 +1485,11 @@ Show the Cancel button only when `status == "CONFIRMED"`.
 
 ```json
 {
-  "timestamp": "2026-09-29T09:56:30.806785584Z",
+  "timestamp": "2026-09-30T03:49:39.660037841Z",
   "status": 409,
   "code": "ORDER_NOT_CANCELLABLE",
   "message": "An order in status CANCELLED cannot be cancelled",
-  "path": "/orders/68b4a55f-b8ad-4919-8c82-cca15897da88/cancel"
+  "path": "/orders/6ad07f58-e3fc-4b7c-ae8a-141074e52fbb/cancel"
 }
 ```
 

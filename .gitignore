@@ -10,3 +10,7 @@ target/
 *.iml
 .vscode/
 .DS_Store
+
+# Internal data crawler. Not shipped: it scrapes a third-party site and exists only to
+# generate the seed migrations, which are committed. Keep it out of the repo.
+tools/crawler/

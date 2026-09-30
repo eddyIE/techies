@@ -46,11 +46,11 @@ class CatalogControllerTest extends AbstractPostgresTest {
     }
 
     @Test
-    @DisplayName("the six seeded categories come back in display order")
+    @DisplayName("every seeded category comes back in display order")
     void listsCategoriesInOrder() throws Exception {
         JsonNode body = getJson("/categories");
 
-        assertThat(body).hasSize(6);
+        assertThat(body).hasSize(11);
         List<Integer> orders = new ArrayList<>();
         body.forEach(c -> orders.add(c.get("displayOrder").asInt()));
         assertThat(orders).isSorted();
@@ -65,9 +65,9 @@ class CatalogControllerTest extends AbstractPostgresTest {
         assertThat(body.get("page").asInt()).isZero();
         assertThat(body.get("size").asInt()).isEqualTo(20);
         assertThat(body.get("content")).hasSize(20);
-        // 42 seeded, 2 inactive.
-        assertThat(body.get("totalElements").asLong()).isEqualTo(40);
-        assertThat(body.get("totalPages").asInt()).isEqualTo(2);
+        // 42 seeded (2 inactive) plus 20 crawled -- see docs/SEED-IDS.md.
+        assertThat(body.get("totalElements").asLong()).isEqualTo(60);
+        assertThat(body.get("totalPages").asInt()).isEqualTo(3);
     }
 
     @Test
@@ -78,7 +78,7 @@ class CatalogControllerTest extends AbstractPostgresTest {
         JsonNode unaccented = search("bao hanh");
         JsonNode accented = search("bảo hành");
 
-        assertThat(unaccented.get("totalElements").asLong()).isEqualTo(40);
+        assertThat(unaccented.get("totalElements").asLong()).isEqualTo(60);
         assertThat(unaccented.get("totalElements").asLong())
                 .isEqualTo(accented.get("totalElements").asLong());
     }
@@ -172,7 +172,9 @@ class CatalogControllerTest extends AbstractPostgresTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.description").isNotEmpty())
-                .andExpect(jsonPath("$.images.length()").value(2))
+                // Not a fixed count: seeded products carry two gallery images and crawled
+                // ones a single catalogue image. The gallery being present is the point.
+                .andExpect(jsonPath("$.images").isNotEmpty())
                 .andExpect(jsonPath("$.categoryName").isNotEmpty());
 
         mvc.perform(get("/products/" + java.util.UUID.randomUUID()))
@@ -181,11 +183,37 @@ class CatalogControllerTest extends AbstractPostgresTest {
     }
 
     @Test
+    @DisplayName("a crawled product carries its specification table, in display order")
+    void productDetailIncludesSpecifications() throws Exception {
+        JsonNode list = getJson("/products?keyword=Tivi");
+        String id = list.get("content").get(0).get("id").asText();
+
+        mvc.perform(get("/products/" + id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.specifications").isNotEmpty())
+                .andExpect(jsonPath("$.specifications[0].name").isNotEmpty())
+                .andExpect(jsonPath("$.specifications[0].value").isNotEmpty());
+    }
+
+    @Test
+    @DisplayName("a product with no known specifications returns an empty list, not null")
+    void productWithoutSpecifications() throws Exception {
+        JsonNode list = getJson("/products?keyword=AirPods");
+        String id = list.get("content").get(0).get("id").asText();
+
+        // The app hides the section on an empty list; a null would make it a special case.
+        mvc.perform(get("/products/" + id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.specifications").isArray())
+                .andExpect(jsonPath("$.specifications.length()").value(0));
+    }
+
+    @Test
     @DisplayName("an inactive product 404s on detail but the batch endpoint returns it flagged")
     void inactiveProductHiddenFromBrowsingButVisibleToCheckout() throws Exception {
         // Find the inactive product's id via the batch endpoint, since browsing hides it.
         JsonNode all = getJson("/products?size=100");
-        assertThat(all.get("totalElements").asLong()).isEqualTo(40);
+        assertThat(all.get("totalElements").asLong()).isEqualTo(60);
 
         // The inactive seeded product is absent from search results entirely.
         JsonNode search = getJson("/products?keyword=Nothing%20Phone");
@@ -208,7 +236,7 @@ class CatalogControllerTest extends AbstractPostgresTest {
                 .andReturn().getResponse().getContentAsString();
 
         JsonNode snapshots = json.readTree(response);
-        assertThat(snapshots).hasSize(40);
+        assertThat(snapshots).hasSize(60);
         snapshots.forEach(s -> {
             assertThat(s.get("price").decimalValue()).isPositive();
             assertThat(s.get("active").asBoolean()).isTrue();

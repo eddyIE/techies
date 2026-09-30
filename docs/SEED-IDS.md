@@ -82,3 +82,48 @@ Products chosen to make each branch reproducible:
 
 - `nothing-phone-2a` — Nothing Phone (2a) — `01f18f88-0728-59d2-805c-29640538c4aa`
 - `amazfit-gtr-4` — Amazfit GTR 4 — `35bb84e1-87b2-5a23-997e-a117dc87d48f`
+
+## Crawled additions (catalog `V5`)
+
+Added from cellphones.com.vn by `tools/crawler/` (internal, gitignored). Nothing here
+replaces an existing row, so no order already placed can be invalidated.
+
+The original UUIDs above were generated with a namespace that was never recorded, so
+they stay as literals. Everything below is `uuid5` under
+`uuid5(NAMESPACE_URL, "https://techies.vn/seed")` with the key `category:<slug>` or
+`product:<slug>`, which makes regenerating the migration reproducible.
+
+### Categories
+
+| Slug | Name | UUID |
+|---|---|---|
+| `tivi` | Tivi | `13df1ea8-f30d-553f-a03c-7af6c0e0d2f4` |
+| `may-tinh-de-ban` | Máy tính để bàn | `b300e933-d9b2-5527-8dae-ffd8abd6cd0f` |
+| `am-thanh` | Âm thanh | `b3c7ffd4-af74-5471-8d98-eb1865f5241c` |
+| `tu-lanh` | Tủ lạnh | `b1f38776-76d4-548b-81fa-f7f5bcd586f4` |
+| `may-giat` | Máy giặt | `2ac73eb3-4007-5de9-a602-5390c65018f0` |
+
+### Products
+
+| Slug | Name | Category | Price (VND) | Specs |
+|---|---|---|---:|---:|
+| `smart-tivi-samsung-neo-qled-75qn80f-4k-75-inch-2025` | Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F) | `tivi` | 29,990,000 | 10 |
+| `gia-treo-tivi-north-bayou-c3-fg` | GIÁ TREO TIVI 32 -75 INCH (C3-FG) | `tivi` | 350,000 | 4 |
+| `pc-cps-gaming-g1-amd` | PC CPS Gaming G1 - AMD | `may-tinh-de-ban` | 10,530,000 | 14 |
+| `pc-cps-core-work-p144f650` | PC CPS Core Work P144F650 i5-14400F / RX 6500 | `may-tinh-de-ban` | 19,930,000 | 7 |
+| `tai-nghe-bluetooth-baseus-bowie-m2` | Tai nghe Bluetooth True Wireless Baseus Bowie M2 | `am-thanh` | 750,000 | 5 |
+| `microphone-thu-am-boya-mic-2-1tx-1rx` | Microphone thu âm không dây Boya MIC 2 ( 1TX + 1RX ) | `am-thanh` | 2,790,000 | 9 |
+| `tu-lanh-lg-inverter-side-by-side-gr-b256bl-519-lit` | LG Side By Side 519 lít 2023 (GR-B256BL) | `tu-lanh` | 13,490,000 | 10 |
+| `tu-lanh-panasonic-inverter-nr-tv341vgmv-306-lit` | Panasonic 306 lít 2021 (NR-TV341VGMV) | `tu-lanh` | 10,590,000 | 11 |
+| `may-giat-samsung-bespoke-14kg-inverter-ww14bb944dgbsv` | Samsung cửa ngang Bespoke 14kg 2024 (WW14BB944DGBSV) | `may-giat` | 13,490,000 | 9 |
+| `may-giat-say-hitachi-inverter-10-5-bd-d1054hvos` | sấy Hitachi cửa ngang giặt 10.5kg - sấy 7kg 2023 (BD-D1054HVOS) | `may-giat` | 9,990,000 | 9 |
+| `iphone-16-pro-max` | iPhone 16 Pro Max 256GB | `dien-thoai` | 30,990,000 | 16 |
+| `dien-thoai-xiaomi-15t-pro-5g` | Xiaomi 15T Pro 5G 12GB 512GB | `dien-thoai` | 15,990,000 | 11 |
+| `laptop-acer-aspire-lite-gen-2-al14-52m-32kv` | Acer Aspire Lite Gen 2 AL14-52M-32KV | `laptop` | 13,490,000 | 12 |
+| `laptop-lenovo-ideapad-slim-5-15iru9-83d00003vn` | Lenovo IdeaPad Slim 5 15IRU9 83D00003VN | `laptop` | 17,990,000 | 11 |
+| `may-doc-sach-kindle-new-2024-gen-11-16gb-khong-quang-cao` | Máy đọc sách New Kindle Gen 11 2024 16GB (Bản không quảng cáo) | `tablet` | 4,090,000 | 4 |
+| `may-doc-sach-kindle-paperwhite-6-16gb-khong-quang-cao` | Máy đọc sách Kindle Paperwhite 6 16GB (Bản không quảng cáo) | `tablet` | 5,490,000 | 4 |
+| `tai-nghe-bluetooth-tws-philips-tat3020` | Bluetooth True Wireless Philips TAT3020 | `tai-nghe` | 620,000 | 6 |
+| `tai-nghe-khong-day-soundpeats-air-5-pro-plus` | Bluetooth True Wireless SoundPEATS Air 5 Pro+ | `tai-nghe` | 2,090,000 | 8 |
+| `apple-watch-ultra-2-2024-49mm-4g-vien-titan-day-alpine-size-l` | Apple Watch Ultra 2 2024 49mm 4G Viền Titan Dây Alpine Size L | Chính hãng VN/A | `dong-ho-thong-minh` | 16,990,000 | 9 |
+| `hub-usb-3-0-orico-twu3-4a-bk-3-in-1` | Hub USB 3.0 Orico TWU3-4A-BK 3 in 1 | `phu-kien` | 239,000 | 6 |

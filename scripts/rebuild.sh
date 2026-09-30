@@ -14,6 +14,11 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
+# The project pins its own JDK; without this Maven runs on whatever java is on PATH, or
+# none at all, and the build fails before Docker is ever reached.
+# shellcheck disable=SC1091 -- path is relative to this script, resolved at run time
+[ -f scripts/env.sh ] && . scripts/env.sh
+
 TIMEOUT="${WAIT_TIMEOUT:-240}"
 BUILD=1
 if [[ "${1:-}" == "--no-build" ]]; then BUILD=0; shift; fi

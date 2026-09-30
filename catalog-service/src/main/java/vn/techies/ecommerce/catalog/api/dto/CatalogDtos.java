@@ -19,9 +19,18 @@ public final class CatalogDtos {
                                  String thumbnailUrl, UUID categoryId, String categoryName) {
     }
 
+    /**
+     * @param specifications the product's specification table, in display order. Empty for a
+     *                       product whose specifications are not known -- the app hides the
+     *                       section rather than showing an empty table.
+     */
     public record ProductDetail(UUID id, String name, String slug, String description,
                                 BigDecimal price, String thumbnailUrl, UUID categoryId,
-                                String categoryName, List<String> images) {
+                                String categoryName, List<String> images,
+                                List<Specification> specifications) {
+    }
+
+    public record Specification(String name, String value) {
     }
 
     /** Page envelope shared by every paginated endpoint in the project. */

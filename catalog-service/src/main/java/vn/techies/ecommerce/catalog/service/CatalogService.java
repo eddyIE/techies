@@ -8,12 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 import vn.techies.ecommerce.catalog.api.dto.CatalogDtos.CategoryResponse;
 import vn.techies.ecommerce.catalog.api.dto.CatalogDtos.PageResponse;
 import vn.techies.ecommerce.catalog.api.dto.CatalogDtos.ProductDetail;
+import vn.techies.ecommerce.catalog.api.dto.CatalogDtos.Specification;
 import vn.techies.ecommerce.catalog.api.dto.CatalogDtos.ProductSnapshot;
 import vn.techies.ecommerce.catalog.api.dto.CatalogDtos.ProductSummary;
 import vn.techies.ecommerce.catalog.domain.Product;
 import vn.techies.ecommerce.catalog.domain.ProductImage;
 import vn.techies.ecommerce.catalog.repository.CategoryRepository;
 import vn.techies.ecommerce.catalog.repository.ProductImageRepository;
+import vn.techies.ecommerce.catalog.repository.ProductSpecRepository;
 import vn.techies.ecommerce.catalog.repository.ProductRepository;
 import vn.techies.ecommerce.common.error.ApiException;
 import vn.techies.ecommerce.common.error.ErrorCode;
@@ -34,6 +36,7 @@ public class CatalogService {
     private final CategoryRepository categories;
     private final ProductRepository products;
     private final ProductImageRepository images;
+    private final ProductSpecRepository specs;
 
     @Transactional(readOnly = true)
     public List<CategoryResponse> listCategories() {
@@ -71,9 +74,14 @@ public class CatalogService {
                 .map(ProductImage::getUrl)
                 .toList();
 
+        List<Specification> specifications = specs.findByProductIdOrderByDisplayOrderAsc(id).stream()
+                .map(s -> new Specification(s.getName(), s.getValue()))
+                .toList();
+
         return new ProductDetail(product.getId(), product.getName(), product.getSlug(),
                 product.getDescription(), product.getPrice(), product.getThumbnailUrl(),
-                product.getCategory().getId(), product.getCategory().getName(), urls);
+                product.getCategory().getId(), product.getCategory().getName(), urls,
+                specifications);
     }
 
     /** Price and name snapshot for checkout. Inactive products come back flagged, not filtered. */

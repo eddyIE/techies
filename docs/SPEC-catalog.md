@@ -90,6 +90,31 @@ refusing hotlinks, and that image 404s until `V4` is regenerated.
 
 Shared fixed IDs live in `docs/SEED-IDS.md` so catalog and inventory migrations cannot drift.
 
+`V5` enriches the catalogue from cellphones.com.vn: five new top-level categories and twenty
+products, crawled by `tools/crawler/` (internal, gitignored -- it scrapes a third party and
+only exists to generate the committed SQL). Nothing existing is replaced, so an order already
+placed cannot be invalidated.
+
+## Specifications
+
+`product_specs` holds the "Thông số kỹ thuật" table as ordered name/value rows, nested into
+`GET /products/{id}` as `specifications`. Rows rather than JSON, for the same reason as
+`product_images`: the order is part of the data, and filtering on a spec later stays an
+ordinary query.
+
+Two sources are needed, because neither is sufficient. The GraphQL API exposes
+`general.attributes`, but as ~95 raw Magento codes padded with filler (`ads_base_image:
+no_selection`); the rendered product page carries the curated, human-labelled subset a
+customer actually reads. So products and prices come from the API and specifications from
+the page.
+
+Only **one** of the original 42 products could be given specifications. The rest are 2023-24
+models the source no longer sells -- its laptop listing carries M4 and M5 MacBooks and no M3,
+and it stocks no AirPods at all. The matcher fails closed: it requires every model-identifying
+token, because a near-miss pairs a Baseus car mount with Baseus earbuds, and a wrong
+specification on a real product page is worse than none. Those products return an empty list
+and the app hides the section.
+
 ## Rules
 
 - Inactive products are excluded from list and search, and 404 on detail.

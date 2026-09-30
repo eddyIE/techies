@@ -505,6 +505,7 @@ def main():
         | Field | Values |
         |---|---|
         | `addressId` | From `GET /addresses` |
+        | `couponCode` | Optional discount code, case-insensitive — see below |
         | `paymentMethod` | `COD` (confirmed at once) or `MOCK_CARD` (waits for payment) |
         | `cartItemIds` | Optional array of cart line ids — see below |
 
@@ -537,6 +538,82 @@ def main():
         committed to an order. If the payment then fails — or the window expires — those lines
         are put back automatically, so the user still has something to retry with. Do not
         clear or refill it client-side; re-read `GET /cart` after a failure.
+
+        ---
+
+        ## Discount coupons
+
+        Send `couponCode` on checkout. A fixed amount comes off the subtotal, and both the code
+        and the amount are snapshotted onto the order, so withdrawing a coupon later never
+        changes what a past order charged.
+
+        ```
+        total = subtotal + shippingFee - discount
+        ```
+
+        | Code | Effect | Minimum order |
+        |---|---|---:|
+        | `TECHIES50K` | −50,000đ | 500,000đ |
+        | `TECHIES500K` | −500,000đ | 10,000,000đ |
+        | `FREESHIP30K` | −30,000đ | none |
+        | `EXPIRED100K` | expired — demonstrates the rejection | none |
+        | `PAUSED200K` | deactivated — demonstrates the rejection | none |
+
+        One code per order; no stacking and no percentages. Rejections happen **before the order
+        exists**, so an unusable coupon is a mistake to fix on the checkout screen rather than a
+        failed order in the customer's history:
+
+        | Problem | Response |
+        |---|---|
+        | unknown code | `404 COUPON_NOT_FOUND` |
+        | expired or deactivated | `409 COUPON_NOT_APPLICABLE` |
+        | order below the minimum | `409 COUPON_NOT_APPLICABLE` |
+
+        The discount is capped at the subtotal, so an order can never total less than its
+        shipping fee.
+
+        ---
+
+        ## Product reviews
+
+        Only a customer who bought the product may review it, and a review belongs to the
+        **order line** rather than to the product: buying the same thing twice earns two
+        reviews. That is what lets an order be marked as still needing one.
+
+        **After checkout**, take the customer to a review page built from the order's items —
+        `GET /orders/{id}` returns each line's own `id` and a `reviewed` flag. The page is
+        skippable: nothing expires, and the order list keeps `reviewed: false` until every line
+        has been reviewed, so they can return to it from order history at any time.
+
+        ```json
+        POST /orders/{orderId}/reviews
+        { "reviews": [ { "orderItemId": "<uuid>", "rating": 5, "comment": "Rất tốt" } ] }
+        ```
+
+        Several lines in one request, because the review page submits them together. `rating` is
+        1–5 and required; `comment` is optional, up to 1000 characters. The response is the
+        order, so the app sees the updated flags without a second call.
+
+        | Problem | Response |
+        |---|---|
+        | order not paid for, or failed | `409 ORDER_NOT_REVIEWABLE` |
+        | that line was already reviewed | `409 ALREADY_REVIEWED` |
+        | line belongs to another order | `404 NOT_FOUND` |
+        | someone else's order | `403 FORBIDDEN` |
+
+        Reviews are immutable — no edit, no delete. The author name is the order's own recipient
+        name, snapshotted, so a review keeps the name it was written under.
+
+        **Reading them**, for the product page:
+
+        ```
+        GET /products/{productId}/reviews?page=0&size=10
+        { "averageRating": 4.7, "total": 3, "content": [ ... ] }
+        ```
+
+        `averageRating` is 0 when nothing has been reviewed, never null. Note this path is served
+        by **order-service**, not catalog — the reviews live with the purchases that entitle
+        them. It means a product's rating is not part of the catalog payload: fetch it here.
 
         ---
 
@@ -591,7 +668,9 @@ def main():
 
     w("---\n\n## Orders\n")
     w(endpoint(cap, "orders.list", "My orders", auth=True,
-               description="Newest first. Optional `?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED`, plus `page` and `size`."))
+               description="Newest first. Each row carries `firstItem` (so a row renders a picture "
+                           "and a name without fetching every order) and `reviewed`. Optional "
+                           "`?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED`, plus `page` and `size`."))
     w(endpoint(cap, "orders.detail", "Order detail", auth=True,
                description="Prices and the shipping address are snapshots taken at checkout — a later "
                            "catalog price change never alters a past order. Another user's order returns 403."))

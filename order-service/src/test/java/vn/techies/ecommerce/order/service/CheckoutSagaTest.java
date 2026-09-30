@@ -103,11 +103,11 @@ class CheckoutSagaTest extends AbstractPostgresTest {
 
     /** A card checkout, which now stops at PENDING for the customer to pay. */
     private CheckoutRequest card() {
-        return new CheckoutRequest(addressId, PaymentMethod.MOCK_CARD, null);
+        return new CheckoutRequest(addressId, PaymentMethod.MOCK_CARD, null, null);
     }
 
     private CheckoutRequest cod() {
-        return new CheckoutRequest(addressId, PaymentMethod.COD, null);
+        return new CheckoutRequest(addressId, PaymentMethod.COD, null, null);
     }
 
     /** What the app reports once the customer has paid. */
@@ -369,7 +369,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         UUID chosenProduct = cart.items().get(0).productId();
 
         Order order = saga.checkout(userId, new CheckoutRequest(
-                addressId, PaymentMethod.MOCK_CARD, List.of(chosen)));
+                addressId, PaymentMethod.MOCK_CARD, List.of(chosen), null));
         pay(order);
 
         assertThat(orderService.detail(order.getId(), userId).status()).isEqualTo(OrderStatus.CONFIRMED);
@@ -400,7 +400,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         fillCart();
 
         assertThatThrownBy(() -> saga.checkout(userId, new CheckoutRequest(
-                addressId, PaymentMethod.COD, List.of(UUID.randomUUID()))))
+                addressId, PaymentMethod.COD, List.of(UUID.randomUUID()), null)))
                 .isInstanceOf(ApiException.class)
                 .extracting(e -> ((ApiException) e).code())
                 .isEqualTo(ErrorCode.NOT_FOUND);
@@ -415,7 +415,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         UUID chosen = cartService.view(userId).items().get(0).id();
 
         Order order = saga.checkout(userId, new CheckoutRequest(
-                addressId, PaymentMethod.MOCK_CARD, List.of(chosen)));
+                addressId, PaymentMethod.MOCK_CARD, List.of(chosen), null));
         PaymentResultResponse failed = declinePayment(order);
 
         assertThat(failed.order().status()).isEqualTo(OrderStatus.FAILED);

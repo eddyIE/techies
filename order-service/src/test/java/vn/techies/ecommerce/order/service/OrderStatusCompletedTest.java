@@ -63,7 +63,7 @@ class OrderStatusCompletedTest extends AbstractPostgresTest {
                 .willReturn(new InventoryClient.MovementResponse("r", UUID.randomUUID(), true, false));
 
         cartService.add(userId, new AddCartItemRequest(PRODUCT, 1));
-        Order order = saga.checkout(userId, new CheckoutRequest(UUID.randomUUID(), PaymentMethod.COD, null));
+        Order order = saga.checkout(userId, new CheckoutRequest(UUID.randomUUID(), PaymentMethod.COD, null, null));
         assertThat(order.getStatus()).isEqualTo(OrderStatus.CONFIRMED);
         return order.getId();
     }

@@ -14,3 +14,7 @@ target/
 # Internal data crawler. Not shipped: it scrapes a third-party site and exists only to
 # generate the seed migrations, which are committed. Keep it out of the repo.
 tools/crawler/
+
+# Runtime logs. logback-spring.xml writes and rotates these per service; committing them
+# means every run shows up as a diff and rotated archives churn the history.
+*/logs/

@@ -302,7 +302,7 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "email": "fe-demo-4b5964@techies.vn",
+  "email": "fe-demo-0bcb24@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -313,8 +313,8 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "userId": "ade5251c-c0c5-4097-929e-71604be45c48",
-  "email": "fe-demo-4b5964@techies.vn"
+  "userId": "df90bf6b-13d2-4f37-ac20-510022cca1e1",
+  "email": "fe-demo-0bcb24@techies.vn"
 }
 ```
 
@@ -329,7 +329,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "email": "fe-demo-4b5964@techies.vn",
+  "email": "fe-demo-0bcb24@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -340,7 +340,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "timestamp": "2026-09-30T03:49:37.078203965Z",
+  "timestamp": "2026-09-30T07:11:30.686374376Z",
   "status": 409,
   "code": "EMAIL_ALREADY_EXISTS",
   "message": "An account with this email already exists",
@@ -370,14 +370,14 @@ Shows the `fieldErrors` map you bind to form fields.
 
 ```json
 {
-  "timestamp": "2026-09-30T03:49:37.104884465Z",
+  "timestamp": "2026-09-30T07:11:30.704594584Z",
   "status": 400,
   "code": "VALIDATION_ERROR",
   "message": "Request validation failed",
   "path": "/auth/register",
   "fieldErrors": {
-    "email": "must be a well-formed email address",
     "phone": "must be 9-11 digits",
+    "email": "must be a well-formed email address",
     "fullName": "must not be blank"
   }
 }
@@ -396,7 +396,7 @@ Returns the token plus the user, so Login need not call `/users/me` after.
 
 ```json
 {
-  "email": "fe-demo-4b5964@techies.vn",
+  "email": "fe-demo-0bcb24@techies.vn",
   "password": "password1"
 }
 ```
@@ -409,8 +409,8 @@ Returns the token plus the user, so Login need not call `/users/me` after.
   "tokenType": "Bearer",
   "expiresIn": 2592000,
   "user": {
-    "id": "ade5251c-c0c5-4097-929e-71604be45c48",
-    "email": "fe-demo-4b5964@techies.vn",
+    "id": "df90bf6b-13d2-4f37-ac20-510022cca1e1",
+    "email": "fe-demo-0bcb24@techies.vn",
     "fullName": "Nguyen Van A",
     "phone": "0901234567",
     "avatarUrl": null
@@ -429,7 +429,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "email": "fe-demo-4b5964@techies.vn",
+  "email": "fe-demo-0bcb24@techies.vn",
   "password": "wrongpassword1"
 }
 ```
@@ -438,7 +438,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "timestamp": "2026-09-30T03:49:37.375948965Z",
+  "timestamp": "2026-09-30T07:11:30.884752792Z",
   "status": 401,
   "code": "INVALID_CREDENTIALS",
   "message": "Email or password is incorrect",
@@ -457,7 +457,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-4b5964@techies.vn"
+  "email": "fe-demo-0bcb24@techies.vn"
 }
 ```
 
@@ -465,7 +465,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-4b5964@techies.vn",
+  "email": "fe-demo-0bcb24@techies.vn",
   "exists": true
 }
 ```
@@ -524,8 +524,8 @@ For the Profile screen.
 
 ```json
 {
-  "id": "ade5251c-c0c5-4097-929e-71604be45c48",
-  "email": "fe-demo-4b5964@techies.vn",
+  "id": "df90bf6b-13d2-4f37-ac20-510022cca1e1",
+  "email": "fe-demo-0bcb24@techies.vn",
   "fullName": "Nguyen Van A",
   "phone": "0901234567",
   "avatarUrl": null
@@ -552,8 +552,8 @@ Name and phone only. Email cannot change — it is the login identifier.
 
 ```json
 {
-  "id": "ade5251c-c0c5-4097-929e-71604be45c48",
-  "email": "fe-demo-4b5964@techies.vn",
+  "id": "df90bf6b-13d2-4f37-ac20-510022cca1e1",
+  "email": "fe-demo-0bcb24@techies.vn",
   "fullName": "Nguyen Van B",
   "phone": "0909999999",
   "avatarUrl": null
@@ -571,7 +571,7 @@ What the app gets when the token is missing or expired.
 
 ```json
 {
-  "timestamp": "2026-09-30T03:49:37.528947590Z",
+  "timestamp": "2026-09-30T07:11:30.981324084Z",
   "status": 401,
   "code": "UNAUTHENTICATED",
   "message": "Authentication required",
@@ -616,7 +616,7 @@ The user's first address becomes the default automatically, so Checkout always h
 
 ```json
 {
-  "id": "ee2feb7d-eaf6-4386-9c08-51be0f5d5ebd",
+  "id": "3d107576-100c-4bd2-94fd-cb2e69975f48",
   "recipientName": "Nguyen Van B",
   "phone": "0907654321",
   "line1": "12 Nguyen Hue",
@@ -639,7 +639,7 @@ Default first, then newest. Use the first entry to preselect at Checkout.
 ```json
 [
   {
-    "id": "ee2feb7d-eaf6-4386-9c08-51be0f5d5ebd",
+    "id": "3d107576-100c-4bd2-94fd-cb2e69975f48",
     "recipientName": "Nguyen Van B",
     "phone": "0907654321",
     "line1": "12 Nguyen Hue",
@@ -849,7 +849,7 @@ Includes the description and image gallery.
 
 ### Product detail — gone
 
-`GET /products/d9cdaaf9-2d4b-4f9f-95f1-ca5921df7edb` · **Public — no token** · responds `404`
+`GET /products/d90b2fc0-7715-4bff-85c6-553444a76039` · **Public — no token** · responds `404`
 
 Unknown or delisted products return 404.
 
@@ -857,11 +857,11 @@ Unknown or delisted products return 404.
 
 ```json
 {
-  "timestamp": "2026-09-30T03:49:37.956500757Z",
+  "timestamp": "2026-09-30T07:11:31.161945293Z",
   "status": 404,
   "code": "PRODUCT_NOT_FOUND",
   "message": "Product not found",
-  "path": "/products/d9cdaaf9-2d4b-4f9f-95f1-ca5921df7edb"
+  "path": "/products/d90b2fc0-7715-4bff-85c6-553444a76039"
 }
 ```
 
@@ -877,7 +877,7 @@ For the in-stock badge on Product Detail. This is the only public stock endpoint
 ```json
 {
   "productId": "759d9034-b058-5375-aa35-cadf437332c3",
-  "available": 40,
+  "available": 39,
   "inStock": true
 }
 ```
@@ -927,14 +927,14 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "35eefb1e-f4d0-4f7f-8bd7-6427930dd68c",
+      "id": "6c825923-56d5-498a-b81a-3cc2458c0730",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
       "quantity": 2,
       "lineTotal": 59980000.0,
       "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
-      "available": 40
+      "available": 39
     }
   ],
   "subtotal": 59980000.0,
@@ -945,7 +945,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 
 ### Change quantity
 
-`PUT /cart/items/35eefb1e-f4d0-4f7f-8bd7-6427930dd68c` · **Bearer token required** · responds `200`
+`PUT /cart/items/6c825923-56d5-498a-b81a-3cc2458c0730` · **Bearer token required** · responds `200`
 
 `quantity: 0` removes the line. `DELETE /cart/items/{itemId}` does the same and returns `204`.
 
@@ -963,14 +963,14 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "35eefb1e-f4d0-4f7f-8bd7-6427930dd68c",
+      "id": "6c825923-56d5-498a-b81a-3cc2458c0730",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
       "quantity": 1,
       "lineTotal": 29990000.0,
       "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
-      "available": 40
+      "available": 39
     }
   ],
   "subtotal": 29990000.0,
@@ -995,14 +995,14 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "35eefb1e-f4d0-4f7f-8bd7-6427930dd68c",
+      "id": "6c825923-56d5-498a-b81a-3cc2458c0730",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
       "quantity": 1,
       "lineTotal": 29990000.0,
       "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
-      "available": 40
+      "available": 39
     }
   ],
   "subtotal": 29990000.0,
@@ -1036,6 +1036,7 @@ POST /orders/{id}/payment -> CONFIRMED           cart already clean
 | Field | Values |
 |---|---|
 | `addressId` | From `GET /addresses` |
+| `couponCode` | Optional discount code, case-insensitive — see below |
 | `paymentMethod` | `COD` (confirmed at once) or `MOCK_CARD` (waits for payment) |
 | `cartItemIds` | Optional array of cart line ids — see below |
 
@@ -1068,6 +1069,82 @@ A 4xx here means the request never became an order at all (`EMPTY_CART`,
 committed to an order. If the payment then fails — or the window expires — those lines
 are put back automatically, so the user still has something to retry with. Do not
 clear or refill it client-side; re-read `GET /cart` after a failure.
+
+---
+
+## Discount coupons
+
+Send `couponCode` on checkout. A fixed amount comes off the subtotal, and both the code
+and the amount are snapshotted onto the order, so withdrawing a coupon later never
+changes what a past order charged.
+
+```
+total = subtotal + shippingFee - discount
+```
+
+| Code | Effect | Minimum order |
+|---|---|---:|
+| `TECHIES50K` | −50,000đ | 500,000đ |
+| `TECHIES500K` | −500,000đ | 10,000,000đ |
+| `FREESHIP30K` | −30,000đ | none |
+| `EXPIRED100K` | expired — demonstrates the rejection | none |
+| `PAUSED200K` | deactivated — demonstrates the rejection | none |
+
+One code per order; no stacking and no percentages. Rejections happen **before the order
+exists**, so an unusable coupon is a mistake to fix on the checkout screen rather than a
+failed order in the customer's history:
+
+| Problem | Response |
+|---|---|
+| unknown code | `404 COUPON_NOT_FOUND` |
+| expired or deactivated | `409 COUPON_NOT_APPLICABLE` |
+| order below the minimum | `409 COUPON_NOT_APPLICABLE` |
+
+The discount is capped at the subtotal, so an order can never total less than its
+shipping fee.
+
+---
+
+## Product reviews
+
+Only a customer who bought the product may review it, and a review belongs to the
+**order line** rather than to the product: buying the same thing twice earns two
+reviews. That is what lets an order be marked as still needing one.
+
+**After checkout**, take the customer to a review page built from the order's items —
+`GET /orders/{id}` returns each line's own `id` and a `reviewed` flag. The page is
+skippable: nothing expires, and the order list keeps `reviewed: false` until every line
+has been reviewed, so they can return to it from order history at any time.
+
+```json
+POST /orders/{orderId}/reviews
+{ "reviews": [ { "orderItemId": "<uuid>", "rating": 5, "comment": "Rất tốt" } ] }
+```
+
+Several lines in one request, because the review page submits them together. `rating` is
+1–5 and required; `comment` is optional, up to 1000 characters. The response is the
+order, so the app sees the updated flags without a second call.
+
+| Problem | Response |
+|---|---|
+| order not paid for, or failed | `409 ORDER_NOT_REVIEWABLE` |
+| that line was already reviewed | `409 ALREADY_REVIEWED` |
+| line belongs to another order | `404 NOT_FOUND` |
+| someone else's order | `403 FORBIDDEN` |
+
+Reviews are immutable — no edit, no delete. The author name is the order's own recipient
+name, snapshotted, so a review keeps the name it was written under.
+
+**Reading them**, for the product page:
+
+```
+GET /products/{productId}/reviews?page=0&size=10
+{ "averageRating": 4.7, "total": 3, "content": [ ... ] }
+```
+
+`averageRating` is 0 when nothing has been reviewed, never null. Note this path is served
+by **order-service**, not catalog — the reviews live with the purchases that entitle
+them. It means a product's rating is not part of the catalog payload: fetch it here.
 
 ---
 
@@ -1117,7 +1194,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ```json
 {
-  "addressId": "ee2feb7d-eaf6-4386-9c08-51be0f5d5ebd",
+  "addressId": "3d107576-100c-4bd2-94fd-cb2e69975f48",
   "paymentMethod": "MOCK_CARD"
 }
 ```
@@ -1127,13 +1204,15 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "6ad07f58-e3fc-4b7c-ae8a-141074e52fbb",
-    "orderRef": "ORD-20260930-0001",
+    "id": "3c08a241-e1d6-4853-aac8-f64c20795aa5",
+    "orderRef": "ORD-20260930-0009",
     "status": "AWAITING_PAYMENT",
     "failureCode": null,
     "subtotal": 29990000.0,
     "shippingFee": 0.0,
     "total": 29990000.0,
+    "couponCode": null,
+    "discount": 0.0,
     "paymentMethod": "MOCK_CARD",
     "paymentStatus": "PENDING",
     "paymentRef": null,
@@ -1147,15 +1226,17 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
     },
     "items": [
       {
+        "id": "1be225ff-0fce-4f0e-9b1a-0f25814847b1",
         "productId": "759d9034-b058-5375-aa35-cadf437332c3",
         "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
         "unitPrice": 29990000.0,
         "quantity": 1,
         "lineTotal": 29990000.0,
-        "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png"
+        "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+        "reviewed": false
       }
     ],
-    "createdAt": "2026-09-30T03:49:38.945523Z"
+    "createdAt": "2026-09-30T07:11:31.369978Z"
   },
   "message": "Order placed, complete the payment to confirm it"
 }
@@ -1164,7 +1245,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ### Payment — success
 
-`POST /orders/6ad07f58-e3fc-4b7c-ae8a-141074e52fbb/payment` · **Bearer token required** · responds `200`
+`POST /orders/3c08a241-e1d6-4853-aac8-f64c20795aa5/payment` · **Bearer token required** · responds `200`
 
 `status: CONFIRMED`. The cart is now empty and the stock is sold.
 
@@ -1182,13 +1263,15 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "6ad07f58-e3fc-4b7c-ae8a-141074e52fbb",
-    "orderRef": "ORD-20260930-0001",
+    "id": "3c08a241-e1d6-4853-aac8-f64c20795aa5",
+    "orderRef": "ORD-20260930-0009",
     "status": "CONFIRMED",
     "failureCode": null,
     "subtotal": 29990000.0,
     "shippingFee": 0.0,
     "total": 29990000.0,
+    "couponCode": null,
+    "discount": 0.0,
     "paymentMethod": "MOCK_CARD",
     "paymentStatus": "PAID",
     "paymentRef": "TXN-DEMO-0001",
@@ -1202,15 +1285,17 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
     },
     "items": [
       {
+        "id": "1be225ff-0fce-4f0e-9b1a-0f25814847b1",
         "productId": "759d9034-b058-5375-aa35-cadf437332c3",
         "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
         "unitPrice": 29990000.0,
         "quantity": 1,
         "lineTotal": 29990000.0,
-        "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png"
+        "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+        "reviewed": false
       }
     ],
-    "createdAt": "2026-09-30T03:49:38.945523Z"
+    "createdAt": "2026-09-30T07:11:31.369978Z"
   },
   "cartRestore": null
 }
@@ -1219,7 +1304,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ### Payment — failed
 
-`POST /orders/3c9bc9b8-2061-4984-b07a-ff6b647ace92/payment` · **Bearer token required** · responds `200`
+`POST /orders/709ec4b7-d59a-4012-b053-e2435b97a8e2/payment` · **Bearer token required** · responds `200`
 
 **HTTP 200 with a FAILED order.** Stock that was held has been released, and the ordered lines are back in the cart. Read `cartRestore` for what could not be returned.
 
@@ -1237,13 +1322,15 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "3c9bc9b8-2061-4984-b07a-ff6b647ace92",
-    "orderRef": "ORD-20260930-0002",
+    "id": "709ec4b7-d59a-4012-b053-e2435b97a8e2",
+    "orderRef": "ORD-20260930-0010",
     "status": "FAILED",
     "failureCode": "PAYMENT_FAILED",
     "subtotal": 29990000.0,
     "shippingFee": 0.0,
     "total": 29990000.0,
+    "couponCode": null,
+    "discount": 0.0,
     "paymentMethod": "MOCK_CARD",
     "paymentStatus": "DECLINED",
     "paymentRef": null,
@@ -1257,15 +1344,17 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
     },
     "items": [
       {
+        "id": "ef1314e5-6f5b-44ae-bab5-7b2c19eed018",
         "productId": "759d9034-b058-5375-aa35-cadf437332c3",
         "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
         "unitPrice": 29990000.0,
         "quantity": 1,
         "lineTotal": 29990000.0,
-        "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png"
+        "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+        "reviewed": false
       }
     ],
-    "createdAt": "2026-09-30T03:49:39.329084Z"
+    "createdAt": "2026-09-30T07:11:31.509714Z"
   },
   "cartRestore": {
     "linesReturned": 1,
@@ -1285,7 +1374,7 @@ The order never reached the payment step. Refresh the cart to see what is unavai
 
 ```json
 {
-  "addressId": "ee2feb7d-eaf6-4386-9c08-51be0f5d5ebd",
+  "addressId": "3d107576-100c-4bd2-94fd-cb2e69975f48",
   "paymentMethod": "COD"
 }
 ```
@@ -1295,13 +1384,15 @@ The order never reached the payment step. Refresh the cart to see what is unavai
 ```json
 {
   "order": {
-    "id": "55ac1c4d-65ab-4752-bbf5-7b44952fccac",
-    "orderRef": "ORD-20260930-0003",
+    "id": "17874e22-2434-4f7e-b862-14d2545bd5e1",
+    "orderRef": "ORD-20260930-0011",
     "status": "FAILED",
     "failureCode": "OUT_OF_STOCK",
     "subtotal": 43980000.0,
     "shippingFee": 0.0,
     "total": 43980000.0,
+    "couponCode": null,
+    "discount": 0.0,
     "paymentMethod": "COD",
     "paymentStatus": "PENDING",
     "paymentRef": null,
@@ -1315,25 +1406,23 @@ The order never reached the payment step. Refresh the cart to see what is unavai
     },
     "items": [
       {
+        "id": "34a0cc3f-6bdb-46cd-b786-20798fd58dd8",
         "productId": "759d9034-b058-5375-aa35-cadf437332c3",
         "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
         "unitPrice": 29990000.0,
         "quantity": 1,
         "lineTotal": 29990000.0,
-        "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png"
+        "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+        "reviewed": false
       },
       {
+        "id": "cae52f07-9b9b-42fd-bb72-5196d121ac19",
         "productId": "b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8",
         "productName": "MSI Modern 14 C13M",
         "unitPrice": 13990000.0,
         "quantity": 1,
         "lineTotal": 13990000.0,
-        "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M"
-      }
-    ],
-    "createdAt": "2026-09-30T03:49:39.501136Z"
-  },
-  "message": "Some items are no longer in stock"
+  ...
 }
 ```
 
@@ -1346,7 +1435,7 @@ The order never reached the payment step. Refresh the cart to see what is unavai
 
 `GET /orders` · **Bearer token required** · responds `200`
 
-Newest first. Optional `?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED`, plus `page` and `size`.
+Newest first. Each row carries `firstItem` (so a row renders a picture and a name without fetching every order) and `reviewed`. Optional `?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED`, plus `page` and `size`.
 
 **Response**
 
@@ -1354,44 +1443,50 @@ Newest first. Optional `?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED`, pl
 {
   "content": [
     {
-      "id": "55ac1c4d-65ab-4752-bbf5-7b44952fccac",
-      "orderRef": "ORD-20260930-0003",
+      "id": "d80a11c3-42c3-41cb-b880-50c914f26d8a",
+      "orderRef": "ORD-20260930-0012",
+      "status": "FAILED",
+      "failureCode": "OUT_OF_STOCK",
+      "total": 73940000.0,
+      "itemCount": 2,
+      "firstItem": {
+        "productId": "b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8",
+        "productName": "MSI Modern 14 C13M",
+        "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M",
+        "quantity": 1
+      },
+      "reviewed": false,
+      "createdAt": "2026-09-30T07:11:31.724543Z"
+    },
+    {
+      "id": "17874e22-2434-4f7e-b862-14d2545bd5e1",
+      "orderRef": "ORD-20260930-0011",
       "status": "FAILED",
       "failureCode": "OUT_OF_STOCK",
       "total": 43980000.0,
       "itemCount": 2,
-      "createdAt": "2026-09-30T03:49:39.501136Z"
+      "firstItem": {
+        "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+        "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+        "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+        "quantity": 1
+      },
+      "reviewed": false,
+      "createdAt": "2026-09-30T07:11:31.639229Z"
     },
     {
-      "id": "3c9bc9b8-2061-4984-b07a-ff6b647ace92",
-      "orderRef": "ORD-20260930-0002",
+      "id": "709ec4b7-d59a-4012-b053-e2435b97a8e2",
+      "orderRef": "ORD-20260930-0010",
       "status": "FAILED",
       "failureCode": "PAYMENT_FAILED",
-      "total": 29990000.0,
-      "itemCount": 1,
-      "createdAt": "2026-09-30T03:49:39.329084Z"
-    },
-    {
-      "id": "6ad07f58-e3fc-4b7c-ae8a-141074e52fbb",
-      "orderRef": "ORD-20260930-0001",
-      "status": "CONFIRMED",
-      "failureCode": null,
-      "total": 29990000.0,
-      "itemCount": 1,
-      "createdAt": "2026-09-30T03:49:38.945523Z"
-    }
-  ],
-  "page": 0,
-  "size": 20,
-  "totalElements": 3,
-  "totalPages": 1
+  ...
 }
 ```
 
 
 ### Order detail
 
-`GET /orders/6ad07f58-e3fc-4b7c-ae8a-141074e52fbb` · **Bearer token required** · responds `200`
+`GET /orders/3c08a241-e1d6-4853-aac8-f64c20795aa5` · **Bearer token required** · responds `200`
 
 Prices and the shipping address are snapshots taken at checkout — a later catalog price change never alters a past order. Another user's order returns 403.
 
@@ -1399,13 +1494,15 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
 
 ```json
 {
-  "id": "6ad07f58-e3fc-4b7c-ae8a-141074e52fbb",
-  "orderRef": "ORD-20260930-0001",
+  "id": "3c08a241-e1d6-4853-aac8-f64c20795aa5",
+  "orderRef": "ORD-20260930-0009",
   "status": "CONFIRMED",
   "failureCode": null,
   "subtotal": 29990000.0,
   "shippingFee": 0.0,
   "total": 29990000.0,
+  "couponCode": null,
+  "discount": 0.0,
   "paymentMethod": "MOCK_CARD",
   "paymentStatus": "PAID",
   "paymentRef": "TXN-DEMO-0001",
@@ -1419,22 +1516,24 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
   },
   "items": [
     {
+      "id": "1be225ff-0fce-4f0e-9b1a-0f25814847b1",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
       "quantity": 1,
       "lineTotal": 29990000.0,
-      "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png"
+      "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+      "reviewed": false
     }
   ],
-  "createdAt": "2026-09-30T03:49:38.945523Z"
+  "createdAt": "2026-09-30T07:11:31.369978Z"
 }
 ```
 
 
 ### Cancel order
 
-`POST /orders/6ad07f58-e3fc-4b7c-ae8a-141074e52fbb/cancel` · **Bearer token required** · responds `200`
+`POST /orders/3c08a241-e1d6-4853-aac8-f64c20795aa5/cancel` · **Bearer token required** · responds `200`
 
 Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunded.
 
@@ -1442,13 +1541,15 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
 
 ```json
 {
-  "id": "6ad07f58-e3fc-4b7c-ae8a-141074e52fbb",
-  "orderRef": "ORD-20260930-0001",
+  "id": "3c08a241-e1d6-4853-aac8-f64c20795aa5",
+  "orderRef": "ORD-20260930-0009",
   "status": "CANCELLED",
   "failureCode": null,
   "subtotal": 29990000.0,
   "shippingFee": 0.0,
   "total": 29990000.0,
+  "couponCode": null,
+  "discount": 0.0,
   "paymentMethod": "MOCK_CARD",
   "paymentStatus": "REFUNDED",
   "paymentRef": "TXN-DEMO-0001",
@@ -1462,22 +1563,24 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
   },
   "items": [
     {
+      "id": "1be225ff-0fce-4f0e-9b1a-0f25814847b1",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
       "quantity": 1,
       "lineTotal": 29990000.0,
-      "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png"
+      "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+      "reviewed": false
     }
   ],
-  "createdAt": "2026-09-30T03:49:38.945523Z"
+  "createdAt": "2026-09-30T07:11:31.369978Z"
 }
 ```
 
 
 ### Cancel — not allowed
 
-`POST /orders/6ad07f58-e3fc-4b7c-ae8a-141074e52fbb/cancel` · **Bearer token required** · responds `409`
+`POST /orders/3c08a241-e1d6-4853-aac8-f64c20795aa5/cancel` · **Bearer token required** · responds `409`
 
 Show the Cancel button only when `status == "CONFIRMED"`.
 
@@ -1485,11 +1588,11 @@ Show the Cancel button only when `status == "CONFIRMED"`.
 
 ```json
 {
-  "timestamp": "2026-09-30T03:49:39.660037841Z",
+  "timestamp": "2026-09-30T07:11:31.919329501Z",
   "status": 409,
   "code": "ORDER_NOT_CANCELLABLE",
   "message": "An order in status CANCELLED cannot be cancelled",
-  "path": "/orders/6ad07f58-e3fc-4b7c-ae8a-141074e52fbb/cancel"
+  "path": "/orders/3c08a241-e1d6-4853-aac8-f64c20795aa5/cancel"
 }
 ```
 

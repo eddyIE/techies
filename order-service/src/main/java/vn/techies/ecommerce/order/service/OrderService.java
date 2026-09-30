@@ -20,10 +20,13 @@ import vn.techies.ecommerce.order.domain.OrderItem;
 import vn.techies.ecommerce.order.domain.OrderStatus;
 import vn.techies.ecommerce.order.domain.PaymentStatus;
 import vn.techies.ecommerce.order.domain.ShippingAddress;
+import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderLinePreview;
 import vn.techies.ecommerce.order.repository.OrderRepository;
+import vn.techies.ecommerce.order.repository.ProductReviewRepository;
 import vn.techies.ecommerce.order.service.payment.PaymentSimulator;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -36,6 +39,7 @@ public class OrderService {
     private final OrderRepository orders;
     private final InventoryClient inventoryClient;
     private final PaymentSimulator paymentSimulator;
+    private final ProductReviewRepository reviews;
 
     @Transactional(readOnly = true)
     public PageResponse<OrderSummary> list(UUID userId, OrderStatus status, int page, int size) {
@@ -43,9 +47,18 @@ public class OrderService {
         Page<Order> found = orders.findForUser(userId, status,
                 PageRequest.of(Math.max(page, 0), effectiveSize));
 
+        // One query for the whole page. Asking per order would be an N+1 on the list screen,
+        // which is the most-visited screen in the app.
+        List<UUID> itemIds = found.getContent().stream()
+                .flatMap(o -> o.getItems().stream().map(OrderItem::getId))
+                .toList();
+        Set<UUID> reviewed = itemIds.isEmpty() ? Set.of()
+                : Set.copyOf(reviews.reviewedItemIdsIn(itemIds));
+
         List<OrderSummary> content = found.getContent().stream()
                 .map(o -> new OrderSummary(o.getId(), o.getOrderRef(), o.getStatus(),
-                        o.getFailureCode(), o.getTotal(), o.getItems().size(), o.getCreatedAt()))
+                        o.getFailureCode(), o.getTotal(), o.getItems().size(),
+                        firstLine(o), isFullyReviewed(o, reviewed), o.getCreatedAt()))
                 .toList();
 
         return new PageResponse<>(content, found.getNumber(), found.getSize(),
@@ -54,7 +67,31 @@ public class OrderService {
 
     @Transactional(readOnly = true)
     public OrderResponse detail(UUID orderId, UUID userId) {
-        return toResponse(loadOwned(orderId, userId));
+        Order order = loadOwned(orderId, userId);
+        List<UUID> itemIds = order.getItems().stream().map(OrderItem::getId).toList();
+        Set<UUID> reviewed = itemIds.isEmpty() ? Set.of()
+                : Set.copyOf(reviews.reviewedItemIdsIn(itemIds));
+        return toResponse(order, reviewed);
+    }
+
+    /** The line an order row shows: a picture and a name, without fetching every order. */
+    private static OrderLinePreview firstLine(Order order) {
+        return order.getItems().stream().findFirst()
+                .map(i -> new OrderLinePreview(i.getProductId(), i.getProductName(),
+                        i.getThumbnailUrl(), i.getQuantity()))
+                .orElse(null);
+    }
+
+    /**
+     * Whether nothing is left to review. Only a settled order can be, so an unpaid or failed
+     * one reports false rather than "nothing outstanding", which would read as done.
+     */
+    private static boolean isFullyReviewed(Order order, Set<UUID> reviewedItemIds) {
+        if (order.getStatus() != OrderStatus.CONFIRMED && order.getStatus() != OrderStatus.COMPLETED) {
+            return false;
+        }
+        return !order.getItems().isEmpty() && order.getItems().stream()
+                .allMatch(i -> reviewedItemIds.contains(i.getId()));
     }
 
     /**
@@ -94,7 +131,8 @@ public class OrderService {
         order.cancel();
 
         log.info("Order {} cancelled by user {}", order.getOrderRef(), userId);
-        return toResponse(order);
+        // A cancelled order is not reviewable, so nothing is outstanding to report.
+        return toResponse(order, Set.of());
     }
 
     private Order loadOwned(UUID orderId, UUID userId) {
@@ -106,24 +144,26 @@ public class OrderService {
         return order;
     }
 
-    public static OrderResponse toResponse(Order order) {
+    /** @param reviewedItemIds the lines already reviewed; pass an empty set when unknown. */
+    public static OrderResponse toResponse(Order order, Set<UUID> reviewedItemIds) {
         ShippingAddress a = order.getShippingAddress();
         List<OrderItemResponse> items = order.getItems().stream()
-                .map(OrderService::toItemResponse)
+                .map(i -> toItemResponse(i, reviewedItemIds))
                 .toList();
 
         return new OrderResponse(order.getId(), order.getOrderRef(), order.getStatus(),
                 order.getFailureCode(), order.getSubtotal(), order.getShippingFee(),
-                order.getTotal(), order.getPaymentMethod(), order.getPaymentStatus(),
+                order.getTotal(), order.getCouponCode(), order.getDiscount(),
+                order.getPaymentMethod(), order.getPaymentStatus(),
                 order.getPaymentRef(),
                 new ShippingAddressResponse(a.getRecipientName(), a.getPhone(), a.getLine1(),
                         a.getWard(), a.getDistrict(), a.getProvince()),
                 items, order.getCreatedAt());
     }
 
-    private static OrderItemResponse toItemResponse(OrderItem item) {
-        return new OrderItemResponse(item.getProductId(), item.getProductName(),
+    private static OrderItemResponse toItemResponse(OrderItem item, Set<UUID> reviewedItemIds) {
+        return new OrderItemResponse(item.getId(), item.getProductId(), item.getProductName(),
                 item.getUnitPrice(), item.getQuantity(), item.getLineTotal(),
-                item.getThumbnailUrl());
+                item.getThumbnailUrl(), reviewedItemIds.contains(item.getId()));
     }
 }

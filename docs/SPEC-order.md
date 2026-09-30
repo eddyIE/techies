@@ -188,3 +188,47 @@ anyway (`NOTHING_TO_RESTORE`), so this is guarded on both sides.
 - [ ] Cancel a `FAILED` order → 409, and inventory stock is unchanged.
 - [ ] Cancel an already-`CANCELLED` order → 409.
 - [ ] A product's price changed after an order was placed → the order still shows the old price.
+
+## Product reviews
+
+Only a customer who bought the product may review it, and a review is keyed on the **order
+line**, not the product: buying the same thing twice earns two reviews. One-per-product was
+rejected because it leaves a repeat order permanently un-reviewable while the app shows it as
+"not reviewed yet" — the badge would lie.
+
+Reviews live here rather than in `catalog-service`, which is the less obvious choice. Both
+directions were considered:
+
+| | catalog-service | order-service |
+|---|---|---|
+| eligibility check | Feign call to order | local |
+| `reviewed` badge on the order list | **Feign call on every list** | local |
+| rating on the product payload | local | not available |
+
+The badge decided it. Catalog-owned reviews would force order-service to call catalog on the
+most-visited screen in the app just to render a flag — a dependency cycle on a read path. Here
+everything eligibility needs is already local and there are **no service-to-service calls at
+all**; the gateway routes `/api/products/{id}/reviews` to this service. The cost is that a
+product's rating is not part of the catalog payload, so the app fetches it separately.
+
+`author_name` is the order's own recipient name, snapshotted. A review keeps the name it was
+written under, and rendering one needs no call to identity-service.
+
+Reviews are immutable. With one per line there is nothing to edit — the next purchase is the
+next review.
+
+## Coupons
+
+Fixed amount off the subtotal, gated on an optional minimum order value, with an active flag
+and an expiry. No percentages, no stacking, no per-customer limits: one code per order.
+
+`total = subtotal + shippingFee - discount`
+
+The code and the amount are both snapshotted onto the order, for the same reason prices and
+names are — withdrawing or editing a coupon later must not change what a past order charged. A
+CHECK constraint keeps `discount` between zero and the subtotal, so no logic bug can write a
+negative total.
+
+An unusable coupon is rejected **before the order row is created**, alongside the other input
+problems: it is a mistake to correct on the checkout screen, not a failed order in someone's
+history.

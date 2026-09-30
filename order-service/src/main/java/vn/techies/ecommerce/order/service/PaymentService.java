@@ -111,13 +111,13 @@ public class PaymentService {
         sagaRecorder.record(order.getId(), "7-CONFIRM_ORDER", SagaStepStatus.SUCCESS, "confirmed");
 
         log.info("Order {} paid and confirmed (ref {})", order.getOrderRef(), transactionRef);
-        return new PaymentResultResponse(OrderService.toResponse(order), null);
+        return new PaymentResultResponse(OrderService.toResponse(order, java.util.Set.of()), null);
     }
 
     /** The payment did not happen: release the stock and hand the lines back to the cart. */
     private PaymentResultResponse declined(Order order, String reason) {
         CartService.RestoreSummary restored = release(order, reason, true);
-        return new PaymentResultResponse(OrderService.toResponse(order),
+        return new PaymentResultResponse(OrderService.toResponse(order, java.util.Set.of()),
                 new CartRestoreResponse(restored.linesReturned(), restored.unavailable()));
     }
 
@@ -152,7 +152,7 @@ public class PaymentService {
         if (agrees) {
             log.debug("Payment for {} reported again as {}, already {}", order.getOrderRef(),
                     reported, order.getStatus());
-            return new PaymentResultResponse(OrderService.toResponse(order), null);
+            return new PaymentResultResponse(OrderService.toResponse(order, java.util.Set.of()), null);
         }
 
         // The common real case: payment succeeded but the app only reported it after the

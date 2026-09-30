@@ -76,7 +76,7 @@ class PendingPaymentSweeperTest extends AbstractPostgresTest {
 
     private Order placeCardOrder() {
         cartService.add(userId, new AddCartItemRequest(PRODUCT, 1));
-        return saga.checkout(userId, new CheckoutRequest(UUID.randomUUID(), PaymentMethod.MOCK_CARD, null));
+        return saga.checkout(userId, new CheckoutRequest(UUID.randomUUID(), PaymentMethod.MOCK_CARD, null, null));
     }
 
     /** Backdates the order rather than waiting fifteen real minutes for the window to pass. */
@@ -114,7 +114,7 @@ class PendingPaymentSweeperTest extends AbstractPostgresTest {
     @DisplayName("a COD order is never swept: it is confirmed at checkout and owes nothing now")
     void ignoresCodOrders() {
         cartService.add(userId, new AddCartItemRequest(PRODUCT, 1));
-        Order cod = saga.checkout(userId, new CheckoutRequest(UUID.randomUUID(), PaymentMethod.COD, null));
+        Order cod = saga.checkout(userId, new CheckoutRequest(UUID.randomUUID(), PaymentMethod.COD, null, null));
         ageBy(cod, 30);
 
         sweeper.expireAbandonedPayments();

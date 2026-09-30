@@ -77,7 +77,7 @@ class PaymentServiceTest extends AbstractPostgresTest {
 
     private Order placeCardOrder() {
         cartService.add(userId, new AddCartItemRequest(PRODUCT, 1));
-        return saga.checkout(userId, new CheckoutRequest(UUID.randomUUID(), PaymentMethod.MOCK_CARD, null));
+        return saga.checkout(userId, new CheckoutRequest(UUID.randomUUID(), PaymentMethod.MOCK_CARD, null, null));
     }
 
     private PaymentResultResponse report(Order order, PaymentOutcome outcome, UUID caller) {
@@ -172,7 +172,7 @@ class PaymentServiceTest extends AbstractPostgresTest {
     @DisplayName("a COD order has nothing to pay now and is refused")
     void codIsNotPayable() {
         cartService.add(userId, new AddCartItemRequest(PRODUCT, 1));
-        Order cod = saga.checkout(userId, new CheckoutRequest(UUID.randomUUID(), PaymentMethod.COD, null));
+        Order cod = saga.checkout(userId, new CheckoutRequest(UUID.randomUUID(), PaymentMethod.COD, null, null));
 
         assertThatThrownBy(() -> report(cod, PaymentOutcome.SUCCESS, userId))
                 .isInstanceOf(ApiException.class)
@@ -244,7 +244,7 @@ class PaymentServiceTest extends AbstractPostgresTest {
         // line, so the Checkout button places a second order for the same goods.
         cartService.add(userId, new AddCartItemRequest(PRODUCT, 1));
         Order second = saga.checkout(userId,
-                new CheckoutRequest(UUID.randomUUID(), PaymentMethod.MOCK_CARD, null));
+                new CheckoutRequest(UUID.randomUUID(), PaymentMethod.MOCK_CARD, null, null));
 
         assertThat(second.getId()).isNotEqualTo(first.getId());
         assertThat(orderService.detail(first.getId(), userId).status())

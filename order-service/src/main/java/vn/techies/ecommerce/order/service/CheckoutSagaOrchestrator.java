@@ -10,11 +10,13 @@ import vn.techies.ecommerce.order.api.dto.OrderDtos.CheckoutRequest;
 import vn.techies.ecommerce.order.client.CatalogClient;
 import vn.techies.ecommerce.order.client.IdentityClient;
 import vn.techies.ecommerce.order.client.InventoryClient;
+import vn.techies.ecommerce.order.domain.Coupon;
 import vn.techies.ecommerce.order.domain.FailureCode;
 import vn.techies.ecommerce.order.domain.Order;
 import vn.techies.ecommerce.order.domain.PaymentMethod;
 import vn.techies.ecommerce.order.domain.SagaStepStatus;
 import vn.techies.ecommerce.order.domain.ShippingAddress;
+import vn.techies.ecommerce.order.repository.CouponRepository;
 import vn.techies.ecommerce.order.repository.OrderRefSequence;
 import vn.techies.ecommerce.order.repository.OrderRepository;
 
@@ -56,6 +58,7 @@ public class CheckoutSagaOrchestrator {
     private final SagaRecorder sagaRecorder;
     private final OrderRefSequence orderRefSequence;
     private final ShippingPolicy shippingPolicy;
+    private final CouponRepository coupons;
     private final OrderRepository orders;
     private final PaymentService paymentService;
     private final IdentityClient identityClient;
@@ -190,8 +193,12 @@ public class CheckoutSagaOrchestrator {
             subtotal = subtotal.add(price.multiply(BigDecimal.valueOf(line.quantity())));
         }
 
+        Coupon coupon = resolveCoupon(request.couponCode(), subtotal);
+        BigDecimal discount = coupon == null ? BigDecimal.ZERO : coupon.discountFor(subtotal);
+
         Order order = Order.pending(orderRefSequence.next(), userId, address,
-                request.paymentMethod(), subtotal, shippingPolicy.feeFor(subtotal));
+                request.paymentMethod(), subtotal, shippingPolicy.feeFor(subtotal),
+                coupon == null ? null : coupon.getCode(), discount);
 
         for (CartLine line : lines) {
             CatalogClient.ProductSnapshot product = products.get(line.productId());
@@ -206,6 +213,32 @@ public class CheckoutSagaOrchestrator {
         for (Order stale : orders.findAwaitingPaymentFor(userId)) {
             paymentService.releaseSuperseded(stale.getId(), "abandoned, replaced by " + replacedBy);
         }
+    }
+
+    /**
+     * Validates the coupon, or returns null when none was sent.
+     *
+     * <p>Rejected before any order row exists, like the other input problems: an unusable coupon
+     * is a mistake to correct on the checkout screen, not a failed order in someone's history.
+     */
+    private Coupon resolveCoupon(String code, BigDecimal subtotal) {
+        if (code == null || code.isBlank()) {
+            return null;
+        }
+        String normalised = code.strip().toUpperCase();
+        Coupon coupon = coupons.findById(normalised)
+                .orElseThrow(() -> new ApiException(ErrorCode.COUPON_NOT_FOUND,
+                        "Coupon '" + normalised + "' does not exist"));
+        if (!coupon.isUsable()) {
+            throw new ApiException(ErrorCode.COUPON_NOT_APPLICABLE,
+                    "Coupon '" + normalised + "' is no longer available");
+        }
+        if (!coupon.appliesTo(subtotal)) {
+            throw new ApiException(ErrorCode.COUPON_NOT_APPLICABLE,
+                    "Coupon '" + normalised + "' needs an order of at least "
+                            + coupon.getMinOrderTotal().toBigInteger() + " VND");
+        }
+        return coupon;
     }
 
     private Order failOrder(Order order, FailureCode code) {

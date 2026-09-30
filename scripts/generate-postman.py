@@ -365,10 +365,33 @@ def main():
                 item("Checkout — cash on delivery", request("POST", "/checkout", {
                     "addressId": "{{addressId}}", "paymentMethod": "COD"},
                     desc="COD is CONFIRMED straight away: there is nothing to settle before delivery, so it never waits for a payment call."), pre=ensure_cart()),
+                item("Checkout — with a coupon", request("POST", "/checkout", {
+                    "addressId": "{{addressId}}", "paymentMethod": "COD", "couponCode": "FREESHIP30K"},
+                    desc="Fixed amount off the subtotal. Code is case-insensitive and snapshotted onto the order. Seeded codes: TECHIES50K (min 500k), TECHIES500K (min 10tr), FREESHIP30K (no minimum)."),
+                    ex("checkout.coupon", "200 with a discount"), save_var("order.id", "orderId"),
+                    pre=ensure_cart()),
+                item("Checkout — coupon rejected", request("POST", "/checkout", {
+                    "addressId": "{{addressId}}", "paymentMethod": "COD", "couponCode": "EXPIRED100K"},
+                    desc="409 COUPON_NOT_APPLICABLE, raised before any order exists. PAUSED200K is deactivated; an unknown code is 404 COUPON_NOT_FOUND."),
+                    ex("checkout.coupon.rejected", "409 COUPON_NOT_APPLICABLE"), pre=ensure_cart()),
+            ]},
+            {"name": "7. Reviews", "item": [
+                item("Write reviews for an order", request("POST", "/orders/{{orderId}}/reviews",
+                    {"reviews": [{"orderItemId": "{{orderItemId}}", "rating": 5,
+                                  "comment": "Sản phẩm tốt, giao hàng nhanh."}]},
+                    desc="The post-checkout review page submits every line at once. Only a CONFIRMED or COMPLETED order is reviewable, and each line can be reviewed once — buying again earns another. Run 'Order detail' first to capture orderItemId."),
+                    ex("reviews.write", "200, lines now reviewed")),
+                item("Write reviews — already reviewed", request("POST", "/orders/{{orderId}}/reviews",
+                    {"reviews": [{"orderItemId": "{{orderItemId}}", "rating": 1, "comment": "lần hai"}]},
+                    desc="409 ALREADY_REVIEWED: one review per order line."),
+                    ex("reviews.duplicate", "409 ALREADY_REVIEWED")),
+                item("Product reviews", request("GET", "/products/{{productId}}/reviews?page=0&size=10",
+                    desc="Served by order-service via the gateway, not catalog: reviews live with the purchases that entitle them. averageRating is 0 when there are none, never null."),
+                    ex("reviews.product", "200 OK")),
             ]},
             {"name": "6. Orders", "item": [
                 item("My orders", request("GET", "/orders?page=0&size=20",
-                    desc="Newest first. Optional ?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED."),
+                    desc="Newest first. Each row carries firstItem (picture + name, no extra fetch) and reviewed. Optional ?status=AWAITING_PAYMENT|CONFIRMED|FAILED|CANCELLED."),
                     ex("orders.list", "200 OK"), [
                         "const body = pm.response.json();",
                         "// Pick a CONFIRMED order: only those are cancellable, and the newest",

@@ -127,6 +127,32 @@ if dead["content"]:
          {"addressId": address_id, "paymentMethod": "COD"}, token,
          note="HTTP 200, order.status = FAILED, failureCode = OUT_OF_STOCK")
 
+# --- coupons --------------------------------------------------------------
+call(None, "POST", "/cart/items", {"productId": product["id"], "quantity": 1}, token)
+_, couponed = call("checkout.coupon", "POST", "/checkout",
+                   {"addressId": address_id, "paymentMethod": "COD", "couponCode": "FREESHIP30K"}, token,
+                   note="discount comes off the subtotal; code and amount are snapshotted")
+call(None, "POST", "/cart/items", {"productId": product["id"], "quantity": 1}, token)
+call("checkout.coupon.rejected", "POST", "/checkout",
+     {"addressId": address_id, "paymentMethod": "COD", "couponCode": "EXPIRED100K"}, token,
+     note="409 before any order exists -- fix it on the checkout screen")
+
+# --- reviews --------------------------------------------------------------
+_order = (couponed or {}).get("order") or {}
+if _order.get("id"):
+    _, _detail = call(None, "GET", f"/orders/{_order['id']}", token=token)
+    _lines = _detail.get("items") or []
+    if _lines:
+        call("reviews.write", "POST", f"/orders/{_order['id']}/reviews",
+             {"reviews": [{"orderItemId": _lines[0]["id"], "rating": 5,
+                           "comment": "Sản phẩm tốt, giao hàng nhanh."}]}, token,
+             note="returns the order, so the app sees the updated reviewed flags")
+        call("reviews.duplicate", "POST", f"/orders/{_order['id']}/reviews",
+             {"reviews": [{"orderItemId": _lines[0]["id"], "rating": 1, "comment": "lần hai"}]}, token,
+             note="409 ALREADY_REVIEWED -- one review per order line")
+call("reviews.product", "GET", f"/products/{product['id']}/reviews?size=5",
+     note="served by order-service via the gateway, not catalog")
+
 # --- orders ---------------------------------------------------------------
 _, orders = call("orders.list", "GET", "/orders", token=token)
 confirmed = [o for o in orders["content"] if o["status"] == "CONFIRMED"]

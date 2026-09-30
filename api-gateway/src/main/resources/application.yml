@@ -27,6 +27,15 @@ spring:
               filters:
                 - StripPrefix=1
 
+            # Before the catalog route: reviews live with the purchases that entitle them,
+            # in order-service, so this one more specific path has to win. Gateway predicates
+            # are evaluated in declaration order.
+            - id: product-reviews
+              uri: lb://order-service
+              predicates:
+                - Path=/api/products/*/reviews
+              filters:
+                - StripPrefix=1
             - id: products
               uri: lb://catalog-service
               predicates:

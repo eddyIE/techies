@@ -1,5 +1,8 @@
 package vn.techies.ecommerce.order.api.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import vn.techies.ecommerce.order.domain.FailureCode;
@@ -29,7 +32,8 @@ public final class OrderDtos {
             @NotNull UUID addressId,
             @NotNull PaymentMethod paymentMethod,
             @Size(min = 1, message = "select at least one item, or omit the field for the whole cart")
-            List<UUID> cartItemIds) {
+            List<UUID> cartItemIds,
+            @Size(max = 32) String couponCode) {
     }
 
     /**
@@ -62,6 +66,29 @@ public final class OrderDtos {
     public record CartRestoreResponse(int linesReturned, List<String> unavailable) {
     }
 
+    /**
+     * What the post-checkout review page submits. Several lines at once, because that page
+     * lists every product in the order and submits them together.
+     */
+    public record WriteReviewsRequest(
+            @NotNull @Size(min = 1, max = 50) @Valid List<ReviewEntry> reviews) {
+    }
+
+    public record ReviewEntry(
+            @NotNull UUID orderItemId,
+            @NotNull @Min(1) @Max(5) Integer rating,
+            @Size(max = 1000) String comment) {
+    }
+
+    /** @param averageRating 0 when there are no reviews yet, never null. */
+    public record ProductReviewsResponse(double averageRating, long total,
+                                         List<ReviewResponse> content) {
+    }
+
+    public record ReviewResponse(UUID productId, String authorName, int rating, String comment,
+                                 Instant createdAt) {
+    }
+
     public record ShippingAddressResponse(String recipientName, String phone, String line1,
                                           String ward, String district, String province) {
     }
@@ -70,19 +97,37 @@ public final class OrderDtos {
      * @param thumbnailUrl the product image as it was at checkout, or null for orders placed
      *                     before this was recorded — render a placeholder in that case.
      */
-    public record OrderItemResponse(UUID productId, String productName, BigDecimal unitPrice,
-                                    int quantity, BigDecimal lineTotal, String thumbnailUrl) {
+    /**
+     * @param id       the order line's own id. The review endpoint keys on it, because a review
+     *                 belongs to a purchase rather than to a product.
+     * @param reviewed whether this line has already been reviewed.
+     */
+    public record OrderItemResponse(UUID id, UUID productId, String productName,
+                                    BigDecimal unitPrice, int quantity, BigDecimal lineTotal,
+                                    String thumbnailUrl, boolean reviewed) {
     }
 
     public record OrderResponse(UUID id, String orderRef, OrderStatus status, FailureCode failureCode,
                                 BigDecimal subtotal, BigDecimal shippingFee, BigDecimal total,
+                                String couponCode, BigDecimal discount,
                                 PaymentMethod paymentMethod, PaymentStatus paymentStatus,
                                 String paymentRef, ShippingAddressResponse shippingAddress,
                                 List<OrderItemResponse> items, Instant createdAt) {
     }
 
+    /**
+     * @param firstItem the first line, so an order row can show a picture and a name without
+     *                  the app fetching every order's detail just to render the list.
+     * @param reviewed  whether every line of this order has been reviewed. Only ever true for
+     *                  a CONFIRMED or COMPLETED order: nothing else is reviewable.
+     */
     public record OrderSummary(UUID id, String orderRef, OrderStatus status, FailureCode failureCode,
-                               BigDecimal total, int itemCount, Instant createdAt) {
+                               BigDecimal total, int itemCount, OrderLinePreview firstItem,
+                               boolean reviewed, Instant createdAt) {
+    }
+
+    public record OrderLinePreview(UUID productId, String productName, String thumbnailUrl,
+                                   int quantity) {
     }
 
     /**

@@ -48,6 +48,13 @@ public class Order {
     @Column(name = "shipping_fee", nullable = false, precision = 19, scale = 2)
     private BigDecimal shippingFee;
 
+    /** Snapshot: withdrawing or editing a coupon later must not change a past order. */
+    @Column(name = "coupon_code", length = 32)
+    private String couponCode;
+
+    @Column(nullable = false, precision = 19, scale = 2)
+    private BigDecimal discount;
+
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal total;
 
@@ -77,7 +84,7 @@ public class Order {
 
     public static Order pending(String orderRef, UUID userId, ShippingAddress address,
                                 PaymentMethod paymentMethod, BigDecimal subtotal,
-                                BigDecimal shippingFee) {
+                                BigDecimal shippingFee, String couponCode, BigDecimal discount) {
         Order order = new Order();
         order.id = UUID.randomUUID();
         order.orderRef = orderRef;
@@ -88,7 +95,9 @@ public class Order {
         order.paymentStatus = PaymentStatus.PENDING;
         order.subtotal = subtotal;
         order.shippingFee = shippingFee;
-        order.total = subtotal.add(shippingFee);
+        order.couponCode = couponCode;
+        order.discount = discount;
+        order.total = subtotal.add(shippingFee).subtract(discount);
         Instant now = Instant.now();
         order.createdAt = now;
         order.updatedAt = now;

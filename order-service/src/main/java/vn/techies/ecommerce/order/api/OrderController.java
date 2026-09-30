@@ -17,11 +17,14 @@ import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderSummary;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PageResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentConfirmationRequest;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentResultResponse;
+import vn.techies.ecommerce.order.api.dto.OrderDtos.ProductReviewsResponse;
+import vn.techies.ecommerce.order.api.dto.OrderDtos.WriteReviewsRequest;
 import vn.techies.ecommerce.order.domain.Order;
 import vn.techies.ecommerce.order.domain.OrderStatus;
 import vn.techies.ecommerce.order.service.CheckoutSagaOrchestrator;
 import vn.techies.ecommerce.order.service.OrderService;
 import vn.techies.ecommerce.order.service.PaymentService;
+import vn.techies.ecommerce.order.service.ReviewService;
 
 import java.util.UUID;
 
@@ -32,6 +35,7 @@ class OrderController {
     private final CheckoutSagaOrchestrator checkoutSaga;
     private final OrderService orderService;
     private final PaymentService paymentService;
+    private final ReviewService reviewService;
 
     /**
      * Returns 200 even when the order FAILED — the client reads {@code order.status} to decide
@@ -76,6 +80,30 @@ class OrderController {
     PaymentResultResponse confirmPayment(@CurrentUser UserPrincipal principal, @PathVariable UUID id,
                                          @Valid @RequestBody PaymentConfirmationRequest request) {
         return paymentService.confirmPayment(id, principal.userId(), request);
+    }
+
+    /**
+     * Submits the post-checkout review page. Several lines at once, because that page lists
+     * every product in the order and submits them together.
+     *
+     * <p>Returns the order, so the app immediately sees which lines are now reviewed and
+     * whether anything is still outstanding.
+     */
+    @PostMapping("/orders/{id}/reviews")
+    OrderResponse writeReviews(@CurrentUser UserPrincipal principal, @PathVariable UUID id,
+                               @Valid @RequestBody WriteReviewsRequest request) {
+        return reviewService.write(id, principal.userId(), request);
+    }
+
+    /**
+     * A product's reviews and its rating. Routed here rather than to catalog-service because
+     * the reviews live with the purchases that entitle them — see docs/SPEC-order.md.
+     */
+    @GetMapping("/products/{productId}/reviews")
+    ProductReviewsResponse productReviews(@PathVariable UUID productId,
+                                          @RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "10") int size) {
+        return reviewService.forProduct(productId, page, size);
     }
 
     @PostMapping("/orders/{id}/cancel")

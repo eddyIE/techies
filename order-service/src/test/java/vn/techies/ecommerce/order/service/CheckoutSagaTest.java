@@ -147,7 +147,7 @@ class CheckoutSagaTest extends AbstractPostgresTest {
         assertThat(order.getStatus()).isEqualTo(OrderStatus.AWAITING_PAYMENT);
         assertThat(order.getPaymentStatus()).isEqualTo(PaymentStatus.PENDING);
         assertThat(order.getFailureCode()).isNull();
-        assertThat(order.getOrderRef()).matches("ORD-\\d{8}-\\d{4}");
+        assertThat(order.getOrderRef()).matches("ORD-\\d{6,}");
 
         // 2 x 150000 + 1 x 250000 = 550000, which clears the 500000 free-shipping threshold.
         assertThat(order.getSubtotal()).isEqualByComparingTo("550000.00");

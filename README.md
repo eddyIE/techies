@@ -185,7 +185,7 @@ Two failure paths sit outside that handler and log themselves:
 Every line carries a correlation id and the caller:
 
 ```
-2026-09-22 14:24:59 WARN [order-service] [TRACE23f] [8a9118de-...] ... ORDER FAILED ORD-20260922-0001 -> PAYMENT_FAILED
+2026-09-22 14:24:59 WARN [order-service] [TRACE23f] [8a9118de-...] ... ORDER FAILED ORD-100042 -> PAYMENT_FAILED
                             ^service        ^request   ^user
 ```
 

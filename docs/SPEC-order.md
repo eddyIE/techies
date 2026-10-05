@@ -22,7 +22,7 @@ snapshotted only at checkout.
 | Column | Type | Notes |
 |---|---|---|
 | id | uuid PK | |
-| order_ref | varchar(20) | UNIQUE, human-readable e.g. `ORD-20260920-0001` |
+| order_ref | varchar(20) | UNIQUE, human-readable e.g. `ORD-100001` |
 | user_id | uuid | indexed |
 | status | varchar | see state machine |
 | failure_code | varchar | null unless FAILED |
@@ -163,7 +163,11 @@ anyway (`NOTHING_TO_RESTORE`), so this is guarded on both sides.
 
 ## Rules
 
-- `order_ref` format `ORD-yyyyMMdd-NNNN`, per-day sequence from a DB sequence.
+- `order_ref` format `ORD-NNNNNN` from one global `order_ref_seq`, starting at 100001. It was
+  numbered per day until V9, which restarted the counter every morning so a customer's order
+  list never read as an ascending list. Orders placed before V9 keep their old references:
+  `inventory.stock_movements` links to an order by this string, so rewriting them would break
+  the idempotency key that stops stock being restored twice.
 - Shipping fee: flat 30,000 VND, free at subtotal ≥ 500,000 VND. Hardcoded constant; no
   shipping service exists and inventing one is out of scope.
 - `total = subtotal + shipping_fee`. No tax, no discounts.

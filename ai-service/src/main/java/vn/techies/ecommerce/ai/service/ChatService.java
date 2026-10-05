@@ -126,7 +126,7 @@ public class ChatService {
 
         String resultJson;
         try {
-            resultJson = runSearch(pending.arguments, categories, listener);
+            resultJson = runSearch(pending.arguments, categories, pending);
         } catch (Exception ex) {
             log.warn("Product search failed mid-turn: {}", ex.toString());
             listener.onError("SERVICE_UNAVAILABLE", "Không thể tìm sản phẩm lúc này.");
@@ -135,6 +135,7 @@ public class ChatService {
 
         if (pending.interactionId == null || pending.interactionId.isBlank()) {
             // Without the interaction id the continuation cannot be chained.
+            flushProducts(pending, listener);
             listener.onError("SERVICE_UNAVAILABLE", "Trợ lý tạm thời không khả dụng.");
             return;
         }
@@ -144,8 +145,25 @@ public class ChatService {
                         resultJson, systemPrompt, tools),
                 event -> handleEvent(event, listener, pending, node -> { }));
 
+        // A reply that never produced a word still owes the app its cards.
+        flushProducts(pending, listener);
         if (!pending.errored) {
             listener.onDone("stop");
+        }
+    }
+
+    /**
+     * Sends the cards, at most once per turn.
+     *
+     * <p>They are held back until the reply has started arriving. Running the search finishes
+     * a whole Gemini call before the answer begins, so emitting them the moment they were
+     * fetched put the cards on screen while the bubble was still empty — the app looked like
+     * it had answered with products and no words.
+     */
+    private static void flushProducts(TurnState state, ChatListener listener) {
+        if (state.products != null) {
+            listener.onProducts(state.products);
+            state.products = null;
         }
     }
 
@@ -184,6 +202,8 @@ public class ChatService {
                     String text = delta.path("text").asText("");
                     if (!text.isEmpty()) {
                         listener.onToken(text);
+                        // After the token, so the reply visibly leads and the cards follow it.
+                        flushProducts(state, listener);
                     }
                 } else if ("arguments_delta".equals(deltaType)) {
                     // Tool arguments stream in fragments, exactly like reply text. step.start
@@ -203,6 +223,7 @@ public class ChatService {
                 String message = event.path("error").path("message").asText("");
                 log.warn("Gemini stream error: {}", message);
                 state.errored = true;
+                flushProducts(state, listener);
                 listener.onError(mapErrorCode(message), userFacingError(message));
             }
             default -> {
@@ -212,9 +233,9 @@ public class ChatService {
         }
     }
 
-    /** Runs the real catalogue search and emits the cards. */
+    /** Runs the real catalogue search and parks the cards for {@link #flushProducts}. */
     private String runSearch(String argumentsJson, List<CatalogClient.Category> categories,
-                             ChatListener listener) throws Exception {
+                             TurnState state) throws Exception {
         JsonNode args = json.readTree(argumentsJson.isBlank() ? "{}" : argumentsJson);
 
         String keyword = args.path("keyword").asText(null);
@@ -251,13 +272,16 @@ public class ChatService {
         }
 
         SearchQuery query = new SearchQuery(keyword, categoryId, minPrice, maxPrice, sort);
-        listener.onProducts(new ProductsEvent(page.totalElements(), query, cards));
+        // `total` is the number of cards sent, not page.totalElements(). The search routinely
+        // matches more than the popup shows, and a count above the cards on screen reads as
+        // missing products whether the reply says it or a "see all 23" button does. `query`
+        // is echoed instead, so that button can open the product list screen, which does its
+        // own paging and states its own total honestly.
+        state.products = new ProductsEvent(cards.size(), query, cards);
 
-        // The model is told only what is on screen, never the wider total. Given both, it
-        // announced "có 8 mẫu" above five cards, which reads as four missing products rather
-        // than a capped display. The true total still goes to the app in the products event,
-        // where it belongs: a "see all" link can state it without the reply contradicting
-        // what the customer is looking at.
+        // The model is told only what is on screen. Given a wider total it announced "có 8
+        // mẫu" above five cards, which reads as four missing products rather than a capped
+        // display.
         //
         // Stock is joined in here and nowhere else in the search path: catalog-service does not
         // carry it, so without this the assistant happily recommends something sold out — and
@@ -341,6 +365,7 @@ public class ChatService {
         private String callId;
         private String toolName;
         private String arguments = "";
+        private ProductsEvent products;
         private boolean toolRequested;
         private boolean errored;
     }

@@ -1,9 +1,17 @@
 event:tool_start
 data:{"tool":"search_products","message":"Đang tìm sản phẩm…"}
 
+event:token
+data:{"text":"Dạ, em đã tìm thấy 4 mẫu tai nghe dưới"}
+
 event:products
-data:{"total":2,"query":{"keyword":null,"categoryId":"3a8e7aee-9455-52a3-be9a-3790e375821a","minPrice":null,"maxPrice":3000000,"sort":"PRICE_ASC"},"products":[{"id":"08f2421a-f186-5270-be82-390e8f6376fe","name":"SoundPEATS Air4 Pro","price":1490000.00,"thumbnailUrl":"https://picsum.photos/seed/soundpeats-air4-pro/600"},{"id":"513f03f9-8a1c-5813-9feb-2cae892e82a9","name":"JBL Tune 770NC","price":2290000.00,"thumbnailUrl":"https://picsum.photos/seed/jbl-tune-770nc/600"}]}
+data:{"total":4,"query":{"keyword":null,"categoryId":"3a8e7aee-9455-52a3-be9a-3790e375821a","minPrice":null,"maxPrice":3000000,"sort":"NEWEST"},"products":[{"id":"3df158f5-a7c4-520e-a911-97cb76a06f6f","name":"Bluetooth True Wireless Philips TAT3020","price":620000.00,"thumbnailUrl":"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/a/tai-nghe-bluetooth-tws-philips-tat3020_1_.png"},{"id":"6fb6ec88-3126-51a1-ac6f-30d01009eac6","name":"Bluetooth True Wireless SoundPEATS Air 5 Pro+","price":2090000.00,"thumbnailUrl":"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/f/r/frame_314.png"},{"id":"513f03f9-8a1c-5813-9feb-2cae892e82a9","name":"JBL Tune 770NC","price":2290000.00,"thumbnailUrl":"https://placehold.co/600x600/7c2d12/ffffff/png?text=JBL+Tune+770NC"},{"id":"08f2421a-f186-5270-be82-390e8f6376fe","name":"SoundPEATS Air4 Pro","price":1490000.00,"thumbnailUrl":"https://placehold.co/600x600/7c2d12/ffffff/png?text=SoundPEATS+Air4+Pro"}]}
 
-event:error
-data:{"code":"SERVICE_UNAVAILABLE","message":"Trợ lý tạm thời không khả dụng. Vui lòng thử lại sau."}
+event:token
+data:{"text":" 3 triệu đang còn hàng và hiển thị ngay trên màn hình để anh/chị tham khảo ạ. Anh/ch"}
 
+event:token
+data:{"text":"ị có thể bấm vào từng mẫu để xem chi tiết hoặc nhắn em nếu cần hỗ trợ thêm nhé!"}
+
+event:done
+data:{"finishReason":"stop"}

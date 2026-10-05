@@ -45,8 +45,11 @@ public final class ChatDtos {
     }
 
     /**
-     * @param total   how many products actually matched, which may exceed what is shown.
-     * @param query   echoed back so the app can deep-link the product list screen.
+     * @param total    how many cards this event carries, never more. The search often matches
+     *                 more than the popup shows, but a number above the cards on screen reads
+     *                 as missing products, so the wider total is deliberately not sent.
+     * @param query    echoed back so the app can deep-link the product list screen, which
+     *                 pages properly and states the real total there.
      * @param products at most {@code techies.gemini.max-products} cards.
      */
     public record ProductsEvent(long total, SearchQuery query, List<ProductCard> products) {

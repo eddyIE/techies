@@ -32,7 +32,8 @@ import java.util.concurrent.Executors;
  * <ul>
  *   <li>{@code token} — a fragment of the reply, appended in order</li>
  *   <li>{@code tool_start} — the model paused to search; show a searching indicator</li>
- *   <li>{@code products} — product cards plus the true total and the query to deep-link</li>
+ *   <li>{@code products} — product cards and the query to deep-link. Always arrives after
+ *       the reply has started, so the bubble is never filled with cards and no words</li>
  *   <li>{@code done} — the turn finished</li>
  *   <li>{@code error} — a failure that happened after the stream opened</li>
  * </ul>

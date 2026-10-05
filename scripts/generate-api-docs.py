@@ -245,7 +245,7 @@ def main():
         |---|---|---|
         | `token` | `{"text": "..."}` | Append to the reply, in order |
         | `tool_start` | `{"tool": "...", "message": "Đang tìm sản phẩm…"}` | Show a searching indicator |
-        | `products` | `{"total", "query", "products": [...]}` | Render cards; link "see all" to the product list |
+        | `products` | `{"total", "query", "products": [...]}` | Render cards; link "see all" to the product list. Always arrives after the first `token` |
         | `done` | `{"finishReason": "stop"}` | Close the stream |
         | `error` | `{"code", "message"}` | Show the message inline |
 
@@ -256,19 +256,34 @@ def main():
         event: tool_start
         data: {"tool":"search_products","message":"Đang tìm sản phẩm…"}
 
+        event: token
+        data: {"text":"Dạ, em gợi ý vài mẫu phù hợp ạ: "}
+
         event: products
         data: {"total":2,"query":{"keyword":null,"categoryId":"...","maxPrice":3000000,"sort":"PRICE_ASC"},
                "products":[{"id":"...","name":"SoundPEATS Air4 Pro","price":1490000.00,"thumbnailUrl":"..."}]}
+
+        event: token
+        data: {"text":"Anh/chị cần em tư vấn thêm gì không ạ?"}
 
         event: done
         data: {"finishReason":"stop"}
         ```
 
-        ### Three things that will catch you out
+        ### Four things that will catch you out
 
-        **`products.total` can exceed the cards shown.** Only 3 are returned, to fit a phone
-        popup. Render the cards, then a "Xem tất cả {total} sản phẩm" button that opens the
-        product list screen with `query` applied — that screen already does paging and filters.
+        **`products.total` equals the number of cards, never more.** At most 5 are returned, to
+        fit a phone popup. The search usually matches more, but a count above the cards on
+        screen reads as missing products, so the wider total is not sent. For a "see all"
+        button, open the product list screen with `query` applied and let that screen state
+        its own total — it already does paging and filters.
+
+        **`products` always arrives after the first `token`.** Finding the products takes a
+        whole extra Gemini call that completes before the reply begins, so the cards used to
+        land while the bubble was still empty. They are now held until the reply has started,
+        which means the order is `tool_start` → `token` → `products` → more `token`s. Append
+        events as they come and the bubble reads correctly; do not wait for `done` to render
+        the cards.
 
         **Tapping a card should push a new screen, not replace the current one.** Replacing the
         PDP closes the popup and loses the conversation.

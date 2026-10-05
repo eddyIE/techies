@@ -15,6 +15,7 @@ import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderSummary;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PageResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.ShippingAddressResponse;
 import vn.techies.ecommerce.order.client.InventoryClient;
+import vn.techies.ecommerce.order.domain.FailureCode;
 import vn.techies.ecommerce.order.domain.Order;
 import vn.techies.ecommerce.order.domain.OrderItem;
 import vn.techies.ecommerce.order.domain.OrderStatus;
@@ -92,6 +93,36 @@ public class OrderService {
         }
         return !order.getItems().isEmpty() && order.getItems().stream()
                 .allMatch(i -> reviewedItemIds.contains(i.getId()));
+    }
+
+    /**
+     * Moves an order to a chosen status, for demonstrating the lifecycle.
+     *
+     * <p>Nothing else moves an order on from CONFIRMED — there is no management app and so no
+     * actor to do it, which is why COMPLETED was unreachable. This stands in for that actor.
+     *
+     * <p>It rewrites the order only. Stock is <strong>not</strong> adjusted, so sending
+     * CANCELLED here leaves the stock deducted; {@code POST /orders/{id}/cancel} is the real
+     * cancellation that returns it. Payment status follows the status, because an order shown
+     * as paid with an unpaid payment status reads as a bug on the app's screens.
+     */
+    @Transactional
+    public OrderResponse updateStatus(UUID orderId, UUID userId, OrderStatus target) {
+        Order order = loadOwned(orderId, userId);
+
+        switch (target) {
+            case PENDING -> throw new ApiException(ErrorCode.VALIDATION_ERROR,
+                    "PENDING is an internal state and cannot be set");
+            case AWAITING_PAYMENT -> order.awaitPayment();
+            case CONFIRMED -> order.confirm(null);
+            case COMPLETED -> order.complete();
+            case FAILED -> order.fail(FailureCode.PAYMENT_FAILED);
+            case CANCELLED -> order.cancel();
+        }
+
+        log.info("Order {} moved to {} by user {} via the demo endpoint",
+                order.getOrderRef(), target, userId);
+        return detail(orderId, userId);
     }
 
     /**

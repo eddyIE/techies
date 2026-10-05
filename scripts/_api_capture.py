@@ -159,6 +159,12 @@ confirmed = [o for o in orders["content"] if o["status"] == "CONFIRMED"]
 if confirmed:
     oid = confirmed[0]["id"]
     call("orders.detail", "GET", f"/orders/{oid}", token=token)
+    call("orders.status", "PUT", f"/orders/{oid}/status", {"status": "COMPLETED"}, token,
+         note="demo shortcut -- nothing else moves an order on from CONFIRMED")
+    call("orders.status.pending", "PUT", f"/orders/{oid}/status", {"status": "PENDING"}, token,
+         note="400 VALIDATION_ERROR -- PENDING is an internal saga state")
+    # Put it back before the cancel examples: a COMPLETED order is not cancellable.
+    call(None, "PUT", f"/orders/{oid}/status", {"status": "CONFIRMED"}, token)
     call("orders.cancel", "POST", f"/orders/{oid}/cancel", token=token)
     call("orders.cancel.again", "POST", f"/orders/{oid}/cancel", token=token,
          note="cancelling twice is refused")

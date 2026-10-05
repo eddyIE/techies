@@ -51,6 +51,16 @@ public final class OrderDtos {
     }
 
     /**
+     * Moves an order to a chosen status, for demonstrating the lifecycle without a management
+     * app. See {@code OrderService#updateStatus}.
+     *
+     * @param status the status to move to. PENDING is refused: it is an internal saga state
+     *               the app has no screen for.
+     */
+    public record OrderStatusUpdateRequest(@NotNull OrderStatus status) {
+    }
+
+    /**
      * @param cartRestore what went back into the cart, or null when nothing was restored
      *                    (a successful payment, or an outcome reported twice).
      */

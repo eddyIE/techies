@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import vn.techies.ecommerce.common.security.UserPrincipal;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.CheckoutRequest;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.CheckoutResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderResponse;
+import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderStatusUpdateRequest;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderSummary;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PageResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentConfirmationRequest;
@@ -104,6 +106,16 @@ class OrderController {
                                           @RequestParam(defaultValue = "0") int page,
                                           @RequestParam(defaultValue = "10") int size) {
         return reviewService.forProduct(productId, page, size);
+    }
+
+    /**
+     * Demo only: moves an order to any status so the lifecycle can be shown without a
+     * management app. Does not touch stock — see {@code OrderService#updateStatus}.
+     */
+    @PutMapping("/orders/{id}/status")
+    OrderResponse updateStatus(@CurrentUser UserPrincipal principal, @PathVariable UUID id,
+                               @Valid @RequestBody OrderStatusUpdateRequest request) {
+        return orderService.updateStatus(id, principal.userId(), request.status());
     }
 
     @PostMapping("/orders/{id}/cancel")

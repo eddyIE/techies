@@ -141,6 +141,15 @@ public class Order {
         touch();
     }
 
+    /**
+     * Fulfilled. Payment status is left alone: an order only reaches here from CONFIRMED,
+     * which is already PAID.
+     */
+    public void complete() {
+        this.status = OrderStatus.COMPLETED;
+        touch();
+    }
+
     public boolean isCancellable() {
         return status == OrderStatus.CONFIRMED;
     }

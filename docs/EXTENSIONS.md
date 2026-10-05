@@ -53,11 +53,11 @@ why it was cut.
 
 ## 5. Order fulfilment states
 
-**Not built.** Orders terminate at `CONFIRMED`, `FAILED` or `CANCELLED`. There is no
-`SHIPPED`/`DELIVERED`.
+**Not built.** There is no `SHIPPED`/`DELIVERED`, and no process that moves an order on by
+itself. `COMPLETED` exists but only `PUT /orders/{id}/status` sets it, by hand, for a demo.
 
-**Why.** With no admin site, nothing could ever drive those transitions. They would be
-unreachable states — dead code that looks like features.
+**Why.** With no admin site, nothing could ever drive those transitions on its own. They would
+be unreachable states — dead code that looks like features.
 
 ## 6. Real payment integration
 

@@ -56,12 +56,11 @@ PENDING ───┤ stock deducted + payment paid  ├──► CONFIRMED ─�
 
 `COMPLETED`, `FAILED` and `CANCELLED` are terminal.
 
-**`COMPLETED` is accepted but never set by the API.** With no management app there is no actor
-to move an order on from `CONFIRMED`, so the transition has no trigger. It exists so the
-lifecycle can be shown end to end in a demo, so filtering by it behaves, and so a row written
-directly — or by a future admin tool — is not rejected by the constraint. It is treated as
-terminal: cancelling a `COMPLETED` order returns 409, which matters because its stock was
-already deducted and must not be returned twice.
+**`COMPLETED` is only reachable through `PUT /orders/{id}/status`.** With no management app
+there is no actor to move an order on from `CONFIRMED`, so the transition has no business
+trigger; that endpoint stands in for the actor so the lifecycle can be shown end to end in a
+demo. It is still treated as terminal: cancelling a `COMPLETED` order returns 409, which
+matters because its stock was already deducted and must not be returned twice.
 
 There is still no `SHIPPED`/`DELIVERED`: those need a fulfilment process that does not exist
 here, and unreachable states that look like features are worse than absent ones.
@@ -91,6 +90,7 @@ grey out unavailable lines. If either service is down, it degrades: items return
 | GET | `/orders` | `?page=&size=&status=` | 200 paginated, newest first — row 21 |
 | GET | `/orders/{id}` | — | 200 with items + shipping snapshot — row 20; 403 if not owner |
 | POST | `/orders/{id}/cancel` | — | 200 — **gap #3**, required by screen ORDER-03 |
+| PUT | `/orders/{id}/status` | `{status}` | 200 — demo only, no screen. Rewrites the order and never touches stock; `PENDING` is refused |
 
 `POST /checkout` returns **200 with a FAILED order**, not a 4xx, when stock or payment fails.
 The mobile app needs the order id in both branches to drive the Payment Result screen and its

@@ -674,6 +674,26 @@ def main():
     w(endpoint(cap, "orders.detail", "Order detail", auth=True,
                description="Prices and the shipping address are snapshots taken at checkout — a later "
                            "catalog price change never alters a past order. Another user's order returns 403."))
+    w(endpoint(cap, "orders.status", "Update order status (demo)", auth=True,
+               description="Moves one of your own orders to any status, so the lifecycle can be "
+                           "shown without a management app. Nothing else sets `COMPLETED`: there "
+                           "is no fulfilment process and so no actor to move an order on from "
+                           "`CONFIRMED`.\n\n"
+                           "**This is a demo shortcut, not a workflow.** It rewrites the order "
+                           "only and never touches stock, so sending `CANCELLED` here leaves the "
+                           "stock deducted — a real cancellation is `POST /orders/{id}/cancel`. "
+                           "Payment status follows the new status, so an order moved to "
+                           "`CONFIRMED` reads as `PAID`.",
+               extra="| Value | Effect |\n|---|---|\n"
+                     "| `AWAITING_PAYMENT` | back to the payment screen, payment status `PENDING` |\n"
+                     "| `CONFIRMED` | paid, payment status `PAID` |\n"
+                     "| `COMPLETED` | fulfilled; payment status left as it is |\n"
+                     "| `FAILED` | failure code `PAYMENT_FAILED`, payment status `DECLINED` |\n"
+                     "| `CANCELLED` | payment status `REFUNDED` if it was `PAID` |\n"
+                     "| `PENDING` | **refused** — an internal saga state |"))
+    w(endpoint(cap, "orders.status.pending", "Update order status — PENDING refused", auth=True,
+               description="`PENDING` is an internal saga state the app has no screen for, so it "
+                           "is the one status this endpoint will not set."))
     w(endpoint(cap, "orders.cancel", "Cancel order", auth=True,
                description="Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunded."))
     w(endpoint(cap, "orders.cancel.again", "Cancel — not allowed", auth=True,
@@ -700,6 +720,7 @@ def main():
         | My Orders | ORDER-01 | `GET /orders` |
         | Order Detail | ORDER-02 | `GET /orders/{id}` |
         | Cancel Order | ORDER-03 | `POST /orders/{id}/cancel` |
+        | _(demo, no screen)_ | — | `PUT /orders/{id}/status` |
         | Profile | PROFILE-01 | `GET /users/me` |
         | Edit Profile | PROFILE-02 | `PUT /users/me` |
         | Change Password | PROFILE-03 | `PUT /users/me/password` |
@@ -711,9 +732,9 @@ def main():
         ## Not implemented
 
         Deliberately out of scope, so do not build UI expecting them: logout (delete the token
-        locally), token refresh, product reviews or ratings, wishlist, coupons or discounts,
-        multiple shipping options, and order tracking beyond
-        `CONFIRMED` / `FAILED` / `CANCELLED`.
+        locally), token refresh, wishlist, multiple shipping options, and fulfilment tracking
+        (there is no `SHIPPED` or `DELIVERED`, and `COMPLETED` is only reachable through the
+        demo status endpoint).
 
         Shipping is a flat **30,000 VND**, free at a subtotal of **500,000 VND** or more.
         """))

@@ -14,7 +14,10 @@ import java.util.Locale;
  * the world in two, which is the whole design: <em>store facts</em> and <em>manufacturer
  * facts</em>.
  *
- * <p>Price, stock, warranty, promotions and delivery are Techies' own and may only come from
+ * <p>The store the customer sees is <em>ElecGo</em>, the name of the Android app. Techies
+ * is the backend, and saying it to a customer would name a system they have never heard of.
+ *
+ * <p>Price, stock, warranty, promotions and delivery are the store's own and may only come from
  * the block above. The web may well state a 24-month warranty for a phone we sell with 12,
  * and a grounded answer that contradicts our own checkout is worse than no answer.
  *
@@ -22,7 +25,7 @@ import java.util.Locale;
  * wherever the product is sold. The seeded descriptions are a single line, so these questions
  * arrive constantly and used to be refused. Google Search now answers them, and the model is
  * told to say the figure is a manufacturer reference so a customer never reads it as a
- * Techies promise.
+ * ElecGo promise.
  */
 @Component
 public class SystemPromptBuilder {
@@ -67,7 +70,7 @@ public class SystemPromptBuilder {
         boolean canSearch = properties.webSearch();
 
         return """
-                Bạn là trợ lý bán hàng của Techies, một cửa hàng điện tử tại Việt Nam.
+                Bạn là trợ lý bán hàng của ElecGo, một cửa hàng điện tử tại Việt Nam.
                 Bạn đang hỗ trợ khách hàng đang xem một sản phẩm cụ thể.
 
                 THÔNG TIN SẢN PHẨM ĐANG XEM:
@@ -82,7 +85,7 @@ public class SystemPromptBuilder {
                    đổi trả và giao hàng: CHỈ được lấy từ phần THÔNG TIN SẢN PHẨM ở trên.
                    Nếu ở trên không có, hãy nói thẳng là bạn không có thông tin đó và mời
                    khách liên hệ cửa hàng. TUYỆT ĐỐI KHÔNG tra trên internet và KHÔNG suy
-                   đoán, vì đây là chính sách riêng của Techies.
+                   đoán, vì đây là chính sách riêng của ElecGo.
                 2. %s
                 3. %s
                 4. Luôn trả lời bằng tiếng Việt, thân thiện và ngắn gọn: tối đa 2-3 câu.
@@ -102,7 +105,7 @@ public class SystemPromptBuilder {
                    dáng hay chất âm.
                    Chỉ gợi ý những mẫu đang "còn hàng". Nếu khách hỏi một mẫu "hết hàng",
                    nói thẳng là đang hết hàng và gợi ý mẫu còn hàng thay thế.
-                7. Chỉ nói về sản phẩm và cửa hàng Techies. Nếu khách hỏi chuyện ngoài lề,
+                7. Chỉ nói về sản phẩm và cửa hàng ElecGo. Nếu khách hỏi chuyện ngoài lề,
                    từ chối lịch sự và hướng khách về sản phẩm.
                 8. XƯNG HÔ: luôn tự xưng là "em" và gọi khách là "anh/chị", từ câu đầu tiên
                    đến hết cuộc trò chuyện. TUYỆT ĐỐI KHÔNG đổi sang "mình", "tôi", "bạn"

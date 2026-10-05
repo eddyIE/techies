@@ -88,7 +88,7 @@ class SystemPromptBuilderTest {
         String prompt = builder.build(product(), 1);
 
         assertThat(prompt).contains("KHÔNG tra trên internet");
-        assertThat(prompt).contains("chính sách riêng của Techies");
+        assertThat(prompt).contains("chính sách riêng của ElecGo");
     }
 
     @Test

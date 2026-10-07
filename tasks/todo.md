@@ -220,7 +220,7 @@ Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `ord
     without `--clean`; service shows `UP` in Eureka.
   - Files: `pom.xml`, `loyalty-service/` (~5 files), `docker/postgres/init.sql`, `docker-compose.yml`
 
-- [ ] **F2. `V1__init.sql` — five tables and the seed catalogue**
+- [x] **F2. `V1__init.sql` — five tables and the seed catalogue**
   - Acceptance: `points_ledger` (signed `points`, `ck_points_sign`, UNIQUE `(entry_type,
     reference)`), `tiers` (3 rows: 10000/30000/60000 at 10/30/50%), `gifts`,
     `gift_redemptions` (UNIQUE `(user_id, gift_id)`, UNIQUE `code`), `tier_vouchers`

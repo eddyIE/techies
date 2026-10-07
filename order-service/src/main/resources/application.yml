@@ -41,6 +41,14 @@ spring.cloud.openfeign.client.config:
     connectTimeout: 2000
     readTimeout: 5000
     loggerLevel: basic
+  # A review summary is a Gemini round trip behind one more hop, and takes far longer than
+  # the other services answer in. At the default 5s every generation timed out and the
+  # product page served null for ever, because nothing was ever cached to go stale.
+  # Not retried: a retry would pay for the summary twice.
+  ai-service:
+    connectTimeout: 2000
+    readTimeout: 30000
+    loggerLevel: basic
 
 techies:
   shipping:

@@ -99,6 +99,14 @@ public final class OrderDtos {
                                  Instant createdAt) {
     }
 
+    /**
+     * The AI brief of a product's reviews. {@code reviewCount} is the count it was written
+     * from, so the app can show "based on N reviews" without a second call.
+     */
+    public record ReviewSummaryResponse(List<String> pros, List<String> cons, String verdict,
+                                        int reviewCount, Instant generatedAt) {
+    }
+
     public record ShippingAddressResponse(String recipientName, String phone, String line1,
                                           String ward, String district, String province) {
     }

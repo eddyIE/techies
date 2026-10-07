@@ -36,6 +36,19 @@ spring:
                 - Path=/api/products/*/reviews
               filters:
                 - StripPrefix=1
+
+            # Its own route purely for the timeout. The first read after a new review waits on
+            # a Gemini round trip, which the global 10s ceiling would cut every time; the
+            # review list beside it stays on the fast default.
+            - id: product-review-summary
+              uri: lb://order-service
+              predicates:
+                - Path=/api/products/*/review-summary
+              filters:
+                - StripPrefix=1
+              metadata:
+                response-timeout: 35000
+                connect-timeout: 3000
             - id: products
               uri: lb://catalog-service
               predicates:

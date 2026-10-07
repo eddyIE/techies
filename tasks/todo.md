@@ -291,7 +291,7 @@ Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `ord
   - Verify: the five acceptance criteria in SPEC-ai.md; no live API call in the unit tests.
   - Files: `ai-service/src/main/java/.../` (~4 files), test
 
-- [ ] **H2. Cache and endpoint in order-service**
+- [x] **H2. Cache and endpoint in order-service**
   - Acceptance: `V11__review_summaries.sql` creates `product_review_summaries` keyed on `product_id` with the `review_count` it was
     generated from; `GET /products/{productId}/review-summary` returns the summary or `null`
     below three reviews; a stale count regenerates; an `ai-service` failure serves the previous

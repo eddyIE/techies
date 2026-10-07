@@ -20,6 +20,7 @@ import vn.techies.ecommerce.order.api.dto.OrderDtos.PageResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentConfirmationRequest;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PaymentResultResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.ProductReviewsResponse;
+import vn.techies.ecommerce.order.api.dto.OrderDtos.ReviewSummaryResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.WriteReviewsRequest;
 import vn.techies.ecommerce.order.domain.Order;
 import vn.techies.ecommerce.order.domain.OrderStatus;
@@ -27,6 +28,7 @@ import vn.techies.ecommerce.order.service.CheckoutSagaOrchestrator;
 import vn.techies.ecommerce.order.service.OrderService;
 import vn.techies.ecommerce.order.service.PaymentService;
 import vn.techies.ecommerce.order.service.ReviewService;
+import vn.techies.ecommerce.order.service.ReviewSummaryService;
 
 import java.util.UUID;
 
@@ -38,6 +40,7 @@ class OrderController {
     private final OrderService orderService;
     private final PaymentService paymentService;
     private final ReviewService reviewService;
+    private final ReviewSummaryService reviewSummaryService;
 
     /**
      * Returns 200 even when the order FAILED — the client reads {@code order.status} to decide
@@ -106,6 +109,21 @@ class OrderController {
                                           @RequestParam(defaultValue = "0") int page,
                                           @RequestParam(defaultValue = "10") int size) {
         return reviewService.forProduct(productId, page, size);
+    }
+
+    /**
+     * The AI brief of this product's reviews, or 200 with a {@code null} body.
+     *
+     * <p>Its own endpoint, not part of the review list: folding it in would make the list wait
+     * on a Gemini round trip the first time anyone opened the product. The app renders the
+     * reviews immediately and fills this section when it arrives.
+     *
+     * <p>Never fails. {@code null} means either fewer than three reviews, or a summary that
+     * could not be written and was never cached.
+     */
+    @GetMapping("/products/{productId}/review-summary")
+    ReviewSummaryResponse reviewSummary(@PathVariable UUID productId) {
+        return reviewSummaryService.forProduct(productId);
     }
 
     /**

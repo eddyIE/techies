@@ -239,7 +239,7 @@ Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `ord
     including one order crossing tiers 1 and 2 together.
   - Files: `loyalty-service/src/main/java/.../loyalty/` (~6 files), test
 
-- [ ] **F4. Read endpoints: `/loyalty/me`, `/loyalty/gifts`, `/loyalty/vouchers`**
+- [x] **F4. Read endpoints: `/loyalty/me`, `/loyalty/gifts`, `/loyalty/vouchers`**
   - Acceptance: `me` returns `lifetimePoints`, `balance`, `tier` 0-3, `pointsToNextTier` and the
     `tiers` ladder; `gifts` returns per-user `eligible` and `alreadyClaimed`; tier is **never
     named**, only numbered.

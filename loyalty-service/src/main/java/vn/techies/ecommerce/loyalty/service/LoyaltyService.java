@@ -7,11 +7,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.AwardRequest;
 import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.AwardResponse;
+import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.GiftResponse;
+import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.MeResponse;
+import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.TierRung;
 import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.VoucherSummary;
 import vn.techies.ecommerce.loyalty.domain.EntryType;
+import vn.techies.ecommerce.loyalty.domain.Gift;
+import vn.techies.ecommerce.loyalty.domain.GiftRedemption;
 import vn.techies.ecommerce.loyalty.domain.PointsEntry;
 import vn.techies.ecommerce.loyalty.domain.Tier;
 import vn.techies.ecommerce.loyalty.domain.TierVoucher;
+import vn.techies.ecommerce.loyalty.repository.GiftRedemptionRepository;
+import vn.techies.ecommerce.loyalty.repository.GiftRepository;
 import vn.techies.ecommerce.loyalty.repository.PointsEntryRepository;
 import vn.techies.ecommerce.loyalty.repository.TierRepository;
 import vn.techies.ecommerce.loyalty.repository.TierVoucherRepository;
@@ -20,6 +27,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -34,6 +42,8 @@ public class LoyaltyService {
     private final PointsEntryRepository ledger;
     private final TierRepository tiers;
     private final TierVoucherRepository vouchers;
+    private final GiftRepository gifts;
+    private final GiftRedemptionRepository redemptions;
     private final CodeGenerator codes;
 
     /**
@@ -59,8 +69,47 @@ public class LoyaltyService {
             log.info("Order {} earned {} points for user {}", request.orderRef(), points, request.userId());
         }
 
-        int tier = tierFor(ledger.lifetimeOf(request.userId()));
-        return new AwardResponse(awarded, points, tier, issueMissingVouchers(request.userId(), tier));
+        List<Tier> ladder = tiers.findAllByOrderByTierAsc();
+        int tier = tierFor(ladder, ledger.lifetimeOf(request.userId()));
+        return new AwardResponse(awarded, points, tier,
+                issueMissingVouchers(request.userId(), ladder, tier));
+    }
+
+    /** Points, tier and the ladder behind it, for the loyalty screen. */
+    @Transactional(readOnly = true)
+    public MeResponse summaryFor(UUID userId) {
+        long lifetime = ledger.lifetimeOf(userId);
+        List<Tier> ladder = tiers.findAllByOrderByTierAsc();
+        Integer toNextTier = ladder.stream()
+                .filter(rung -> rung.getThresholdPoints() > lifetime)
+                .findFirst()
+                .map(rung -> (int) (rung.getThresholdPoints() - lifetime))
+                .orElse(null);
+
+        return new MeResponse(lifetime, ledger.balanceOf(userId), tierFor(ladder, lifetime),
+                toNextTier, ladder.stream().map(LoyaltyService::describe).toList());
+    }
+
+    /**
+     * The exchange catalogue, answered for this customer: {@code eligible} already accounts for
+     * tier, balance, stock and a previous claim, so the app does not re-implement the rules.
+     */
+    @Transactional(readOnly = true)
+    public List<GiftResponse> giftsFor(UUID userId) {
+        int tier = tierFor(tiers.findAllByOrderByTierAsc(), ledger.lifetimeOf(userId));
+        long balance = ledger.balanceOf(userId);
+        Set<UUID> claimed = redemptions.findGiftIdsByUserId(userId);
+
+        return gifts.findByActiveTrueOrderByPointsCostAsc().stream()
+                .map(gift -> describe(gift, tier, balance, claimed.contains(gift.getId())))
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<VoucherSummary> vouchersFor(UUID userId) {
+        return vouchers.findByUserIdOrderByTierAsc(userId).stream()
+                .map(LoyaltyService::summarise)
+                .toList();
     }
 
     /**
@@ -72,9 +121,9 @@ public class LoyaltyService {
     }
 
     /** The highest rung the lifetime total has reached, or 0 below the first one. */
-    private int tierFor(long lifetimePoints) {
+    private static int tierFor(List<Tier> ladder, long lifetimePoints) {
         int tier = 0;
-        for (Tier rung : tiers.findAllByOrderByTierAsc()) {
+        for (Tier rung : ladder) {
             if (lifetimePoints >= rung.getThresholdPoints()) {
                 tier = rung.getTier();
             }
@@ -90,9 +139,9 @@ public class LoyaltyService {
      * failed after its ledger row heals on the next one instead of silently owing a voucher.
      * The UNIQUE on {@code (user_id, tier)} is what makes repeating it safe.
      */
-    private List<VoucherSummary> issueMissingVouchers(UUID userId, int tier) {
+    private List<VoucherSummary> issueMissingVouchers(UUID userId, List<Tier> ladder, int tier) {
         List<VoucherSummary> issued = new ArrayList<>();
-        for (Tier rung : tiers.findAllByOrderByTierAsc()) {
+        for (Tier rung : ladder) {
             if (rung.getTier() > tier || vouchers.existsByUserIdAndTier(userId, rung.getTier())) {
                 continue;
             }
@@ -103,6 +152,21 @@ public class LoyaltyService {
                     rung.getTier(), voucher.getCode(), voucher.getDiscountPercent(), userId);
         }
         return issued;
+    }
+
+    private static GiftResponse describe(Gift gift, int tier, long balance, boolean alreadyClaimed) {
+        boolean eligible = !alreadyClaimed
+                && gift.isInStock()
+                && tier >= gift.getMinTier()
+                && balance >= gift.getPointsCost();
+
+        return new GiftResponse(gift.getId(), gift.getName(), gift.getDescription(),
+                gift.getImageUrl(), gift.getPointsCost(), gift.getMinTier(), gift.isInStock(),
+                eligible, alreadyClaimed);
+    }
+
+    private static TierRung describe(Tier rung) {
+        return new TierRung(rung.getTier(), rung.getThresholdPoints(), rung.getVoucherDiscountPercent());
     }
 
     static VoucherSummary summarise(TierVoucher voucher) {

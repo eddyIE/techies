@@ -56,8 +56,14 @@ public class PointsEntry {
         return new PointsEntry(userId, EntryType.ORDER_EARN, points, orderRef);
     }
 
-    /** Debit for a claimed gift, stored negative so the balance is a plain SUM. */
+    /**
+     * Debit for a claimed gift, stored negative so the balance is a plain SUM.
+     *
+     * <p>The redemption id goes in undashed: a UUID prints as 36 characters and
+     * {@code reference} is 32, which is exactly the hex without them.
+     */
     public static PointsEntry spend(UUID userId, int points, UUID redemptionId) {
-        return new PointsEntry(userId, EntryType.GIFT_SPEND, -points, redemptionId.toString());
+        return new PointsEntry(userId, EntryType.GIFT_SPEND, -points,
+                redemptionId.toString().replace("-", ""));
     }
 }

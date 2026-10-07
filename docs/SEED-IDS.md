@@ -14,6 +14,7 @@ attaches to a product that exists. **Do not edit either migration by hand.**
 | `tai-nghe` | Tai nghe | `3a8e7aee-9455-52a3-be9a-3790e375821a` |
 | `dong-ho-thong-minh` | Đồng hồ thông minh | `5e8b4230-0d61-5f2b-a468-5499e8e7331b` |
 | `phu-kien` | Phụ kiện | `cec6d4cc-9d78-55d8-aaf7-35d3bcf87a9f` |
+| `demo` | Demo | `4ef9d6be-fda4-514d-871f-3cb98fd5762b` |
 
 ## Products
 
@@ -127,3 +128,46 @@ they stay as literals. Everything below is `uuid5` under
 | `tai-nghe-khong-day-soundpeats-air-5-pro-plus` | Bluetooth True Wireless SoundPEATS Air 5 Pro+ | `tai-nghe` | 2,090,000 | 8 |
 | `apple-watch-ultra-2-2024-49mm-4g-vien-titan-day-alpine-size-l` | Apple Watch Ultra 2 2024 49mm 4G Viền Titan Dây Alpine Size L | Chính hãng VN/A | `dong-ho-thong-minh` | 16,990,000 | 9 |
 | `hub-usb-3-0-orico-twu3-4a-bk-3-in-1` | Hub USB 3.0 Orico TWU3-4A-BK 3 in 1 | `phu-kien` | 239,000 | 6 |
+
+## Demo products for the tier ladder
+
+Priced so a fresh account reaches each tier in one order, in this sequence. Catalog `V6`,
+inventory `V4`. They sit in the `demo` category, sorted last, so the app can keep them out of
+the real catalogue.
+
+| Slug | Name | Price (VND) | Lifetime after | Reaches | Seed stock |
+|---|---|---:|---:|---|---:|
+| `demo-tier-a` | Demo A - 10 triệu | 10,000,000 | 10,000 | tier 1 | 999 |
+| `demo-tier-b` | Demo B - 20 triệu | 20,000,000 | 30,000 | tier 2 | 999 |
+| `demo-tier-c` | Demo C - 30 triệu | 30,000,000 | 60,000 | tier 3 | 999 |
+
+| Slug | UUID |
+|---|---|
+| `demo-tier-a` | `9c57e463-c2ec-560b-b0ca-c84f6a7a56e7` |
+| `demo-tier-b` | `0c00e340-1aee-5a44-90a5-1b734973daad` |
+| `demo-tier-c` | `a55d0844-ed95-5ca5-b69b-374bcedf9e0e` |
+
+## Loyalty gifts
+
+Seeded by loyalty `V1`, in the `loyalty` schema. The catalogue spans the ladder so every
+branch of `claim` is reachable without editing data (SPEC-loyalty.md, Seed Data).
+
+| Name | Points | Min tier | Stock | Demonstrates |
+|---|---:|---:|---:|---|
+| Ốp lưng silicon | 500 | 0 | 50 | a claim from a standing start |
+| Cáp sạc USB-C 1m | 800 | 0 | 40 | a second tier 0 claim |
+| Tai nghe có dây | 2,000 | 1 | 25 | the tier 1 reward |
+| Củ sạc nhanh 25W | 5,000 | 2 | 15 | the tier 2 reward |
+| Tai nghe Bluetooth | 12,000 | 3 | 10 | the tier 3 reward, and `TIER_TOO_LOW` below it |
+| Pin sạc dự phòng 10.000mAh | 1,500 | 0 | 0 | `GIFT_OUT_OF_STOCK` |
+| Đồng hồ thông minh | 999,999 | 0 | 5 | `INSUFFICIENT_POINTS` at every tier |
+
+| Name | UUID |
+|---|---|
+| Ốp lưng silicon | `ce2eb2ca-a432-5d29-9755-1f4f1abf2a14` |
+| Cáp sạc USB-C 1m | `fa31e0b6-78d5-5739-a025-965512251dd0` |
+| Tai nghe có dây | `1d61e4c8-962b-55bd-b0c9-f6c1045571ab` |
+| Củ sạc nhanh 25W | `f0fb47a7-58e4-576e-9470-3b91dc212271` |
+| Tai nghe Bluetooth | `5a895aa7-839d-5f07-9729-7f3a68806ac1` |
+| Pin sạc dự phòng 10.000mAh | `e20b380a-f62c-56eb-9ba4-f7cbf404ee5c` |
+| Đồng hồ thông minh | `378bdc0f-8cea-57b3-a646-86b07ac39296` |

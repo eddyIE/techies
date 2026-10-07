@@ -89,13 +89,37 @@ spring:
               filters:
                 - StripPrefix=1
 
+            # Only the five customer-facing paths. /loyalty/points and the voucher
+            # consume and release endpoints are deliberately absent, so they 404 at the edge:
+            # a customer must never award themselves points, and releasing their own voucher
+            # mid-checkout would hand them the discount twice.
+            - id: loyalty-read
+              uri: lb://loyalty-service
+              predicates:
+                - Path=/api/loyalty/me,/api/loyalty/gifts,/api/loyalty/claimed-gifts,/api/loyalty/vouchers
+                - Method=GET
+              filters:
+                - StripPrefix=1
+
+            - id: loyalty-claim
+              uri: lb://loyalty-service
+              predicates:
+                - Path=/api/loyalty/gifts/{giftId}/claim
+                - Method=POST
+              filters:
+                - StripPrefix=1
+
             # Server-sent events. The global 10s response timeout would cut a streamed
             # reply mid-sentence, so this route gets its own, matched to the AI service's
             # own ceiling.
+            #
+            # /ai/chat by name, not /api/ai/**: /ai/review-summary is internal, and routing it
+            # would let a customer spend the day's Gemini quota by reloading a product page.
             - id: ai
               uri: lb://ai-service
               predicates:
-                - Path=/api/ai/**
+                - Path=/api/ai/chat
+                - Method=POST
               filters:
                 - StripPrefix=1
               metadata:

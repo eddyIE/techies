@@ -301,7 +301,7 @@ Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `ord
 
 ## I. Wiring, seed data and docs
 
-- [ ] **I1. Gateway route and demo products**
+- [x] **I1. Gateway route and demo products**
   - Acceptance: `/api/loyalty/**` routed to `loyalty-service` with JWT validation and
     `X-User-Id` injection; `/loyalty/points`, `/loyalty/vouchers/*/consume` and `*/release`
     **not** routed, and neither is `/ai/review-summary`; catalog seeds the three demo products

@@ -3,15 +3,15 @@
     "method": "POST",
     "path": "/auth/register",
     "request": {
-      "email": "fe-demo-848275@techies.vn",
+      "email": "fe-demo-60a443@techies.vn",
       "password": "password1",
       "fullName": "Nguyen Van A",
       "phone": "0901234567"
     },
     "status": 201,
     "response": {
-      "userId": "e009ee7d-c1d8-4d5d-9a18-e260d3fc1c17",
-      "email": "fe-demo-848275@techies.vn"
+      "userId": "30b27805-6376-478f-9e47-0004be7033f2",
+      "email": "fe-demo-60a443@techies.vn"
     },
     "note": null
   },
@@ -19,14 +19,14 @@
     "method": "POST",
     "path": "/auth/register",
     "request": {
-      "email": "fe-demo-848275@techies.vn",
+      "email": "fe-demo-60a443@techies.vn",
       "password": "password1",
       "fullName": "Nguyen Van A",
       "phone": "0901234567"
     },
     "status": 409,
     "response": {
-      "timestamp": "2026-09-29T08:25:19.536639385Z",
+      "timestamp": "2026-10-07T11:31:44.863735428Z",
       "status": 409,
       "code": "EMAIL_ALREADY_EXISTS",
       "message": "An account with this email already exists",
@@ -45,15 +45,15 @@
     },
     "status": 400,
     "response": {
-      "timestamp": "2026-09-29T08:25:19.545410844Z",
+      "timestamp": "2026-10-07T11:31:44.880318803Z",
       "status": 400,
       "code": "VALIDATION_ERROR",
       "message": "Request validation failed",
       "path": "/auth/register",
       "fieldErrors": {
-        "phone": "must be 9-11 digits",
+        "fullName": "must not be blank",
         "email": "must be a well-formed email address",
-        "fullName": "must not be blank"
+        "phone": "must be 9-11 digits"
       }
     },
     "note": null
@@ -62,17 +62,17 @@
     "method": "POST",
     "path": "/auth/login",
     "request": {
-      "email": "fe-demo-848275@techies.vn",
+      "email": "fe-demo-60a443@techies.vn",
       "password": "password1"
     },
     "status": 200,
     "response": {
-      "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlMDA5ZWU3ZC1jMWQ4LTRkNWQtOWExOC1lMjYwZDNmYzFjMTciLCJlbWFpbCI6ImZlLWRlbW8tODQ4Mjc1QHRlY2hpZXMudm4iLCJpYXQiOjE3OTA2NzAzMTksImV4cCI6MTc5MzI2MjMxOX0._-Y8QVHPI7-p6-lkJRstk38gYJ41HzyS1I9srqF_i53tV_fvxh0eMlouPb75YUEn",
+      "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIzMGIyNzgwNS02Mzc2LTQ3OGYtOWU0Ny0wMDA0YmU3MDMzZjIiLCJlbWFpbCI6ImZlLWRlbW8tNjBhNDQzQHRlY2hpZXMudm4iLCJpYXQiOjE3OTEzNzI3MDQsImV4cCI6MTc5Mzk2NDcwNH0.9TZHcD-P1FyV9IUceXoPCfu_jJu-rfl8Q_NHYbkVlvFlFtl1rtjO0atWWNaNnMGj",
       "tokenType": "Bearer",
       "expiresIn": 2592000,
       "user": {
-        "id": "e009ee7d-c1d8-4d5d-9a18-e260d3fc1c17",
-        "email": "fe-demo-848275@techies.vn",
+        "id": "30b27805-6376-478f-9e47-0004be7033f2",
+        "email": "fe-demo-60a443@techies.vn",
         "fullName": "Nguyen Van A",
         "phone": "0901234567",
         "avatarUrl": null
@@ -84,12 +84,12 @@
     "method": "POST",
     "path": "/auth/login",
     "request": {
-      "email": "fe-demo-848275@techies.vn",
+      "email": "fe-demo-60a443@techies.vn",
       "password": "wrongpassword1"
     },
     "status": 401,
     "response": {
-      "timestamp": "2026-09-29T08:25:19.714042635Z",
+      "timestamp": "2026-10-07T11:31:45.061077886Z",
       "status": 401,
       "code": "INVALID_CREDENTIALS",
       "message": "Email or password is incorrect",
@@ -101,11 +101,11 @@
     "method": "POST",
     "path": "/auth/check-email",
     "request": {
-      "email": "fe-demo-848275@techies.vn"
+      "email": "fe-demo-60a443@techies.vn"
     },
     "status": 200,
     "response": {
-      "email": "fe-demo-848275@techies.vn",
+      "email": "fe-demo-60a443@techies.vn",
       "exists": true
     },
     "note": null
@@ -129,8 +129,8 @@
     "request": null,
     "status": 200,
     "response": {
-      "id": "e009ee7d-c1d8-4d5d-9a18-e260d3fc1c17",
-      "email": "fe-demo-848275@techies.vn",
+      "id": "30b27805-6376-478f-9e47-0004be7033f2",
+      "email": "fe-demo-60a443@techies.vn",
       "fullName": "Nguyen Van A",
       "phone": "0901234567",
       "avatarUrl": null
@@ -146,8 +146,8 @@
     },
     "status": 200,
     "response": {
-      "id": "e009ee7d-c1d8-4d5d-9a18-e260d3fc1c17",
-      "email": "fe-demo-848275@techies.vn",
+      "id": "30b27805-6376-478f-9e47-0004be7033f2",
+      "email": "fe-demo-60a443@techies.vn",
       "fullName": "Nguyen Van B",
       "phone": "0909999999",
       "avatarUrl": null
@@ -160,7 +160,7 @@
     "request": null,
     "status": 401,
     "response": {
-      "timestamp": "2026-09-29T08:25:19.742258177Z",
+      "timestamp": "2026-10-07T11:31:45.109888803Z",
       "status": 401,
       "code": "UNAUTHENTICATED",
       "message": "Authentication required",
@@ -182,11 +182,11 @@
     "request": null,
     "status": 200,
     "response": {
-      "id": "e009ee7d-c1d8-4d5d-9a18-e260d3fc1c17",
-      "email": "fe-demo-848275@techies.vn",
+      "id": "30b27805-6376-478f-9e47-0004be7033f2",
+      "email": "fe-demo-60a443@techies.vn",
       "fullName": "Nguyen Van B",
       "phone": "0909999999",
-      "avatarUrl": "/users/e009ee7d-c1d8-4d5d-9a18-e260d3fc1c17/avatar"
+      "avatarUrl": "/users/30b27805-6376-478f-9e47-0004be7033f2/avatar"
     },
     "note": "avatarUrl is populated once an image exists"
   },
@@ -196,7 +196,7 @@
     "request": null,
     "status": 400,
     "response": {
-      "timestamp": "2026-09-29T08:25:19.763963844Z",
+      "timestamp": "2026-10-07T11:31:45.148392261Z",
       "status": 400,
       "code": "UNSUPPORTED_IMAGE_TYPE",
       "message": "Only PNG and JPEG images are accepted (received 'evil.png')",
@@ -210,7 +210,7 @@
     "request": null,
     "status": 400,
     "response": {
-      "timestamp": "2026-09-29T08:25:19.772842010Z",
+      "timestamp": "2026-10-07T11:31:45.160907886Z",
       "status": 400,
       "code": "UNSUPPORTED_IMAGE_TYPE",
       "message": "Only PNG and JPEG images are accepted (received 'me.gif')",
@@ -232,7 +232,7 @@
     },
     "status": 201,
     "response": {
-      "id": "c1558e29-63f2-43af-823f-a799456cc650",
+      "id": "b4792266-a631-4090-a431-d352a5ee02e2",
       "recipientName": "Nguyen Van B",
       "phone": "0907654321",
       "line1": "12 Nguyen Hue",
@@ -250,7 +250,7 @@
     "status": 200,
     "response": [
       {
-        "id": "c1558e29-63f2-43af-823f-a799456cc650",
+        "id": "b4792266-a631-4090-a431-d352a5ee02e2",
         "recipientName": "Nguyen Van B",
         "phone": "0907654321",
         "line1": "12 Nguyen Hue",
@@ -309,6 +309,48 @@
         "slug": "phu-kien",
         "imageUrl": "https://cdn.shopify.com/s/files/1/0493/9834/9974/products/A2663111-Anker_715_Charger_Nano_II_65W.png?v=1767756360",
         "displayOrder": 6
+      },
+      {
+        "id": "13df1ea8-f30d-553f-a03c-7af6c0e0d2f4",
+        "name": "Tivi",
+        "slug": "tivi",
+        "imageUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+        "displayOrder": 7
+      },
+      {
+        "id": "b300e933-d9b2-5527-8dae-ffd8abd6cd0f",
+        "name": "Máy tính để bàn",
+        "slug": "may-tinh-de-ban",
+        "imageUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/p/c/pc-cps-gaming-g1-amd-1253.png",
+        "displayOrder": 8
+      },
+      {
+        "id": "b3c7ffd4-af74-5471-8d98-eb1865f5241c",
+        "name": "Âm thanh",
+        "slug": "am-thanh",
+        "imageUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_146_3_.png",
+        "displayOrder": 9
+      },
+      {
+        "id": "b1f38776-76d4-548b-81fa-f7f5bcd586f4",
+        "name": "Tủ lạnh",
+        "slug": "tu-lanh",
+        "imageUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/_/t_l_nh_23_.png",
+        "displayOrder": 10
+      },
+      {
+        "id": "2ac73eb3-4007-5de9-a602-5390c65018f0",
+        "name": "Máy giặt",
+        "slug": "may-giat",
+        "imageUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/_/m_y_c_o_r_u_14_11_.png",
+        "displayOrder": 11
+      },
+      {
+        "id": "4ef9d6be-fda4-514d-871f-3cb98fd5762b",
+        "name": "Demo",
+        "slug": "demo",
+        "imageUrl": "https://picsum.photos/seed/demo/400",
+        "displayOrder": 99
       }
     ],
     "note": null
@@ -321,28 +363,28 @@
     "response": {
       "content": [
         {
-          "id": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-          "name": "MacBook Air M3 13 inch 8GB/256GB",
-          "slug": "macbook-air-m3-13",
-          "price": 27990000.0,
-          "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
-          "categoryId": "1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b",
-          "categoryName": "Laptop"
+          "id": "759d9034-b058-5375-aa35-cadf437332c3",
+          "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+          "slug": "smart-tivi-samsung-neo-qled-75qn80f-4k-75-inch-2025",
+          "price": 29990000.0,
+          "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+          "categoryId": "13df1ea8-f30d-553f-a03c-7af6c0e0d2f4",
+          "categoryName": "Tivi"
         },
         {
-          "id": "9dc2c272-0914-54de-b46b-62ca7e689523",
-          "name": "vivo V30e 5G",
-          "slug": "vivo-v30e",
-          "price": 8990000.0,
-          "thumbnailUrl": "https://placehold.co/600x600/1e293b/ffffff/png?text=vivo+V30e+5G",
-          "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
-          "categoryName": "Điện thoại"
+          "id": "f02ca688-a95d-5ebe-b6d4-04b5f911504f",
+          "name": "GIÁ TREO TIVI 32 -75 INCH (C3-FG)",
+          "slug": "gia-treo-tivi-north-bayou-c3-fg",
+          "price": 350000.0,
+          "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/i/gia-treo-tivi-north-bayou-c3-fg.png",
+          "categoryId": "13df1ea8-f30d-553f-a03c-7af6c0e0d2f4",
+          "categoryName": "Tivi"
         }
       ],
       "page": 0,
       "size": 2,
-      "totalElements": 40,
-      "totalPages": 20
+      "totalElements": 63,
+      "totalPages": 32
     },
     "note": null
   },
@@ -354,6 +396,15 @@
     "response": {
       "content": [
         {
+          "id": "07324815-82b1-580d-b763-45dbb73655a4",
+          "name": "iPhone 16 Pro Max 256GB",
+          "slug": "iphone-16-pro-max",
+          "price": 30990000.0,
+          "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-16-pro-max.png",
+          "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
+          "categoryName": "Điện thoại"
+        },
+        {
           "id": "1f8d1d18-6b82-542e-bcca-e7485fe03e0d",
           "name": "iPhone 15 Pro Max 256GB",
           "slug": "iphone-15-pro-max-256gb",
@@ -361,67 +412,99 @@
           "thumbnailUrl": "https://cdn.tgdd.vn/Products/Images/42/305658/iphone-15-pro-max-blue-thumbnew-600x600.jpg",
           "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
           "categoryName": "Điện thoại"
-        },
-        {
-          "id": "e0404394-59b0-5044-af93-6a93adc3af39",
-          "name": "iPhone 15 128GB",
-          "slug": "iphone-15-128gb",
-          "price": 22990000.0,
-          "thumbnailUrl": "https://cdn.tgdd.vn/Products/Images/42/281570/iphone-15-xanh-thumb-600x600.jpg",
-          "categoryId": "621a9347-0b52-58d5-ba30-9c524079231d",
-          "categoryName": "Điện thoại"
         }
       ],
       "page": 0,
       "size": 2,
-      "totalElements": 2,
-      "totalPages": 1
+      "totalElements": 3,
+      "totalPages": 2
     },
     "note": null
   },
   "catalog.detail": {
     "method": "GET",
-    "path": "/products/717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+    "path": "/products/759d9034-b058-5375-aa35-cadf437332c3",
     "request": null,
     "status": 200,
     "response": {
-      "id": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-      "name": "MacBook Air M3 13 inch 8GB/256GB",
-      "slug": "macbook-air-m3-13",
-      "description": "MacBook Air M3 13 inch 8GB/256GB - hàng chính hãng, bảo hành 12 tháng tại Techies.",
-      "price": 27990000.0,
-      "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
-      "categoryId": "1cf6c2ff-e4cd-50c1-bcb8-39c22a711b9b",
-      "categoryName": "Laptop",
+      "id": "759d9034-b058-5375-aa35-cadf437332c3",
+      "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+      "slug": "smart-tivi-samsung-neo-qled-75qn80f-4k-75-inch-2025",
+      "description": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F) - hàng chính hãng, bảo hành 12 tháng tại Techies.",
+      "price": 29990000.0,
+      "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+      "categoryId": "13df1ea8-f30d-553f-a03c-7af6c0e0d2f4",
+      "categoryName": "Tivi",
       "images": [
-        "https://placehold.co/800x800/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB+%281%2F2%29",
-        "https://placehold.co/800x800/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB+%282%2F2%29"
+        "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png"
+      ],
+      "specifications": [
+        {
+          "name": "Kích cỡ màn hình",
+          "value": "75 inch"
+        },
+        {
+          "name": "Công nghệ hình ảnh",
+          "value": "HDR 10+ / 4K AI Upscaling / Color Booster Pro / Chế độ Filmmaker / Chế độ EyeComfort / Neo Quantum HDR / Wide Viewing Angle / Real Depth Enhancer / Auto HDR Remastering / Supreme UHD Dimming / Motion Xcelerator 144Hz / Quantum Matrix Technology Core / Công nghệ Quantum Matrix Core"
+        },
+        {
+          "name": "Độ phân giải",
+          "value": "4K"
+        },
+        {
+          "name": "Loại màn hình",
+          "value": "QLED"
+        },
+        {
+          "name": "Tần số quét",
+          "value": "100Hz"
+        },
+        {
+          "name": "Loại tivi",
+          "value": "Tivi QLED, Smart tivi, Neo QLED"
+        },
+        {
+          "name": "Công nghệ âm thanh",
+          "value": "OTS Lite / Q-Symphony / Dolby Atmos / Adaptive Sound / Âm thanh 360° / Active Voice Amplifier Pro"
+        },
+        {
+          "name": "Hệ điều hành",
+          "value": "Tizen OS"
+        },
+        {
+          "name": "Tiện ích nổi bật",
+          "value": "Tìm kiếm giọng nói bằng tiếng Việt, Tích hợp trợ lí ảo Google Assistant, Chiếu hình ảnh từ điện thoại lên TV"
+        },
+        {
+          "name": "Thương hiệu",
+          "value": "Samsung"
+        }
       ]
     },
     "note": null
   },
   "catalog.detail.missing": {
     "method": "GET",
-    "path": "/products/82f55351-ab79-4c75-833f-f9191356f2be",
+    "path": "/products/239c38c2-5874-4166-850b-68bf1ee89616",
     "request": null,
     "status": 404,
     "response": {
-      "timestamp": "2026-09-29T08:25:19.895416510Z",
+      "timestamp": "2026-10-07T11:31:45.280512053Z",
       "status": 404,
       "code": "PRODUCT_NOT_FOUND",
       "message": "Product not found",
-      "path": "/products/82f55351-ab79-4c75-833f-f9191356f2be"
+      "path": "/products/239c38c2-5874-4166-850b-68bf1ee89616"
     },
     "note": null
   },
   "stock.get": {
     "method": "GET",
-    "path": "/stock/717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+    "path": "/stock/759d9034-b058-5375-aa35-cadf437332c3",
     "request": null,
     "status": 200,
     "response": {
-      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-      "available": 51,
+      "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+      "available": 36,
       "inStock": true
     },
     "note": null
@@ -442,31 +525,31 @@
     "method": "POST",
     "path": "/cart/items",
     "request": {
-      "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
+      "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "quantity": 2
     },
     "status": 201,
     "response": {
       "items": [
         {
-          "id": "f8360cbc-40d7-4326-8d5d-cf29d63ff04f",
-          "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-          "name": "MacBook Air M3 13 inch 8GB/256GB",
-          "unitPrice": 27990000.0,
+          "id": "5b300a6b-e0b0-4ab8-b4f2-b10558f66063",
+          "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+          "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+          "unitPrice": 29990000.0,
           "quantity": 2,
-          "lineTotal": 55980000.0,
-          "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
-          "available": 51
+          "lineTotal": 59980000.0,
+          "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+          "available": 36
         }
       ],
-      "subtotal": 55980000.0,
+      "subtotal": 59980000.0,
       "itemCount": 1
     },
     "note": null
   },
   "cart.update": {
     "method": "PUT",
-    "path": "/cart/items/f8360cbc-40d7-4326-8d5d-cf29d63ff04f",
+    "path": "/cart/items/5b300a6b-e0b0-4ab8-b4f2-b10558f66063",
     "request": {
       "quantity": 1
     },
@@ -474,17 +557,17 @@
     "response": {
       "items": [
         {
-          "id": "f8360cbc-40d7-4326-8d5d-cf29d63ff04f",
-          "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-          "name": "MacBook Air M3 13 inch 8GB/256GB",
-          "unitPrice": 27990000.0,
+          "id": "5b300a6b-e0b0-4ab8-b4f2-b10558f66063",
+          "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+          "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+          "unitPrice": 29990000.0,
           "quantity": 1,
-          "lineTotal": 27990000.0,
-          "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
-          "available": 51
+          "lineTotal": 29990000.0,
+          "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+          "available": 36
         }
       ],
-      "subtotal": 27990000.0,
+      "subtotal": 29990000.0,
       "itemCount": 1
     },
     "note": null
@@ -497,17 +580,17 @@
     "response": {
       "items": [
         {
-          "id": "f8360cbc-40d7-4326-8d5d-cf29d63ff04f",
-          "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-          "name": "MacBook Air M3 13 inch 8GB/256GB",
-          "unitPrice": 27990000.0,
+          "id": "5b300a6b-e0b0-4ab8-b4f2-b10558f66063",
+          "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+          "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+          "unitPrice": 29990000.0,
           "quantity": 1,
-          "lineTotal": 27990000.0,
-          "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB",
-          "available": 51
+          "lineTotal": 29990000.0,
+          "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+          "available": 36
         }
       ],
-      "subtotal": 27990000.0,
+      "subtotal": 29990000.0,
       "itemCount": 1
     },
     "note": null
@@ -516,19 +599,21 @@
     "method": "POST",
     "path": "/checkout",
     "request": {
-      "addressId": "c1558e29-63f2-43af-823f-a799456cc650",
+      "addressId": "b4792266-a631-4090-a431-d352a5ee02e2",
       "paymentMethod": "MOCK_CARD"
     },
     "status": 200,
     "response": {
       "order": {
-        "id": "d5ba9e58-8152-475c-8abd-c9059a8c6305",
-        "orderRef": "ORD-20260929-0019",
+        "id": "94648049-9618-49f0-b30c-7b318074a3a7",
+        "orderRef": "ORD-100053",
         "status": "AWAITING_PAYMENT",
         "failureCode": null,
-        "subtotal": 27990000.0,
+        "subtotal": 29990000.0,
         "shippingFee": 0.0,
-        "total": 27990000.0,
+        "total": 29990000.0,
+        "couponCode": null,
+        "discount": 0.0,
         "paymentMethod": "MOCK_CARD",
         "paymentStatus": "PENDING",
         "paymentRef": null,
@@ -542,15 +627,17 @@
         },
         "items": [
           {
-            "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-            "productName": "MacBook Air M3 13 inch 8GB/256GB",
-            "unitPrice": 27990000.0,
+            "id": "8ed7083a-078e-4a30-bf52-26434f6d21a4",
+            "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+            "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+            "unitPrice": 29990000.0,
             "quantity": 1,
-            "lineTotal": 27990000.0,
-            "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+            "lineTotal": 29990000.0,
+            "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+            "reviewed": false
           }
         ],
-        "createdAt": "2026-09-29T08:25:20.244746Z"
+        "createdAt": "2026-10-07T11:31:45.615994Z"
       },
       "message": "Order placed, complete the payment to confirm it"
     },
@@ -558,7 +645,7 @@
   },
   "payment.success": {
     "method": "POST",
-    "path": "/orders/d5ba9e58-8152-475c-8abd-c9059a8c6305/payment",
+    "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7/payment",
     "request": {
       "result": "SUCCESS",
       "transactionRef": "TXN-DEMO-0001"
@@ -566,13 +653,15 @@
     "status": 200,
     "response": {
       "order": {
-        "id": "d5ba9e58-8152-475c-8abd-c9059a8c6305",
-        "orderRef": "ORD-20260929-0019",
+        "id": "94648049-9618-49f0-b30c-7b318074a3a7",
+        "orderRef": "ORD-100053",
         "status": "CONFIRMED",
         "failureCode": null,
-        "subtotal": 27990000.0,
+        "subtotal": 29990000.0,
         "shippingFee": 0.0,
-        "total": 27990000.0,
+        "total": 29990000.0,
+        "couponCode": null,
+        "discount": 0.0,
         "paymentMethod": "MOCK_CARD",
         "paymentStatus": "PAID",
         "paymentRef": "TXN-DEMO-0001",
@@ -586,15 +675,17 @@
         },
         "items": [
           {
-            "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-            "productName": "MacBook Air M3 13 inch 8GB/256GB",
-            "unitPrice": 27990000.0,
+            "id": "8ed7083a-078e-4a30-bf52-26434f6d21a4",
+            "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+            "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+            "unitPrice": 29990000.0,
             "quantity": 1,
-            "lineTotal": 27990000.0,
-            "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+            "lineTotal": 29990000.0,
+            "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+            "reviewed": false
           }
         ],
-        "createdAt": "2026-09-29T08:25:20.244746Z"
+        "createdAt": "2026-10-07T11:31:45.615994Z"
       },
       "cartRestore": null
     },
@@ -604,19 +695,21 @@
     "method": "POST",
     "path": "/checkout",
     "request": {
-      "addressId": "c1558e29-63f2-43af-823f-a799456cc650",
+      "addressId": "b4792266-a631-4090-a431-d352a5ee02e2",
       "paymentMethod": "MOCK_CARD"
     },
     "status": 200,
     "response": {
       "order": {
-        "id": "c18176a6-2e7d-4fcc-a045-69b0ccaba3a1",
-        "orderRef": "ORD-20260929-0020",
+        "id": "f569d3a8-17ae-49c9-83fd-fb698695bfd6",
+        "orderRef": "ORD-100054",
         "status": "AWAITING_PAYMENT",
         "failureCode": null,
-        "subtotal": 27990000.0,
+        "subtotal": 29990000.0,
         "shippingFee": 0.0,
-        "total": 27990000.0,
+        "total": 29990000.0,
+        "couponCode": null,
+        "discount": 0.0,
         "paymentMethod": "MOCK_CARD",
         "paymentStatus": "PENDING",
         "paymentRef": null,
@@ -630,15 +723,17 @@
         },
         "items": [
           {
-            "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-            "productName": "MacBook Air M3 13 inch 8GB/256GB",
-            "unitPrice": 27990000.0,
+            "id": "ab9871af-5c0f-482e-bd1e-9b8b29957806",
+            "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+            "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+            "unitPrice": 29990000.0,
             "quantity": 1,
-            "lineTotal": 27990000.0,
-            "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+            "lineTotal": 29990000.0,
+            "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+            "reviewed": false
           }
         ],
-        "createdAt": "2026-09-29T08:25:20.432426Z"
+        "createdAt": "2026-10-07T11:31:45.789293Z"
       },
       "message": "Order placed, complete the payment to confirm it"
     },
@@ -646,7 +741,7 @@
   },
   "payment.failed": {
     "method": "POST",
-    "path": "/orders/c18176a6-2e7d-4fcc-a045-69b0ccaba3a1/payment",
+    "path": "/orders/f569d3a8-17ae-49c9-83fd-fb698695bfd6/payment",
     "request": {
       "result": "FAILED",
       "failureReason": "Card declined by issuer"
@@ -654,13 +749,15 @@
     "status": 200,
     "response": {
       "order": {
-        "id": "c18176a6-2e7d-4fcc-a045-69b0ccaba3a1",
-        "orderRef": "ORD-20260929-0020",
+        "id": "f569d3a8-17ae-49c9-83fd-fb698695bfd6",
+        "orderRef": "ORD-100054",
         "status": "FAILED",
         "failureCode": "PAYMENT_FAILED",
-        "subtotal": 27990000.0,
+        "subtotal": 29990000.0,
         "shippingFee": 0.0,
-        "total": 27990000.0,
+        "total": 29990000.0,
+        "couponCode": null,
+        "discount": 0.0,
         "paymentMethod": "MOCK_CARD",
         "paymentStatus": "DECLINED",
         "paymentRef": null,
@@ -674,15 +771,17 @@
         },
         "items": [
           {
-            "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-            "productName": "MacBook Air M3 13 inch 8GB/256GB",
-            "unitPrice": 27990000.0,
+            "id": "ab9871af-5c0f-482e-bd1e-9b8b29957806",
+            "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+            "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+            "unitPrice": 29990000.0,
             "quantity": 1,
-            "lineTotal": 27990000.0,
-            "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+            "lineTotal": 29990000.0,
+            "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+            "reviewed": false
           }
         ],
-        "createdAt": "2026-09-29T08:25:20.432426Z"
+        "createdAt": "2026-10-07T11:31:45.789293Z"
       },
       "cartRestore": {
         "linesReturned": 1,
@@ -695,19 +794,21 @@
     "method": "POST",
     "path": "/checkout",
     "request": {
-      "addressId": "c1558e29-63f2-43af-823f-a799456cc650",
+      "addressId": "b4792266-a631-4090-a431-d352a5ee02e2",
       "paymentMethod": "COD"
     },
     "status": 200,
     "response": {
       "order": {
-        "id": "53c2c085-aabf-4303-9fc5-132e99d66011",
-        "orderRef": "ORD-20260929-0021",
+        "id": "7c6d9870-e6d7-4487-b6f7-f88b1961c3fe",
+        "orderRef": "ORD-100055",
         "status": "FAILED",
         "failureCode": "OUT_OF_STOCK",
-        "subtotal": 41980000.0,
+        "subtotal": 43980000.0,
         "shippingFee": 0.0,
-        "total": 41980000.0,
+        "total": 43980000.0,
+        "couponCode": null,
+        "discount": 0.0,
         "paymentMethod": "COD",
         "paymentStatus": "PENDING",
         "paymentRef": null,
@@ -721,27 +822,179 @@
         },
         "items": [
           {
-            "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-            "productName": "MacBook Air M3 13 inch 8GB/256GB",
-            "unitPrice": 27990000.0,
+            "id": "916e2238-f0a0-4af1-be9a-4c9b38e1d7e5",
+            "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+            "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+            "unitPrice": 29990000.0,
             "quantity": 1,
-            "lineTotal": 27990000.0,
-            "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+            "lineTotal": 29990000.0,
+            "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+            "reviewed": false
           },
           {
+            "id": "e3373a6f-dfd2-4681-8949-09acbbaf4eed",
             "productId": "b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8",
             "productName": "MSI Modern 14 C13M",
             "unitPrice": 13990000.0,
             "quantity": 1,
             "lineTotal": 13990000.0,
-            "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M"
+            "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M",
+            "reviewed": false
           }
         ],
-        "createdAt": "2026-09-29T08:25:20.618184Z"
+        "createdAt": "2026-10-07T11:31:45.981105Z"
       },
       "message": "Some items are no longer in stock"
     },
     "note": "HTTP 200, order.status = FAILED, failureCode = OUT_OF_STOCK"
+  },
+  "checkout.coupon": {
+    "method": "POST",
+    "path": "/checkout",
+    "request": {
+      "addressId": "b4792266-a631-4090-a431-d352a5ee02e2",
+      "paymentMethod": "COD",
+      "couponCode": "FREESHIP30K"
+    },
+    "status": 200,
+    "response": {
+      "order": {
+        "id": "0d05890b-6880-4f57-a887-d89235480e37",
+        "orderRef": "ORD-100056",
+        "status": "FAILED",
+        "failureCode": "OUT_OF_STOCK",
+        "subtotal": 73970000.0,
+        "shippingFee": 0.0,
+        "total": 73940000.0,
+        "couponCode": "FREESHIP30K",
+        "discount": 30000.0,
+        "paymentMethod": "COD",
+        "paymentStatus": "PENDING",
+        "paymentRef": null,
+        "shippingAddress": {
+          "recipientName": "Nguyen Van B",
+          "phone": "0907654321",
+          "line1": "12 Nguyen Hue",
+          "ward": "Ben Nghe",
+          "district": "Quan 1",
+          "province": "Ho Chi Minh"
+        },
+        "items": [
+          {
+            "id": "952ba919-3201-4817-9af3-e018ac7a1700",
+            "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+            "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+            "unitPrice": 29990000.0,
+            "quantity": 2,
+            "lineTotal": 59980000.0,
+            "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+            "reviewed": false
+          },
+          {
+            "id": "732b8232-411d-4031-9245-2053d31358ac",
+            "productId": "b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8",
+            "productName": "MSI Modern 14 C13M",
+            "unitPrice": 13990000.0,
+            "quantity": 1,
+            "lineTotal": 13990000.0,
+            "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M",
+            "reviewed": false
+          }
+        ],
+        "createdAt": "2026-10-07T11:31:46.106271Z"
+      },
+      "message": "Some items are no longer in stock"
+    },
+    "note": "discount comes off the subtotal; code and amount are snapshotted"
+  },
+  "checkout.coupon.rejected": {
+    "method": "POST",
+    "path": "/checkout",
+    "request": {
+      "addressId": "b4792266-a631-4090-a431-d352a5ee02e2",
+      "paymentMethod": "COD",
+      "couponCode": "EXPIRED100K"
+    },
+    "status": 409,
+    "response": {
+      "timestamp": "2026-10-07T11:31:46.190177512Z",
+      "status": 409,
+      "code": "COUPON_NOT_APPLICABLE",
+      "message": "Coupon 'EXPIRED100K' is no longer available",
+      "path": "/checkout"
+    },
+    "note": "409 before any order exists -- fix it on the checkout screen"
+  },
+  "reviews.write": {
+    "method": "POST",
+    "path": "/orders/0d05890b-6880-4f57-a887-d89235480e37/reviews",
+    "request": {
+      "reviews": [
+        {
+          "orderItemId": "952ba919-3201-4817-9af3-e018ac7a1700",
+          "rating": 5,
+          "comment": "Sản phẩm tốt, giao hàng nhanh."
+        }
+      ]
+    },
+    "status": 409,
+    "response": {
+      "timestamp": "2026-10-07T11:31:46.211870137Z",
+      "status": 409,
+      "code": "ORDER_NOT_REVIEWABLE",
+      "message": "An order in status FAILED cannot be reviewed",
+      "path": "/orders/0d05890b-6880-4f57-a887-d89235480e37/reviews"
+    },
+    "note": "returns the order, so the app sees the updated reviewed flags"
+  },
+  "reviews.duplicate": {
+    "method": "POST",
+    "path": "/orders/0d05890b-6880-4f57-a887-d89235480e37/reviews",
+    "request": {
+      "reviews": [
+        {
+          "orderItemId": "952ba919-3201-4817-9af3-e018ac7a1700",
+          "rating": 1,
+          "comment": "lần hai"
+        }
+      ]
+    },
+    "status": 409,
+    "response": {
+      "timestamp": "2026-10-07T11:31:46.221457595Z",
+      "status": 409,
+      "code": "ORDER_NOT_REVIEWABLE",
+      "message": "An order in status FAILED cannot be reviewed",
+      "path": "/orders/0d05890b-6880-4f57-a887-d89235480e37/reviews"
+    },
+    "note": "409 ALREADY_REVIEWED -- one review per order line"
+  },
+  "reviews.product": {
+    "method": "GET",
+    "path": "/products/759d9034-b058-5375-aa35-cadf437332c3/reviews?size=5",
+    "request": null,
+    "status": 200,
+    "response": {
+      "averageRating": 5.0,
+      "total": 2,
+      "content": [
+        {
+          "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+          "authorName": "Lâm Quang Vinh",
+          "rating": 5,
+          "comment": "Màu rất đẹp, chơi game 120Hz mượt. Rất đáng giá.",
+          "createdAt": "2026-09-29T07:07:34.525012Z"
+        },
+        {
+          "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+          "authorName": "Trương Bảo Châu",
+          "rating": 5,
+          "comment": "Hình ảnh sắc nét, xem phim như ở rạp. Lắp đặt tận nhà nhanh.",
+          "createdAt": "2026-09-20T07:07:34.525012Z"
+        }
+      ]
+    },
+    "note": "served by order-service via the gateway, not catalog"
   },
   "orders.list": {
     "method": "GET",
@@ -751,53 +1004,92 @@
     "response": {
       "content": [
         {
-          "id": "53c2c085-aabf-4303-9fc5-132e99d66011",
-          "orderRef": "ORD-20260929-0021",
+          "id": "0d05890b-6880-4f57-a887-d89235480e37",
+          "orderRef": "ORD-100056",
           "status": "FAILED",
           "failureCode": "OUT_OF_STOCK",
-          "total": 41980000.0,
+          "total": 73940000.0,
           "itemCount": 2,
-          "createdAt": "2026-09-29T08:25:20.618184Z"
+          "firstItem": {
+            "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+            "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+            "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+            "quantity": 2
+          },
+          "reviewed": false,
+          "createdAt": "2026-10-07T11:31:46.106271Z"
         },
         {
-          "id": "c18176a6-2e7d-4fcc-a045-69b0ccaba3a1",
-          "orderRef": "ORD-20260929-0020",
+          "id": "7c6d9870-e6d7-4487-b6f7-f88b1961c3fe",
+          "orderRef": "ORD-100055",
+          "status": "FAILED",
+          "failureCode": "OUT_OF_STOCK",
+          "total": 43980000.0,
+          "itemCount": 2,
+          "firstItem": {
+            "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+            "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+            "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+            "quantity": 1
+          },
+          "reviewed": false,
+          "createdAt": "2026-10-07T11:31:45.981105Z"
+        },
+        {
+          "id": "f569d3a8-17ae-49c9-83fd-fb698695bfd6",
+          "orderRef": "ORD-100054",
           "status": "FAILED",
           "failureCode": "PAYMENT_FAILED",
-          "total": 27990000.0,
+          "total": 29990000.0,
           "itemCount": 1,
-          "createdAt": "2026-09-29T08:25:20.432426Z"
+          "firstItem": {
+            "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+            "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+            "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+            "quantity": 1
+          },
+          "reviewed": false,
+          "createdAt": "2026-10-07T11:31:45.789293Z"
         },
         {
-          "id": "d5ba9e58-8152-475c-8abd-c9059a8c6305",
-          "orderRef": "ORD-20260929-0019",
+          "id": "94648049-9618-49f0-b30c-7b318074a3a7",
+          "orderRef": "ORD-100053",
           "status": "CONFIRMED",
           "failureCode": null,
-          "total": 27990000.0,
+          "total": 29990000.0,
           "itemCount": 1,
-          "createdAt": "2026-09-29T08:25:20.244746Z"
+          "firstItem": {
+            "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+            "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+            "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+            "quantity": 1
+          },
+          "reviewed": false,
+          "createdAt": "2026-10-07T11:31:45.615994Z"
         }
       ],
       "page": 0,
       "size": 20,
-      "totalElements": 3,
+      "totalElements": 4,
       "totalPages": 1
     },
     "note": null
   },
   "orders.detail": {
     "method": "GET",
-    "path": "/orders/d5ba9e58-8152-475c-8abd-c9059a8c6305",
+    "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7",
     "request": null,
     "status": 200,
     "response": {
-      "id": "d5ba9e58-8152-475c-8abd-c9059a8c6305",
-      "orderRef": "ORD-20260929-0019",
+      "id": "94648049-9618-49f0-b30c-7b318074a3a7",
+      "orderRef": "ORD-100053",
       "status": "CONFIRMED",
       "failureCode": null,
-      "subtotal": 27990000.0,
+      "subtotal": 29990000.0,
       "shippingFee": 0.0,
-      "total": 27990000.0,
+      "total": 29990000.0,
+      "couponCode": null,
+      "discount": 0.0,
       "paymentMethod": "MOCK_CARD",
       "paymentStatus": "PAID",
       "paymentRef": "TXN-DEMO-0001",
@@ -811,31 +1103,95 @@
       },
       "items": [
         {
-          "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-          "productName": "MacBook Air M3 13 inch 8GB/256GB",
-          "unitPrice": 27990000.0,
+          "id": "8ed7083a-078e-4a30-bf52-26434f6d21a4",
+          "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+          "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+          "unitPrice": 29990000.0,
           "quantity": 1,
-          "lineTotal": 27990000.0,
-          "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+          "lineTotal": 29990000.0,
+          "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+          "reviewed": false
         }
       ],
-      "createdAt": "2026-09-29T08:25:20.244746Z"
+      "createdAt": "2026-10-07T11:31:45.615994Z"
     },
     "note": null
   },
+  "orders.status": {
+    "method": "PUT",
+    "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7/status",
+    "request": {
+      "status": "COMPLETED"
+    },
+    "status": 200,
+    "response": {
+      "id": "94648049-9618-49f0-b30c-7b318074a3a7",
+      "orderRef": "ORD-100053",
+      "status": "COMPLETED",
+      "failureCode": null,
+      "subtotal": 29990000.0,
+      "shippingFee": 0.0,
+      "total": 29990000.0,
+      "couponCode": null,
+      "discount": 0.0,
+      "paymentMethod": "MOCK_CARD",
+      "paymentStatus": "PAID",
+      "paymentRef": "TXN-DEMO-0001",
+      "shippingAddress": {
+        "recipientName": "Nguyen Van B",
+        "phone": "0907654321",
+        "line1": "12 Nguyen Hue",
+        "ward": "Ben Nghe",
+        "district": "Quan 1",
+        "province": "Ho Chi Minh"
+      },
+      "items": [
+        {
+          "id": "8ed7083a-078e-4a30-bf52-26434f6d21a4",
+          "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+          "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+          "unitPrice": 29990000.0,
+          "quantity": 1,
+          "lineTotal": 29990000.0,
+          "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+          "reviewed": false
+        }
+      ],
+      "createdAt": "2026-10-07T11:31:45.615994Z"
+    },
+    "note": "demo shortcut -- nothing else moves an order on from CONFIRMED"
+  },
+  "orders.status.pending": {
+    "method": "PUT",
+    "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7/status",
+    "request": {
+      "status": "PENDING"
+    },
+    "status": 400,
+    "response": {
+      "timestamp": "2026-10-07T11:31:46.346868220Z",
+      "status": 400,
+      "code": "VALIDATION_ERROR",
+      "message": "PENDING is an internal state and cannot be set",
+      "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7/status"
+    },
+    "note": "400 VALIDATION_ERROR -- PENDING is an internal saga state"
+  },
   "orders.cancel": {
     "method": "POST",
-    "path": "/orders/d5ba9e58-8152-475c-8abd-c9059a8c6305/cancel",
+    "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7/cancel",
     "request": null,
     "status": 200,
     "response": {
-      "id": "d5ba9e58-8152-475c-8abd-c9059a8c6305",
-      "orderRef": "ORD-20260929-0019",
+      "id": "94648049-9618-49f0-b30c-7b318074a3a7",
+      "orderRef": "ORD-100053",
       "status": "CANCELLED",
       "failureCode": null,
-      "subtotal": 27990000.0,
+      "subtotal": 29990000.0,
       "shippingFee": 0.0,
-      "total": 27990000.0,
+      "total": 29990000.0,
+      "couponCode": null,
+      "discount": 0.0,
       "paymentMethod": "MOCK_CARD",
       "paymentStatus": "REFUNDED",
       "paymentRef": "TXN-DEMO-0001",
@@ -849,30 +1205,345 @@
       },
       "items": [
         {
-          "productId": "717f7b5b-1ce7-5c1c-9e7d-3c5818effa1a",
-          "productName": "MacBook Air M3 13 inch 8GB/256GB",
-          "unitPrice": 27990000.0,
+          "id": "8ed7083a-078e-4a30-bf52-26434f6d21a4",
+          "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+          "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
+          "unitPrice": 29990000.0,
           "quantity": 1,
-          "lineTotal": 27990000.0,
-          "thumbnailUrl": "https://placehold.co/600x600/312e81/ffffff/png?text=MacBook+Air+M3+13+inch+8GB%2F256GB"
+          "lineTotal": 29990000.0,
+          "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
+          "reviewed": false
         }
       ],
-      "createdAt": "2026-09-29T08:25:20.244746Z"
+      "createdAt": "2026-10-07T11:31:45.615994Z"
     },
     "note": null
   },
   "orders.cancel.again": {
     "method": "POST",
-    "path": "/orders/d5ba9e58-8152-475c-8abd-c9059a8c6305/cancel",
+    "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7/cancel",
     "request": null,
     "status": 409,
     "response": {
-      "timestamp": "2026-09-29T08:25:20.872518178Z",
+      "timestamp": "2026-10-07T11:31:46.399349095Z",
       "status": 409,
       "code": "ORDER_NOT_CANCELLABLE",
       "message": "An order in status CANCELLED cannot be cancelled",
-      "path": "/orders/d5ba9e58-8152-475c-8abd-c9059a8c6305/cancel"
+      "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7/cancel"
     },
     "note": "cancelling twice is refused"
+  },
+  "reviews.summary": {
+    "method": "GET",
+    "path": "/products/513f03f9-8a1c-5813-9feb-2cae892e82a9/review-summary",
+    "request": null,
+    "status": 200,
+    "response": {
+      "pros": [
+        "Âm thanh tốt, bass mạnh",
+        "Có chống ồn trong tầm giá",
+        "Giao hàng nhanh"
+      ],
+      "cons": [
+        "Vỏ nhựa cảm giác hơi mỏng"
+      ],
+      "verdict": "Sản phẩm phù hợp với những ai tìm kiếm thiết bị có chống ồn và âm bass mạnh trong tầm giá hợp lý.",
+      "reviewCount": 3,
+      "generatedAt": "2026-10-07T11:29:28.503059Z"
+    },
+    "note": "written by ai-service, cached here on the review count it was written from"
+  },
+  "reviews.summary.none": {
+    "method": "GET",
+    "path": "/products/b6f87b01-d775-5c86-b8cf-4833bbdd452f/review-summary",
+    "request": null,
+    "status": 200,
+    "response": null,
+    "note": "200 with a null body -- under three reviews is a normal answer, not an error"
+  },
+  "loyalty.me.fresh": {
+    "method": "GET",
+    "path": "/loyalty/me",
+    "request": null,
+    "status": 200,
+    "response": {
+      "lifetimePoints": 0,
+      "balance": 0,
+      "tier": 0,
+      "pointsToNextTier": 10000,
+      "tiers": [
+        {
+          "tier": 1,
+          "thresholdPoints": 10000,
+          "discountPercent": 10
+        },
+        {
+          "tier": 2,
+          "thresholdPoints": 30000,
+          "discountPercent": 30
+        },
+        {
+          "tier": 3,
+          "thresholdPoints": 60000,
+          "discountPercent": 50
+        }
+      ]
+    },
+    "note": "tier 0 with the ladder attached -- the app never hardcodes a threshold or names a tier"
+  },
+  "loyalty.order.completed": {
+    "method": "PUT",
+    "path": "/orders/c17602f8-090b-4cfb-9fb5-d31120c502d7/status",
+    "request": {
+      "status": "COMPLETED"
+    },
+    "status": 200,
+    "response": {
+      "id": "c17602f8-090b-4cfb-9fb5-d31120c502d7",
+      "orderRef": "ORD-100058",
+      "status": "COMPLETED",
+      "failureCode": null,
+      "subtotal": 10000000.0,
+      "shippingFee": 0.0,
+      "total": 10000000.0,
+      "couponCode": null,
+      "discount": 0.0,
+      "paymentMethod": "COD",
+      "paymentStatus": "PAID",
+      "paymentRef": null,
+      "shippingAddress": {
+        "recipientName": "Tran Thi Loyal",
+        "phone": "0902222222",
+        "line1": "45 Nguyen Trai",
+        "ward": "Ben Thanh",
+        "district": "Quan 1",
+        "province": "Ho Chi Minh"
+      },
+      "items": [
+        {
+          "id": "15ce2ed2-8d34-42fe-a937-f9ba3d10827c",
+          "productId": "9c57e463-c2ec-560b-b0ca-c84f6a7a56e7",
+          "productName": "Demo A - 10 triệu",
+          "unitPrice": 10000000.0,
+          "quantity": 1,
+          "lineTotal": 10000000.0,
+          "thumbnailUrl": "https://picsum.photos/seed/demo-tier-a/600",
+          "reviewed": false
+        }
+      ],
+      "createdAt": "2026-10-07T11:31:47.193855Z"
+    },
+    "note": "the only thing that credits points -- nothing reaches COMPLETED on its own"
+  },
+  "loyalty.me.tier1": {
+    "method": "GET",
+    "path": "/loyalty/me",
+    "request": null,
+    "status": 200,
+    "response": {
+      "lifetimePoints": 10000,
+      "balance": 10000,
+      "tier": 1,
+      "pointsToNextTier": 20000,
+      "tiers": [
+        {
+          "tier": 1,
+          "thresholdPoints": 10000,
+          "discountPercent": 10
+        },
+        {
+          "tier": 2,
+          "thresholdPoints": 30000,
+          "discountPercent": 30
+        },
+        {
+          "tier": 3,
+          "thresholdPoints": 60000,
+          "discountPercent": 50
+        }
+      ]
+    },
+    "note": "10.000.000d of goods earned 10.000 points, which is tier 1"
+  },
+  "loyalty.vouchers": {
+    "method": "GET",
+    "path": "/loyalty/vouchers",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "code": "TIER1-METZMUG5",
+        "tier": 1,
+        "discountPercent": 10,
+        "issuedAt": "2026-10-07T11:31:47.293076Z",
+        "expiresAt": null,
+        "consumedAt": null
+      }
+    ],
+    "note": "submit the code as couponCode at checkout, like a coupon"
+  },
+  "loyalty.gifts": {
+    "method": "GET",
+    "path": "/loyalty/gifts",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "id": "ce2eb2ca-a432-5d29-9755-1f4f1abf2a14",
+        "name": "Ốp lưng silicon",
+        "description": "Ốp lưng silicon chống sốc, nhận tại cửa hàng ElecGo gần nhất.",
+        "imageUrl": "https://picsum.photos/seed/op-lung-silicon/400",
+        "pointsCost": 500,
+        "minTier": 0,
+        "inStock": true,
+        "eligible": true,
+        "alreadyClaimed": false
+      },
+      {
+        "id": "fa31e0b6-78d5-5739-a025-965512251dd0",
+        "name": "Cáp sạc USB-C 1m",
+        "description": "Cáp sạc USB-C dài 1m, hỗ trợ sạc nhanh 20W.",
+        "imageUrl": "https://picsum.photos/seed/cap-usb-c/400",
+        "pointsCost": 800,
+        "minTier": 0,
+        "inStock": true,
+        "eligible": true,
+        "alreadyClaimed": false
+      },
+      {
+        "id": "e20b380a-f62c-56eb-9ba4-f7cbf404ee5c",
+        "name": "Pin sạc dự phòng 10.000mAh",
+        "description": "Pin sạc dự phòng 10.000mAh, hai cổng ra. Tạm thời hết hàng.",
+        "imageUrl": "https://picsum.photos/seed/pin-du-phong/400",
+        "pointsCost": 1500,
+        "minTier": 0,
+        "inStock": false,
+        "eligible": false,
+        "alreadyClaimed": false
+      },
+      {
+        "id": "1d61e4c8-962b-55bd-b0c9-f6c1045571ab",
+        "name": "Tai nghe có dây",
+        "description": "Tai nghe nhét tai có dây kèm micro, jack 3.5mm.",
+        "imageUrl": "https://picsum.photos/seed/tai-nghe-day/400",
+        "pointsCost": 2000,
+        "minTier": 1,
+        "inStock": true,
+        "eligible": true,
+        "alreadyClaimed": false
+      },
+      {
+        "id": "f0fb47a7-58e4-576e-9470-3b91dc212271",
+        "name": "Củ sạc nhanh 25W",
+        "description": "Củ sạc nhanh 25W chuẩn PD, tương thích iPhone và Android.",
+        "imageUrl": "https://picsum.photos/seed/sac-nhanh-25w/400",
+        "pointsCost": 5000,
+        "minTier": 2,
+        "inStock": true,
+        "eligible": false,
+        "alreadyClaimed": false
+      },
+      {
+        "id": "5a895aa7-839d-5f07-9729-7f3a68806ac1",
+        "name": "Tai nghe Bluetooth",
+        "description": "Tai nghe không dây chống ồn chủ động, hộp sạc 24 giờ.",
+        "imageUrl": "https://picsum.photos/seed/tai-nghe-bluetooth/400",
+        "pointsCost": 12000,
+        "minTier": 3,
+        "inStock": true,
+        "eligible": false,
+        "alreadyClaimed": false
+      },
+      {
+        "id": "378bdc0f-8cea-57b3-a646-86b07ac39296",
+        "name": "Đồng hồ thông minh",
+        "description": "Đồng hồ thông minh đo nhịp tim và SpO2, pin 7 ngày.",
+        "imageUrl": "https://picsum.photos/seed/dong-ho-thong-minh/400",
+        "pointsCost": 999999,
+        "minTier": 0,
+        "inStock": true,
+        "eligible": false,
+        "alreadyClaimed": false
+      }
+    ],
+    "note": "eligible already accounts for tier, balance, stock and a previous claim"
+  },
+  "loyalty.claim": {
+    "method": "POST",
+    "path": "/loyalty/gifts/ce2eb2ca-a432-5d29-9755-1f4f1abf2a14/claim",
+    "request": null,
+    "status": 200,
+    "response": {
+      "redemptionId": "d43bfd3d-9f16-4599-9300-bb9c827a0385",
+      "code": "GIFT-TW42-6NGB",
+      "giftName": "Ốp lưng silicon",
+      "pointsSpent": 500,
+      "balanceAfter": 9500,
+      "claimedAt": "2026-10-07T11:31:47.397874179Z"
+    },
+    "note": "claiming is the whole transaction -- the code is collected in store, and nothing tracks that"
+  },
+  "loyalty.claim.again": {
+    "method": "POST",
+    "path": "/loyalty/gifts/ce2eb2ca-a432-5d29-9755-1f4f1abf2a14/claim",
+    "request": null,
+    "status": 409,
+    "response": {
+      "timestamp": "2026-10-07T11:31:47.422540887Z",
+      "status": 409,
+      "code": "GIFT_ALREADY_CLAIMED",
+      "message": "User 6604961e-b4ad-4a0f-a7cf-28612e877281 already claimed gift ce2eb2ca-a432-5d29-9755-1f4f1abf2a14",
+      "path": "/loyalty/gifts/ce2eb2ca-a432-5d29-9755-1f4f1abf2a14/claim"
+    },
+    "note": "409 GIFT_ALREADY_CLAIMED -- one per customer per gift, enforced by a UNIQUE"
+  },
+  "loyalty.claim.tierTooLow": {
+    "method": "POST",
+    "path": "/loyalty/gifts/5a895aa7-839d-5f07-9729-7f3a68806ac1/claim",
+    "request": null,
+    "status": 409,
+    "response": {
+      "timestamp": "2026-10-07T11:31:47.437467804Z",
+      "status": 409,
+      "code": "TIER_TOO_LOW",
+      "message": "Gift 5a895aa7-839d-5f07-9729-7f3a68806ac1 needs tier 3, customer is tier 1",
+      "path": "/loyalty/gifts/5a895aa7-839d-5f07-9729-7f3a68806ac1/claim"
+    },
+    "note": "409 TIER_TOO_LOW, nothing written"
+  },
+  "loyalty.claimedGifts": {
+    "method": "GET",
+    "path": "/loyalty/claimed-gifts",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "redemptionId": "d43bfd3d-9f16-4599-9300-bb9c827a0385",
+        "code": "GIFT-TW42-6NGB",
+        "giftName": "Ốp lưng silicon",
+        "imageUrl": "https://picsum.photos/seed/op-lung-silicon/400",
+        "pointsSpent": 500,
+        "claimedAt": "2026-10-07T11:31:47.397874Z"
+      }
+    ],
+    "note": "the code stays readable here indefinitely"
+  },
+  "loyalty.points.notRouted": {
+    "method": "POST",
+    "path": "/loyalty/points",
+    "request": {
+      "orderRef": "ORD-100001",
+      "userId": "7c454e64-5a8c-4dde-8931-6e6e5ce4f0d4",
+      "amountSpent": 99000000
+    },
+    "status": 404,
+    "response": {
+      "timestamp": "2026-10-07T11:31:47.471+00:00",
+      "path": "/api/loyalty/points",
+      "status": 404,
+      "error": "Not Found",
+      "requestId": "c46c5463-223"
+    },
+    "note": "404 -- internal only, so nobody can award themselves points"
   }
 }

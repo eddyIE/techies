@@ -335,7 +335,7 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "email": "fe-demo-534273@techies.vn",
+  "email": "fe-demo-6fe1ab@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -346,8 +346,8 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "userId": "e88d6438-22cc-4c41-a082-5862d4734df6",
-  "email": "fe-demo-534273@techies.vn"
+  "userId": "7d9ae26e-256b-42c6-8f66-20ba449bea44",
+  "email": "fe-demo-6fe1ab@techies.vn"
 }
 ```
 
@@ -362,7 +362,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "email": "fe-demo-534273@techies.vn",
+  "email": "fe-demo-6fe1ab@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -373,7 +373,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "timestamp": "2026-10-07T11:29:57.624002961Z",
+  "timestamp": "2026-10-07T11:32:38.052536216Z",
   "status": 409,
   "code": "EMAIL_ALREADY_EXISTS",
   "message": "An account with this email already exists",
@@ -403,15 +403,15 @@ Shows the `fieldErrors` map you bind to form fields.
 
 ```json
 {
-  "timestamp": "2026-10-07T11:29:57.638438169Z",
+  "timestamp": "2026-10-07T11:32:38.065213299Z",
   "status": 400,
   "code": "VALIDATION_ERROR",
   "message": "Request validation failed",
   "path": "/auth/register",
   "fieldErrors": {
+    "fullName": "must not be blank",
     "email": "must be a well-formed email address",
-    "phone": "must be 9-11 digits",
-    "fullName": "must not be blank"
+    "phone": "must be 9-11 digits"
   }
 }
 ```
@@ -429,7 +429,7 @@ Returns the token plus the user, so Login need not call `/users/me` after.
 
 ```json
 {
-  "email": "fe-demo-534273@techies.vn",
+  "email": "fe-demo-6fe1ab@techies.vn",
   "password": "password1"
 }
 ```
@@ -442,8 +442,8 @@ Returns the token plus the user, so Login need not call `/users/me` after.
   "tokenType": "Bearer",
   "expiresIn": 2592000,
   "user": {
-    "id": "e88d6438-22cc-4c41-a082-5862d4734df6",
-    "email": "fe-demo-534273@techies.vn",
+    "id": "7d9ae26e-256b-42c6-8f66-20ba449bea44",
+    "email": "fe-demo-6fe1ab@techies.vn",
     "fullName": "Nguyen Van A",
     "phone": "0901234567",
     "avatarUrl": null
@@ -462,7 +462,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "email": "fe-demo-534273@techies.vn",
+  "email": "fe-demo-6fe1ab@techies.vn",
   "password": "wrongpassword1"
 }
 ```
@@ -471,7 +471,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "timestamp": "2026-10-07T11:29:58.035384420Z",
+  "timestamp": "2026-10-07T11:32:38.246831341Z",
   "status": 401,
   "code": "INVALID_CREDENTIALS",
   "message": "Email or password is incorrect",
@@ -490,7 +490,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-534273@techies.vn"
+  "email": "fe-demo-6fe1ab@techies.vn"
 }
 ```
 
@@ -498,7 +498,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-534273@techies.vn",
+  "email": "fe-demo-6fe1ab@techies.vn",
   "exists": true
 }
 ```
@@ -557,8 +557,8 @@ For the Profile screen.
 
 ```json
 {
-  "id": "e88d6438-22cc-4c41-a082-5862d4734df6",
-  "email": "fe-demo-534273@techies.vn",
+  "id": "7d9ae26e-256b-42c6-8f66-20ba449bea44",
+  "email": "fe-demo-6fe1ab@techies.vn",
   "fullName": "Nguyen Van A",
   "phone": "0901234567",
   "avatarUrl": null
@@ -585,8 +585,8 @@ Name and phone only. Email cannot change — it is the login identifier.
 
 ```json
 {
-  "id": "e88d6438-22cc-4c41-a082-5862d4734df6",
-  "email": "fe-demo-534273@techies.vn",
+  "id": "7d9ae26e-256b-42c6-8f66-20ba449bea44",
+  "email": "fe-demo-6fe1ab@techies.vn",
   "fullName": "Nguyen Van B",
   "phone": "0909999999",
   "avatarUrl": null
@@ -604,7 +604,7 @@ What the app gets when the token is missing or expired.
 
 ```json
 {
-  "timestamp": "2026-10-07T11:29:58.323060336Z",
+  "timestamp": "2026-10-07T11:32:38.285359008Z",
   "status": 401,
   "code": "UNAUTHENTICATED",
   "message": "Authentication required",
@@ -649,7 +649,7 @@ The user's first address becomes the default automatically, so Checkout always h
 
 ```json
 {
-  "id": "b3dab7e8-3497-4017-bbb0-96390c519796",
+  "id": "5db730f4-4247-4b0f-990a-1ba8a63c26c6",
   "recipientName": "Nguyen Van B",
   "phone": "0907654321",
   "line1": "12 Nguyen Hue",
@@ -672,7 +672,7 @@ Default first, then newest. Use the first entry to preselect at Checkout.
 ```json
 [
   {
-    "id": "b3dab7e8-3497-4017-bbb0-96390c519796",
+    "id": "5db730f4-4247-4b0f-990a-1ba8a63c26c6",
     "recipientName": "Nguyen Van B",
     "phone": "0907654321",
     "line1": "12 Nguyen Hue",
@@ -882,7 +882,7 @@ Includes the description and image gallery.
 
 ### Product detail — gone
 
-`GET /products/d3edadc5-ddfb-46dd-8120-29c229d8bd7a` · **Public — no token** · responds `404`
+`GET /products/3dc36d0a-5205-41c7-97f2-8153ff345a53` · **Public — no token** · responds `404`
 
 Unknown or delisted products return 404.
 
@@ -890,11 +890,11 @@ Unknown or delisted products return 404.
 
 ```json
 {
-  "timestamp": "2026-10-07T11:29:58.645312712Z",
+  "timestamp": "2026-10-07T11:32:38.408327633Z",
   "status": 404,
   "code": "PRODUCT_NOT_FOUND",
   "message": "Product not found",
-  "path": "/products/d3edadc5-ddfb-46dd-8120-29c229d8bd7a"
+  "path": "/products/3dc36d0a-5205-41c7-97f2-8153ff345a53"
 }
 ```
 
@@ -960,7 +960,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "52153074-d12d-4060-b632-5c062951dd0d",
+      "id": "e8f0d1bb-966e-4094-ba6f-84a5a927ac35",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
@@ -978,7 +978,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 
 ### Change quantity
 
-`PUT /cart/items/52153074-d12d-4060-b632-5c062951dd0d` · **Bearer token required** · responds `200`
+`PUT /cart/items/e8f0d1bb-966e-4094-ba6f-84a5a927ac35` · **Bearer token required** · responds `200`
 
 `quantity: 0` removes the line. `DELETE /cart/items/{itemId}` does the same and returns `204`.
 
@@ -996,7 +996,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "52153074-d12d-4060-b632-5c062951dd0d",
+      "id": "e8f0d1bb-966e-4094-ba6f-84a5a927ac35",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
@@ -1028,7 +1028,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "52153074-d12d-4060-b632-5c062951dd0d",
+      "id": "e8f0d1bb-966e-4094-ba6f-84a5a927ac35",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
@@ -1181,6 +1181,28 @@ them. It means a product's rating is not part of the catalog payload: fetch it h
 
 ---
 
+## AI review summary
+
+A short brief of what reviewers say, for its own section on the product page.
+
+```
+GET /products/{productId}/review-summary
+{ "pros": [...], "cons": [...], "verdict": "...", "reviewCount": 3, "generatedAt": "..." }
+```
+
+**Call it separately and render it late.** It is not part of the review list precisely so
+the list never waits on it: the first read after a new review pays for a Gemini round trip
+and takes several seconds, while every read after that is a local lookup.
+
+**A `null` body is a normal answer**, and HTTP 200. It means either fewer than three
+reviews — one review is not a summary and two are not a consensus — or a summary that
+could not be written and was never cached. Show nothing in both cases. This endpoint
+never returns an error, because the reviews underneath it are the real content.
+
+`pros` and `cons` are short phrases meant to be rendered as chips, not prose.
+
+---
+
 ## Reporting the payment
 
 `POST /orders/{id}/payment` finishes an `AWAITING_PAYMENT` order.
@@ -1227,7 +1249,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ```json
 {
-  "addressId": "b3dab7e8-3497-4017-bbb0-96390c519796",
+  "addressId": "5db730f4-4247-4b0f-990a-1ba8a63c26c6",
   "paymentMethod": "MOCK_CARD"
 }
 ```
@@ -1237,8 +1259,8 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "9edd7278-32e3-4bf7-a734-4fde3d11fc83",
-    "orderRef": "ORD-100043",
+    "id": "269149ed-5616-41ea-b3fb-e8689c9c8753",
+    "orderRef": "ORD-100059",
     "status": "AWAITING_PAYMENT",
     "failureCode": null,
     "subtotal": 29990000.0,
@@ -1259,7 +1281,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
     },
     "items": [
       {
-        "id": "8d0854ac-44fa-4e59-8770-9427c7266954",
+        "id": "0b9448ca-c176-46b7-a2bc-52dbb2eec441",
         "productId": "759d9034-b058-5375-aa35-cadf437332c3",
         "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
         "unitPrice": 29990000.0,
@@ -1269,7 +1291,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
         "reviewed": false
       }
     ],
-    "createdAt": "2026-10-07T11:29:59.232093Z"
+    "createdAt": "2026-10-07T11:32:38.580777Z"
   },
   "message": "Order placed, complete the payment to confirm it"
 }
@@ -1278,7 +1300,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ### Payment — success
 
-`POST /orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83/payment` · **Bearer token required** · responds `200`
+`POST /orders/269149ed-5616-41ea-b3fb-e8689c9c8753/payment` · **Bearer token required** · responds `200`
 
 `status: CONFIRMED`. The cart is now empty and the stock is sold.
 
@@ -1296,8 +1318,8 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "9edd7278-32e3-4bf7-a734-4fde3d11fc83",
-    "orderRef": "ORD-100043",
+    "id": "269149ed-5616-41ea-b3fb-e8689c9c8753",
+    "orderRef": "ORD-100059",
     "status": "CONFIRMED",
     "failureCode": null,
     "subtotal": 29990000.0,
@@ -1318,7 +1340,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
     },
     "items": [
       {
-        "id": "8d0854ac-44fa-4e59-8770-9427c7266954",
+        "id": "0b9448ca-c176-46b7-a2bc-52dbb2eec441",
         "productId": "759d9034-b058-5375-aa35-cadf437332c3",
         "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
         "unitPrice": 29990000.0,
@@ -1328,7 +1350,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
         "reviewed": false
       }
     ],
-    "createdAt": "2026-10-07T11:29:59.232093Z"
+    "createdAt": "2026-10-07T11:32:38.580777Z"
   },
   "cartRestore": null
 }
@@ -1337,7 +1359,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ### Payment — failed
 
-`POST /orders/b08ef132-3902-48b1-8502-36d08b58b002/payment` · **Bearer token required** · responds `200`
+`POST /orders/702548d7-2a6c-405f-8841-286bea366272/payment` · **Bearer token required** · responds `200`
 
 **HTTP 200 with a FAILED order.** Stock that was held has been released, and the ordered lines are back in the cart. Read `cartRestore` for what could not be returned.
 
@@ -1355,8 +1377,8 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "b08ef132-3902-48b1-8502-36d08b58b002",
-    "orderRef": "ORD-100044",
+    "id": "702548d7-2a6c-405f-8841-286bea366272",
+    "orderRef": "ORD-100060",
     "status": "FAILED",
     "failureCode": "PAYMENT_FAILED",
     "subtotal": 29990000.0,
@@ -1377,7 +1399,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
     },
     "items": [
       {
-        "id": "1c3f97c8-7aa3-4335-a8ad-1ab963db4766",
+        "id": "36459b7d-691f-41d4-95c9-1e67dce153e6",
         "productId": "759d9034-b058-5375-aa35-cadf437332c3",
         "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
         "unitPrice": 29990000.0,
@@ -1387,7 +1409,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
         "reviewed": false
       }
     ],
-    "createdAt": "2026-10-07T11:29:59.525021Z"
+    "createdAt": "2026-10-07T11:32:38.696338Z"
   },
   "cartRestore": {
     "linesReturned": 1,
@@ -1407,7 +1429,7 @@ The order never reached the payment step. Refresh the cart to see what is unavai
 
 ```json
 {
-  "addressId": "b3dab7e8-3497-4017-bbb0-96390c519796",
+  "addressId": "5db730f4-4247-4b0f-990a-1ba8a63c26c6",
   "paymentMethod": "COD"
 }
 ```
@@ -1417,8 +1439,8 @@ The order never reached the payment step. Refresh the cart to see what is unavai
 ```json
 {
   "order": {
-    "id": "c07e27e4-fca6-429d-be9d-b7893c33a687",
-    "orderRef": "ORD-100045",
+    "id": "72ec28c1-efa5-4605-bb90-7b65f288914e",
+    "orderRef": "ORD-100061",
     "status": "FAILED",
     "failureCode": "OUT_OF_STOCK",
     "subtotal": 43980000.0,
@@ -1439,7 +1461,7 @@ The order never reached the payment step. Refresh the cart to see what is unavai
     },
     "items": [
       {
-        "id": "6109f7ef-eb9f-4aeb-8afb-7824b38fb800",
+        "id": "ec6afa69-17da-4ade-a205-39dab162d1c9",
         "productId": "759d9034-b058-5375-aa35-cadf437332c3",
         "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
         "unitPrice": 29990000.0,
@@ -1449,7 +1471,7 @@ The order never reached the payment step. Refresh the cart to see what is unavai
         "reviewed": false
       },
       {
-        "id": "da464525-5ab8-463a-87a6-ae333b9c093c",
+        "id": "3b89db6c-332e-4431-a4e4-3babbe73aef9",
         "productId": "b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8",
         "productName": "MSI Modern 14 C13M",
         "unitPrice": 13990000.0,
@@ -1476,8 +1498,8 @@ Newest first. Each row carries `firstItem` (so a row renders a picture and a nam
 {
   "content": [
     {
-      "id": "32e15efc-bb83-4079-b392-973ae6efef61",
-      "orderRef": "ORD-100046",
+      "id": "5f82ba67-24b0-4bae-9fa8-21e0bd85626a",
+      "orderRef": "ORD-100062",
       "status": "FAILED",
       "failureCode": "OUT_OF_STOCK",
       "total": 73940000.0,
@@ -1489,11 +1511,11 @@ Newest first. Each row carries `firstItem` (so a row renders a picture and a nam
         "quantity": 2
       },
       "reviewed": false,
-      "createdAt": "2026-10-07T11:29:59.882330Z"
+      "createdAt": "2026-10-07T11:32:38.940370Z"
     },
     {
-      "id": "c07e27e4-fca6-429d-be9d-b7893c33a687",
-      "orderRef": "ORD-100045",
+      "id": "72ec28c1-efa5-4605-bb90-7b65f288914e",
+      "orderRef": "ORD-100061",
       "status": "FAILED",
       "failureCode": "OUT_OF_STOCK",
       "total": 43980000.0,
@@ -1505,10 +1527,10 @@ Newest first. Each row carries `firstItem` (so a row renders a picture and a nam
         "quantity": 1
       },
       "reviewed": false,
-      "createdAt": "2026-10-07T11:29:59.752141Z"
+      "createdAt": "2026-10-07T11:32:38.831661Z"
     },
     {
-      "id": "b08ef132-3902-48b1-8502-36d08b58b002",
+      "id": "702548d7-2a6c-405f-8841-286bea366272",
   ...
 }
 ```
@@ -1516,7 +1538,7 @@ Newest first. Each row carries `firstItem` (so a row renders a picture and a nam
 
 ### Order detail
 
-`GET /orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83` · **Bearer token required** · responds `200`
+`GET /orders/269149ed-5616-41ea-b3fb-e8689c9c8753` · **Bearer token required** · responds `200`
 
 Prices and the shipping address are snapshots taken at checkout — a later catalog price change never alters a past order. Another user's order returns 403.
 
@@ -1524,8 +1546,8 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
 
 ```json
 {
-  "id": "9edd7278-32e3-4bf7-a734-4fde3d11fc83",
-  "orderRef": "ORD-100043",
+  "id": "269149ed-5616-41ea-b3fb-e8689c9c8753",
+  "orderRef": "ORD-100059",
   "status": "CONFIRMED",
   "failureCode": null,
   "subtotal": 29990000.0,
@@ -1546,7 +1568,7 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
   },
   "items": [
     {
-      "id": "8d0854ac-44fa-4e59-8770-9427c7266954",
+      "id": "0b9448ca-c176-46b7-a2bc-52dbb2eec441",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
@@ -1556,14 +1578,14 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
       "reviewed": false
     }
   ],
-  "createdAt": "2026-10-07T11:29:59.232093Z"
+  "createdAt": "2026-10-07T11:32:38.580777Z"
 }
 ```
 
 
 ### Update order status (demo)
 
-`PUT /orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83/status` · **Bearer token required** · responds `200`
+`PUT /orders/269149ed-5616-41ea-b3fb-e8689c9c8753/status` · **Bearer token required** · responds `200`
 
 Moves one of your own orders to any status, so the lifecycle can be shown without a management app. Nothing else sets `COMPLETED`: there is no fulfilment process and so no actor to move an order on from `CONFIRMED`.
 
@@ -1590,8 +1612,8 @@ Moves one of your own orders to any status, so the lifecycle can be shown withou
 
 ```json
 {
-  "id": "9edd7278-32e3-4bf7-a734-4fde3d11fc83",
-  "orderRef": "ORD-100043",
+  "id": "269149ed-5616-41ea-b3fb-e8689c9c8753",
+  "orderRef": "ORD-100059",
   "status": "COMPLETED",
   "failureCode": null,
   "subtotal": 29990000.0,
@@ -1612,7 +1634,7 @@ Moves one of your own orders to any status, so the lifecycle can be shown withou
   },
   "items": [
     {
-      "id": "8d0854ac-44fa-4e59-8770-9427c7266954",
+      "id": "0b9448ca-c176-46b7-a2bc-52dbb2eec441",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
@@ -1622,14 +1644,14 @@ Moves one of your own orders to any status, so the lifecycle can be shown withou
       "reviewed": false
     }
   ],
-  "createdAt": "2026-10-07T11:29:59.232093Z"
+  "createdAt": "2026-10-07T11:32:38.580777Z"
 }
 ```
 
 
 ### Update order status — PENDING refused
 
-`PUT /orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83/status` · **Bearer token required** · responds `400`
+`PUT /orders/269149ed-5616-41ea-b3fb-e8689c9c8753/status` · **Bearer token required** · responds `400`
 
 `PENDING` is an internal saga state the app has no screen for, so it is the one status this endpoint will not set.
 
@@ -1645,18 +1667,18 @@ Moves one of your own orders to any status, so the lifecycle can be shown withou
 
 ```json
 {
-  "timestamp": "2026-10-07T11:30:00.371242462Z",
+  "timestamp": "2026-10-07T11:32:39.172007633Z",
   "status": 400,
   "code": "VALIDATION_ERROR",
   "message": "PENDING is an internal state and cannot be set",
-  "path": "/orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83/status"
+  "path": "/orders/269149ed-5616-41ea-b3fb-e8689c9c8753/status"
 }
 ```
 
 
 ### Cancel order
 
-`POST /orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83/cancel` · **Bearer token required** · responds `200`
+`POST /orders/269149ed-5616-41ea-b3fb-e8689c9c8753/cancel` · **Bearer token required** · responds `200`
 
 Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunded.
 
@@ -1664,8 +1686,8 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
 
 ```json
 {
-  "id": "9edd7278-32e3-4bf7-a734-4fde3d11fc83",
-  "orderRef": "ORD-100043",
+  "id": "269149ed-5616-41ea-b3fb-e8689c9c8753",
+  "orderRef": "ORD-100059",
   "status": "CANCELLED",
   "failureCode": null,
   "subtotal": 29990000.0,
@@ -1686,7 +1708,7 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
   },
   "items": [
     {
-      "id": "8d0854ac-44fa-4e59-8770-9427c7266954",
+      "id": "0b9448ca-c176-46b7-a2bc-52dbb2eec441",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
@@ -1696,14 +1718,14 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
       "reviewed": false
     }
   ],
-  "createdAt": "2026-10-07T11:29:59.232093Z"
+  "createdAt": "2026-10-07T11:32:38.580777Z"
 }
 ```
 
 
 ### Cancel — not allowed
 
-`POST /orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83/cancel` · **Bearer token required** · responds `409`
+`POST /orders/269149ed-5616-41ea-b3fb-e8689c9c8753/cancel` · **Bearer token required** · responds `409`
 
 Show the Cancel button only when `status == "CONFIRMED"`.
 
@@ -1711,11 +1733,352 @@ Show the Cancel button only when `status == "CONFIRMED"`.
 
 ```json
 {
-  "timestamp": "2026-10-07T11:30:00.790350046Z",
+  "timestamp": "2026-10-07T11:32:39.231240550Z",
   "status": 409,
   "code": "ORDER_NOT_CANCELLABLE",
   "message": "An order in status CANCELLED cannot be cancelled",
-  "path": "/orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83/cancel"
+  "path": "/orders/269149ed-5616-41ea-b3fb-e8689c9c8753/cancel"
+}
+```
+
+
+---
+
+## Loyalty points and gifts
+
+Points, a three-tier ladder, the voucher each tier grants, and a gift catalogue those
+points are spent on.
+
+**The tier is always a number, 0 to 3, and never a name.** Naming it is the app's
+decision, so "Đồng / Bạc / Vàng" or anything else can change without a server release.
+`GET /loyalty/me` hands over the whole ladder, so no threshold needs hardcoding either.
+
+**Points arrive when an order reaches `COMPLETED`**, at 1 point per 1.000đ of
+`subtotal - discount`. Shipping earns nothing, and a half-price coupon earns half the
+points. Nothing reaches `COMPLETED` on its own, so a demo has to push each order's
+status by hand with `PUT /orders/{id}/status`.
+
+**A tier voucher is submitted as `couponCode` at checkout**, exactly like a coupon. The
+server resolves coupons first and falls through to loyalty, so the app does not need to
+know which kind of code the customer typed.
+
+**A claimed gift is terminal.** Clicking claim is the whole transaction: it returns a
+code, the gift moves to the claimed-gifts screen, and the code stays readable there
+indefinitely. Collection happens at a counter and nothing in the app tracks it, so there
+is no status to poll and no further call to make.
+
+### Points and tier — new account
+
+`GET /loyalty/me` · **Bearer token required** · responds `200`
+
+Tier 0, nothing earned, and the ladder the app shows progress against. `pointsToNextTier` is null at the top of the ladder.
+
+**Response**
+
+```json
+{
+  "lifetimePoints": 0,
+  "balance": 0,
+  "tier": 0,
+  "pointsToNextTier": 10000,
+  "tiers": [
+    {
+      "tier": 1,
+      "thresholdPoints": 10000,
+      "discountPercent": 10
+    },
+    {
+      "tier": 2,
+      "thresholdPoints": 30000,
+      "discountPercent": 30
+    },
+    {
+      "tier": 3,
+      "thresholdPoints": 60000,
+      "discountPercent": 50
+    }
+  ]
+}
+```
+
+
+### Completing an order (demo) credits its points
+
+`PUT /orders/cffc57a9-1038-475d-b5aa-b278c6f9f0df/status` · **Bearer token required** · responds `200`
+
+The only thing that awards points. Re-sending `COMPLETED` credits nothing: the award happens on the transition, and loyalty dedupes on the order reference even if it did.
+
+**Request**
+
+```json
+{
+  "status": "COMPLETED"
+}
+```
+
+**Response**
+
+```json
+{
+  "id": "cffc57a9-1038-475d-b5aa-b278c6f9f0df",
+  "orderRef": "ORD-100064",
+  "status": "COMPLETED",
+  "failureCode": null,
+  "subtotal": 10000000.0,
+  "shippingFee": 0.0,
+  "total": 10000000.0,
+  "couponCode": null,
+  "discount": 0.0,
+  "paymentMethod": "COD",
+  "paymentStatus": "PAID",
+  "paymentRef": null,
+  "shippingAddress": {
+    "recipientName": "Tran Thi Loyal",
+    "phone": "0902222222",
+    "line1": "45 Nguyen Trai",
+    "ward": "Ben Thanh",
+    "district": "Quan 1",
+    "province": "Ho Chi Minh"
+  },
+  "items": [
+    {
+      "id": "3df2c8da-3292-4db2-9fac-b98e9a885248",
+      "productId": "9c57e463-c2ec-560b-b0ca-c84f6a7a56e7",
+      "productName": "Demo A - 10 triệu",
+      "unitPrice": 10000000.0,
+      "quantity": 1,
+      "lineTotal": 10000000.0,
+      "thumbnailUrl": "https://picsum.photos/seed/demo-tier-a/600",
+      "reviewed": false
+    }
+  ],
+  "createdAt": "2026-10-07T11:32:39.726732Z"
+}
+```
+
+
+### Points and tier — after one order
+
+`GET /loyalty/me` · **Bearer token required** · responds `200`
+
+10.000.000đ of goods earned 10.000 points, which is tier 1.
+
+**Response**
+
+```json
+{
+  "lifetimePoints": 10000,
+  "balance": 10000,
+  "tier": 1,
+  "pointsToNextTier": 20000,
+  "tiers": [
+    {
+      "tier": 1,
+      "thresholdPoints": 10000,
+      "discountPercent": 10
+    },
+    {
+      "tier": 2,
+      "thresholdPoints": 30000,
+      "discountPercent": 30
+    },
+    {
+      "tier": 3,
+      "thresholdPoints": 60000,
+      "discountPercent": 50
+    }
+  ]
+}
+```
+
+
+### My vouchers
+
+`GET /loyalty/vouchers` · **Bearer token required** · responds `200`
+
+One voucher per tier reached, ever. `consumedAt` is null until it is spent; a cancelled order returns it to null.
+
+**Response**
+
+```json
+[
+  {
+    "code": "TIER1-4K8789MM",
+    "tier": 1,
+    "discountPercent": 10,
+    "issuedAt": "2026-10-07T11:32:39.784180Z",
+    "expiresAt": null,
+    "consumedAt": null
+  }
+]
+```
+
+
+### Gift catalogue
+
+`GET /loyalty/gifts` · **Bearer token required** · responds `200`
+
+`eligible` is the whole claim rule answered in advance — tier, balance, stock and a previous claim — so the app can grey a card out without re-implementing it. `inStock` and `alreadyClaimed` are there to explain why.
+
+**Response**
+
+```json
+[
+  {
+    "id": "ce2eb2ca-a432-5d29-9755-1f4f1abf2a14",
+    "name": "Ốp lưng silicon",
+    "description": "Ốp lưng silicon chống sốc, nhận tại cửa hàng ElecGo gần nhất.",
+    "imageUrl": "https://picsum.photos/seed/op-lung-silicon/400",
+    "pointsCost": 500,
+    "minTier": 0,
+    "inStock": true,
+    "eligible": true,
+    "alreadyClaimed": false
+  },
+  {
+    "id": "fa31e0b6-78d5-5739-a025-965512251dd0",
+    "name": "Cáp sạc USB-C 1m",
+    "description": "Cáp sạc USB-C dài 1m, hỗ trợ sạc nhanh 20W.",
+    "imageUrl": "https://picsum.photos/seed/cap-usb-c/400",
+    "pointsCost": 800,
+    "minTier": 0,
+    "inStock": true,
+    "eligible": true,
+    "alreadyClaimed": false
+  },
+  {
+    "id": "e20b380a-f62c-56eb-9ba4-f7cbf404ee5c",
+    "name": "Pin sạc dự phòng 10.000mAh",
+    "description": "Pin sạc dự phòng 10.000mAh, hai cổng ra. Tạm thời hết hàng.",
+    "imageUrl": "https://picsum.photos/seed/pin-du-phong/400",
+    "pointsCost": 1500,
+    "minTier": 0,
+    "inStock": false,
+    "eligible": false,
+    "alreadyClaimed": false
+  },
+  {
+    "id": "1d61e4c8-962b-55bd-b0c9-f6c1045571ab",
+    "name": "Tai nghe có dây",
+    "description": "Tai nghe nhét tai có dây kèm micro, jack 3.5mm.",
+    "imageUrl": "https://picsum.photos/seed/tai-nghe-day/400",
+    "pointsCost": 2000,
+    "minTier": 1,
+    "inStock": true,
+    "eligible": true,
+    "alreadyClaimed": false
+  },
+  {
+  ...
+}
+```
+
+
+### Claim a gift
+
+`POST /loyalty/gifts/ce2eb2ca-a432-5d29-9755-1f4f1abf2a14/claim` · **Bearer token required** · responds `200`
+
+Spends the points and returns the code. Claiming never changes the lifetime total, so it cannot cost a customer their tier.
+
+**Response**
+
+```json
+{
+  "redemptionId": "f3d35d3c-23f3-4e78-ae1c-818dd7e6a9aa",
+  "code": "GIFT-VXBF-SB85",
+  "giftName": "Ốp lưng silicon",
+  "pointsSpent": 500,
+  "balanceAfter": 9500,
+  "claimedAt": "2026-10-07T11:32:39.840784842Z"
+}
+```
+
+
+### Claim — already claimed
+
+`POST /loyalty/gifts/ce2eb2ca-a432-5d29-9755-1f4f1abf2a14/claim` · **Bearer token required** · responds `409`
+
+One per customer per gift, enforced by a UNIQUE rather than a read-then-write, so a double tap cannot slip through. The other refusals are `TIER_TOO_LOW`, `INSUFFICIENT_POINTS` and `GIFT_OUT_OF_STOCK`.
+
+**Response**
+
+```json
+{
+  "timestamp": "2026-10-07T11:32:39.859689592Z",
+  "status": 409,
+  "code": "GIFT_ALREADY_CLAIMED",
+  "message": "User 9db8c353-f6a3-4f5e-b151-4c97c27b6bae already claimed gift ce2eb2ca-a432-5d29-9755-1f4f1abf2a14",
+  "path": "/loyalty/gifts/ce2eb2ca-a432-5d29-9755-1f4f1abf2a14/claim"
+}
+```
+
+
+### Claim — tier too low
+
+`POST /loyalty/gifts/5a895aa7-839d-5f07-9729-7f3a68806ac1/claim` · **Bearer token required** · responds `409`
+
+Refused before anything is written: no points spent, no stock moved.
+
+**Response**
+
+```json
+{
+  "timestamp": "2026-10-07T11:32:39.869899300Z",
+  "status": 409,
+  "code": "TIER_TOO_LOW",
+  "message": "Gift 5a895aa7-839d-5f07-9729-7f3a68806ac1 needs tier 3, customer is tier 1",
+  "path": "/loyalty/gifts/5a895aa7-839d-5f07-9729-7f3a68806ac1/claim"
+}
+```
+
+
+### My claimed gifts
+
+`GET /loyalty/claimed-gifts` · **Bearer token required** · responds `200`
+
+Where the customer reads the code back. Newest first, and never expires.
+
+**Response**
+
+```json
+[
+  {
+    "redemptionId": "f3d35d3c-23f3-4e78-ae1c-818dd7e6a9aa",
+    "code": "GIFT-VXBF-SB85",
+    "giftName": "Ốp lưng silicon",
+    "imageUrl": "https://picsum.photos/seed/op-lung-silicon/400",
+    "pointsSpent": 500,
+    "claimedAt": "2026-10-07T11:32:39.840785Z"
+  }
+]
+```
+
+
+### Awarding points is not reachable
+
+`POST /loyalty/points` · **Bearer token required** · responds `404`
+
+`POST /loyalty/points` and the voucher consume and release endpoints are internal: order-service calls them on the compose network and the gateway routes none of them. So is `POST /ai/review-summary`.
+
+**Request**
+
+```json
+{
+  "orderRef": "ORD-100001",
+  "userId": "ce362875-dac2-4660-bb6a-d6a390ababcd",
+  "amountSpent": 99000000
+}
+```
+
+**Response**
+
+```json
+{
+  "timestamp": "2026-10-07T11:32:39.885+00:00",
+  "path": "/api/loyalty/points",
+  "status": 404,
+  "error": "Not Found",
+  "requestId": "e87afe38-322"
 }
 ```
 
@@ -1745,6 +2108,10 @@ Against the screen list in `Java - BT Lớn.xlsx`:
 | Edit Profile | PROFILE-02 | `PUT /users/me` |
 | Change Password | PROFILE-03 | `PUT /users/me/password` |
 | Address List | PROFILE-04 | `GET /addresses` · `POST`/`PUT`/`DELETE /addresses` |
+| _(new)_ Loyalty | — | `GET /loyalty/me` · `GET /loyalty/vouchers` |
+| _(new)_ Gift exchange | — | `GET /loyalty/gifts` · `POST /loyalty/gifts/{id}/claim` |
+| _(new)_ Claimed gifts | — | `GET /loyalty/claimed-gifts` |
+| Product Detail | PRODUCT-05 | also `GET /products/{id}/review-summary` |
 
 Forgot Password has no screen code in the sheet but is supported:
 `POST /auth/check-email` then `POST /auth/reset-password`.
@@ -1755,5 +2122,9 @@ Deliberately out of scope, so do not build UI expecting them: logout (delete the
 locally), token refresh, wishlist, multiple shipping options, and fulfilment tracking
 (there is no `SHIPPED` or `DELIVERED`, and `COMPLETED` is only reachable through the
 demo status endpoint).
+
+Gifts are not delivered and their collection is not tracked: a claim returns a code and
+the app is never told what happens to it. Points do not convert back into a discount
+either — they buy gifts, and tiers grant vouchers. See `docs/EXTENSIONS.md`.
 
 Shipping is a flat **30,000 VND**, free at a subtotal of **500,000 VND** or more.

@@ -650,6 +650,28 @@ def main():
 
         ---
 
+        ## AI review summary
+
+        A short brief of what reviewers say, for its own section on the product page.
+
+        ```
+        GET /products/{productId}/review-summary
+        { "pros": [...], "cons": [...], "verdict": "...", "reviewCount": 3, "generatedAt": "..." }
+        ```
+
+        **Call it separately and render it late.** It is not part of the review list precisely so
+        the list never waits on it: the first read after a new review pays for a Gemini round trip
+        and takes several seconds, while every read after that is a local lookup.
+
+        **A `null` body is a normal answer**, and HTTP 200. It means either fewer than three
+        reviews — one review is not a summary and two are not a consensus — or a summary that
+        could not be written and was never cached. Show nothing in both cases. This endpoint
+        never returns an error, because the reviews underneath it are the real content.
+
+        `pros` and `cons` are short phrases meant to be rendered as chips, not prose.
+
+        ---
+
         ## Reporting the payment
 
         `POST /orders/{id}/payment` finishes an `AWAITING_PAYMENT` order.
@@ -732,6 +754,64 @@ def main():
     w(endpoint(cap, "orders.cancel.again", "Cancel — not allowed", auth=True,
                description="Show the Cancel button only when `status == \"CONFIRMED\"`."))
 
+    w("---\n\n## Loyalty points and gifts\n")
+    w(textwrap.dedent("""\
+        Points, a three-tier ladder, the voucher each tier grants, and a gift catalogue those
+        points are spent on.
+
+        **The tier is always a number, 0 to 3, and never a name.** Naming it is the app's
+        decision, so "Đồng / Bạc / Vàng" or anything else can change without a server release.
+        `GET /loyalty/me` hands over the whole ladder, so no threshold needs hardcoding either.
+
+        **Points arrive when an order reaches `COMPLETED`**, at 1 point per 1.000đ of
+        `subtotal - discount`. Shipping earns nothing, and a half-price coupon earns half the
+        points. Nothing reaches `COMPLETED` on its own, so a demo has to push each order's
+        status by hand with `PUT /orders/{id}/status`.
+
+        **A tier voucher is submitted as `couponCode` at checkout**, exactly like a coupon. The
+        server resolves coupons first and falls through to loyalty, so the app does not need to
+        know which kind of code the customer typed.
+
+        **A claimed gift is terminal.** Clicking claim is the whole transaction: it returns a
+        code, the gift moves to the claimed-gifts screen, and the code stays readable there
+        indefinitely. Collection happens at a counter and nothing in the app tracks it, so there
+        is no status to poll and no further call to make.
+        """))
+    w(endpoint(cap, "loyalty.me.fresh", "Points and tier — new account", auth=True,
+               description="Tier 0, nothing earned, and the ladder the app shows progress "
+                           "against. `pointsToNextTier` is null at the top of the ladder."))
+    w(endpoint(cap, "loyalty.order.completed", "Completing an order (demo) credits its points", auth=True,
+               description="The only thing that awards points. Re-sending `COMPLETED` credits "
+                           "nothing: the award happens on the transition, and loyalty dedupes "
+                           "on the order reference even if it did."))
+    w(endpoint(cap, "loyalty.me.tier1", "Points and tier — after one order", auth=True,
+               description="10.000.000đ of goods earned 10.000 points, which is tier 1."))
+    w(endpoint(cap, "loyalty.vouchers", "My vouchers", auth=True,
+               description="One voucher per tier reached, ever. `consumedAt` is null until it "
+                           "is spent; a cancelled order returns it to null."))
+    w(endpoint(cap, "loyalty.gifts", "Gift catalogue", auth=True,
+               description="`eligible` is the whole claim rule answered in advance — tier, "
+                           "balance, stock and a previous claim — so the app can grey a card "
+                           "out without re-implementing it. `inStock` and `alreadyClaimed` are "
+                           "there to explain why."))
+    w(endpoint(cap, "loyalty.claim", "Claim a gift", auth=True,
+               description="Spends the points and returns the code. Claiming never changes the "
+                           "lifetime total, so it cannot cost a customer their tier."))
+    w(endpoint(cap, "loyalty.claim.again", "Claim — already claimed", auth=True,
+               description="One per customer per gift, enforced by a UNIQUE rather than a "
+                           "read-then-write, so a double tap cannot slip through. The other "
+                           "refusals are `TIER_TOO_LOW`, `INSUFFICIENT_POINTS` and "
+                           "`GIFT_OUT_OF_STOCK`."))
+    w(endpoint(cap, "loyalty.claim.tierTooLow", "Claim — tier too low", auth=True,
+               description="Refused before anything is written: no points spent, no stock moved."))
+    w(endpoint(cap, "loyalty.claimedGifts", "My claimed gifts", auth=True,
+               description="Where the customer reads the code back. Newest first, and never "
+                           "expires."))
+    w(endpoint(cap, "loyalty.points.notRouted", "Awarding points is not reachable", auth=True,
+               description="`POST /loyalty/points` and the voucher consume and release endpoints "
+                           "are internal: order-service calls them on the compose network and "
+                           "the gateway routes none of them. So is `POST /ai/review-summary`."))
+
     w(textwrap.dedent("""\
         ---
 
@@ -758,6 +838,10 @@ def main():
         | Edit Profile | PROFILE-02 | `PUT /users/me` |
         | Change Password | PROFILE-03 | `PUT /users/me/password` |
         | Address List | PROFILE-04 | `GET /addresses` · `POST`/`PUT`/`DELETE /addresses` |
+        | _(new)_ Loyalty | — | `GET /loyalty/me` · `GET /loyalty/vouchers` |
+        | _(new)_ Gift exchange | — | `GET /loyalty/gifts` · `POST /loyalty/gifts/{id}/claim` |
+        | _(new)_ Claimed gifts | — | `GET /loyalty/claimed-gifts` |
+        | Product Detail | PRODUCT-05 | also `GET /products/{id}/review-summary` |
 
         Forgot Password has no screen code in the sheet but is supported:
         `POST /auth/check-email` then `POST /auth/reset-password`.
@@ -768,6 +852,10 @@ def main():
         locally), token refresh, wishlist, multiple shipping options, and fulfilment tracking
         (there is no `SHIPPED` or `DELIVERED`, and `COMPLETED` is only reachable through the
         demo status endpoint).
+
+        Gifts are not delivered and their collection is not tracked: a claim returns a code and
+        the app is never told what happens to it. Points do not convert back into a discount
+        either — they buy gifts, and tiers grant vouchers. See `docs/EXTENSIONS.md`.
 
         Shipping is a flat **30,000 VND**, free at a subtotal of **500,000 VND** or more.
         """))

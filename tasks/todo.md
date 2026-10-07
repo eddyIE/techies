@@ -322,7 +322,7 @@ Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `ord
     `scripts/generate-postman.py`, `docs/postman/README.md`
   - Note: ask the user for their project's actual RPM/RPD if a concrete figure is wanted.
 
-- [ ] **I3. Regenerate the API docs and extend the demo**
+- [x] **I3. Regenerate the API docs and extend the demo**
   - Acceptance: `docs/API.md` and the Postman collection carry every new endpoint; `docs/DEMO.md`
     gains the tier walk (three orders, hand-pushed to `COMPLETED`) and a gift claim showing the
     code and the re-claim refusal; `docs/EXTENSIONS.md` records delivered gifts and gift

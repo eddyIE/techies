@@ -67,7 +67,57 @@ be unreachable states — dead code that looks like features.
 callback handling, and reconciliation. Notably, this is the change that would make extension #1
 genuinely necessary.
 
-## 7. Operational concerns
+## 7. Delivered gifts
+
+**Not built.** Claiming a gift returns a code. The customer takes it to a store and hands it
+over; the app is never told what happened next.
+
+**Why.** A delivered gift needs an address, a shipment, stock movement and a status someone
+advances — and there is no fulfilment actor in this system to advance it, exactly as in
+extension #5. Three drafts were written and dropped before claim codes: a gift order placed
+through `order-service` (which closed the cycle `order → loyalty → order` and needed a second
+three-service saga), a standalone redemption with its own address snapshot, and a free gift
+riding the customer's next order. The first two added a second thing-with-a-status that nothing
+could move; the third defers the reward until the customer happens to buy again.
+
+The catalogue was crawled from cellphones.com.vn, a physical retail chain, so collection at a
+counter is how that business genuinely works. The missing actor does not disappear — it is
+moved outside the system, where it is real, instead of being modelled as an unreachable state
+inside it.
+
+**What it costs.** An address snapshot on the redemption, a shipment entity, a fourth saga
+participant for gift stock, and an admin surface to mark a gift dispatched. Four to five days,
+most of it to produce a status nobody can change.
+
+## 8. Gift collection tracking
+
+**Not built.** `gift_redemptions` has no status column. A code is issued and that is the end
+of it, as far as the backend knows.
+
+**Why.** The only thing that could set `collected` is a demo endpoint, and a flag that exists
+solely so a demo can flip it is the dead code extension #5 warns about. Codes therefore never
+expire either: an expiry nothing can renew would strand a reward the customer paid points for.
+
+**What it costs.** Little in code — a `collected_at` column and a staff endpoint to stamp it —
+and a lot in everything around it: an authenticated staff role, a till-side screen or scanner,
+and a story for a code presented at a store that cannot reach the API. The code is cheap; the
+actor is not.
+
+## 9. Points as a direct discount
+
+**Not built.** Points buy gifts. Tiers grant percentage vouchers. Points never convert into
+money off an order.
+
+**Why.** Explicitly specified that way. One-way conversion keeps the ledger a ledger: a balance
+is only ever spent on a catalogue item at a known price, so there is no exchange rate to
+maintain, no rounding to argue about, and no interaction between a points discount and a
+coupon or a voucher on the same order.
+
+**What it costs.** A fourth kind of discount in the checkout saga, a `POINTS_SPEND` ledger
+entry tied to an order rather than a redemption, and a rule for how it stacks with the other
+three. The stacking rules are the expensive part, not the arithmetic.
+
+## 10. Operational concerns
 
 Out of scope, listed for completeness: rate limiting, distributed tracing, centralised logging,
 metrics, circuit breakers (Resilience4j), config server, API versioning, database read replicas,

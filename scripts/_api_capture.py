@@ -169,6 +169,76 @@ if confirmed:
     call("orders.cancel.again", "POST", f"/orders/{oid}/cancel", token=token,
          note="cancelling twice is refused")
 
+# --- AI review summary ----------------------------------------------------
+# Needs a product with at least three reviews. The seeded ones from V7 are spread around the
+# catalogue, so scan for one rather than pin an id that a reseed could move.
+#
+# Costs one Gemini request the first time only: the summary is cached on the review count, so
+# regenerating these docs against an unchanged catalogue spends nothing.
+_, _wide = call(None, "GET", "/products?size=40")
+reviewed = unreviewed = None
+for candidate in _wide["content"]:
+    _, _revs = call(None, "GET", f"/products/{candidate['id']}/reviews?size=1")
+    total = (_revs or {}).get("total", 0)
+    if total >= 3 and reviewed is None:
+        reviewed = candidate
+    elif total == 0 and unreviewed is None:
+        unreviewed = candidate
+    if reviewed and unreviewed:
+        break
+
+if reviewed:
+    call("reviews.summary", "GET", f"/products/{reviewed['id']}/review-summary",
+         note="written by ai-service, cached here on the review count it was written from")
+if unreviewed:
+    call("reviews.summary.none", "GET", f"/products/{unreviewed['id']}/review-summary",
+         note="200 with a null body -- under three reviews is a normal answer, not an error")
+
+# --- loyalty: points, tiers and gifts -------------------------------------
+# Its own account, so the examples read as a clean walk from tier 0 rather than inheriting
+# whatever the order examples above left behind.
+DEMO_A = "9c57e463-c2ec-560b-b0ca-c84f6a7a56e7"       # 10.000.000d -> tier 1
+GIFT_PHONE_CASE = "ce2eb2ca-a432-5d29-9755-1f4f1abf2a14"   # 500 points, min tier 0
+GIFT_EARBUDS = "5a895aa7-839d-5f07-9729-7f3a68806ac1"      # 12.000 points, min tier 3
+
+loyal_email = f"loyal-demo-{uuid.uuid4().hex[:6]}@techies.vn"
+call(None, "POST", "/auth/register",
+     {"email": loyal_email, "password": PW, "fullName": "Tran Thi Loyal", "phone": "0902222222"})
+_, loyal_login = call(None, "POST", "/auth/login", {"email": loyal_email, "password": PW})
+ltoken = loyal_login["accessToken"]
+_, laddr = call(None, "POST", "/addresses", {
+    "recipientName": "Tran Thi Loyal", "phone": "0902222222", "line1": "45 Nguyen Trai",
+    "ward": "Ben Thanh", "district": "Quan 1", "province": "Ho Chi Minh", "isDefault": True}, ltoken)
+
+call("loyalty.me.fresh", "GET", "/loyalty/me", token=ltoken,
+     note="tier 0 with the ladder attached -- the app never hardcodes a threshold or names a tier")
+
+call(None, "POST", "/cart/items", {"productId": DEMO_A, "quantity": 1}, ltoken)
+_, lorder = call(None, "POST", "/checkout",
+                 {"addressId": laddr["id"], "paymentMethod": "COD"}, ltoken)
+call("loyalty.order.completed", "PUT", f"/orders/{lorder['order']['id']}/status",
+     {"status": "COMPLETED"}, ltoken,
+     note="the only thing that credits points -- nothing reaches COMPLETED on its own")
+
+call("loyalty.me.tier1", "GET", "/loyalty/me", token=ltoken,
+     note="10.000.000d of goods earned 10.000 points, which is tier 1")
+call("loyalty.vouchers", "GET", "/loyalty/vouchers", token=ltoken,
+     note="submit the code as couponCode at checkout, like a coupon")
+call("loyalty.gifts", "GET", "/loyalty/gifts", token=ltoken,
+     note="eligible already accounts for tier, balance, stock and a previous claim")
+
+call("loyalty.claim", "POST", f"/loyalty/gifts/{GIFT_PHONE_CASE}/claim", token=ltoken,
+     note="claiming is the whole transaction -- the code is collected in store, and nothing tracks that")
+call("loyalty.claim.again", "POST", f"/loyalty/gifts/{GIFT_PHONE_CASE}/claim", token=ltoken,
+     note="409 GIFT_ALREADY_CLAIMED -- one per customer per gift, enforced by a UNIQUE")
+call("loyalty.claim.tierTooLow", "POST", f"/loyalty/gifts/{GIFT_EARBUDS}/claim", token=ltoken,
+     note="409 TIER_TOO_LOW, nothing written")
+call("loyalty.claimedGifts", "GET", "/loyalty/claimed-gifts", token=ltoken,
+     note="the code stays readable here indefinitely")
+call("loyalty.points.notRouted", "POST", "/loyalty/points",
+     {"orderRef": "ORD-100001", "userId": str(uuid.uuid4()), "amountSpent": 99000000}, ltoken,
+     note="404 -- internal only, so nobody can award themselves points")
+
 out = os.environ.get("OUT", "captured.json")
 with open(out, "w", encoding="utf-8") as f:
     json.dump(captured, f, indent=2, ensure_ascii=False)

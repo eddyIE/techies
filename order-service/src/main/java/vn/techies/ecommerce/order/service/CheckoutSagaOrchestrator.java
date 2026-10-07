@@ -1,5 +1,6 @@
 package vn.techies.ecommerce.order.service;
 
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +11,9 @@ import vn.techies.ecommerce.order.api.dto.OrderDtos.CheckoutRequest;
 import vn.techies.ecommerce.order.client.CatalogClient;
 import vn.techies.ecommerce.order.client.IdentityClient;
 import vn.techies.ecommerce.order.client.InventoryClient;
+import vn.techies.ecommerce.order.client.LoyaltyClient;
 import vn.techies.ecommerce.order.domain.Coupon;
+import vn.techies.ecommerce.order.domain.DiscountSource;
 import vn.techies.ecommerce.order.domain.FailureCode;
 import vn.techies.ecommerce.order.domain.Order;
 import vn.techies.ecommerce.order.domain.PaymentMethod;
@@ -64,6 +67,8 @@ public class CheckoutSagaOrchestrator {
     private final IdentityClient identityClient;
     private final CatalogClient catalogClient;
     private final InventoryClient inventoryClient;
+    private final LoyaltyClient loyaltyClient;
+    private final VoucherCompensator voucherCompensator;
 
     public Order checkout(UUID userId, CheckoutRequest request) {
         // ---- Step 1: cart ----------------------------------------------------------------
@@ -101,7 +106,9 @@ public class CheckoutSagaOrchestrator {
             FailureCode code = isInsufficientStock(ex)
                     ? FailureCode.OUT_OF_STOCK : FailureCode.SERVICE_UNAVAILABLE;
             record(order, "5-DEDUCT_STOCK", SagaStepStatus.FAILED, ex.toString());
-            // No payment is attempted, and there is nothing to compensate: stock never moved.
+            // Stock never moved, so there is none to put back, but the voucher was consumed
+            // before the order row and has to be returned.
+            voucherCompensator.releaseIfHeld(order);
             return failOrder(order, code);
         }
 
@@ -193,12 +200,14 @@ public class CheckoutSagaOrchestrator {
             subtotal = subtotal.add(price.multiply(BigDecimal.valueOf(line.quantity())));
         }
 
-        Coupon coupon = resolveCoupon(request.couponCode(), subtotal);
-        BigDecimal discount = coupon == null ? BigDecimal.ZERO : coupon.discountFor(subtotal);
+        // Drawn before the discount is resolved: consuming a voucher has to cite the order it
+        // is held for, and that has to be the ref this order will carry.
+        String orderRef = orderRefSequence.next();
+        AppliedDiscount applied = resolveDiscount(userId, orderRef, request.couponCode(), subtotal);
 
-        Order order = Order.pending(orderRefSequence.next(), userId, address,
+        Order order = Order.pending(orderRef, userId, address,
                 request.paymentMethod(), subtotal, shippingPolicy.feeFor(subtotal),
-                coupon == null ? null : coupon.getCode(), discount);
+                applied.code(), applied.amount(), applied.source());
 
         for (CartLine line : lines) {
             CatalogClient.ProductSnapshot product = products.get(line.productId());
@@ -216,19 +225,30 @@ public class CheckoutSagaOrchestrator {
     }
 
     /**
-     * Validates the coupon, or returns null when none was sent.
+     * Resolves the submitted code to a discount: a coupon first, then a loyalty voucher.
      *
-     * <p>Rejected before any order row exists, like the other input problems: an unusable coupon
+     * <p>Coupons are checked locally and win ties, because they are this service's own data and
+     * a lookup beats a network call. Only an unknown code falls through to loyalty, so an
+     * ordinary coupon checkout never depends on loyalty being up.
+     *
+     * <p>Rejected before any order row exists, like the other input problems: an unusable code
      * is a mistake to correct on the checkout screen, not a failed order in someone's history.
+     * That is also why the voucher is consumed here rather than after the order is written —
+     * a voucher another cart is holding must not produce a FAILED order.
      */
-    private Coupon resolveCoupon(String code, BigDecimal subtotal) {
+    private AppliedDiscount resolveDiscount(UUID userId, String orderRef, String code,
+                                            BigDecimal subtotal) {
         if (code == null || code.isBlank()) {
-            return null;
+            return AppliedDiscount.none();
         }
         String normalised = code.strip().toUpperCase();
-        Coupon coupon = coupons.findById(normalised)
-                .orElseThrow(() -> new ApiException(ErrorCode.COUPON_NOT_FOUND,
-                        "Coupon '" + normalised + "' does not exist"));
+
+        return coupons.findById(normalised)
+                .map(coupon -> fromCoupon(coupon, normalised, subtotal))
+                .orElseGet(() -> fromLoyaltyVoucher(userId, orderRef, normalised, subtotal));
+    }
+
+    private AppliedDiscount fromCoupon(Coupon coupon, String normalised, BigDecimal subtotal) {
         if (!coupon.isUsable()) {
             throw new ApiException(ErrorCode.COUPON_NOT_APPLICABLE,
                     "Coupon '" + normalised + "' is no longer available");
@@ -238,7 +258,46 @@ public class CheckoutSagaOrchestrator {
                     "Coupon '" + normalised + "' needs an order of at least "
                             + coupon.getMinOrderTotal().toBigInteger() + " VND");
         }
-        return coupon;
+        return new AppliedDiscount(coupon.getCode(), coupon.discountFor(subtotal),
+                DiscountSource.COUPON);
+    }
+
+    /**
+     * Spends a tier voucher on this order.
+     *
+     * <p>Loyalty's refusals are translated into the coupon codes the app already handles, so
+     * the checkout screen needs no second vocabulary for a code it cannot tell apart anyway:
+     * 404 means no such code in either system, and 409 means it exists but cannot be used.
+     */
+    private AppliedDiscount fromLoyaltyVoucher(UUID userId, String orderRef, String code,
+                                               BigDecimal subtotal) {
+        try {
+            LoyaltyClient.ConsumeResponse consumed = loyaltyClient.consume(code,
+                    new LoyaltyClient.ConsumeRequest(userId, orderRef, subtotal));
+            log.info("Order {} consumed loyalty voucher {} for {}", orderRef, code,
+                    consumed.discount());
+            return new AppliedDiscount(code, consumed.discount(), DiscountSource.LOYALTY_VOUCHER);
+        } catch (FeignException ex) {
+            throw switch (ex.status()) {
+                case 404 -> new ApiException(ErrorCode.COUPON_NOT_FOUND,
+                        "Coupon '" + code + "' does not exist");
+                case 409 -> new ApiException(ErrorCode.COUPON_NOT_APPLICABLE,
+                        "Voucher '" + code + "' is no longer available");
+                default -> new ApiException(ErrorCode.SERVICE_UNAVAILABLE,
+                        "Could not check that code right now, please try again");
+            };
+        } catch (Exception ex) {
+            throw new ApiException(ErrorCode.SERVICE_UNAVAILABLE,
+                    "Could not check that code right now, please try again");
+        }
+    }
+
+    /** What the submitted code resolved to, and which system has to be compensated for it. */
+    private record AppliedDiscount(String code, BigDecimal amount, DiscountSource source) {
+
+        static AppliedDiscount none() {
+            return new AppliedDiscount(null, BigDecimal.ZERO, DiscountSource.NONE);
+        }
     }
 
     private Order failOrder(Order order, FailureCode code) {

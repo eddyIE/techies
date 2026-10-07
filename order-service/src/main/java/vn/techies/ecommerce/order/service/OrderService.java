@@ -42,6 +42,7 @@ public class OrderService {
     private final OrderRepository orders;
     private final InventoryClient inventoryClient;
     private final LoyaltyClient loyaltyClient;
+    private final VoucherCompensator voucherCompensator;
     private final PaymentSimulator paymentSimulator;
     private final ProductReviewRepository reviews;
 
@@ -185,6 +186,11 @@ public class OrderService {
             throw new ApiException(ErrorCode.SERVICE_UNAVAILABLE,
                     "Could not cancel right now, please try again");
         }
+
+        // The third release path. inventory already uses one restore for both payment failure
+        // and cancellation, and a voucher has to follow it: nothing went wrong here, so leaving
+        // it consumed would destroy a reward over a change of mind.
+        voucherCompensator.releaseIfHeld(order);
 
         if (order.getPaymentStatus() == PaymentStatus.PAID) {
             paymentSimulator.refund(order.getOrderRef(), order.getTotal());

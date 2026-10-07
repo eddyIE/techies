@@ -272,7 +272,7 @@ Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `ord
   - Verify: test asserts one award per transition and none on any other status change.
   - Files: `order-service/src/main/java/.../client/LoyaltyClient.java`, `OrderService`, test
 
-- [ ] **G2. Vouchers in the checkout saga and on cancellation**
+- [x] **G2. Vouchers in the checkout saga and on cancellation**
   - Acceptance: checkout resolves a submitted code against `coupons` locally first, then falls
     through to loyalty; consume is saga step 3, before the order row; `release` compensates on
     stock failure, payment failure **and user cancellation**, the third path mirroring how one
@@ -292,12 +292,12 @@ Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `ord
   - Files: `ai-service/src/main/java/.../` (~4 files), test
 
 - [ ] **H2. Cache and endpoint in order-service**
-  - Acceptance: `product_review_summaries` keyed on `product_id` with the `review_count` it was
+  - Acceptance: `V11__review_summaries.sql` creates `product_review_summaries` keyed on `product_id` with the `review_count` it was
     generated from; `GET /products/{productId}/review-summary` returns the summary or `null`
     below three reviews; a stale count regenerates; an `ai-service` failure serves the previous
     summary when cached and `null` otherwise, **never** an error.
   - Verify: tests for null-below-three, regeneration on count change, and graceful degradation.
-  - Files: `order-service/.../db/migration/V10__review_summaries.sql`, service, controller, test
+  - Files: `order-service/.../db/migration/V11__review_summaries.sql`, service, controller, test
 
 ## I. Wiring, seed data and docs
 

@@ -52,6 +52,10 @@ public class Order {
     @Column(name = "coupon_code", length = 32)
     private String couponCode;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "discount_source", nullable = false, length = 16)
+    private DiscountSource discountSource;
+
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal discount;
 
@@ -84,7 +88,8 @@ public class Order {
 
     public static Order pending(String orderRef, UUID userId, ShippingAddress address,
                                 PaymentMethod paymentMethod, BigDecimal subtotal,
-                                BigDecimal shippingFee, String couponCode, BigDecimal discount) {
+                                BigDecimal shippingFee, String couponCode, BigDecimal discount,
+                                DiscountSource discountSource) {
         Order order = new Order();
         order.id = UUID.randomUUID();
         order.orderRef = orderRef;
@@ -97,6 +102,7 @@ public class Order {
         order.shippingFee = shippingFee;
         order.couponCode = couponCode;
         order.discount = discount;
+        order.discountSource = discountSource;
         order.total = subtotal.add(shippingFee).subtract(discount);
         Instant now = Instant.now();
         order.createdAt = now;
@@ -148,6 +154,11 @@ public class Order {
     public void complete() {
         this.status = OrderStatus.COMPLETED;
         touch();
+    }
+
+    /** Whether compensation has to hand a voucher back to loyalty-service. */
+    public boolean usedLoyaltyVoucher() {
+        return discountSource == DiscountSource.LOYALTY_VOUCHER;
     }
 
     public boolean isCancellable() {

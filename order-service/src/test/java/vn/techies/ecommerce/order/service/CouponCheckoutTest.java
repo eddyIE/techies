@@ -13,7 +13,9 @@ import vn.techies.ecommerce.order.api.dto.CartDtos.AddCartItemRequest;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.CheckoutRequest;
 import vn.techies.ecommerce.order.client.CatalogClient;
 import vn.techies.ecommerce.order.client.IdentityClient;
+import vn.techies.ecommerce.order.client.FeignErrors;
 import vn.techies.ecommerce.order.client.InventoryClient;
+import vn.techies.ecommerce.order.client.LoyaltyClient;
 import vn.techies.ecommerce.order.domain.Order;
 import vn.techies.ecommerce.order.domain.PaymentMethod;
 
@@ -25,6 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
@@ -49,6 +52,8 @@ class CouponCheckoutTest extends AbstractPostgresTest {
     private CatalogClient catalogClient;
     @MockitoBean
     private InventoryClient inventoryClient;
+    @MockitoBean
+    private LoyaltyClient loyaltyClient;
 
     private UUID userId;
 
@@ -58,6 +63,9 @@ class CouponCheckoutTest extends AbstractPostgresTest {
         given(identityClient.getAddress(any(), any())).willReturn(
                 new IdentityClient.AddressSnapshot(UUID.randomUUID(), "A", "0901234567",
                         "1 Le Loi", "W", "D", "HCM", true));
+        // A code that is not a coupon now falls through to loyalty, which does not know it
+        // either. Without this, these tests would depend on loyalty-service being reachable.
+        willThrow(FeignErrors.status(404)).given(loyaltyClient).consume(any(), any());
         given(catalogClient.batch(any())).willReturn(List.of(new CatalogClient.ProductSnapshot(
                 PRODUCT, "Sản phẩm", new BigDecimal("100000.00"), "t", true)));
         given(inventoryClient.deduct(any()))

@@ -1,6 +1,7 @@
 package vn.techies.ecommerce.order.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -18,6 +19,17 @@ public interface LoyaltyClient {
     @PostMapping("/points")
     AwardResponse award(@RequestBody AwardRequest request);
 
+    /**
+     * Claims the voucher for this order, before payment, so two carts cannot both spend it.
+     * Idempotent on {@code (code, orderRef)}.
+     */
+    @PostMapping("/vouchers/{code}/consume")
+    ConsumeResponse consume(@PathVariable("code") String code, @RequestBody ConsumeRequest request);
+
+    /** Compensation. 409 for a code this order never consumed, like NOTHING_TO_RESTORE. */
+    @PostMapping("/vouchers/{code}/release")
+    ReleaseResponse release(@PathVariable("code") String code, @RequestBody ReleaseRequest request);
+
     /** {@code amountSpent} is {@code subtotal - discount}: the goods, shipping excluded. */
     record AwardRequest(String orderRef, UUID userId, BigDecimal amountSpent) {
     }
@@ -26,5 +38,17 @@ public interface LoyaltyClient {
     }
 
     record VoucherSummary(String code, int tier, int discountPercent) {
+    }
+
+    record ConsumeRequest(UUID userId, String orderRef, BigDecimal subtotal) {
+    }
+
+    record ConsumeResponse(String code, BigDecimal discount) {
+    }
+
+    record ReleaseRequest(String orderRef) {
+    }
+
+    record ReleaseResponse(String code, boolean released) {
     }
 }

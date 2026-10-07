@@ -49,6 +49,7 @@ public class PaymentService {
     private final OrderRepository orders;
     private final CartService cartService;
     private final StockCompensator stockCompensator;
+    private final VoucherCompensator voucherCompensator;
     private final SagaRecorder sagaRecorder;
 
     @Transactional
@@ -129,6 +130,7 @@ public class PaymentService {
         sagaRecorder.record(order.getId(), "6-CHARGE_PAYMENT", SagaStepStatus.FAILED,
                 reason == null ? "reported as failed by the app" : reason);
         stockCompensator.restore(order.getId(), order.getOrderRef(), stockLines(order));
+        voucherCompensator.releaseIfHeld(order);
         order.fail(FailureCode.PAYMENT_FAILED);
         log.warn("ORDER FAILED {} -> PAYMENT_FAILED ({})", order.getOrderRef(), reason);
 

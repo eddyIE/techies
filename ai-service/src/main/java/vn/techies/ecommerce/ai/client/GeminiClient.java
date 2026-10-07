@@ -10,6 +10,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import vn.techies.ecommerce.ai.config.GeminiProperties;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -31,13 +33,20 @@ import java.util.function.Consumer;
  *   error        {error:{message, code}}              mid-stream failure
  * </pre>
  *
- * <p>A turn that calls a tool needs two requests: the first ends with
- * {@code status: requires_action} and a {@code function_call} step; the second supplies the
- * result. The continuation is chained with {@code previous_interaction_id}, which requires
- * {@code store: true} — so Google retains the interaction. We persist nothing ourselves.
+ * <p>A turn that calls a tool needs at least two requests: the first ends with
+ * {@code status: requires_action} and one or more {@code function_call} steps; the second
+ * supplies their results and may itself ask for more. The continuation is chained with
+ * {@code previous_interaction_id}, which requires {@code store: true} — so Google retains the
+ * interaction. We persist nothing ourselves.
+ *
+ * <p>Every event carries a top-level {@code index}, and that index is the only thing that
+ * separates concurrently requested calls from one another.
  */
 @Component
 public class GeminiClient {
+
+    /** The only function this service executes itself. */
+    public static final String SEARCH_PRODUCTS = "search_products";
 
     private static final Logger log = LoggerFactory.getLogger(GeminiClient.class);
 
@@ -69,31 +78,52 @@ public class GeminiClient {
                 "tools", tools);
     }
 
+    /** One executed tool call, ready to be handed back to the model. */
+    public record ToolResult(String callId, String toolName, String resultJson) {
+    }
+
     /**
-     * Continuation after a tool ran, chained to the interaction that requested it.
+     * Continuation after one or more tools ran, chained to the interaction that requested them.
+     *
+     * <p>Every result the interaction asked for goes in a single request. A stream can request
+     * several calls at once — a comparison asks for two searches — and the interaction stays
+     * at {@code status: requires_action} until each one has been answered, so returning only
+     * the first leaves the model waiting and it never writes a word.
      *
      * <p>The system instruction and the tools are both declared again. Chaining on
      * {@code previous_interaction_id} alone was not enough: the reply written after a search
      * is a fresh generation, and without the rules restated it re-listed every product,
      * invented features for them and dropped the pinned pronouns — precisely the turn where
      * those rules matter most.
+     *
+     * <p>An empty {@code tools} list omits the declaration altogether, which is how the caller
+     * stops a model that keeps asking for searches: with nothing to call it has to answer.
      */
-    public Map<String, Object> toolResultRequest(String previousInteractionId, String callId,
-                                                 String toolName, String resultJson,
+    public Map<String, Object> toolResultRequest(String previousInteractionId,
+                                                 List<ToolResult> results,
                                                  String systemInstruction,
                                                  List<Map<String, Object>> tools) {
-        return Map.of(
-                "model", properties.model(),
-                "stream", true,
-                "store", true,
-                "previous_interaction_id", previousInteractionId,
-                "system_instruction", systemInstruction,
-                "tools", tools,
-                "input", List.of(Map.of(
-                        "type", "function_result",
-                        "call_id", callId,
-                        "name", toolName,
-                        "result", List.of(Map.of("type", "text", "text", resultJson)))));
+        List<Map<String, Object>> input = new ArrayList<>();
+        for (ToolResult result : results) {
+            input.add(Map.of(
+                    "type", "function_result",
+                    "call_id", result.callId(),
+                    "name", result.toolName(),
+                    "result", List.of(Map.of("type", "text", "text", result.resultJson()))));
+        }
+
+        // A LinkedHashMap rather than Map.of because `tools` is conditional.
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("model", properties.model());
+        body.put("stream", true);
+        body.put("store", true);
+        body.put("previous_interaction_id", previousInteractionId);
+        body.put("system_instruction", systemInstruction);
+        body.put("input", input);
+        if (!tools.isEmpty()) {
+            body.put("tools", tools);
+        }
+        return body;
     }
 
     /**
@@ -141,7 +171,7 @@ public class GeminiClient {
     public static Map<String, Object> searchProductsTool(List<String> categoryNames) {
         return Map.of(
                 "type", "function",
-                "name", "search_products",
+                "name", SEARCH_PRODUCTS,
                 "description",
                 "Tìm sản phẩm khác trong cửa hàng Techies. Dùng khi khách hỏi về sản phẩm khác, "
                         + "muốn so sánh, tìm theo giá, theo danh mục hoặc xin gợi ý.",

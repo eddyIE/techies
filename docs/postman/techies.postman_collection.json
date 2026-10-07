@@ -3450,7 +3450,7 @@
                 "chat"
               ]
             },
-            "description": "Streams a Vietnamese reply over **Server-Sent Events**.\n\nPostman shows the raw stream rather than parsed events; for a readable view use `curl -N`, or the app's EventSource.\n\n**Skipped during a collection run** unless the variable `RUN_AI` is `true`. Gemini's free tier allows 20 requests per day and a searching turn costs two.",
+            "description": "Streams a Vietnamese reply over **Server-Sent Events**.\n\nPostman shows the raw stream rather than parsed events; for a readable view use `curl -N`, or the app's EventSource.\n\n**Skipped during a collection run** unless the variable `RUN_AI` is `true`. Gemini's free tier allows 20 requests per day - one per plain question, two for a searching turn and up to four for a comparison.",
             "body": {
               "mode": "raw",
               "raw": "{\n  \"productId\": \"{{productId}}\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Sản phẩm này giá bao nhiêu và còn hàng không?\"\n    }\n  ]\n}",
@@ -3518,7 +3518,7 @@
                   "const optedIn = String(pm.variables.get('RUN_AI') || '').toLowerCase() === 'true';",
                   "if (!optedIn) {",
                   "    console.log('Skipping the AI request: set RUN_AI=true to include it.');",
-                  "    console.log('Gemini free tier allows 20 requests/day; a search turn costs two.');",
+                  "    console.log('Gemini free tier allows 20 requests/day; a searching turn costs two, a comparison up to four.');",
                   "    if (typeof pm.execution !== 'undefined' && pm.execution.skipRequest) {",
                   "        pm.execution.skipRequest();",
                   "    }",
@@ -3620,7 +3620,7 @@
                   "const optedIn = String(pm.variables.get('RUN_AI') || '').toLowerCase() === 'true';",
                   "if (!optedIn) {",
                   "    console.log('Skipping the AI request: set RUN_AI=true to include it.');",
-                  "    console.log('Gemini free tier allows 20 requests/day; a search turn costs two.');",
+                  "    console.log('Gemini free tier allows 20 requests/day; a searching turn costs two, a comparison up to four.');",
                   "    if (typeof pm.execution !== 'undefined' && pm.execution.skipRequest) {",
                   "        pm.execution.skipRequest();",
                   "    }",

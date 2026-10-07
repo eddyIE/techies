@@ -244,8 +244,8 @@ def main():
         | Event | Payload | What the app does |
         |---|---|---|
         | `token` | `{"text": "..."}` | Append to the reply, in order |
-        | `tool_start` | `{"tool": "...", "message": "Đang tìm sản phẩm…"}` | Show a searching indicator |
-        | `products` | `{"total", "query", "products": [...]}` | Render cards; link "see all" to the product list. Always arrives after the first `token` |
+        | `tool_start` | `{"tool": "...", "message": "Đang tìm sản phẩm…"}` | Show a searching indicator. Once per turn, however many searches it runs |
+        | `products` | `{"total", "query", "products": [...]}` | Render cards; link "see all" to the product list. At most one per turn, always after the first `token` |
         | `done` | `{"finishReason": "stop"}` | Close the stream |
         | `error` | `{"code", "message"}` | Show the message inline |
 
@@ -270,13 +270,20 @@ def main():
         data: {"finishReason":"stop"}
         ```
 
-        ### Four things that will catch you out
+        ### Five things that will catch you out
 
         **`products.total` equals the number of cards, never more.** At most 5 are returned, to
         fit a phone popup. The search usually matches more, but a count above the cards on
         screen reads as missing products, so the wider total is not sent. For a "see all"
         button, open the product list screen with `query` applied and let that screen state
         its own total — it already does paging and filters.
+
+        One turn sends **at most one** `products` event even when it searched more than once. A
+        comparison ("so sánh X với Y") runs two catalogue searches, and their results are merged
+        into that single event — one card taken from each search in turn, repeats dropped by
+        product id, then capped at 5. So `total` is still exactly the cards you were sent, and
+        `query` is the **first** search's — "See all" after a comparison opens one side of it,
+        which is worth knowing before you label the button.
 
         **`products` always arrives after the first `token`.** Finding the products takes a
         whole extra Gemini call that completes before the reply begins, so the cards used to
@@ -288,14 +295,23 @@ def main():
         **Tapping a card should push a new screen, not replace the current one.** Replacing the
         PDP closes the popup and loses the conversation.
 
+        **`done` never follows zero `token` events.** The server guarantees at least one `token`
+        per turn — if the model produces no text, a short Vietnamese fallback is sent before
+        `done`. So treat an empty bubble at `done` as a bug rather than a state to handle, and
+        do not reach for a timeout to decide the reply is never coming. Some turns used to end
+        with cards and no words at all — that is what this closes.
+
         **Errors can arrive after a 200.** Once streaming starts the status cannot change, so a
         failure becomes an `error` event. Handle both: a non-200 with the usual JSON envelope
         *before* streaming, and an `error` event *during* it. `code` is `RATE_LIMITED`,
         `SERVICE_UNAVAILABLE`, `PRODUCT_NOT_FOUND` or `INTERNAL_ERROR`.
 
-        > **Quota.** The assistant runs on Gemini's free tier: **20 requests per day**, and a
-        > turn that searches costs two. Expect `RATE_LIMITED` in normal use and make the chat
-        > button degrade gracefully — nothing else on the product page depends on it.
+        > **Quota.** The assistant runs on Gemini's free tier: **20 requests per day**. A plain
+        > question costs one request, a turn that searches costs two, and a comparison costs
+        > three or four — the model asks for a second catalogue lookup after reading the first.
+        > Four is the hard ceiling per turn, so the day's budget is nearer five or six
+        > comparisons than twenty questions. Expect `RATE_LIMITED` in normal use and make the
+        > chat button degrade gracefully — nothing else on the product page depends on it.
 
         ### Android
 

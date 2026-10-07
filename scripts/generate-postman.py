@@ -94,7 +94,8 @@ DESC_SIMPLE = (
     "Postman shows the raw stream rather than parsed events; for a readable view use "
     "`curl -N`, or the app's EventSource.\n\n"
     "**Skipped during a collection run** unless the variable `RUN_AI` is `true`. Gemini's "
-    "free tier allows 20 requests per day and a searching turn costs two."
+    "free tier allows 20 requests per day - one per plain question, two for a searching "
+    "turn and up to four for a comparison."
 )
 
 DESC_SEARCH = (
@@ -130,13 +131,14 @@ def sse_example(label, req, body, status=200):
 
 
 # The assistant costs real quota, so it is skipped in a collection run unless the caller
-# opts in with RUN_AI=true. Without this, every Newman run would spend 2-4 of 20 daily
-# requests and the feature would be unusable by the afternoon.
+# opts in with RUN_AI=true. Without this, every Newman run would spend three or more of 20
+# daily requests - a searching turn costs two and a comparison up to four - and the feature
+# would be unusable by the afternoon.
 SKIP_UNLESS_OPTED_IN = [
     "const optedIn = String(pm.variables.get('RUN_AI') || '').toLowerCase() === 'true';",
     "if (!optedIn) {",
     "    console.log('Skipping the AI request: set RUN_AI=true to include it.');",
-    "    console.log('Gemini free tier allows 20 requests/day; a search turn costs two.');",
+    "    console.log('Gemini free tier allows 20 requests/day; a searching turn costs two, a comparison up to four.');",
     "    if (typeof pm.execution !== 'undefined' && pm.execution.skipRequest) {",
     "        pm.execution.skipRequest();",
     "    }",

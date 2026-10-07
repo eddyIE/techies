@@ -11,10 +11,15 @@ Source of requirements: `Java - BT Lớn.xlsx` (sheets: Chức năng, List màn 
 | inventory | Stock levels, atomic deduct / compensating restore | — |
 | order | Cart, checkout saga, mock payment, orders, cancel | identity, catalog, inventory |
 | gateway | Single entry point, JWT validation, routing | identity |
+| ai | Product assistant chat, streamed over SSE | catalog, inventory |
 
-Infrastructure (not capability modules): `discovery-server` (Eureka), `common` (shared DTOs + error model), Postgres, Docker Compose.
+Infrastructure (not capability modules): `discovery-server` (Eureka), `common` (shared DTOs + error model), Postgres, Docker Compose. `ai` needs no schema and no database: it holds no state, and the Gemini API is the only external dependency any module has.
 
-**Build order:** identity, catalog, inventory (parallel) → order → gateway
+**Build order:** identity, catalog, inventory (parallel) → order → gateway → ai
+
+`ai` is last because it is additive. It was written long after the rest (commit `10390dc`) and
+nothing in the brief depends on it, so the backend stays complete and demoable without it.
+See SPEC-ai.md.
 
 ## Dependency direction
 
@@ -23,14 +28,20 @@ gateway ──► (routes to all)
 order ──► identity   (address snapshot)
       ──► catalog    (price + product snapshot)
       ──► inventory  (deduct / restore)
+ai    ──► catalog    (product detail + search)
+      ──► inventory  (stock, for the model only)
 ```
 
-No cycles. `identity`, `catalog` and `inventory` know nothing about `order`.
+No cycles. `identity`, `catalog` and `inventory` know nothing about `order` or `ai`, and `ai`
+reads only: it never writes to another module.
 
 ## Where the complexity lives
 
 `order` owns the only genuinely hard problem in this project: an **orchestrated saga** across
-three services with a compensating transaction. Everything else is deliberately thin CRUD.
+three services with a compensating transaction. Everything else is deliberately thin CRUD,
+with one exception: `ai` is thin in data terms but owns the project's only non-deterministic
+control flow, a tool-calling loop against a model that decides for itself how many catalogue
+lookups a question needs. SPEC-ai.md sets its bounds.
 
 The saga mirrors the Order Flow sheet exactly, including its Failed → Payment Result branch:
 

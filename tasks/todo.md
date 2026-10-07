@@ -265,7 +265,7 @@ Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `ord
 
 ## G. order to loyalty
 
-- [ ] **G1. Award points when an order reaches `COMPLETED`**
+- [x] **G1. Award points when an order reaches `COMPLETED`**
   - Acceptance: `LoyaltyClient` Feign interface; `updateStatus` calls it **only** on the
     transition into `COMPLETED`; a loyalty outage logs and leaves the status change committed,
     because points must never block the lifecycle.

@@ -15,6 +15,7 @@ import vn.techies.ecommerce.order.api.dto.OrderDtos.OrderSummary;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.PageResponse;
 import vn.techies.ecommerce.order.api.dto.OrderDtos.ShippingAddressResponse;
 import vn.techies.ecommerce.order.client.InventoryClient;
+import vn.techies.ecommerce.order.client.LoyaltyClient;
 import vn.techies.ecommerce.order.domain.FailureCode;
 import vn.techies.ecommerce.order.domain.Order;
 import vn.techies.ecommerce.order.domain.OrderItem;
@@ -26,6 +27,7 @@ import vn.techies.ecommerce.order.repository.OrderRepository;
 import vn.techies.ecommerce.order.repository.ProductReviewRepository;
 import vn.techies.ecommerce.order.service.payment.PaymentSimulator;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -39,6 +41,7 @@ public class OrderService {
 
     private final OrderRepository orders;
     private final InventoryClient inventoryClient;
+    private final LoyaltyClient loyaltyClient;
     private final PaymentSimulator paymentSimulator;
     private final ProductReviewRepository reviews;
 
@@ -109,6 +112,7 @@ public class OrderService {
     @Transactional
     public OrderResponse updateStatus(UUID orderId, UUID userId, OrderStatus target) {
         Order order = loadOwned(orderId, userId);
+        OrderStatus before = order.getStatus();
 
         switch (target) {
             case PENDING -> throw new ApiException(ErrorCode.VALIDATION_ERROR,
@@ -120,9 +124,35 @@ public class OrderService {
             case CANCELLED -> order.cancel();
         }
 
+        if (target == OrderStatus.COMPLETED && before != OrderStatus.COMPLETED) {
+            awardLoyaltyPoints(order);
+        }
+
         log.info("Order {} moved to {} by user {} via the demo endpoint",
                 order.getOrderRef(), target, userId);
         return detail(orderId, userId);
+    }
+
+    /**
+     * Credits the order's points, on the transition into COMPLETED and nowhere else. Re-sending
+     * COMPLETED awards nothing here, and loyalty would dedupe on the order ref even if it did.
+     *
+     * <p>A loyalty outage is logged and swallowed. The status change is the customer's order
+     * moving on, and holding that up over a reward would be the wrong trade; the points are
+     * recoverable by re-sending the status, and nothing else depends on them.
+     */
+    private void awardLoyaltyPoints(Order order) {
+        BigDecimal spentOnGoods = order.getSubtotal().subtract(order.getDiscount());
+        try {
+            LoyaltyClient.AwardResponse awarded = loyaltyClient.award(new LoyaltyClient.AwardRequest(
+                    order.getOrderRef(), order.getUserId(), spentOnGoods));
+            log.info("Order {} earned {} points on {}đ of goods; user {} is now tier {}",
+                    order.getOrderRef(), awarded.points(), spentOnGoods, order.getUserId(),
+                    awarded.tier());
+        } catch (Exception ex) {
+            log.error("Could not award loyalty points for {}; the status change stands",
+                    order.getOrderRef(), ex);
+        }
     }
 
     /**

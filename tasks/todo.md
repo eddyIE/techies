@@ -246,7 +246,7 @@ Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `ord
   - Verify: unit tests; a fresh account returns tier 0, balance 0, no vouchers.
   - Files: `loyalty-service/src/main/java/.../api/` (~4 files), test
 
-- [ ] **F5. `POST /loyalty/gifts/{id}/claim` and `/loyalty/claimed-gifts`**
+- [x] **F5. `POST /loyalty/gifts/{id}/claim` and `/loyalty/claimed-gifts`**
   - Acceptance: the five-step local transaction in spec order; `GIFT-XXXX-XXXX` codes, random and
     over an alphabet without `O`/`0`/`I`/`1`/`L`; `gift_name` and `points_spent` snapshotted; all
     four 409s distinct; redemption is terminal, with no status column and no expiry.

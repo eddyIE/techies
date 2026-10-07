@@ -3,10 +3,15 @@ package vn.techies.ecommerce.loyalty.service;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.techies.ecommerce.common.error.ApiException;
+import vn.techies.ecommerce.common.error.ErrorCode;
 import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.AwardRequest;
 import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.AwardResponse;
+import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.ClaimResponse;
+import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.ClaimedGiftResponse;
 import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.GiftResponse;
 import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.MeResponse;
 import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.TierRung;
@@ -27,8 +32,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +45,9 @@ public class LoyaltyService {
 
     /** 1 point per 1.000đ, one way only: points never convert back into a discount. */
     private static final BigDecimal DONG_PER_POINT = BigDecimal.valueOf(1000);
+
+    /** Named in V1__init.sql. Postgres puts it in the error, which is how a re-claim is told apart. */
+    private static final String RE_CLAIM_CONSTRAINT = "ux_gift_redemptions_user_gift";
 
     private final PointsEntryRepository ledger;
     private final TierRepository tiers;
@@ -102,6 +112,82 @@ public class LoyaltyService {
 
         return gifts.findByActiveTrueOrderByPointsCostAsc().stream()
                 .map(gift -> describe(gift, tier, balance, claimed.contains(gift.getId())))
+                .toList();
+    }
+
+    /**
+     * The five-step local transaction from SPEC-loyalty.md. No saga: every table involved is in
+     * this schema, so one rollback undoes the whole thing.
+     *
+     * <p>Order matters. Tier and balance are read first because they refuse without touching
+     * anything; stock is taken before the redemption row so the conditional UPDATE settles a
+     * race; and the UNIQUE on {@code (user_id, gift_id)} settles a re-claim, which is why no
+     * read-then-write check is needed for it.
+     */
+    @Transactional
+    public ClaimResponse claim(UUID userId, UUID giftId) {
+        Gift gift = gifts.findByIdAndActiveTrue(giftId)
+                .orElseThrow(() -> new ApiException(ErrorCode.GIFT_NOT_FOUND,
+                        "No gift " + giftId + " in the catalogue"));
+
+        int tier = tierFor(tiers.findAllByOrderByTierAsc(), ledger.lifetimeOf(userId));
+        if (tier < gift.getMinTier()) {
+            throw new ApiException(ErrorCode.TIER_TOO_LOW,
+                    "Gift " + giftId + " needs tier " + gift.getMinTier() + ", customer is tier " + tier);
+        }
+
+        long balance = ledger.balanceOf(userId);
+        if (balance < gift.getPointsCost()) {
+            throw new ApiException(ErrorCode.INSUFFICIENT_POINTS,
+                    "Gift " + giftId + " costs " + gift.getPointsCost() + ", balance is " + balance);
+        }
+
+        if (gifts.takeOneFromStock(giftId) == 0) {
+            throw new ApiException(ErrorCode.GIFT_OUT_OF_STOCK, "Gift " + giftId + " is out of stock");
+        }
+
+        GiftRedemption redemption = saveRedemption(userId, gift);
+        ledger.save(PointsEntry.spend(userId, gift.getPointsCost(), redemption.getId()));
+
+        log.info("User {} claimed gift {} for {} points, code {}",
+                userId, giftId, gift.getPointsCost(), redemption.getCode());
+        return new ClaimResponse(redemption.getId(), redemption.getCode(), redemption.getGiftName(),
+                redemption.getPointsSpent(), balance - gift.getPointsCost(), redemption.getClaimedAt());
+    }
+
+    /**
+     * Inserts the redemption and turns the re-claim collision into a 409.
+     *
+     * <p>Matched on the constraint name rather than on any integrity violation, so a code
+     * collision stays the 500 it deserves to be instead of being reported as a re-claim.
+     * Throwing from here rolls back the stock already taken above.
+     */
+    private GiftRedemption saveRedemption(UUID userId, Gift gift) {
+        try {
+            return redemptions.saveAndFlush(
+                    GiftRedemption.of(userId, gift, codes.giftCode()));
+        } catch (DataIntegrityViolationException ex) {
+            if (String.valueOf(ex.getMostSpecificCause().getMessage())
+                    .contains(RE_CLAIM_CONSTRAINT)) {
+                throw new ApiException(ErrorCode.GIFT_ALREADY_CLAIMED,
+                        "User " + userId + " already claimed gift " + gift.getId(), ex);
+            }
+            throw ex;
+        }
+    }
+
+    /** Newest first: the screen should open on what was just claimed. */
+    @Transactional(readOnly = true)
+    public List<ClaimedGiftResponse> claimedGiftsFor(UUID userId) {
+        List<GiftRedemption> claimed = redemptions.findByUserIdOrderByClaimedAtDesc(userId);
+        Map<UUID, String> images = gifts.findAllById(
+                        claimed.stream().map(GiftRedemption::getGiftId).toList()).stream()
+                .collect(Collectors.toMap(Gift::getId, Gift::getImageUrl));
+
+        return claimed.stream()
+                .map(redemption -> new ClaimedGiftResponse(redemption.getId(), redemption.getCode(),
+                        redemption.getGiftName(), images.get(redemption.getGiftId()),
+                        redemption.getPointsSpent(), redemption.getClaimedAt()))
                 .toList();
     }
 

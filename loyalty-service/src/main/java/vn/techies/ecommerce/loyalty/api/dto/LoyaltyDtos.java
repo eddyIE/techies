@@ -65,6 +65,29 @@ public final class LoyaltyDtos {
             boolean alreadyClaimed) {
     }
 
+    /** {@code balanceAfter} saves the app a second call just to refresh the points counter. */
+    public record ClaimResponse(
+            UUID redemptionId,
+            String code,
+            String giftName,
+            int pointsSpent,
+            long balanceAfter,
+            Instant claimedAt) {
+    }
+
+    /**
+     * The claimed-gifts screen. {@code giftName} and {@code pointsSpent} are the snapshots taken
+     * at claim time; {@code imageUrl} is read live, since a better photo should reach old claims.
+     */
+    public record ClaimedGiftResponse(
+            UUID redemptionId,
+            String code,
+            String giftName,
+            String imageUrl,
+            int pointsSpent,
+            Instant claimedAt) {
+    }
+
     public record VoucherSummary(
             String code,
             int tier,

@@ -18,6 +18,11 @@ public class CodeGenerator {
 
     private final SecureRandom random = new SecureRandom();
 
+    /** {@code GIFT-XXXX-XXXX}, grouped in fours because a human types it at a till. */
+    public String giftCode() {
+        return "GIFT-" + block(4) + "-" + block(4);
+    }
+
     /** {@code TIER1-XXXXXXXX}, distinguishable from a coupon code at a glance. */
     public String voucherCode(int tier) {
         return "TIER" + tier + "-" + block(8);

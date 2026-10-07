@@ -16,4 +16,6 @@ public interface GiftRedemptionRepository extends JpaRepository<GiftRedemption, 
     Set<UUID> findGiftIdsByUserId(@Param("userId") UUID userId);
 
     List<GiftRedemption> findByUserIdOrderByClaimedAtDesc(UUID userId);
+
+    boolean existsByUserIdAndGiftId(UUID userId, UUID giftId);
 }

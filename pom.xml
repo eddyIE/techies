@@ -25,6 +25,7 @@
     <module>identity-service</module>
     <module>catalog-service</module>
     <module>inventory-service</module>
+    <module>loyalty-service</module>
     <module>order-service</module>
     <module>ai-service</module>
   </modules>

@@ -210,7 +210,7 @@ verification, one commit. Plan: `tasks/plan.md`.
 
 Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `order` needs it.
 
-- [ ] **F1. Module skeleton, schema bootstrap, compose entry**
+- [x] **F1. Module skeleton, schema bootstrap, compose entry**
   - Acceptance: `loyalty-service` declared in the parent POM; Spring Boot app on port 8086;
     Eureka client registers; `spring.flyway.schemas: loyalty` so **Flyway creates the schema
     itself** rather than depending on `docker/postgres/init.sql`, which only runs on a fresh

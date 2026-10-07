@@ -6,11 +6,12 @@ CREATE SCHEMA IF NOT EXISTS identity;
 CREATE SCHEMA IF NOT EXISTS catalog;
 CREATE SCHEMA IF NOT EXISTS inventory;
 CREATE SCHEMA IF NOT EXISTS orders;
+CREATE SCHEMA IF NOT EXISTS loyalty;
 
--- The application user owns all four so Flyway can migrate each independently.
+-- The application user owns all five so Flyway can migrate each independently.
 DO $$
 BEGIN
-    EXECUTE format('GRANT ALL ON SCHEMA identity, catalog, inventory, orders TO %I',
+    EXECUTE format('GRANT ALL ON SCHEMA identity, catalog, inventory, orders, loyalty TO %I',
                    current_setting('POSTGRES_USER', true));
 EXCEPTION WHEN OTHERS THEN
     -- current_setting is unavailable in some entrypoint contexts; the bootstrap user already

@@ -104,6 +104,25 @@ services:
       timeout: 3s
       retries: 30
 
+  # Added after the volume was first initialised, so Flyway creates the schema rather than
+  # init.sql: see spring.flyway.create-schemas in loyalty-service/src/main/resources.
+  loyalty-service:
+    <<: *service-base
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        MODULE: loyalty-service
+    container_name: techies-loyalty
+    depends_on:
+      postgres: {condition: service_healthy}
+      discovery-server: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8086/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
   order-service:
     <<: *service-base
     build:
@@ -163,6 +182,7 @@ services:
       identity-service: {condition: service_healthy}
       catalog-service: {condition: service_healthy}
       inventory-service: {condition: service_healthy}
+      loyalty-service: {condition: service_healthy}
       order-service: {condition: service_healthy}
       ai-service: {condition: service_healthy}
 

@@ -1,0 +1,50 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: loyalty-service
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:techies}
+    username: ${POSTGRES_USER:techies}
+    password: ${POSTGRES_PASSWORD:techies_local_dev}
+    hikari:
+      schema: loyalty
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: loyalty
+    open-in-view: false
+  flyway:
+    enabled: true
+    # create-schemas lets Flyway make the schema itself. docker/postgres/init.sql only runs on a
+    # fresh volume, so a schema added later would otherwise force a full reseed to appear.
+    schemas: loyalty
+    default-schema: loyalty
+    create-schemas: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+  info:
+    title: Techies Loyalty API
+    description: Points ledger, tier ladder, reward vouchers and gift claim codes
+    version: 1.0.0

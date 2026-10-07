@@ -82,3 +82,42 @@ Everything else is strictly sequential.
 
 Per `SPEC.md § Boundaries`: tests written and green, `./mvnw test` passes, no `@Disabled`, no
 endpoint absent from its module spec, one commit per task.
+
+---
+
+## Second wave (2026-10-07): loyalty and the AI review summary
+
+Specs: `docs/SPEC-loyalty.md`, plus new sections in `docs/SPEC-order.md` and `docs/SPEC-ai.md`.
+
+```
+   F. loyalty            ← a leaf: calls nothing, so it blocks only G
+        │
+        ├──► G. order ↔ loyalty      (points on COMPLETED, voucher in the saga)
+        │
+   H. review summary     ← independent of F; ai-service + order-service only
+        │
+        └──► I. gateway route, demo products, docs
+```
+
+**F first, and alone.** `loyalty` calls no other service, so it can be built and proven green
+with no caller at all. That is the whole reason the gift mechanism is a claim code: the rejected
+gift-order design made `loyalty` depend on `order`, which already depends on `loyalty`, and the
+cycle would have forced both to be built together.
+
+**H is parallelisable with F** — it touches only `ai-service` and `order-service` and shares no
+file with the loyalty work. Under `auto` they run in listed order, which is fine.
+
+**I last**, because a gateway route to a service that does not answer yet is untestable, and the
+demo products exist only to walk the tier ladder F defines.
+
+### Risks
+
+| Risk | Why it matters | Mitigation |
+|---|---|---|
+| `init.sql` only runs on a fresh volume | A new schema would need a full reseed mid-project | F1 sets `spring.flyway.schemas` so Flyway creates `loyalty` itself; `init.sql` updated for new volumes only |
+| Points awarded twice | Free money, and it moves a customer up a tier | UNIQUE `(entry_type, reference)` in the ledger; the retry collides instead of crediting |
+| Voucher spent twice | Two orders at one discount | Consume is atomic and happens before payment, mirroring `deduct` |
+| Voucher lost on cancellation | Destroys an earned reward on the one path where nothing failed | `release` is specced on three paths, not two; G2 tests all three |
+| Loyalty outage blocks checkout | A reward feature taking down the core flow | G1 logs and continues; G2 fails the order only if a voucher was actually submitted |
+| Review summary drains the Gemini quota | Paid requests per page view | Cached on `review_count`, so cost is per new review, not per view; endpoint is internal |
+| Tier thresholds unreachable in a demo | The feature cannot be shown | I1 seeds three demo products that step 0 → 1 → 2 → 3 in three orders |

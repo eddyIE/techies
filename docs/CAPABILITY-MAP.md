@@ -9,17 +9,22 @@ Source of requirements: `Java - BT Lớn.xlsx` (sheets: Chức năng, List màn 
 | identity | Register, login, password reset, profile, addresses | — |
 | catalog | Categories, product list, search, product detail | — |
 | inventory | Stock levels, atomic deduct / compensating restore | — |
-| order | Cart, checkout saga, mock payment, orders, cancel | identity, catalog, inventory |
+| order | Cart, checkout saga, mock payment, orders, cancel | identity, catalog, inventory, loyalty |
 | gateway | Single entry point, JWT validation, routing | identity |
 | ai | Product assistant chat, streamed over SSE | catalog, inventory |
+| loyalty | Points ledger, tier ladder, reward vouchers, gift claim codes | — |
 
 Infrastructure (not capability modules): `discovery-server` (Eureka), `common` (shared DTOs + error model), Postgres, Docker Compose. `ai` needs no schema and no database: it holds no state, and the Gemini API is the only external dependency any module has.
 
-**Build order:** identity, catalog, inventory (parallel) → order → gateway → ai
+**Build order:** identity, catalog, inventory, loyalty (parallel) → order → gateway → ai
 
 `ai` is last because it is additive. It was written long after the rest (commit `10390dc`) and
-nothing in the brief depends on it, so the backend stays complete and demoable without it.
-See SPEC-ai.md.
+the one thing that depends on it, the review summary `order` asks it to write, degrades to a
+cached or empty summary when it is unreachable. So the backend stays complete and demoable
+without it. See SPEC-ai.md.
+
+`loyalty` was added later still (2026-10-07) but builds early, because it is a leaf: it calls
+nothing, so only `order` has to wait for it. See SPEC-loyalty.md.
 
 ## Dependency direction
 
@@ -28,12 +33,18 @@ gateway ──► (routes to all)
 order ──► identity   (address snapshot)
       ──► catalog    (price + product snapshot)
       ──► inventory  (deduct / restore)
+      ──► loyalty    (award points, consume / release voucher)
+      ──► ai         (review summary text, best-effort)
 ai    ──► catalog    (product detail + search)
       ──► inventory  (stock, for the model only)
 ```
 
-No cycles. `identity`, `catalog` and `inventory` know nothing about `order` or `ai`, and `ai`
-reads only: it never writes to another module.
+No cycles. `identity`, `catalog`, `inventory` and `loyalty` know nothing about `order` or `ai`,
+and `ai` reads only: it never writes to another module.
+
+`loyalty` is deliberately a leaf. An earlier draft had it place gift orders through `order`,
+which closed the cycle `order → loyalty → order`; claim codes removed the need entirely. See the
+design note in SPEC-loyalty.md.
 
 ## Where the complexity lives
 

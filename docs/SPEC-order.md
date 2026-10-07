@@ -221,6 +221,56 @@ written under, and rendering one needs no call to identity-service.
 Reviews are immutable. With one per line there is nothing to edit — the next purchase is the
 next review.
 
+## AI review summary
+
+A short brief of what customers say about a product, shown as its own section on the product
+page so a shopper does not have to read twenty reviews to learn that the battery is good and
+the thing is heavy.
+
+The summary is owned here, not in `ai-service`, because everything it summarises is already
+local. `ai-service` holds no schema by design (SPEC-ai.md, Data Model) and that property is
+worth keeping, so this service stores the cache and calls out only to have the text written.
+
+**product_review_summaries**
+
+| Column | Type | Notes |
+|---|---|---|
+| product_id | uuid PK | mirrors `catalog.products.id`; no FK, different schema |
+| pros | jsonb | short phrases, rendered as chips |
+| cons | jsonb | same |
+| verdict | varchar(500) | one or two sentences |
+| review_count | int | **the count this summary was generated from** |
+| generated_at | timestamptz | |
+
+`review_count` is the cache key, not a timestamp. A summary is stale when the product's live
+review count no longer matches it, which is precisely when the input changed — a TTL would
+either regenerate identical text on a schedule or serve a summary that is missing yesterday's
+reviews.
+
+| Method | Path | Body | Success | Failure |
+|---|---|---|---|---|
+| GET | `/products/{productId}/review-summary` | — | 200 `{pros, cons, verdict, reviewCount, generatedAt}` or 200 `null` | — |
+
+**Its own endpoint, deliberately.** Folding it into `GET /products/{id}/reviews` would make the
+review list wait on a Gemini round trip the first time anyone opens a product. The app renders
+reviews immediately and fills this section when it arrives, which is also how the summary
+sections customers already recognise behave.
+
+**`null` is a normal answer**, returned for a product with fewer than three reviews. A
+"summary" of one review is that review again, and two is not a consensus. The app shows nothing
+rather than a section that restates what is directly below it.
+
+**It never fails the product page.** If `ai-service` is unreachable, out of quota or slow, the
+response is the previous summary when one is cached and `null` otherwise. A rate-limited
+assistant is expected on this project (SPEC-ai.md, Quota), so a summary that cannot be
+regenerated must degrade to a slightly stale one rather than an error — the reviews underneath
+it are the real content.
+
+**Generation is bounded by review volume, not by traffic.** A product whose review count has
+not changed costs nothing however many times its page is opened, which is what makes this
+affordable against a daily request quota at all. The first read after a new review pays for one
+request.
+
 ## Coupons
 
 Fixed amount off the subtotal, gated on an optional minimum order value, with an active flag

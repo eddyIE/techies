@@ -41,8 +41,11 @@ at most 2000 characters. `@Valid` on the nested `messages` list is what makes th
 | Method | Path | Body | Success | Failure |
 |---|---|---|---|---|
 | POST | `/ai/chat` | `{productId, messages:[{role, content}]}` | 200 `text/event-stream` | 400 validation, 404 `PRODUCT_NOT_FOUND`, 503 `SERVICE_UNAVAILABLE` |
+| POST | `/ai/review-summary` | `{productName, reviews:[{rating, comment}]}` | 200 `{pros, cons, verdict}` | 400 validation, 503 `SERVICE_UNAVAILABLE` |
 
-`/ai/chat` requires a JWT.
+`/ai/chat` requires a JWT. `/ai/review-summary` is internal, reachable only on the compose
+network: `order-service` is its sole caller and no customer should be able to spend the day's
+quota by reloading a product page. The gateway routes neither to it.
 
 One turn has a wall-clock ceiling of `techies.gemini.timeout-seconds` (60),
 and the gateway routes `/api/ai/**` with its own 90s response timeout so the stream is cut by
@@ -202,6 +205,36 @@ inventing features for a searched product whose name and price are all it knows.
 The store the customer is told about is **ElecGo**, the name of the Android app. Techies is the
 backend, and naming it to a customer names a system they have never heard of.
 
+## Review summaries
+
+`POST /ai/review-summary` turns a product's reviews into a short brief: a few `pros`, a few
+`cons`, and a one or two sentence `verdict`, all in Vietnamese. `order-service` owns the reviews
+and the cache (SPEC-order.md, AI review summary); this service only writes the text.
+
+**The reviews arrive in the request body.** This service does not fetch them, which keeps it a
+read-only leaf that calls nobody but `catalog` and `inventory`, and keeps it free of a schema.
+It also means the summary is a pure function of its input, so the same reviews always produce
+comparable output and the endpoint is trivially testable without a database.
+
+**Not streamed.** The chat endpoint streams because a customer is watching a bubble fill. A
+summary is generated once, cached by the caller and then read many times, so there is nothing
+to watch and SSE would only complicate both ends. One request, one JSON response.
+
+**No tools and no web search.** The whole point is a summary of *these* reviews. A model free to
+search would import opinions from the internet and present them as what ElecGo's own customers
+said, which is worse than no summary at all. The prompt is told to use nothing but the supplied
+text and to omit a point rather than infer one.
+
+**Structured, not prose.** `pros` and `cons` come back as short phrases for the app to render as
+chips. Prose would be re-paraphrasing reviews the customer can already scroll, and it would make
+the section unskimmable at phone width. The same reasoning as products being their own SSE event
+rather than model-formatted text.
+
+**Minority opinions survive.** The prompt requires a `con` to be carried whenever several
+reviewers raise it, even against an otherwise positive average. A summary that reads as uniformly
+glowing is the failure mode here: it looks fabricated, which is exactly the impression the
+deliberately uneven seeded ratings in `V7__product_reviews.sql` exist to avoid.
+
 ## Quota
 
 Gemini's free tier allows **5 requests per minute and 20 per day** — and the per-day limit is
@@ -210,7 +243,10 @@ free tier is roughly ten searching turns a day. Exceeding it produces an error t
 `RATE_LIMITED` and shows as "Trợ lý đang bận, vui lòng thử lại sau một phút".
 
 Nothing else on the product page depends on the assistant, so the chat button is expected to
-degrade rather than the page failing with it.
+degrade rather than the page failing with it. A review summary costs one request, but only when
+a product's review count has changed since the last one, so it is charged per new review rather
+than per page view. It degrades the same way: `order-service` serves the previous summary, or
+nothing, rather than failing the page.
 
 The Postman AI folder is skipped in a collection run unless `RUN_AI` is `true`, so a Newman
 run does not spend the day's quota. Casual verification against the live API is not worth a
@@ -278,3 +314,8 @@ request.
       than answered from memory.
 - [ ] A rate-limited turn surfaces as `error` with code `RATE_LIMITED`.
 - [ ] A 25-message or 2001-character request is rejected with 400 before any Gemini call.
+- [ ] `POST /ai/review-summary` with five mixed reviews returns at least one `pro` and one `con`.
+- [ ] A criticism raised by several reviewers appears in `cons` despite a high average rating.
+- [ ] The summary names no product, feature or opinion absent from the supplied reviews.
+- [ ] `pros` and `cons` are short phrases, not sentences restating a review verbatim.
+- [ ] Direct `POST /api/ai/review-summary` through the gateway → 404.

@@ -203,3 +203,132 @@ verification, one commit. Plan: `tasks/plan.md`.
   - Files: `README.md`, per-service springdoc config
 
 > **Checkpoint E:** clean-machine `docker compose up --build` works; all 7 cases green.
+
+---
+
+## F. loyalty service
+
+Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `order` needs it.
+
+- [ ] **F1. Module skeleton, schema bootstrap, compose entry**
+  - Acceptance: `loyalty-service` declared in the parent POM; Spring Boot app on port 8086;
+    Eureka client registers; `spring.flyway.schemas: loyalty` so **Flyway creates the schema
+    itself** rather than depending on `docker/postgres/init.sql`, which only runs on a fresh
+    volume and would otherwise force a full reseed; `loyalty` still added to `init.sql` for new
+    volumes; compose service with an actuator healthcheck and no host-published port.
+  - Verify: `docker compose up -d loyalty-service` reaches healthy on the **existing** volume
+    without `--clean`; service shows `UP` in Eureka.
+  - Files: `pom.xml`, `loyalty-service/` (~5 files), `docker/postgres/init.sql`, `docker-compose.yml`
+
+- [ ] **F2. `V1__init.sql` — five tables and the seed catalogue**
+  - Acceptance: `points_ledger` (signed `points`, `ck_points_sign`, UNIQUE `(entry_type,
+    reference)`), `tiers` (3 rows: 10000/30000/60000 at 10/30/50%), `gifts`,
+    `gift_redemptions` (UNIQUE `(user_id, gift_id)`, UNIQUE `code`), `tier_vouchers`
+    (UNIQUE `(user_id, tier)`). Seed gifts cover **all four** claim rejection branches per the
+    spec: ≥2 at `min_tier` 0, ≥1 per tier 1/2/3, ≥1 at `stock` 0, ≥1 priced above any
+    reachable balance.
+  - Verify: migration applies clean; a test asserts each seeded branch exists by query.
+  - Files: `loyalty-service/src/main/resources/db/migration/V1__init.sql`
+
+- [ ] **F3. Ledger, tier derivation, `POST /loyalty/points`**
+  - Acceptance: balance `SUM(points)` and lifetime `SUM(points) WHERE points > 0`, both derived,
+    nothing stored; `points = floor((subtotal - discount) / 1000)`; award idempotent on
+    `(ORDER_EARN, orderRef)`; crossing one or more thresholds issues one voucher per rung
+    crossed, in the same transaction, idempotent on `(user_id, tier)`.
+  - Verify: unit tests for the earning, idempotency and tier criteria in SPEC-loyalty.md,
+    including one order crossing tiers 1 and 2 together.
+  - Files: `loyalty-service/src/main/java/.../loyalty/` (~6 files), test
+
+- [ ] **F4. Read endpoints: `/loyalty/me`, `/loyalty/gifts`, `/loyalty/vouchers`**
+  - Acceptance: `me` returns `lifetimePoints`, `balance`, `tier` 0-3, `pointsToNextTier` and the
+    `tiers` ladder; `gifts` returns per-user `eligible` and `alreadyClaimed`; tier is **never
+    named**, only numbered.
+  - Verify: unit tests; a fresh account returns tier 0, balance 0, no vouchers.
+  - Files: `loyalty-service/src/main/java/.../api/` (~4 files), test
+
+- [ ] **F5. `POST /loyalty/gifts/{id}/claim` and `/loyalty/claimed-gifts`**
+  - Acceptance: the five-step local transaction in spec order; `GIFT-XXXX-XXXX` codes, random and
+    over an alphabet without `O`/`0`/`I`/`1`/`L`; `gift_name` and `points_spent` snapshotted; all
+    four 409s distinct; redemption is terminal, with no status column and no expiry.
+  - Verify: tests for each 409; lifetime unchanged after a claim; 10 parallel claims of a
+    1-stock gift by 10 users leave exactly 1 winner and `stock` 0; two codes are not sequential.
+  - Files: `loyalty-service/src/main/java/.../loyalty/` (~4 files), test
+
+- [ ] **F6. Voucher `consume` and `release`**
+  - Acceptance: atomic consume before payment; idempotent on `(code, order_ref)`; `release`
+    reverses it and returns 409 `NOTHING_TO_RELEASE` for a code never consumed; both endpoints
+    internal only.
+  - Verify: tests; two parallel consumes of one code leave exactly one winner.
+  - Files: `loyalty-service/src/main/java/.../loyalty/` (~3 files), test
+
+> **Checkpoint F:** loyalty is complete and green standing alone, with no caller.
+
+## G. order to loyalty
+
+- [ ] **G1. Award points when an order reaches `COMPLETED`**
+  - Acceptance: `LoyaltyClient` Feign interface; `updateStatus` calls it **only** on the
+    transition into `COMPLETED`; a loyalty outage logs and leaves the status change committed,
+    because points must never block the lifecycle.
+  - Verify: test asserts one award per transition and none on any other status change.
+  - Files: `order-service/src/main/java/.../client/LoyaltyClient.java`, `OrderService`, test
+
+- [ ] **G2. Vouchers in the checkout saga and on cancellation**
+  - Acceptance: checkout resolves a submitted code against `coupons` locally first, then falls
+    through to loyalty; consume is saga step 3, before the order row; `release` compensates on
+    stock failure, payment failure **and user cancellation**, the third path mirroring how one
+    `restore` already serves both failure and cancellation in `SPEC-inventory.md`; the discount
+    is snapshotted onto the order like a coupon discount.
+  - Verify: tests for all three release paths; a voucher survives a declined payment unconsumed.
+  - Files: `order-service/src/main/java/.../service/` (~3 files), test
+
+## H. AI review summary
+
+- [ ] **H1. `POST /ai/review-summary` in ai-service**
+  - Acceptance: reviews arrive in the request body so the service fetches nothing and keeps its
+    no-schema property; returns `{pros, cons, verdict}` as short Vietnamese phrases; no tools and
+    no web search; grounded strictly in the supplied text; a criticism several reviewers raise
+    survives a high average; internal only, not gateway-routed.
+  - Verify: the five acceptance criteria in SPEC-ai.md; no live API call in the unit tests.
+  - Files: `ai-service/src/main/java/.../` (~4 files), test
+
+- [ ] **H2. Cache and endpoint in order-service**
+  - Acceptance: `product_review_summaries` keyed on `product_id` with the `review_count` it was
+    generated from; `GET /products/{productId}/review-summary` returns the summary or `null`
+    below three reviews; a stale count regenerates; an `ai-service` failure serves the previous
+    summary when cached and `null` otherwise, **never** an error.
+  - Verify: tests for null-below-three, regeneration on count change, and graceful degradation.
+  - Files: `order-service/.../db/migration/V10__review_summaries.sql`, service, controller, test
+
+## I. Wiring, seed data and docs
+
+- [ ] **I1. Gateway route and demo products**
+  - Acceptance: `/api/loyalty/**` routed to `loyalty-service` with JWT validation and
+    `X-User-Id` injection; `/loyalty/points`, `/loyalty/vouchers/*/consume` and `*/release`
+    **not** routed, and neither is `/ai/review-summary`; catalog seeds the three demo products
+    at 10M/20M/30M in their own category; inventory stocks them at 999.
+  - Verify: `GET /api/loyalty/me` with a token returns 200; `POST /api/loyalty/points` returns
+    404; buying Demo A then completing the order lands the account on tier 1.
+  - Files: `api-gateway/src/main/resources/application.yml`, catalog `V6__demo_products.sql`,
+    inventory `V4__demo_stock.sql`, `docs/SEED-IDS.md`
+
+- [ ] **I2. Correct the stale Gemini quota claims**
+  - Acceptance: the free tier's "20 requests per day" is replaced everywhere by the paid-tier
+    reality: the per-project RPM/TPM/RPD are read from AI Studio rather than hardcoded, and
+    grounding with Google Search is billed on its **own monthly allowance** shared across the
+    Gemini 3.x family, not against the model's daily requests. Fixed in all five places that
+    repeat it, keeping `docs/API.md` byte-identical with its generator.
+  - Verify: `grep -rn '20 per day\|20 requests per day' docs/ scripts/` returns nothing.
+  - Files: `docs/SPEC-ai.md`, `docs/API.md`, `scripts/generate-api-docs.py`,
+    `scripts/generate-postman.py`, `docs/postman/README.md`
+  - Note: ask the user for their project's actual RPM/RPD if a concrete figure is wanted.
+
+- [ ] **I3. Regenerate the API docs and extend the demo**
+  - Acceptance: `docs/API.md` and the Postman collection carry every new endpoint; `docs/DEMO.md`
+    gains the tier walk (three orders, hand-pushed to `COMPLETED`) and a gift claim showing the
+    code and the re-claim refusal; `docs/EXTENSIONS.md` records delivered gifts and gift
+    collection tracking as deliberate non-goals with their cost.
+  - Verify: run every new `DEMO.md` command against the live stack; outputs match the doc.
+  - Files: `docs/API.md`, `docs/postman/`, `docs/DEMO.md`, `docs/EXTENSIONS.md`
+
+> **Checkpoint I:** a fresh account can be walked from tier 0 to tier 3 and claim a gift, end to
+> end through the gateway, using only commands copied from `docs/DEMO.md`.

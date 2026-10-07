@@ -254,7 +254,7 @@ Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `ord
     1-stock gift by 10 users leave exactly 1 winner and `stock` 0; two codes are not sequential.
   - Files: `loyalty-service/src/main/java/.../loyalty/` (~4 files), test
 
-- [ ] **F6. Voucher `consume` and `release`**
+- [x] **F6. Voucher `consume` and `release`**
   - Acceptance: atomic consume before payment; idempotent on `(code, order_ref)`; `release`
     reverses it and returns 409 `NOTHING_TO_RELEASE` for a code never consumed; both endpoints
     internal only.

@@ -11,6 +11,10 @@ import vn.techies.ecommerce.common.error.ErrorCode;
 import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.AwardRequest;
 import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.AwardResponse;
 import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.ClaimResponse;
+import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.ConsumeRequest;
+import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.ConsumeResponse;
+import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.ReleaseRequest;
+import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.ReleaseResponse;
 import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.ClaimedGiftResponse;
 import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.GiftResponse;
 import vn.techies.ecommerce.loyalty.api.dto.LoyaltyDtos.MeResponse;
@@ -30,6 +34,7 @@ import vn.techies.ecommerce.loyalty.repository.TierVoucherRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +50,8 @@ public class LoyaltyService {
 
     /** 1 point per 1.000đ, one way only: points never convert back into a discount. */
     private static final BigDecimal DONG_PER_POINT = BigDecimal.valueOf(1000);
+
+    private static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
 
     /** Named in V1__init.sql. Postgres puts it in the error, which is how a re-claim is told apart. */
     private static final String RE_CLAIM_CONSTRAINT = "ux_gift_redemptions_user_gift";
@@ -238,6 +245,73 @@ public class LoyaltyService {
                     rung.getTier(), voucher.getCode(), voucher.getDiscountPercent(), userId);
         }
         return issued;
+    }
+
+    /**
+     * Claims the voucher for an order, before payment. The atomic UPDATE is the guard: two
+     * checkouts submitting one code cannot both get a discount.
+     *
+     * <p>Idempotent on {@code (code, orderRef)}, so order-service retrying a timed-out call
+     * gets the same discount back rather than a refusal for a voucher it already holds.
+     */
+    @Transactional
+    public ConsumeResponse consume(String code, ConsumeRequest request) {
+        TierVoucher voucher = vouchers.findById(code)
+                .orElseThrow(() -> new ApiException(ErrorCode.VOUCHER_NOT_FOUND,
+                        "No voucher " + code));
+
+        if (!voucher.getUserId().equals(request.userId())) {
+            throw new ApiException(ErrorCode.VOUCHER_NOT_OWNED,
+                    "Voucher " + code + " belongs to another customer");
+        }
+        if (voucher.getExpiresAt() != null && voucher.getExpiresAt().isBefore(Instant.now())) {
+            throw new ApiException(ErrorCode.VOUCHER_EXPIRED,
+                    "Voucher " + code + " expired at " + voucher.getExpiresAt());
+        }
+
+        BigDecimal discount = discountOn(request.subtotal(), voucher.getDiscountPercent());
+
+        if (request.orderRef().equals(voucher.getConsumedOrderRef())) {
+            log.info("Voucher {} already consumed by order {}; returning the same discount",
+                    code, request.orderRef());
+            return new ConsumeResponse(code, discount);
+        }
+        if (vouchers.consumeIfUnspent(code, request.orderRef()) == 0) {
+            throw new ApiException(ErrorCode.VOUCHER_ALREADY_CONSUMED,
+                    "Voucher " + code + " was already spent on order " + voucher.getConsumedOrderRef());
+        }
+
+        log.info("Order {} consumed voucher {} for a discount of {}",
+                request.orderRef(), code, discount);
+        return new ConsumeResponse(code, discount);
+    }
+
+    /**
+     * The compensating transaction, called on all three unwinding paths: stock failure, payment
+     * failure, and cancelling a confirmed order. Releasing a voucher nobody spent would invent
+     * one, so that is a refusal rather than a silent success, exactly as restoring stock is.
+     */
+    @Transactional
+    public ReleaseResponse release(String code, ReleaseRequest request) {
+        if (!vouchers.existsById(code)) {
+            throw new ApiException(ErrorCode.VOUCHER_NOT_FOUND, "No voucher " + code);
+        }
+        if (vouchers.releaseIfHeldBy(code, request.orderRef()) == 0) {
+            throw new ApiException(ErrorCode.NOTHING_TO_RELEASE,
+                    "Voucher " + code + " is not held by order " + request.orderRef());
+        }
+
+        log.info("Released voucher {} from order {}", code, request.orderRef());
+        return new ReleaseResponse(code, true);
+    }
+
+    /**
+     * Floored to whole đồng. The result is snapshotted onto the order as its discount, where
+     * ck_orders_discount_within_subtotal requires it not to exceed the subtotal.
+     */
+    private static BigDecimal discountOn(BigDecimal subtotal, int percent) {
+        return subtotal.multiply(BigDecimal.valueOf(percent))
+                .divide(ONE_HUNDRED, 0, RoundingMode.FLOOR);
     }
 
     private static GiftResponse describe(Gift gift, int tier, long balance, boolean alreadyClaimed) {

@@ -88,6 +88,22 @@ public final class LoyaltyDtos {
             Instant claimedAt) {
     }
 
+    /** {@code subtotal} is the goods total the percentage applies to, shipping excluded. */
+    public record ConsumeRequest(
+            @NotNull UUID userId,
+            @NotBlank @Size(max = 20) String orderRef,
+            @NotNull @DecimalMin("0") BigDecimal subtotal) {
+    }
+
+    public record ConsumeResponse(String code, BigDecimal discount) {
+    }
+
+    public record ReleaseRequest(@NotBlank @Size(max = 20) String orderRef) {
+    }
+
+    public record ReleaseResponse(String code, boolean released) {
+    }
+
     public record VoucherSummary(
             String code,
             int tier,

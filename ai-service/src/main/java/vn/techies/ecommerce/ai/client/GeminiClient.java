@@ -127,6 +127,36 @@ public class GeminiClient {
     }
 
     /**
+     * One-shot text request: no tools, no chaining, and nothing stored.
+     *
+     * <p>Still streamed, because that is the transport this client is built and proven against.
+     * The caller just concatenates the pieces instead of forwarding them.
+     *
+     * <p>{@code store} is false: nothing chains to this interaction, so keeping it server side
+     * would only leave state behind.
+     */
+    public Map<String, Object> textRequest(String systemInstruction, String userText) {
+        return Map.of(
+                "model", properties.model(),
+                "stream", true,
+                "store", false,
+                "system_instruction", systemInstruction,
+                "input", List.of(Map.of("type", "text", "text", userText)));
+    }
+
+    /** Runs a request and returns the whole reply as one string. Blocks, like {@link #stream}. */
+    public String completeText(Map<String, Object> body) {
+        StringBuilder text = new StringBuilder();
+        stream(body, event -> {
+            if ("step.delta".equals(event.path("event_type").asText())
+                    && "text".equals(event.path("delta").path("type").asText())) {
+                text.append(event.path("delta").path("text").asText(""));
+            }
+        });
+        return text.toString();
+    }
+
+    /**
      * Streams one request, invoking {@code onEvent} for each parsed SSE payload.
      * Blocks until the stream completes, so callers run it on their own thread.
      */

@@ -283,7 +283,7 @@ Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `ord
 
 ## H. AI review summary
 
-- [ ] **H1. `POST /ai/review-summary` in ai-service**
+- [x] **H1. `POST /ai/review-summary` in ai-service**
   - Acceptance: reviews arrive in the request body so the service fetches nothing and keeps its
     no-schema property; returns `{pros, cons, verdict}` as short Vietnamese phrases; no tools and
     no web search; grounded strictly in the supplied text; a criticism several reviewers raise

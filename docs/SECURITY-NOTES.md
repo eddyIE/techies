@@ -82,10 +82,15 @@ constrains a cooperative model, it does not stop a jailbroken one.
 Tell demo users not to type anything personal into the chat. `GEMINI_API_KEY` lives in `.env`,
 which is gitignored; a leaked key is someone else spending your quota, not a data breach.
 
-**Quota is a denial-of-service surface.** The free tier allows 20 requests per day and a turn
-that searches costs two, so roughly ten searching turns exhaust it. Authentication ties abuse
-to an account, but one logged-in user can still empty the day's quota in a minute. A per-user
-cap is the obvious next step if this is ever left running unattended.
+**Quota is both a denial-of-service and a spending surface.** The key has billing enabled, so
+a turn that used to fail when the free allowance ran out now costs money instead. A searching
+turn is two requests and a comparison up to four. Authentication ties abuse to an account, but
+one logged-in user can still run up a bill or hit the project's rate limit in a minute. A
+per-user cap is the obvious next step if this is ever left running unattended.
+
+`/ai/review-summary` is not routed by the gateway for the same reason: it was briefly
+reachable with any valid token, which let any logged-in user spend the quota by reloading a
+product page.
 
 ## Other accepted limitations
 

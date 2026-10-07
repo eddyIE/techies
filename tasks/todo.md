@@ -311,7 +311,7 @@ Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `ord
   - Files: `api-gateway/src/main/resources/application.yml`, catalog `V6__demo_products.sql`,
     inventory `V4__demo_stock.sql`, `docs/SEED-IDS.md`
 
-- [ ] **I2. Correct the stale Gemini quota claims**
+- [x] **I2. Correct the stale Gemini quota claims**
   - Acceptance: the free tier's "20 requests per day" is replaced everywhere by the paid-tier
     reality: the per-project RPM/TPM/RPD are read from AI Studio rather than hardcoded, and
     grounding with Google Search is billed on its **own monthly allowance** shared across the

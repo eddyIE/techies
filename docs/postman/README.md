@@ -52,12 +52,11 @@ folder 8 holds those.
 Folder **7. AI assistant** is skipped during a collection run unless you set the collection
 variable `RUN_AI` to `true`.
 
-The assistant runs on Gemini's free tier: **20 requests per day**. A plain question costs one,
-a turn that searches costs two, and a comparison costs three or four — the model asks for a
-second catalogue lookup after reading the first — so the real budget is nearer five or six
-comparisons than twenty questions. Without the guard, every Newman run would spend three or
-more of them and the feature would stop working by the afternoon. Verified: a default run
-never reaches `/ai/chat`.
+The assistant runs on a key with billing enabled, so every request costs money and the
+project's rate limit is reachable. A plain question costs one request, a turn that searches
+costs two, and a comparison costs three or four — the model asks for a second catalogue
+lookup after reading the first. Without the guard, every Newman run would spend three or more.
+Verified: a default run never reaches `/ai/chat`.
 
 To actually exercise it, set `RUN_AI` to `true` and send the request on its own rather than
 through the Runner.

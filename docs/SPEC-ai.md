@@ -237,10 +237,20 @@ deliberately uneven seeded ratings in `V7__product_reviews.sql` exist to avoid.
 
 ## Quota
 
-Gemini's free tier allows **5 requests per minute and 20 per day** — and the per-day limit is
-the one that bites. A searching turn costs two requests and a comparison three or more, so the
-free tier is roughly ten searching turns a day. Exceeding it produces an error the app maps to
-`RATE_LIMITED` and shows as "Trợ lý đang bận, vui lòng thử lại sau một phút".
+This project's key has billing enabled, so the limits are the paid tier's rather than the
+free one's. They are set per project and per model, they change, and they are not worth
+hardcoding here: read the current RPM, TPM and RPD for `gemini-3.8-flash` in AI Studio. What
+matters architecturally is that a limit exists and is reachable. A plain question costs one
+request, a searching turn two, and a comparison three or four, so a demo can still walk into
+one. Exceeding it produces an error the app maps to `RATE_LIMITED` and shows as
+"Trợ lý đang bận, vui lòng thử lại sau một phút".
+
+**Grounding with Google Search is billed separately.** It does not count against the model's
+request quota at all: it has its own monthly allowance of free search requests, shared across
+the whole Gemini 3.x family, and is charged per thousand after that. So turning `web-search`
+off saves grounding spend and nothing else, and leaving it on cannot exhaust the model quota.
+See https://ai.google.dev/gemini-api/docs/rate-limits and
+https://ai.google.dev/gemini-api/docs/pricing.
 
 Nothing else on the product page depends on the assistant, so the chat button is expected to
 degrade rather than the page failing with it. A review summary costs one request, but only when
@@ -249,8 +259,8 @@ than per page view. It degrades the same way: `order-service` serves the previou
 nothing, rather than failing the page.
 
 The Postman AI folder is skipped in a collection run unless `RUN_AI` is `true`, so a Newman
-run does not spend the day's quota. Casual verification against the live API is not worth a
-request.
+run spends nothing. Requests are no longer free, so casual verification against the live API
+is not worth making.
 
 ## Rules
 

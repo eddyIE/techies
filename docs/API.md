@@ -233,12 +233,14 @@ failure becomes an `error` event. Handle both: a non-200 with the usual JSON env
 *before* streaming, and an `error` event *during* it. `code` is `RATE_LIMITED`,
 `SERVICE_UNAVAILABLE`, `PRODUCT_NOT_FOUND` or `INTERNAL_ERROR`.
 
-> **Quota.** The assistant runs on Gemini's free tier: **20 requests per day**. A plain
-> question costs one request, a turn that searches costs two, and a comparison costs
-> three or four — the model asks for a second catalogue lookup after reading the first.
-> Four is the hard ceiling per turn, so the day's budget is nearer five or six
-> comparisons than twenty questions. Expect `RATE_LIMITED` in normal use and make the
-> chat button degrade gracefully — nothing else on the product page depends on it.
+> **Quota.** The assistant runs on a Gemini key with billing enabled, so requests cost
+> money and the project's own rate limit still applies — read the current RPM and RPD
+> for the model in AI Studio rather than assuming a number. A plain question costs one
+> request, a turn that searches costs two, and a comparison costs three or four, which
+> is the hard ceiling per turn. Grounding with Google Search is billed on its own
+> monthly allowance and does not count against the model's requests at all. Handle
+> `RATE_LIMITED` and make the chat button degrade gracefully — nothing else on the
+> product page depends on it.
 
 ### Android
 
@@ -333,7 +335,7 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "email": "fe-demo-f76014@techies.vn",
+  "email": "fe-demo-534273@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -344,8 +346,8 @@ Creates an account. Email is case-insensitive and must be unique.
 
 ```json
 {
-  "userId": "869bccfc-d51c-454a-a2b8-25aeb6ef21db",
-  "email": "fe-demo-f76014@techies.vn"
+  "userId": "e88d6438-22cc-4c41-a082-5862d4734df6",
+  "email": "fe-demo-534273@techies.vn"
 }
 ```
 
@@ -360,7 +362,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "email": "fe-demo-f76014@techies.vn",
+  "email": "fe-demo-534273@techies.vn",
   "password": "password1",
   "fullName": "Nguyen Van A",
   "phone": "0901234567"
@@ -371,7 +373,7 @@ Registering an existing email, including in different casing.
 
 ```json
 {
-  "timestamp": "2026-10-05T16:11:27.789421092Z",
+  "timestamp": "2026-10-07T11:29:57.624002961Z",
   "status": 409,
   "code": "EMAIL_ALREADY_EXISTS",
   "message": "An account with this email already exists",
@@ -401,14 +403,14 @@ Shows the `fieldErrors` map you bind to form fields.
 
 ```json
 {
-  "timestamp": "2026-10-05T16:11:27.808175050Z",
+  "timestamp": "2026-10-07T11:29:57.638438169Z",
   "status": 400,
   "code": "VALIDATION_ERROR",
   "message": "Request validation failed",
   "path": "/auth/register",
   "fieldErrors": {
-    "phone": "must be 9-11 digits",
     "email": "must be a well-formed email address",
+    "phone": "must be 9-11 digits",
     "fullName": "must not be blank"
   }
 }
@@ -427,7 +429,7 @@ Returns the token plus the user, so Login need not call `/users/me` after.
 
 ```json
 {
-  "email": "fe-demo-f76014@techies.vn",
+  "email": "fe-demo-534273@techies.vn",
   "password": "password1"
 }
 ```
@@ -440,8 +442,8 @@ Returns the token plus the user, so Login need not call `/users/me` after.
   "tokenType": "Bearer",
   "expiresIn": 2592000,
   "user": {
-    "id": "869bccfc-d51c-454a-a2b8-25aeb6ef21db",
-    "email": "fe-demo-f76014@techies.vn",
+    "id": "e88d6438-22cc-4c41-a082-5862d4734df6",
+    "email": "fe-demo-534273@techies.vn",
     "fullName": "Nguyen Van A",
     "phone": "0901234567",
     "avatarUrl": null
@@ -460,7 +462,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "email": "fe-demo-f76014@techies.vn",
+  "email": "fe-demo-534273@techies.vn",
   "password": "wrongpassword1"
 }
 ```
@@ -469,7 +471,7 @@ Identical response whether the email is unknown or the password is wrong, so the
 
 ```json
 {
-  "timestamp": "2026-10-05T16:11:28.175719175Z",
+  "timestamp": "2026-10-07T11:29:58.035384420Z",
   "status": 401,
   "code": "INVALID_CREDENTIALS",
   "message": "Email or password is incorrect",
@@ -488,7 +490,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-f76014@techies.vn"
+  "email": "fe-demo-534273@techies.vn"
 }
 ```
 
@@ -496,7 +498,7 @@ Step 1 of the password reset flow.
 
 ```json
 {
-  "email": "fe-demo-f76014@techies.vn",
+  "email": "fe-demo-534273@techies.vn",
   "exists": true
 }
 ```
@@ -555,8 +557,8 @@ For the Profile screen.
 
 ```json
 {
-  "id": "869bccfc-d51c-454a-a2b8-25aeb6ef21db",
-  "email": "fe-demo-f76014@techies.vn",
+  "id": "e88d6438-22cc-4c41-a082-5862d4734df6",
+  "email": "fe-demo-534273@techies.vn",
   "fullName": "Nguyen Van A",
   "phone": "0901234567",
   "avatarUrl": null
@@ -583,8 +585,8 @@ Name and phone only. Email cannot change — it is the login identifier.
 
 ```json
 {
-  "id": "869bccfc-d51c-454a-a2b8-25aeb6ef21db",
-  "email": "fe-demo-f76014@techies.vn",
+  "id": "e88d6438-22cc-4c41-a082-5862d4734df6",
+  "email": "fe-demo-534273@techies.vn",
   "fullName": "Nguyen Van B",
   "phone": "0909999999",
   "avatarUrl": null
@@ -602,7 +604,7 @@ What the app gets when the token is missing or expired.
 
 ```json
 {
-  "timestamp": "2026-10-05T16:11:28.257258759Z",
+  "timestamp": "2026-10-07T11:29:58.323060336Z",
   "status": 401,
   "code": "UNAUTHENTICATED",
   "message": "Authentication required",
@@ -647,7 +649,7 @@ The user's first address becomes the default automatically, so Checkout always h
 
 ```json
 {
-  "id": "0925f47c-bdb0-4122-8490-8231a9c89919",
+  "id": "b3dab7e8-3497-4017-bbb0-96390c519796",
   "recipientName": "Nguyen Van B",
   "phone": "0907654321",
   "line1": "12 Nguyen Hue",
@@ -670,7 +672,7 @@ Default first, then newest. Use the first entry to preselect at Checkout.
 ```json
 [
   {
-    "id": "0925f47c-bdb0-4122-8490-8231a9c89919",
+    "id": "b3dab7e8-3497-4017-bbb0-96390c519796",
     "recipientName": "Nguyen Van B",
     "phone": "0907654321",
     "line1": "12 Nguyen Hue",
@@ -786,8 +788,8 @@ Searching "điện thoại" will not return all phones; use `categoryId` for tha
   ],
   "page": 0,
   "size": 2,
-  "totalElements": 60,
-  "totalPages": 30
+  "totalElements": 63,
+  "totalPages": 32
 }
 ```
 
@@ -880,7 +882,7 @@ Includes the description and image gallery.
 
 ### Product detail — gone
 
-`GET /products/9158eb65-4812-4cf8-949b-5795c140d808` · **Public — no token** · responds `404`
+`GET /products/d3edadc5-ddfb-46dd-8120-29c229d8bd7a` · **Public — no token** · responds `404`
 
 Unknown or delisted products return 404.
 
@@ -888,11 +890,11 @@ Unknown or delisted products return 404.
 
 ```json
 {
-  "timestamp": "2026-10-05T16:11:28.588256134Z",
+  "timestamp": "2026-10-07T11:29:58.645312712Z",
   "status": 404,
   "code": "PRODUCT_NOT_FOUND",
   "message": "Product not found",
-  "path": "/products/9158eb65-4812-4cf8-949b-5795c140d808"
+  "path": "/products/d3edadc5-ddfb-46dd-8120-29c229d8bd7a"
 }
 ```
 
@@ -908,7 +910,7 @@ For the in-stock badge on Product Detail. This is the only public stock endpoint
 ```json
 {
   "productId": "759d9034-b058-5375-aa35-cadf437332c3",
-  "available": 39,
+  "available": 36,
   "inStock": true
 }
 ```
@@ -958,14 +960,14 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "f8401554-af57-46bc-8c1a-4e76ce3399a7",
+      "id": "52153074-d12d-4060-b632-5c062951dd0d",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
       "quantity": 2,
       "lineTotal": 59980000.0,
       "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
-      "available": 39
+      "available": 36
     }
   ],
   "subtotal": 59980000.0,
@@ -976,7 +978,7 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 
 ### Change quantity
 
-`PUT /cart/items/f8401554-af57-46bc-8c1a-4e76ce3399a7` · **Bearer token required** · responds `200`
+`PUT /cart/items/52153074-d12d-4060-b632-5c062951dd0d` · **Bearer token required** · responds `200`
 
 `quantity: 0` removes the line. `DELETE /cart/items/{itemId}` does the same and returns `204`.
 
@@ -994,14 +996,14 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "f8401554-af57-46bc-8c1a-4e76ce3399a7",
+      "id": "52153074-d12d-4060-b632-5c062951dd0d",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
       "quantity": 1,
       "lineTotal": 29990000.0,
       "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
-      "available": 39
+      "available": 36
     }
   ],
   "subtotal": 29990000.0,
@@ -1026,14 +1028,14 @@ Every response returns the **whole cart**, so the UI can re-render from one payl
 {
   "items": [
     {
-      "id": "f8401554-af57-46bc-8c1a-4e76ce3399a7",
+      "id": "52153074-d12d-4060-b632-5c062951dd0d",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
       "quantity": 1,
       "lineTotal": 29990000.0,
       "thumbnailUrl": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png",
-      "available": 39
+      "available": 36
     }
   ],
   "subtotal": 29990000.0,
@@ -1225,7 +1227,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ```json
 {
-  "addressId": "0925f47c-bdb0-4122-8490-8231a9c89919",
+  "addressId": "b3dab7e8-3497-4017-bbb0-96390c519796",
   "paymentMethod": "MOCK_CARD"
 }
 ```
@@ -1235,8 +1237,8 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "3a072a3a-e441-43c9-873a-202ba3c9cf38",
-    "orderRef": "ORD-100012",
+    "id": "9edd7278-32e3-4bf7-a734-4fde3d11fc83",
+    "orderRef": "ORD-100043",
     "status": "AWAITING_PAYMENT",
     "failureCode": null,
     "subtotal": 29990000.0,
@@ -1257,7 +1259,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
     },
     "items": [
       {
-        "id": "6936a3aa-095f-45ff-a807-36a6bb46e9e1",
+        "id": "8d0854ac-44fa-4e59-8770-9427c7266954",
         "productId": "759d9034-b058-5375-aa35-cadf437332c3",
         "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
         "unitPrice": 29990000.0,
@@ -1267,7 +1269,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
         "reviewed": false
       }
     ],
-    "createdAt": "2026-10-05T16:11:29.150744Z"
+    "createdAt": "2026-10-07T11:29:59.232093Z"
   },
   "message": "Order placed, complete the payment to confirm it"
 }
@@ -1276,7 +1278,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ### Payment — success
 
-`POST /orders/3a072a3a-e441-43c9-873a-202ba3c9cf38/payment` · **Bearer token required** · responds `200`
+`POST /orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83/payment` · **Bearer token required** · responds `200`
 
 `status: CONFIRMED`. The cart is now empty and the stock is sold.
 
@@ -1294,8 +1296,8 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "3a072a3a-e441-43c9-873a-202ba3c9cf38",
-    "orderRef": "ORD-100012",
+    "id": "9edd7278-32e3-4bf7-a734-4fde3d11fc83",
+    "orderRef": "ORD-100043",
     "status": "CONFIRMED",
     "failureCode": null,
     "subtotal": 29990000.0,
@@ -1316,7 +1318,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
     },
     "items": [
       {
-        "id": "6936a3aa-095f-45ff-a807-36a6bb46e9e1",
+        "id": "8d0854ac-44fa-4e59-8770-9427c7266954",
         "productId": "759d9034-b058-5375-aa35-cadf437332c3",
         "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
         "unitPrice": 29990000.0,
@@ -1326,7 +1328,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
         "reviewed": false
       }
     ],
-    "createdAt": "2026-10-05T16:11:29.150744Z"
+    "createdAt": "2026-10-07T11:29:59.232093Z"
   },
   "cartRestore": null
 }
@@ -1335,7 +1337,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 
 ### Payment — failed
 
-`POST /orders/ae294adf-97c6-4cd2-bcb2-fb9e39f32345/payment` · **Bearer token required** · responds `200`
+`POST /orders/b08ef132-3902-48b1-8502-36d08b58b002/payment` · **Bearer token required** · responds `200`
 
 **HTTP 200 with a FAILED order.** Stock that was held has been released, and the ordered lines are back in the cart. Read `cartRestore` for what could not be returned.
 
@@ -1353,8 +1355,8 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
 ```json
 {
   "order": {
-    "id": "ae294adf-97c6-4cd2-bcb2-fb9e39f32345",
-    "orderRef": "ORD-100013",
+    "id": "b08ef132-3902-48b1-8502-36d08b58b002",
+    "orderRef": "ORD-100044",
     "status": "FAILED",
     "failureCode": "PAYMENT_FAILED",
     "subtotal": 29990000.0,
@@ -1375,7 +1377,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
     },
     "items": [
       {
-        "id": "70ab41df-8170-43a5-b9f8-71771c95de1d",
+        "id": "1c3f97c8-7aa3-4335-a8ad-1ab963db4766",
         "productId": "759d9034-b058-5375-aa35-cadf437332c3",
         "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
         "unitPrice": 29990000.0,
@@ -1385,7 +1387,7 @@ checkout nobody pays for is expired after 15 minutes and its stock returned. Rep
         "reviewed": false
       }
     ],
-    "createdAt": "2026-10-05T16:11:29.605478Z"
+    "createdAt": "2026-10-07T11:29:59.525021Z"
   },
   "cartRestore": {
     "linesReturned": 1,
@@ -1405,7 +1407,7 @@ The order never reached the payment step. Refresh the cart to see what is unavai
 
 ```json
 {
-  "addressId": "0925f47c-bdb0-4122-8490-8231a9c89919",
+  "addressId": "b3dab7e8-3497-4017-bbb0-96390c519796",
   "paymentMethod": "COD"
 }
 ```
@@ -1415,8 +1417,8 @@ The order never reached the payment step. Refresh the cart to see what is unavai
 ```json
 {
   "order": {
-    "id": "09177fb4-23f8-4685-ba77-a4829b1b437e",
-    "orderRef": "ORD-100014",
+    "id": "c07e27e4-fca6-429d-be9d-b7893c33a687",
+    "orderRef": "ORD-100045",
     "status": "FAILED",
     "failureCode": "OUT_OF_STOCK",
     "subtotal": 43980000.0,
@@ -1437,7 +1439,7 @@ The order never reached the payment step. Refresh the cart to see what is unavai
     },
     "items": [
       {
-        "id": "ecbf5cf9-51b9-4149-8395-cffe7feb82db",
+        "id": "6109f7ef-eb9f-4aeb-8afb-7824b38fb800",
         "productId": "759d9034-b058-5375-aa35-cadf437332c3",
         "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
         "unitPrice": 29990000.0,
@@ -1447,7 +1449,7 @@ The order never reached the payment step. Refresh the cart to see what is unavai
         "reviewed": false
       },
       {
-        "id": "72f1f525-1d56-46ab-bf2e-779c291b4784",
+        "id": "da464525-5ab8-463a-87a6-ae333b9c093c",
         "productId": "b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8",
         "productName": "MSI Modern 14 C13M",
         "unitPrice": 13990000.0,
@@ -1474,8 +1476,8 @@ Newest first. Each row carries `firstItem` (so a row renders a picture and a nam
 {
   "content": [
     {
-      "id": "c7ae1a7d-a1fe-4cca-8bd9-7ce1a314f983",
-      "orderRef": "ORD-100015",
+      "id": "32e15efc-bb83-4079-b392-973ae6efef61",
+      "orderRef": "ORD-100046",
       "status": "FAILED",
       "failureCode": "OUT_OF_STOCK",
       "total": 73940000.0,
@@ -1487,11 +1489,11 @@ Newest first. Each row carries `firstItem` (so a row renders a picture and a nam
         "quantity": 2
       },
       "reviewed": false,
-      "createdAt": "2026-10-05T16:11:30.753953Z"
+      "createdAt": "2026-10-07T11:29:59.882330Z"
     },
     {
-      "id": "09177fb4-23f8-4685-ba77-a4829b1b437e",
-      "orderRef": "ORD-100014",
+      "id": "c07e27e4-fca6-429d-be9d-b7893c33a687",
+      "orderRef": "ORD-100045",
       "status": "FAILED",
       "failureCode": "OUT_OF_STOCK",
       "total": 43980000.0,
@@ -1503,10 +1505,10 @@ Newest first. Each row carries `firstItem` (so a row renders a picture and a nam
         "quantity": 1
       },
       "reviewed": false,
-      "createdAt": "2026-10-05T16:11:30.066996Z"
+      "createdAt": "2026-10-07T11:29:59.752141Z"
     },
     {
-      "id": "ae294adf-97c6-4cd2-bcb2-fb9e39f32345",
+      "id": "b08ef132-3902-48b1-8502-36d08b58b002",
   ...
 }
 ```
@@ -1514,7 +1516,7 @@ Newest first. Each row carries `firstItem` (so a row renders a picture and a nam
 
 ### Order detail
 
-`GET /orders/3a072a3a-e441-43c9-873a-202ba3c9cf38` · **Bearer token required** · responds `200`
+`GET /orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83` · **Bearer token required** · responds `200`
 
 Prices and the shipping address are snapshots taken at checkout — a later catalog price change never alters a past order. Another user's order returns 403.
 
@@ -1522,8 +1524,8 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
 
 ```json
 {
-  "id": "3a072a3a-e441-43c9-873a-202ba3c9cf38",
-  "orderRef": "ORD-100012",
+  "id": "9edd7278-32e3-4bf7-a734-4fde3d11fc83",
+  "orderRef": "ORD-100043",
   "status": "CONFIRMED",
   "failureCode": null,
   "subtotal": 29990000.0,
@@ -1544,7 +1546,7 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
   },
   "items": [
     {
-      "id": "6936a3aa-095f-45ff-a807-36a6bb46e9e1",
+      "id": "8d0854ac-44fa-4e59-8770-9427c7266954",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
@@ -1554,14 +1556,14 @@ Prices and the shipping address are snapshots taken at checkout — a later cata
       "reviewed": false
     }
   ],
-  "createdAt": "2026-10-05T16:11:29.150744Z"
+  "createdAt": "2026-10-07T11:29:59.232093Z"
 }
 ```
 
 
 ### Update order status (demo)
 
-`PUT /orders/3a072a3a-e441-43c9-873a-202ba3c9cf38/status` · **Bearer token required** · responds `200`
+`PUT /orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83/status` · **Bearer token required** · responds `200`
 
 Moves one of your own orders to any status, so the lifecycle can be shown without a management app. Nothing else sets `COMPLETED`: there is no fulfilment process and so no actor to move an order on from `CONFIRMED`.
 
@@ -1588,8 +1590,8 @@ Moves one of your own orders to any status, so the lifecycle can be shown withou
 
 ```json
 {
-  "id": "3a072a3a-e441-43c9-873a-202ba3c9cf38",
-  "orderRef": "ORD-100012",
+  "id": "9edd7278-32e3-4bf7-a734-4fde3d11fc83",
+  "orderRef": "ORD-100043",
   "status": "COMPLETED",
   "failureCode": null,
   "subtotal": 29990000.0,
@@ -1610,7 +1612,7 @@ Moves one of your own orders to any status, so the lifecycle can be shown withou
   },
   "items": [
     {
-      "id": "6936a3aa-095f-45ff-a807-36a6bb46e9e1",
+      "id": "8d0854ac-44fa-4e59-8770-9427c7266954",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
@@ -1620,14 +1622,14 @@ Moves one of your own orders to any status, so the lifecycle can be shown withou
       "reviewed": false
     }
   ],
-  "createdAt": "2026-10-05T16:11:29.150744Z"
+  "createdAt": "2026-10-07T11:29:59.232093Z"
 }
 ```
 
 
 ### Update order status — PENDING refused
 
-`PUT /orders/3a072a3a-e441-43c9-873a-202ba3c9cf38/status` · **Bearer token required** · responds `400`
+`PUT /orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83/status` · **Bearer token required** · responds `400`
 
 `PENDING` is an internal saga state the app has no screen for, so it is the one status this endpoint will not set.
 
@@ -1643,18 +1645,18 @@ Moves one of your own orders to any status, so the lifecycle can be shown withou
 
 ```json
 {
-  "timestamp": "2026-10-05T16:11:31.822543219Z",
+  "timestamp": "2026-10-07T11:30:00.371242462Z",
   "status": 400,
   "code": "VALIDATION_ERROR",
   "message": "PENDING is an internal state and cannot be set",
-  "path": "/orders/3a072a3a-e441-43c9-873a-202ba3c9cf38/status"
+  "path": "/orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83/status"
 }
 ```
 
 
 ### Cancel order
 
-`POST /orders/3a072a3a-e441-43c9-873a-202ba3c9cf38/cancel` · **Bearer token required** · responds `200`
+`POST /orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83/cancel` · **Bearer token required** · responds `200`
 
 Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunded.
 
@@ -1662,8 +1664,8 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
 
 ```json
 {
-  "id": "3a072a3a-e441-43c9-873a-202ba3c9cf38",
-  "orderRef": "ORD-100012",
+  "id": "9edd7278-32e3-4bf7-a734-4fde3d11fc83",
+  "orderRef": "ORD-100043",
   "status": "CANCELLED",
   "failureCode": null,
   "subtotal": 29990000.0,
@@ -1684,7 +1686,7 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
   },
   "items": [
     {
-      "id": "6936a3aa-095f-45ff-a807-36a6bb46e9e1",
+      "id": "8d0854ac-44fa-4e59-8770-9427c7266954",
       "productId": "759d9034-b058-5375-aa35-cadf437332c3",
       "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
       "unitPrice": 29990000.0,
@@ -1694,14 +1696,14 @@ Only a `CONFIRMED` order can be cancelled. Stock is returned and payment refunde
       "reviewed": false
     }
   ],
-  "createdAt": "2026-10-05T16:11:29.150744Z"
+  "createdAt": "2026-10-07T11:29:59.232093Z"
 }
 ```
 
 
 ### Cancel — not allowed
 
-`POST /orders/3a072a3a-e441-43c9-873a-202ba3c9cf38/cancel` · **Bearer token required** · responds `409`
+`POST /orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83/cancel` · **Bearer token required** · responds `409`
 
 Show the Cancel button only when `status == "CONFIRMED"`.
 
@@ -1709,11 +1711,11 @@ Show the Cancel button only when `status == "CONFIRMED"`.
 
 ```json
 {
-  "timestamp": "2026-10-05T16:11:32.043609052Z",
+  "timestamp": "2026-10-07T11:30:00.790350046Z",
   "status": 409,
   "code": "ORDER_NOT_CANCELLABLE",
   "message": "An order in status CANCELLED cannot be cancelled",
-  "path": "/orders/3a072a3a-e441-43c9-873a-202ba3c9cf38/cancel"
+  "path": "/orders/9edd7278-32e3-4bf7-a734-4fde3d11fc83/cancel"
 }
 ```
 

@@ -306,12 +306,14 @@ def main():
         *before* streaming, and an `error` event *during* it. `code` is `RATE_LIMITED`,
         `SERVICE_UNAVAILABLE`, `PRODUCT_NOT_FOUND` or `INTERNAL_ERROR`.
 
-        > **Quota.** The assistant runs on Gemini's free tier: **20 requests per day**. A plain
-        > question costs one request, a turn that searches costs two, and a comparison costs
-        > three or four — the model asks for a second catalogue lookup after reading the first.
-        > Four is the hard ceiling per turn, so the day's budget is nearer five or six
-        > comparisons than twenty questions. Expect `RATE_LIMITED` in normal use and make the
-        > chat button degrade gracefully — nothing else on the product page depends on it.
+        > **Quota.** The assistant runs on a Gemini key with billing enabled, so requests cost
+        > money and the project's own rate limit still applies — read the current RPM and RPD
+        > for the model in AI Studio rather than assuming a number. A plain question costs one
+        > request, a turn that searches costs two, and a comparison costs three or four, which
+        > is the hard ceiling per turn. Grounding with Google Search is billed on its own
+        > monthly allowance and does not count against the model's requests at all. Handle
+        > `RATE_LIMITED` and make the chat button degrade gracefully — nothing else on the
+        > product page depends on it.
 
         ### Android
 

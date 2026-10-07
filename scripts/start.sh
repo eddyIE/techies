@@ -57,16 +57,32 @@ fi
 
 # ---- 2. The stack ----------------------------------------------------------
 say "2/4  Services"
-docker compose up -d >/dev/null 2>&1 || die "docker compose up failed"
-printf '  waiting for 7 containers to report healthy (up to 4 min)'
+# Swallowing the error here left "docker compose up failed" with no reason to act on.
+if ! COMPOSE_ERR=$(docker compose up -d 2>&1); then
+  printf '%s\n' "$COMPOSE_ERR" | tail -5 | sed 's/^/      /' >&2
+  die "docker compose up failed"
+fi
+
+# Counted from the compose file rather than hardcoded: the old gate wanted 7 of what are
+# now 8 services, so a single dead container still reported success. Every service declares
+# an actuator healthcheck, so the service count is the number to wait for.
+EXPECTED=$(docker compose config --services 2>/dev/null | grep -c . || true)
+EXPECTED=${EXPECTED:-8}
+printf '  waiting for %s containers to report healthy (up to 4 min)' "$EXPECTED"
 for _ in $(seq 1 80); do
   HEALTHY=$(docker compose ps --format '{{.Health}}' 2>/dev/null | grep -cx healthy || true)
-  [ "${HEALTHY:-0}" -ge 7 ] && break
+  [ "${HEALTHY:-0}" -ge "$EXPECTED" ] && break
   printf '.'
   sleep 3
 done
 printf '\n'
-[ "${HEALTHY:-0}" -ge 7 ] && ok "all 7 healthy" || warn "only ${HEALTHY:-0}/7 healthy — check: docker compose ps"
+if [ "${HEALTHY:-0}" -ge "$EXPECTED" ]; then
+  ok "all $EXPECTED healthy"
+else
+  warn "only ${HEALTHY:-0}/$EXPECTED healthy — check: docker compose ps"
+  docker compose ps --format '{{.Name}}\t{{.State}}\t{{.Health}}' 2>/dev/null \
+    | grep -v 'healthy$' | sed 's/^/      /'
+fi
 
 # ---- 3. Gateway routing ----------------------------------------------------
 # Containers report healthy before they finish registering with Eureka, so the gateway

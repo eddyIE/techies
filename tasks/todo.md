@@ -230,7 +230,7 @@ Spec: `docs/SPEC-loyalty.md`. A leaf: it calls nothing, so it builds before `ord
   - Verify: migration applies clean; a test asserts each seeded branch exists by query.
   - Files: `loyalty-service/src/main/resources/db/migration/V1__init.sql`
 
-- [ ] **F3. Ledger, tier derivation, `POST /loyalty/points`**
+- [x] **F3. Ledger, tier derivation, `POST /loyalty/points`**
   - Acceptance: balance `SUM(points)` and lifetime `SUM(points) WHERE points > 0`, both derived,
     nothing stored; `points = floor((subtotal - discount) / 1000)`; award idempotent on
     `(ORDER_EARN, orderRef)`; crossing one or more thresholds issues one voucher per rung

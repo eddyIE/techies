@@ -3,15 +3,15 @@
     "method": "POST",
     "path": "/auth/register",
     "request": {
-      "email": "fe-demo-60a443@techies.vn",
+      "email": "fe-demo-96895b@techies.vn",
       "password": "password1",
       "fullName": "Nguyen Van A",
       "phone": "0901234567"
     },
     "status": 201,
     "response": {
-      "userId": "30b27805-6376-478f-9e47-0004be7033f2",
-      "email": "fe-demo-60a443@techies.vn"
+      "userId": "870bc2d8-cc31-438c-beb5-0613c6cf5b60",
+      "email": "fe-demo-96895b@techies.vn"
     },
     "note": null
   },
@@ -19,14 +19,14 @@
     "method": "POST",
     "path": "/auth/register",
     "request": {
-      "email": "fe-demo-60a443@techies.vn",
+      "email": "fe-demo-96895b@techies.vn",
       "password": "password1",
       "fullName": "Nguyen Van A",
       "phone": "0901234567"
     },
     "status": 409,
     "response": {
-      "timestamp": "2026-10-07T11:31:44.863735428Z",
+      "timestamp": "2026-10-08T16:11:49.430896887Z",
       "status": 409,
       "code": "EMAIL_ALREADY_EXISTS",
       "message": "An account with this email already exists",
@@ -45,15 +45,15 @@
     },
     "status": 400,
     "response": {
-      "timestamp": "2026-10-07T11:31:44.880318803Z",
+      "timestamp": "2026-10-08T16:11:49.459046637Z",
       "status": 400,
       "code": "VALIDATION_ERROR",
       "message": "Request validation failed",
       "path": "/auth/register",
       "fieldErrors": {
         "fullName": "must not be blank",
-        "email": "must be a well-formed email address",
-        "phone": "must be 9-11 digits"
+        "phone": "must be 9-11 digits",
+        "email": "must be a well-formed email address"
       }
     },
     "note": null
@@ -62,17 +62,17 @@
     "method": "POST",
     "path": "/auth/login",
     "request": {
-      "email": "fe-demo-60a443@techies.vn",
+      "email": "fe-demo-96895b@techies.vn",
       "password": "password1"
     },
     "status": 200,
     "response": {
-      "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIzMGIyNzgwNS02Mzc2LTQ3OGYtOWU0Ny0wMDA0YmU3MDMzZjIiLCJlbWFpbCI6ImZlLWRlbW8tNjBhNDQzQHRlY2hpZXMudm4iLCJpYXQiOjE3OTEzNzI3MDQsImV4cCI6MTc5Mzk2NDcwNH0.9TZHcD-P1FyV9IUceXoPCfu_jJu-rfl8Q_NHYbkVlvFlFtl1rtjO0atWWNaNnMGj",
+      "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI4NzBiYzJkOC1jYzMxLTQzOGMtYmViNS0wNjEzYzZjZjViNjAiLCJlbWFpbCI6ImZlLWRlbW8tOTY4OTViQHRlY2hpZXMudm4iLCJpYXQiOjE3OTE0NzU5MDksImV4cCI6MTc5NDA2NzkwOX0.rzo0CoPK87wHTaIQ-Q_23ePiWVlTPdNOfpxxr-mj6ED5ND-3-68DRmhv-IfwEzRS",
       "tokenType": "Bearer",
       "expiresIn": 2592000,
       "user": {
-        "id": "30b27805-6376-478f-9e47-0004be7033f2",
-        "email": "fe-demo-60a443@techies.vn",
+        "id": "870bc2d8-cc31-438c-beb5-0613c6cf5b60",
+        "email": "fe-demo-96895b@techies.vn",
         "fullName": "Nguyen Van A",
         "phone": "0901234567",
         "avatarUrl": null
@@ -84,12 +84,12 @@
     "method": "POST",
     "path": "/auth/login",
     "request": {
-      "email": "fe-demo-60a443@techies.vn",
+      "email": "fe-demo-96895b@techies.vn",
       "password": "wrongpassword1"
     },
     "status": 401,
     "response": {
-      "timestamp": "2026-10-07T11:31:45.061077886Z",
+      "timestamp": "2026-10-08T16:11:50.000375928Z",
       "status": 401,
       "code": "INVALID_CREDENTIALS",
       "message": "Email or password is incorrect",
@@ -101,11 +101,11 @@
     "method": "POST",
     "path": "/auth/check-email",
     "request": {
-      "email": "fe-demo-60a443@techies.vn"
+      "email": "fe-demo-96895b@techies.vn"
     },
     "status": 200,
     "response": {
-      "email": "fe-demo-60a443@techies.vn",
+      "email": "fe-demo-96895b@techies.vn",
       "exists": true
     },
     "note": null
@@ -129,8 +129,8 @@
     "request": null,
     "status": 200,
     "response": {
-      "id": "30b27805-6376-478f-9e47-0004be7033f2",
-      "email": "fe-demo-60a443@techies.vn",
+      "id": "870bc2d8-cc31-438c-beb5-0613c6cf5b60",
+      "email": "fe-demo-96895b@techies.vn",
       "fullName": "Nguyen Van A",
       "phone": "0901234567",
       "avatarUrl": null
@@ -146,8 +146,8 @@
     },
     "status": 200,
     "response": {
-      "id": "30b27805-6376-478f-9e47-0004be7033f2",
-      "email": "fe-demo-60a443@techies.vn",
+      "id": "870bc2d8-cc31-438c-beb5-0613c6cf5b60",
+      "email": "fe-demo-96895b@techies.vn",
       "fullName": "Nguyen Van B",
       "phone": "0909999999",
       "avatarUrl": null
@@ -160,7 +160,7 @@
     "request": null,
     "status": 401,
     "response": {
-      "timestamp": "2026-10-07T11:31:45.109888803Z",
+      "timestamp": "2026-10-08T16:11:50.112156678Z",
       "status": 401,
       "code": "UNAUTHENTICATED",
       "message": "Authentication required",
@@ -182,11 +182,11 @@
     "request": null,
     "status": 200,
     "response": {
-      "id": "30b27805-6376-478f-9e47-0004be7033f2",
-      "email": "fe-demo-60a443@techies.vn",
+      "id": "870bc2d8-cc31-438c-beb5-0613c6cf5b60",
+      "email": "fe-demo-96895b@techies.vn",
       "fullName": "Nguyen Van B",
       "phone": "0909999999",
-      "avatarUrl": "/users/30b27805-6376-478f-9e47-0004be7033f2/avatar"
+      "avatarUrl": "/users/870bc2d8-cc31-438c-beb5-0613c6cf5b60/avatar"
     },
     "note": "avatarUrl is populated once an image exists"
   },
@@ -196,7 +196,7 @@
     "request": null,
     "status": 400,
     "response": {
-      "timestamp": "2026-10-07T11:31:45.148392261Z",
+      "timestamp": "2026-10-08T16:11:50.286550804Z",
       "status": 400,
       "code": "UNSUPPORTED_IMAGE_TYPE",
       "message": "Only PNG and JPEG images are accepted (received 'evil.png')",
@@ -210,7 +210,7 @@
     "request": null,
     "status": 400,
     "response": {
-      "timestamp": "2026-10-07T11:31:45.160907886Z",
+      "timestamp": "2026-10-08T16:11:50.320796929Z",
       "status": 400,
       "code": "UNSUPPORTED_IMAGE_TYPE",
       "message": "Only PNG and JPEG images are accepted (received 'me.gif')",
@@ -232,7 +232,7 @@
     },
     "status": 201,
     "response": {
-      "id": "b4792266-a631-4090-a431-d352a5ee02e2",
+      "id": "83bd91d9-b6bb-48a4-84d4-b9a5b91c59b7",
       "recipientName": "Nguyen Van B",
       "phone": "0907654321",
       "line1": "12 Nguyen Hue",
@@ -250,7 +250,7 @@
     "status": 200,
     "response": [
       {
-        "id": "b4792266-a631-4090-a431-d352a5ee02e2",
+        "id": "83bd91d9-b6bb-48a4-84d4-b9a5b91c59b7",
         "recipientName": "Nguyen Van B",
         "phone": "0907654321",
         "line1": "12 Nguyen Hue",
@@ -485,15 +485,15 @@
   },
   "catalog.detail.missing": {
     "method": "GET",
-    "path": "/products/239c38c2-5874-4166-850b-68bf1ee89616",
+    "path": "/products/c6bbc665-7bb8-497d-b3a6-640f334ebad7",
     "request": null,
     "status": 404,
     "response": {
-      "timestamp": "2026-10-07T11:31:45.280512053Z",
+      "timestamp": "2026-10-08T16:11:50.720939137Z",
       "status": 404,
       "code": "PRODUCT_NOT_FOUND",
       "message": "Product not found",
-      "path": "/products/239c38c2-5874-4166-850b-68bf1ee89616"
+      "path": "/products/c6bbc665-7bb8-497d-b3a6-640f334ebad7"
     },
     "note": null
   },
@@ -532,7 +532,7 @@
     "response": {
       "items": [
         {
-          "id": "5b300a6b-e0b0-4ab8-b4f2-b10558f66063",
+          "id": "b57f0e0e-4aec-460f-9fb1-452232ad372b",
           "productId": "759d9034-b058-5375-aa35-cadf437332c3",
           "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
           "unitPrice": 29990000.0,
@@ -549,7 +549,7 @@
   },
   "cart.update": {
     "method": "PUT",
-    "path": "/cart/items/5b300a6b-e0b0-4ab8-b4f2-b10558f66063",
+    "path": "/cart/items/b57f0e0e-4aec-460f-9fb1-452232ad372b",
     "request": {
       "quantity": 1
     },
@@ -557,7 +557,7 @@
     "response": {
       "items": [
         {
-          "id": "5b300a6b-e0b0-4ab8-b4f2-b10558f66063",
+          "id": "b57f0e0e-4aec-460f-9fb1-452232ad372b",
           "productId": "759d9034-b058-5375-aa35-cadf437332c3",
           "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
           "unitPrice": 29990000.0,
@@ -580,7 +580,7 @@
     "response": {
       "items": [
         {
-          "id": "5b300a6b-e0b0-4ab8-b4f2-b10558f66063",
+          "id": "b57f0e0e-4aec-460f-9fb1-452232ad372b",
           "productId": "759d9034-b058-5375-aa35-cadf437332c3",
           "name": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
           "unitPrice": 29990000.0,
@@ -599,14 +599,14 @@
     "method": "POST",
     "path": "/checkout",
     "request": {
-      "addressId": "b4792266-a631-4090-a431-d352a5ee02e2",
+      "addressId": "83bd91d9-b6bb-48a4-84d4-b9a5b91c59b7",
       "paymentMethod": "MOCK_CARD"
     },
     "status": 200,
     "response": {
       "order": {
-        "id": "94648049-9618-49f0-b30c-7b318074a3a7",
-        "orderRef": "ORD-100053",
+        "id": "52b5f629-564b-4895-8261-f49621071fec",
+        "orderRef": "ORD-100105",
         "status": "AWAITING_PAYMENT",
         "failureCode": null,
         "subtotal": 29990000.0,
@@ -627,7 +627,7 @@
         },
         "items": [
           {
-            "id": "8ed7083a-078e-4a30-bf52-26434f6d21a4",
+            "id": "a9ac1351-0973-4e34-a014-eef386d1fb06",
             "productId": "759d9034-b058-5375-aa35-cadf437332c3",
             "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
             "unitPrice": 29990000.0,
@@ -637,7 +637,7 @@
             "reviewed": false
           }
         ],
-        "createdAt": "2026-10-07T11:31:45.615994Z"
+        "createdAt": "2026-10-08T16:11:52.892546Z"
       },
       "message": "Order placed, complete the payment to confirm it"
     },
@@ -645,7 +645,7 @@
   },
   "payment.success": {
     "method": "POST",
-    "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7/payment",
+    "path": "/orders/52b5f629-564b-4895-8261-f49621071fec/payment",
     "request": {
       "result": "SUCCESS",
       "transactionRef": "TXN-DEMO-0001"
@@ -653,8 +653,8 @@
     "status": 200,
     "response": {
       "order": {
-        "id": "94648049-9618-49f0-b30c-7b318074a3a7",
-        "orderRef": "ORD-100053",
+        "id": "52b5f629-564b-4895-8261-f49621071fec",
+        "orderRef": "ORD-100105",
         "status": "CONFIRMED",
         "failureCode": null,
         "subtotal": 29990000.0,
@@ -675,7 +675,7 @@
         },
         "items": [
           {
-            "id": "8ed7083a-078e-4a30-bf52-26434f6d21a4",
+            "id": "a9ac1351-0973-4e34-a014-eef386d1fb06",
             "productId": "759d9034-b058-5375-aa35-cadf437332c3",
             "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
             "unitPrice": 29990000.0,
@@ -685,7 +685,7 @@
             "reviewed": false
           }
         ],
-        "createdAt": "2026-10-07T11:31:45.615994Z"
+        "createdAt": "2026-10-08T16:11:52.892546Z"
       },
       "cartRestore": null
     },
@@ -695,14 +695,14 @@
     "method": "POST",
     "path": "/checkout",
     "request": {
-      "addressId": "b4792266-a631-4090-a431-d352a5ee02e2",
+      "addressId": "83bd91d9-b6bb-48a4-84d4-b9a5b91c59b7",
       "paymentMethod": "MOCK_CARD"
     },
     "status": 200,
     "response": {
       "order": {
-        "id": "f569d3a8-17ae-49c9-83fd-fb698695bfd6",
-        "orderRef": "ORD-100054",
+        "id": "931dabb7-2555-47c5-a6a9-0215d1a964a9",
+        "orderRef": "ORD-100106",
         "status": "AWAITING_PAYMENT",
         "failureCode": null,
         "subtotal": 29990000.0,
@@ -723,7 +723,7 @@
         },
         "items": [
           {
-            "id": "ab9871af-5c0f-482e-bd1e-9b8b29957806",
+            "id": "7bc07b67-a997-4def-b5e4-bafe7e39bf68",
             "productId": "759d9034-b058-5375-aa35-cadf437332c3",
             "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
             "unitPrice": 29990000.0,
@@ -733,7 +733,7 @@
             "reviewed": false
           }
         ],
-        "createdAt": "2026-10-07T11:31:45.789293Z"
+        "createdAt": "2026-10-08T16:11:53.527301Z"
       },
       "message": "Order placed, complete the payment to confirm it"
     },
@@ -741,7 +741,7 @@
   },
   "payment.failed": {
     "method": "POST",
-    "path": "/orders/f569d3a8-17ae-49c9-83fd-fb698695bfd6/payment",
+    "path": "/orders/931dabb7-2555-47c5-a6a9-0215d1a964a9/payment",
     "request": {
       "result": "FAILED",
       "failureReason": "Card declined by issuer"
@@ -749,8 +749,8 @@
     "status": 200,
     "response": {
       "order": {
-        "id": "f569d3a8-17ae-49c9-83fd-fb698695bfd6",
-        "orderRef": "ORD-100054",
+        "id": "931dabb7-2555-47c5-a6a9-0215d1a964a9",
+        "orderRef": "ORD-100106",
         "status": "FAILED",
         "failureCode": "PAYMENT_FAILED",
         "subtotal": 29990000.0,
@@ -771,7 +771,7 @@
         },
         "items": [
           {
-            "id": "ab9871af-5c0f-482e-bd1e-9b8b29957806",
+            "id": "7bc07b67-a997-4def-b5e4-bafe7e39bf68",
             "productId": "759d9034-b058-5375-aa35-cadf437332c3",
             "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
             "unitPrice": 29990000.0,
@@ -781,7 +781,7 @@
             "reviewed": false
           }
         ],
-        "createdAt": "2026-10-07T11:31:45.789293Z"
+        "createdAt": "2026-10-08T16:11:53.527301Z"
       },
       "cartRestore": {
         "linesReturned": 1,
@@ -794,14 +794,14 @@
     "method": "POST",
     "path": "/checkout",
     "request": {
-      "addressId": "b4792266-a631-4090-a431-d352a5ee02e2",
+      "addressId": "83bd91d9-b6bb-48a4-84d4-b9a5b91c59b7",
       "paymentMethod": "COD"
     },
     "status": 200,
     "response": {
       "order": {
-        "id": "7c6d9870-e6d7-4487-b6f7-f88b1961c3fe",
-        "orderRef": "ORD-100055",
+        "id": "29c1b5d7-f2d0-4e2b-950d-508017ba2aab",
+        "orderRef": "ORD-100107",
         "status": "FAILED",
         "failureCode": "OUT_OF_STOCK",
         "subtotal": 43980000.0,
@@ -822,7 +822,7 @@
         },
         "items": [
           {
-            "id": "916e2238-f0a0-4af1-be9a-4c9b38e1d7e5",
+            "id": "965fdd5b-c728-4aa7-8113-0d542ee06091",
             "productId": "759d9034-b058-5375-aa35-cadf437332c3",
             "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
             "unitPrice": 29990000.0,
@@ -832,7 +832,7 @@
             "reviewed": false
           },
           {
-            "id": "e3373a6f-dfd2-4681-8949-09acbbaf4eed",
+            "id": "ebebfeac-03ad-46ca-8362-2df7fa458e32",
             "productId": "b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8",
             "productName": "MSI Modern 14 C13M",
             "unitPrice": 13990000.0,
@@ -842,7 +842,7 @@
             "reviewed": false
           }
         ],
-        "createdAt": "2026-10-07T11:31:45.981105Z"
+        "createdAt": "2026-10-08T16:11:54.671595Z"
       },
       "message": "Some items are no longer in stock"
     },
@@ -852,15 +852,15 @@
     "method": "POST",
     "path": "/checkout",
     "request": {
-      "addressId": "b4792266-a631-4090-a431-d352a5ee02e2",
+      "addressId": "83bd91d9-b6bb-48a4-84d4-b9a5b91c59b7",
       "paymentMethod": "COD",
       "couponCode": "FREESHIP30K"
     },
     "status": 200,
     "response": {
       "order": {
-        "id": "0d05890b-6880-4f57-a887-d89235480e37",
-        "orderRef": "ORD-100056",
+        "id": "69abfc13-28f9-4e3f-929d-bcf51a1ac176",
+        "orderRef": "ORD-100108",
         "status": "FAILED",
         "failureCode": "OUT_OF_STOCK",
         "subtotal": 73970000.0,
@@ -881,7 +881,7 @@
         },
         "items": [
           {
-            "id": "952ba919-3201-4817-9af3-e018ac7a1700",
+            "id": "4ed2b815-ada5-44c7-87c6-2ef102f7d59c",
             "productId": "759d9034-b058-5375-aa35-cadf437332c3",
             "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
             "unitPrice": 29990000.0,
@@ -891,7 +891,7 @@
             "reviewed": false
           },
           {
-            "id": "732b8232-411d-4031-9245-2053d31358ac",
+            "id": "94a618c5-1f22-4505-add4-1a528bd114a0",
             "productId": "b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8",
             "productName": "MSI Modern 14 C13M",
             "unitPrice": 13990000.0,
@@ -901,7 +901,7 @@
             "reviewed": false
           }
         ],
-        "createdAt": "2026-10-07T11:31:46.106271Z"
+        "createdAt": "2026-10-08T16:11:56.028462Z"
       },
       "message": "Some items are no longer in stock"
     },
@@ -911,13 +911,13 @@
     "method": "POST",
     "path": "/checkout",
     "request": {
-      "addressId": "b4792266-a631-4090-a431-d352a5ee02e2",
+      "addressId": "83bd91d9-b6bb-48a4-84d4-b9a5b91c59b7",
       "paymentMethod": "COD",
       "couponCode": "EXPIRED100K"
     },
     "status": 409,
     "response": {
-      "timestamp": "2026-10-07T11:31:46.190177512Z",
+      "timestamp": "2026-10-08T16:11:56.633299167Z",
       "status": 409,
       "code": "COUPON_NOT_APPLICABLE",
       "message": "Coupon 'EXPIRED100K' is no longer available",
@@ -927,11 +927,11 @@
   },
   "reviews.write": {
     "method": "POST",
-    "path": "/orders/0d05890b-6880-4f57-a887-d89235480e37/reviews",
+    "path": "/orders/69abfc13-28f9-4e3f-929d-bcf51a1ac176/reviews",
     "request": {
       "reviews": [
         {
-          "orderItemId": "952ba919-3201-4817-9af3-e018ac7a1700",
+          "orderItemId": "4ed2b815-ada5-44c7-87c6-2ef102f7d59c",
           "rating": 5,
           "comment": "Sản phẩm tốt, giao hàng nhanh."
         }
@@ -939,21 +939,21 @@
     },
     "status": 409,
     "response": {
-      "timestamp": "2026-10-07T11:31:46.211870137Z",
+      "timestamp": "2026-10-08T16:11:56.719874501Z",
       "status": 409,
       "code": "ORDER_NOT_REVIEWABLE",
       "message": "An order in status FAILED cannot be reviewed",
-      "path": "/orders/0d05890b-6880-4f57-a887-d89235480e37/reviews"
+      "path": "/orders/69abfc13-28f9-4e3f-929d-bcf51a1ac176/reviews"
     },
     "note": "returns the order, so the app sees the updated reviewed flags"
   },
   "reviews.duplicate": {
     "method": "POST",
-    "path": "/orders/0d05890b-6880-4f57-a887-d89235480e37/reviews",
+    "path": "/orders/69abfc13-28f9-4e3f-929d-bcf51a1ac176/reviews",
     "request": {
       "reviews": [
         {
-          "orderItemId": "952ba919-3201-4817-9af3-e018ac7a1700",
+          "orderItemId": "4ed2b815-ada5-44c7-87c6-2ef102f7d59c",
           "rating": 1,
           "comment": "lần hai"
         }
@@ -961,11 +961,11 @@
     },
     "status": 409,
     "response": {
-      "timestamp": "2026-10-07T11:31:46.221457595Z",
+      "timestamp": "2026-10-08T16:11:56.749722626Z",
       "status": 409,
       "code": "ORDER_NOT_REVIEWABLE",
       "message": "An order in status FAILED cannot be reviewed",
-      "path": "/orders/0d05890b-6880-4f57-a887-d89235480e37/reviews"
+      "path": "/orders/69abfc13-28f9-4e3f-929d-bcf51a1ac176/reviews"
     },
     "note": "409 ALREADY_REVIEWED -- one review per order line"
   },
@@ -975,15 +975,36 @@
     "request": null,
     "status": 200,
     "response": {
-      "averageRating": 5.0,
-      "total": 2,
+      "averageRating": 4.5,
+      "total": 8,
       "content": [
+        {
+          "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+          "authorName": "Đinh Phương Mai",
+          "rating": 5,
+          "comment": "Chống loá tốt, phòng nhiều cửa sổ vẫn xem được ban ngày.",
+          "createdAt": "2026-10-06T16:06:16.327026Z"
+        },
+        {
+          "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+          "authorName": "Lương Bảo Ngọc",
+          "rating": 4,
+          "comment": "Lắp đặt tận nhà nhanh, kỹ thuật viên cẩn thận.",
+          "createdAt": "2026-09-30T16:06:16.327026Z"
+        },
         {
           "productId": "759d9034-b058-5375-aa35-cadf437332c3",
           "authorName": "Lâm Quang Vinh",
           "rating": 5,
           "comment": "Màu rất đẹp, chơi game 120Hz mượt. Rất đáng giá.",
           "createdAt": "2026-09-29T07:07:34.525012Z"
+        },
+        {
+          "productId": "759d9034-b058-5375-aa35-cadf437332c3",
+          "authorName": "Trịnh Hải Đăng",
+          "rating": 3,
+          "comment": "Remote ít nút, điều khiển bằng giọng nói tiếng Việt chưa chính xác.",
+          "createdAt": "2026-09-22T16:06:16.327026Z"
         },
         {
           "productId": "759d9034-b058-5375-aa35-cadf437332c3",
@@ -1004,8 +1025,8 @@
     "response": {
       "content": [
         {
-          "id": "0d05890b-6880-4f57-a887-d89235480e37",
-          "orderRef": "ORD-100056",
+          "id": "69abfc13-28f9-4e3f-929d-bcf51a1ac176",
+          "orderRef": "ORD-100108",
           "status": "FAILED",
           "failureCode": "OUT_OF_STOCK",
           "total": 73940000.0,
@@ -1017,11 +1038,11 @@
             "quantity": 2
           },
           "reviewed": false,
-          "createdAt": "2026-10-07T11:31:46.106271Z"
+          "createdAt": "2026-10-08T16:11:56.028462Z"
         },
         {
-          "id": "7c6d9870-e6d7-4487-b6f7-f88b1961c3fe",
-          "orderRef": "ORD-100055",
+          "id": "29c1b5d7-f2d0-4e2b-950d-508017ba2aab",
+          "orderRef": "ORD-100107",
           "status": "FAILED",
           "failureCode": "OUT_OF_STOCK",
           "total": 43980000.0,
@@ -1033,11 +1054,11 @@
             "quantity": 1
           },
           "reviewed": false,
-          "createdAt": "2026-10-07T11:31:45.981105Z"
+          "createdAt": "2026-10-08T16:11:54.671595Z"
         },
         {
-          "id": "f569d3a8-17ae-49c9-83fd-fb698695bfd6",
-          "orderRef": "ORD-100054",
+          "id": "931dabb7-2555-47c5-a6a9-0215d1a964a9",
+          "orderRef": "ORD-100106",
           "status": "FAILED",
           "failureCode": "PAYMENT_FAILED",
           "total": 29990000.0,
@@ -1049,11 +1070,11 @@
             "quantity": 1
           },
           "reviewed": false,
-          "createdAt": "2026-10-07T11:31:45.789293Z"
+          "createdAt": "2026-10-08T16:11:53.527301Z"
         },
         {
-          "id": "94648049-9618-49f0-b30c-7b318074a3a7",
-          "orderRef": "ORD-100053",
+          "id": "52b5f629-564b-4895-8261-f49621071fec",
+          "orderRef": "ORD-100105",
           "status": "CONFIRMED",
           "failureCode": null,
           "total": 29990000.0,
@@ -1065,7 +1086,7 @@
             "quantity": 1
           },
           "reviewed": false,
-          "createdAt": "2026-10-07T11:31:45.615994Z"
+          "createdAt": "2026-10-08T16:11:52.892546Z"
         }
       ],
       "page": 0,
@@ -1077,12 +1098,12 @@
   },
   "orders.detail": {
     "method": "GET",
-    "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7",
+    "path": "/orders/52b5f629-564b-4895-8261-f49621071fec",
     "request": null,
     "status": 200,
     "response": {
-      "id": "94648049-9618-49f0-b30c-7b318074a3a7",
-      "orderRef": "ORD-100053",
+      "id": "52b5f629-564b-4895-8261-f49621071fec",
+      "orderRef": "ORD-100105",
       "status": "CONFIRMED",
       "failureCode": null,
       "subtotal": 29990000.0,
@@ -1103,7 +1124,7 @@
       },
       "items": [
         {
-          "id": "8ed7083a-078e-4a30-bf52-26434f6d21a4",
+          "id": "a9ac1351-0973-4e34-a014-eef386d1fb06",
           "productId": "759d9034-b058-5375-aa35-cadf437332c3",
           "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
           "unitPrice": 29990000.0,
@@ -1113,20 +1134,20 @@
           "reviewed": false
         }
       ],
-      "createdAt": "2026-10-07T11:31:45.615994Z"
+      "createdAt": "2026-10-08T16:11:52.892546Z"
     },
     "note": null
   },
   "orders.status": {
     "method": "PUT",
-    "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7/status",
+    "path": "/orders/52b5f629-564b-4895-8261-f49621071fec/status",
     "request": {
       "status": "COMPLETED"
     },
     "status": 200,
     "response": {
-      "id": "94648049-9618-49f0-b30c-7b318074a3a7",
-      "orderRef": "ORD-100053",
+      "id": "52b5f629-564b-4895-8261-f49621071fec",
+      "orderRef": "ORD-100105",
       "status": "COMPLETED",
       "failureCode": null,
       "subtotal": 29990000.0,
@@ -1147,7 +1168,7 @@
       },
       "items": [
         {
-          "id": "8ed7083a-078e-4a30-bf52-26434f6d21a4",
+          "id": "a9ac1351-0973-4e34-a014-eef386d1fb06",
           "productId": "759d9034-b058-5375-aa35-cadf437332c3",
           "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
           "unitPrice": 29990000.0,
@@ -1157,34 +1178,34 @@
           "reviewed": false
         }
       ],
-      "createdAt": "2026-10-07T11:31:45.615994Z"
+      "createdAt": "2026-10-08T16:11:52.892546Z"
     },
     "note": "demo shortcut -- nothing else moves an order on from CONFIRMED"
   },
   "orders.status.pending": {
     "method": "PUT",
-    "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7/status",
+    "path": "/orders/52b5f629-564b-4895-8261-f49621071fec/status",
     "request": {
       "status": "PENDING"
     },
     "status": 400,
     "response": {
-      "timestamp": "2026-10-07T11:31:46.346868220Z",
+      "timestamp": "2026-10-08T16:11:58.110919501Z",
       "status": 400,
       "code": "VALIDATION_ERROR",
       "message": "PENDING is an internal state and cannot be set",
-      "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7/status"
+      "path": "/orders/52b5f629-564b-4895-8261-f49621071fec/status"
     },
     "note": "400 VALIDATION_ERROR -- PENDING is an internal saga state"
   },
   "orders.cancel": {
     "method": "POST",
-    "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7/cancel",
+    "path": "/orders/52b5f629-564b-4895-8261-f49621071fec/cancel",
     "request": null,
     "status": 200,
     "response": {
-      "id": "94648049-9618-49f0-b30c-7b318074a3a7",
-      "orderRef": "ORD-100053",
+      "id": "52b5f629-564b-4895-8261-f49621071fec",
+      "orderRef": "ORD-100105",
       "status": "CANCELLED",
       "failureCode": null,
       "subtotal": 29990000.0,
@@ -1205,7 +1226,7 @@
       },
       "items": [
         {
-          "id": "8ed7083a-078e-4a30-bf52-26434f6d21a4",
+          "id": "a9ac1351-0973-4e34-a014-eef386d1fb06",
           "productId": "759d9034-b058-5375-aa35-cadf437332c3",
           "productName": "Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)",
           "unitPrice": 29990000.0,
@@ -1215,41 +1236,44 @@
           "reviewed": false
         }
       ],
-      "createdAt": "2026-10-07T11:31:45.615994Z"
+      "createdAt": "2026-10-08T16:11:52.892546Z"
     },
     "note": null
   },
   "orders.cancel.again": {
     "method": "POST",
-    "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7/cancel",
+    "path": "/orders/52b5f629-564b-4895-8261-f49621071fec/cancel",
     "request": null,
     "status": 409,
     "response": {
-      "timestamp": "2026-10-07T11:31:46.399349095Z",
+      "timestamp": "2026-10-08T16:11:58.491771668Z",
       "status": 409,
       "code": "ORDER_NOT_CANCELLABLE",
       "message": "An order in status CANCELLED cannot be cancelled",
-      "path": "/orders/94648049-9618-49f0-b30c-7b318074a3a7/cancel"
+      "path": "/orders/52b5f629-564b-4895-8261-f49621071fec/cancel"
     },
     "note": "cancelling twice is refused"
   },
   "reviews.summary": {
     "method": "GET",
-    "path": "/products/513f03f9-8a1c-5813-9feb-2cae892e82a9/review-summary",
+    "path": "/products/759d9034-b058-5375-aa35-cadf437332c3/review-summary",
     "request": null,
     "status": 200,
     "response": {
       "pros": [
-        "Âm thanh tốt, bass mạnh",
-        "Có chống ồn trong tầm giá",
-        "Giao hàng nhanh"
+        "Chống loá tốt khi xem ban ngày",
+        "Hình ảnh sắc nét, màu sắc đẹp",
+        "Chơi game 120Hz mượt, độ trễ thấp",
+        "Lắp đặt nhanh chóng và cẩn thận"
       ],
       "cons": [
-        "Vỏ nhựa cảm giác hơi mỏng"
+        "Remote ít nút",
+        "Điều khiển giọng nói tiếng Việt chưa chuẩn",
+        "Giao diện Tizen có quảng cáo"
       ],
-      "verdict": "Sản phẩm phù hợp với những ai tìm kiếm thiết bị có chống ồn và âm bass mạnh trong tầm giá hợp lý.",
-      "reviewCount": 3,
-      "generatedAt": "2026-10-07T11:29:28.503059Z"
+      "verdict": "Sản phẩm phù hợp với người thích xem phim, bóng đá và các game thủ chơi game 120Hz.",
+      "reviewCount": 8,
+      "generatedAt": "2026-10-08T16:09:12.647423Z"
     },
     "note": "written by ai-service, cached here on the review count it was written from"
   },
@@ -1293,14 +1317,14 @@
   },
   "loyalty.order.completed": {
     "method": "PUT",
-    "path": "/orders/c17602f8-090b-4cfb-9fb5-d31120c502d7/status",
+    "path": "/orders/5b1ddc4f-24e2-4ff9-93ed-eb47f04d2966/status",
     "request": {
       "status": "COMPLETED"
     },
     "status": 200,
     "response": {
-      "id": "c17602f8-090b-4cfb-9fb5-d31120c502d7",
-      "orderRef": "ORD-100058",
+      "id": "5b1ddc4f-24e2-4ff9-93ed-eb47f04d2966",
+      "orderRef": "ORD-100110",
       "status": "COMPLETED",
       "failureCode": null,
       "subtotal": 10000000.0,
@@ -1321,7 +1345,7 @@
       },
       "items": [
         {
-          "id": "15ce2ed2-8d34-42fe-a937-f9ba3d10827c",
+          "id": "63448173-4fb8-4373-b02b-c1060c1c697e",
           "productId": "9c57e463-c2ec-560b-b0ca-c84f6a7a56e7",
           "productName": "Demo A - 10 triệu",
           "unitPrice": 10000000.0,
@@ -1331,7 +1355,7 @@
           "reviewed": false
         }
       ],
-      "createdAt": "2026-10-07T11:31:47.193855Z"
+      "createdAt": "2026-10-08T16:12:01.441023Z"
     },
     "note": "the only thing that credits points -- nothing reaches COMPLETED on its own"
   },
@@ -1372,10 +1396,10 @@
     "status": 200,
     "response": [
       {
-        "code": "TIER1-METZMUG5",
+        "code": "TIER1-VANB7MW6",
         "tier": 1,
         "discountPercent": 10,
-        "issuedAt": "2026-10-07T11:31:47.293076Z",
+        "issuedAt": "2026-10-08T16:12:01.908613Z",
         "expiresAt": null,
         "consumedAt": null
       }
@@ -1474,12 +1498,12 @@
     "request": null,
     "status": 200,
     "response": {
-      "redemptionId": "d43bfd3d-9f16-4599-9300-bb9c827a0385",
-      "code": "GIFT-TW42-6NGB",
+      "redemptionId": "efaf50a1-575a-46ba-8f51-f4330f9d180f",
+      "code": "GIFT-QFGC-5HY8",
       "giftName": "Ốp lưng silicon",
       "pointsSpent": 500,
       "balanceAfter": 9500,
-      "claimedAt": "2026-10-07T11:31:47.397874179Z"
+      "claimedAt": "2026-10-08T16:12:02.567787295Z"
     },
     "note": "claiming is the whole transaction -- the code is collected in store, and nothing tracks that"
   },
@@ -1489,10 +1513,10 @@
     "request": null,
     "status": 409,
     "response": {
-      "timestamp": "2026-10-07T11:31:47.422540887Z",
+      "timestamp": "2026-10-08T16:12:04.025985337Z",
       "status": 409,
       "code": "GIFT_ALREADY_CLAIMED",
-      "message": "User 6604961e-b4ad-4a0f-a7cf-28612e877281 already claimed gift ce2eb2ca-a432-5d29-9755-1f4f1abf2a14",
+      "message": "User a075280e-3a52-48c5-9dd0-fea1f2b3e529 already claimed gift ce2eb2ca-a432-5d29-9755-1f4f1abf2a14",
       "path": "/loyalty/gifts/ce2eb2ca-a432-5d29-9755-1f4f1abf2a14/claim"
     },
     "note": "409 GIFT_ALREADY_CLAIMED -- one per customer per gift, enforced by a UNIQUE"
@@ -1503,7 +1527,7 @@
     "request": null,
     "status": 409,
     "response": {
-      "timestamp": "2026-10-07T11:31:47.437467804Z",
+      "timestamp": "2026-10-08T16:12:04.129575838Z",
       "status": 409,
       "code": "TIER_TOO_LOW",
       "message": "Gift 5a895aa7-839d-5f07-9729-7f3a68806ac1 needs tier 3, customer is tier 1",
@@ -1518,12 +1542,12 @@
     "status": 200,
     "response": [
       {
-        "redemptionId": "d43bfd3d-9f16-4599-9300-bb9c827a0385",
-        "code": "GIFT-TW42-6NGB",
+        "redemptionId": "efaf50a1-575a-46ba-8f51-f4330f9d180f",
+        "code": "GIFT-QFGC-5HY8",
         "giftName": "Ốp lưng silicon",
         "imageUrl": "https://picsum.photos/seed/op-lung-silicon/400",
         "pointsSpent": 500,
-        "claimedAt": "2026-10-07T11:31:47.397874Z"
+        "claimedAt": "2026-10-08T16:12:02.567787Z"
       }
     ],
     "note": "the code stays readable here indefinitely"
@@ -1533,16 +1557,16 @@
     "path": "/loyalty/points",
     "request": {
       "orderRef": "ORD-100001",
-      "userId": "7c454e64-5a8c-4dde-8931-6e6e5ce4f0d4",
+      "userId": "8916c8e8-24b2-4b9d-a9d9-e79d9fd7f9d5",
       "amountSpent": 99000000
     },
     "status": 404,
     "response": {
-      "timestamp": "2026-10-07T11:31:47.471+00:00",
+      "timestamp": "2026-10-08T16:12:04.203+00:00",
       "path": "/api/loyalty/points",
       "status": 404,
       "error": "Not Found",
-      "requestId": "c46c5463-223"
+      "requestId": "32c91d30-12750"
     },
     "note": "404 -- internal only, so nobody can award themselves points"
   }

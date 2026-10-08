@@ -126,7 +126,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-3ec1c3@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-009039@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -143,7 +143,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"userId\": \"caf11cb6-888c-4cd9-aa61-abe3c6a95c90\",\n  \"email\": \"fe-demo-3ec1c3@techies.vn\"\n}"
+              "body": "{\n  \"userId\": \"b57514af-8e24-4720-8402-a2e17ce5c2b7\",\n  \"email\": \"fe-demo-009039@techies.vn\"\n}"
             },
             {
               "name": "409 Email already exists",
@@ -172,7 +172,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-3ec1c3@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-009039@techies.vn\",\n  \"password\": \"password1\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -189,7 +189,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:52.418786250Z\",\n  \"status\": 409,\n  \"code\": \"EMAIL_ALREADY_EXISTS\",\n  \"message\": \"An account with this email already exists\",\n  \"path\": \"/auth/register\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:30.071230836Z\",\n  \"status\": 409,\n  \"code\": \"EMAIL_ALREADY_EXISTS\",\n  \"message\": \"An account with this email already exists\",\n  \"path\": \"/auth/register\"\n}"
             },
             {
               "name": "400 Validation error",
@@ -235,7 +235,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:52.429610125Z\",\n  \"status\": 400,\n  \"code\": \"VALIDATION_ERROR\",\n  \"message\": \"Request validation failed\",\n  \"path\": \"/auth/register\",\n  \"fieldErrors\": {\n    \"phone\": \"must be 9-11 digits\",\n    \"email\": \"must be a well-formed email address\",\n    \"fullName\": \"must not be blank\"\n  }\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:30.116205752Z\",\n  \"status\": 400,\n  \"code\": \"VALIDATION_ERROR\",\n  \"message\": \"Request validation failed\",\n  \"path\": \"/auth/register\",\n  \"fieldErrors\": {\n    \"phone\": \"must be 9-11 digits\",\n    \"fullName\": \"must not be blank\",\n    \"email\": \"must be a well-formed email address\"\n  }\n}"
             }
           ]
         },
@@ -305,7 +305,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-3ec1c3@techies.vn\",\n  \"password\": \"password1\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-009039@techies.vn\",\n  \"password\": \"password1\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -322,7 +322,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"accessToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJjYWYxMWNiNi04ODhjLTRjZDktYWE2MS1hYmUzYzZhOTVjOTAiLCJlbWFpbCI6ImZlLWRlbW8tM2VjMWMzQHRlY2hpZXMudm4iLCJpYXQiOjE3OTEzNzI4OTIsImV4cCI6MTc5Mzk2NDg5Mn0.lsrLVwC8nAFvqr70ebE5u5c5RMOWAP3qlGB8XB6N8Kz0H7zrj0OBfxs8nDEaZT1u\",\n  \"tokenType\": \"Bearer\",\n  \"expiresIn\": 2592000,\n  \"user\": {\n    \"id\": \"caf11cb6-888c-4cd9-aa61-abe3c6a95c90\",\n    \"email\": \"fe-demo-3ec1c3@techies.vn\",\n    \"fullName\": \"Nguyen Van A\",\n    \"phone\": \"0901234567\",\n    \"avatarUrl\": null\n  }\n}"
+              "body": "{\n  \"accessToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJiNTc1MTRhZi04ZTI0LTQ3MjAtODQwMi1hMmUxN2NlNWMyYjciLCJlbWFpbCI6ImZlLWRlbW8tMDA5MDM5QHRlY2hpZXMudm4iLCJpYXQiOjE3OTE0NzU4OTAsImV4cCI6MTc5NDA2Nzg5MH0.MxXTgThB87qmnZdJjbz31buLiUziKXd3x5DdEbryA22lLdpf_-MZKwtB86rIHyhR\",\n  \"tokenType\": \"Bearer\",\n  \"expiresIn\": 2592000,\n  \"user\": {\n    \"id\": \"b57514af-8e24-4720-8402-a2e17ce5c2b7\",\n    \"email\": \"fe-demo-009039@techies.vn\",\n    \"fullName\": \"Nguyen Van A\",\n    \"phone\": \"0901234567\",\n    \"avatarUrl\": null\n  }\n}"
             },
             {
               "name": "401 Invalid credentials",
@@ -351,7 +351,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-3ec1c3@techies.vn\",\n  \"password\": \"wrongpassword1\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-009039@techies.vn\",\n  \"password\": \"wrongpassword1\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -368,7 +368,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:52.606817667Z\",\n  \"status\": 401,\n  \"code\": \"INVALID_CREDENTIALS\",\n  \"message\": \"Email or password is incorrect\",\n  \"path\": \"/auth/login\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:30.956174419Z\",\n  \"status\": 401,\n  \"code\": \"INVALID_CREDENTIALS\",\n  \"message\": \"Email or password is incorrect\",\n  \"path\": \"/auth/login\"\n}"
             }
           ],
           "event": [
@@ -454,7 +454,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"fe-demo-3ec1c3@techies.vn\"\n}",
+                  "raw": "{\n  \"email\": \"fe-demo-009039@techies.vn\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -471,7 +471,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"email\": \"fe-demo-3ec1c3@techies.vn\",\n  \"exists\": true\n}"
+              "body": "{\n  \"email\": \"fe-demo-009039@techies.vn\",\n  \"exists\": true\n}"
             },
             {
               "name": "200 not registered",
@@ -905,13 +905,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/products/c0fe1a61-1c82-4bed-b440-7779e95d75db",
+                  "raw": "{{baseUrl}}/products/c4c0b86d-e4b5-4d9e-902c-65ce9962645e",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "products",
-                    "c0fe1a61-1c82-4bed-b440-7779e95d75db"
+                    "c4c0b86d-e4b5-4d9e-902c-65ce9962645e"
                   ]
                 },
                 "description": ""
@@ -925,7 +925,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:52.816978792Z\",\n  \"status\": 404,\n  \"code\": \"PRODUCT_NOT_FOUND\",\n  \"message\": \"Product not found\",\n  \"path\": \"/products/c0fe1a61-1c82-4bed-b440-7779e95d75db\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:32.114541337Z\",\n  \"status\": 404,\n  \"code\": \"PRODUCT_NOT_FOUND\",\n  \"message\": \"Product not found\",\n  \"path\": \"/products/c4c0b86d-e4b5-4d9e-902c-65ce9962645e\"\n}"
             }
           ]
         },
@@ -1065,7 +1065,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"caf11cb6-888c-4cd9-aa61-abe3c6a95c90\",\n  \"email\": \"fe-demo-3ec1c3@techies.vn\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\",\n  \"avatarUrl\": null\n}"
+              "body": "{\n  \"id\": \"b57514af-8e24-4720-8402-a2e17ce5c2b7\",\n  \"email\": \"fe-demo-009039@techies.vn\",\n  \"fullName\": \"Nguyen Van A\",\n  \"phone\": \"0901234567\",\n  \"avatarUrl\": null\n}"
             },
             {
               "name": "401 No token",
@@ -1102,7 +1102,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:52.647621584Z\",\n  \"status\": 401,\n  \"code\": \"UNAUTHENTICATED\",\n  \"message\": \"Authentication required\",\n  \"path\": \"/api/users/me\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:31.202341586Z\",\n  \"status\": 401,\n  \"code\": \"UNAUTHENTICATED\",\n  \"message\": \"Authentication required\",\n  \"path\": \"/api/users/me\"\n}"
             }
           ]
         },
@@ -1186,7 +1186,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"caf11cb6-888c-4cd9-aa61-abe3c6a95c90\",\n  \"email\": \"fe-demo-3ec1c3@techies.vn\",\n  \"fullName\": \"Nguyen Van B\",\n  \"phone\": \"0909999999\",\n  \"avatarUrl\": null\n}"
+              "body": "{\n  \"id\": \"b57514af-8e24-4720-8402-a2e17ce5c2b7\",\n  \"email\": \"fe-demo-009039@techies.vn\",\n  \"fullName\": \"Nguyen Van B\",\n  \"phone\": \"0909999999\",\n  \"avatarUrl\": null\n}"
             }
           ]
         },
@@ -1337,7 +1337,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:52.682839292Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'evil.png')\",\n  \"path\": \"/users/me/avatar\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:31.566323420Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'evil.png')\",\n  \"path\": \"/users/me/avatar\"\n}"
             },
             {
               "name": "400 Unsupported format",
@@ -1375,7 +1375,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:52.691468084Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'me.gif')\",\n  \"path\": \"/users/me/avatar\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:31.708998670Z\",\n  \"status\": 400,\n  \"code\": \"UNSUPPORTED_IMAGE_TYPE\",\n  \"message\": \"Only PNG and JPEG images are accepted (received 'me.gif')\",\n  \"path\": \"/users/me/avatar\"\n}"
             }
           ]
         },
@@ -1500,7 +1500,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"id\": \"3ff222a2-6225-4644-81d1-4658a8cb4581\",\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\",\n    \"isDefault\": true\n  }\n]"
+              "body": "[\n  {\n    \"id\": \"d5c300b0-7461-409e-92bc-2fee23e4d802\",\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\",\n    \"isDefault\": true\n  }\n]"
             }
           ]
         },
@@ -1582,7 +1582,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"3ff222a2-6225-4644-81d1-4658a8cb4581\",\n  \"recipientName\": \"Nguyen Van B\",\n  \"phone\": \"0907654321\",\n  \"line1\": \"12 Nguyen Hue\",\n  \"ward\": \"Ben Nghe\",\n  \"district\": \"Quan 1\",\n  \"province\": \"Ho Chi Minh\",\n  \"isDefault\": true\n}"
+              "body": "{\n  \"id\": \"d5c300b0-7461-409e-92bc-2fee23e4d802\",\n  \"recipientName\": \"Nguyen Van B\",\n  \"phone\": \"0907654321\",\n  \"line1\": \"12 Nguyen Hue\",\n  \"ward\": \"Ben Nghe\",\n  \"district\": \"Quan 1\",\n  \"province\": \"Ho Chi Minh\",\n  \"isDefault\": true\n}"
             }
           ],
           "event": [
@@ -1704,7 +1704,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"id\": \"c4e4b7c4-66a3-403a-a0a9-c38c4de61f6f\",\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"name\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n      \"unitPrice\": 29990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 29990000.0,\n      \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n      \"available\": 36\n    }\n  ],\n  \"subtotal\": 29990000.0,\n  \"itemCount\": 1\n}"
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"5168e89c-855b-4e32-89cc-e3b542923f29\",\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"name\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n      \"unitPrice\": 29990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 29990000.0,\n      \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n      \"available\": 36\n    }\n  ],\n  \"subtotal\": 29990000.0,\n  \"itemCount\": 1\n}"
             },
             {
               "name": "200 Empty",
@@ -1824,7 +1824,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"id\": \"c4e4b7c4-66a3-403a-a0a9-c38c4de61f6f\",\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"name\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n      \"unitPrice\": 29990000.0,\n      \"quantity\": 2,\n      \"lineTotal\": 59980000.0,\n      \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n      \"available\": 36\n    }\n  ],\n  \"subtotal\": 59980000.0,\n  \"itemCount\": 1\n}"
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"5168e89c-855b-4e32-89cc-e3b542923f29\",\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"name\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n      \"unitPrice\": 29990000.0,\n      \"quantity\": 2,\n      \"lineTotal\": 59980000.0,\n      \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n      \"available\": 36\n    }\n  ],\n  \"subtotal\": 59980000.0,\n  \"itemCount\": 1\n}"
             }
           ],
           "event": [
@@ -1895,14 +1895,14 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/cart/items/c4e4b7c4-66a3-403a-a0a9-c38c4de61f6f",
+                  "raw": "{{baseUrl}}/cart/items/5168e89c-855b-4e32-89cc-e3b542923f29",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "cart",
                     "items",
-                    "c4e4b7c4-66a3-403a-a0a9-c38c4de61f6f"
+                    "5168e89c-855b-4e32-89cc-e3b542923f29"
                   ]
                 },
                 "description": "",
@@ -1925,7 +1925,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"items\": [\n    {\n      \"id\": \"c4e4b7c4-66a3-403a-a0a9-c38c4de61f6f\",\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"name\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n      \"unitPrice\": 29990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 29990000.0,\n      \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n      \"available\": 36\n    }\n  ],\n  \"subtotal\": 29990000.0,\n  \"itemCount\": 1\n}"
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"5168e89c-855b-4e32-89cc-e3b542923f29\",\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"name\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n      \"unitPrice\": 29990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 29990000.0,\n      \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n      \"available\": 36\n    }\n  ],\n  \"subtotal\": 29990000.0,\n  \"itemCount\": 1\n}"
             }
           ]
         }
@@ -1995,7 +1995,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"addressId\": \"3ff222a2-6225-4644-81d1-4658a8cb4581\",\n  \"paymentMethod\": \"MOCK_CARD\"\n}",
+                  "raw": "{\n  \"addressId\": \"d5c300b0-7461-409e-92bc-2fee23e4d802\",\n  \"paymentMethod\": \"MOCK_CARD\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2012,7 +2012,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"8820e033-91b9-4240-95a1-d3849c615606\",\n    \"orderRef\": \"ORD-100065\",\n    \"status\": \"AWAITING_PAYMENT\",\n    \"failureCode\": null,\n    \"subtotal\": 29990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 29990000.0,\n    \"couponCode\": null,\n    \"discount\": 0.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"PENDING\",\n    \"paymentRef\": null,\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"id\": \"9e77aaba-b025-44fe-ac49-0d9d7647d384\",\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"unitPrice\": 29990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 29990000.0,\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"reviewed\": false\n      }\n    ],\n    \"createdAt\": \"2026-10-07T11:34:53.053775Z\"\n  },\n  \"message\": \"Order placed, complete the payment to confirm it\"\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"ac4d0118-c37e-4bea-9997-1ea196d04929\",\n    \"orderRef\": \"ORD-100099\",\n    \"status\": \"AWAITING_PAYMENT\",\n    \"failureCode\": null,\n    \"subtotal\": 29990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 29990000.0,\n    \"couponCode\": null,\n    \"discount\": 0.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"PENDING\",\n    \"paymentRef\": null,\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"id\": \"9a8223f4-a5e3-463d-a3ac-60f5d604c231\",\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"unitPrice\": 29990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 29990000.0,\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"reviewed\": false\n      }\n    ],\n    \"createdAt\": \"2026-10-08T16:11:32.740581Z\"\n  },\n  \"message\": \"Order placed, complete the payment to confirm it\"\n}"
             }
           ],
           "event": [
@@ -2102,13 +2102,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/8820e033-91b9-4240-95a1-d3849c615606/payment",
+                  "raw": "{{baseUrl}}/orders/ac4d0118-c37e-4bea-9997-1ea196d04929/payment",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "8820e033-91b9-4240-95a1-d3849c615606",
+                    "ac4d0118-c37e-4bea-9997-1ea196d04929",
                     "payment"
                   ]
                 },
@@ -2132,7 +2132,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"8820e033-91b9-4240-95a1-d3849c615606\",\n    \"orderRef\": \"ORD-100065\",\n    \"status\": \"CONFIRMED\",\n    \"failureCode\": null,\n    \"subtotal\": 29990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 29990000.0,\n    \"couponCode\": null,\n    \"discount\": 0.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"PAID\",\n    \"paymentRef\": \"TXN-DEMO-0001\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"id\": \"9e77aaba-b025-44fe-ac49-0d9d7647d384\",\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"unitPrice\": 29990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 29990000.0,\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"reviewed\": false\n      }\n    ],\n    \"createdAt\": \"2026-10-07T11:34:53.053775Z\"\n  },\n  \"cartRestore\": null\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"ac4d0118-c37e-4bea-9997-1ea196d04929\",\n    \"orderRef\": \"ORD-100099\",\n    \"status\": \"CONFIRMED\",\n    \"failureCode\": null,\n    \"subtotal\": 29990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 29990000.0,\n    \"couponCode\": null,\n    \"discount\": 0.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"PAID\",\n    \"paymentRef\": \"TXN-DEMO-0001\",\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"id\": \"9a8223f4-a5e3-463d-a3ac-60f5d604c231\",\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"unitPrice\": 29990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 29990000.0,\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"reviewed\": false\n      }\n    ],\n    \"createdAt\": \"2026-10-08T16:11:32.740581Z\"\n  },\n  \"cartRestore\": null\n}"
             }
           ]
         },
@@ -2197,7 +2197,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"addressId\": \"3ff222a2-6225-4644-81d1-4658a8cb4581\",\n  \"paymentMethod\": \"MOCK_CARD\"\n}",
+                  "raw": "{\n  \"addressId\": \"d5c300b0-7461-409e-92bc-2fee23e4d802\",\n  \"paymentMethod\": \"MOCK_CARD\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2214,7 +2214,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"b1d21e32-1f04-4124-a115-2488f852a75e\",\n    \"orderRef\": \"ORD-100066\",\n    \"status\": \"AWAITING_PAYMENT\",\n    \"failureCode\": null,\n    \"subtotal\": 29990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 29990000.0,\n    \"couponCode\": null,\n    \"discount\": 0.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"PENDING\",\n    \"paymentRef\": null,\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"id\": \"02565017-55d1-4dda-ab52-5fba696acda3\",\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"unitPrice\": 29990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 29990000.0,\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"reviewed\": false\n      }\n    ],\n    \"createdAt\": \"2026-10-07T11:34:53.175880Z\"\n  },\n  \"message\": \"Order placed, complete the payment to confirm it\"\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"6e0beff0-2958-409c-b684-0d03f9bef695\",\n    \"orderRef\": \"ORD-100100\",\n    \"status\": \"AWAITING_PAYMENT\",\n    \"failureCode\": null,\n    \"subtotal\": 29990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 29990000.0,\n    \"couponCode\": null,\n    \"discount\": 0.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"PENDING\",\n    \"paymentRef\": null,\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"id\": \"3b04491f-3bac-4cc2-8c0e-e3b9dc5e93f9\",\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"unitPrice\": 29990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 29990000.0,\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"reviewed\": false\n      }\n    ],\n    \"createdAt\": \"2026-10-08T16:11:35.686556Z\"\n  },\n  \"message\": \"Order placed, complete the payment to confirm it\"\n}"
             }
           ],
           "event": [
@@ -2304,13 +2304,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/b1d21e32-1f04-4124-a115-2488f852a75e/payment",
+                  "raw": "{{baseUrl}}/orders/6e0beff0-2958-409c-b684-0d03f9bef695/payment",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "b1d21e32-1f04-4124-a115-2488f852a75e",
+                    "6e0beff0-2958-409c-b684-0d03f9bef695",
                     "payment"
                   ]
                 },
@@ -2334,7 +2334,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"b1d21e32-1f04-4124-a115-2488f852a75e\",\n    \"orderRef\": \"ORD-100066\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"PAYMENT_FAILED\",\n    \"subtotal\": 29990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 29990000.0,\n    \"couponCode\": null,\n    \"discount\": 0.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"DECLINED\",\n    \"paymentRef\": null,\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"id\": \"02565017-55d1-4dda-ab52-5fba696acda3\",\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"unitPrice\": 29990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 29990000.0,\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"reviewed\": false\n      }\n    ],\n    \"createdAt\": \"2026-10-07T11:34:53.175880Z\"\n  },\n  \"cartRestore\": {\n    \"linesReturned\": 1,\n    \"unavailable\": []\n  }\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"6e0beff0-2958-409c-b684-0d03f9bef695\",\n    \"orderRef\": \"ORD-100100\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"PAYMENT_FAILED\",\n    \"subtotal\": 29990000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 29990000.0,\n    \"couponCode\": null,\n    \"discount\": 0.0,\n    \"paymentMethod\": \"MOCK_CARD\",\n    \"paymentStatus\": \"DECLINED\",\n    \"paymentRef\": null,\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"id\": \"3b04491f-3bac-4cc2-8c0e-e3b9dc5e93f9\",\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"unitPrice\": 29990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 29990000.0,\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"reviewed\": false\n      }\n    ],\n    \"createdAt\": \"2026-10-08T16:11:35.686556Z\"\n  },\n  \"cartRestore\": {\n    \"linesReturned\": 1,\n    \"unavailable\": []\n  }\n}"
             }
           ]
         },
@@ -2399,7 +2399,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"addressId\": \"3ff222a2-6225-4644-81d1-4658a8cb4581\",\n  \"paymentMethod\": \"COD\"\n}",
+                  "raw": "{\n  \"addressId\": \"d5c300b0-7461-409e-92bc-2fee23e4d802\",\n  \"paymentMethod\": \"COD\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2416,7 +2416,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"147b132d-acf3-4bd5-b3ad-a80c122d84f6\",\n    \"orderRef\": \"ORD-100067\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"OUT_OF_STOCK\",\n    \"subtotal\": 43980000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 43980000.0,\n    \"couponCode\": null,\n    \"discount\": 0.0,\n    \"paymentMethod\": \"COD\",\n    \"paymentStatus\": \"PENDING\",\n    \"paymentRef\": null,\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"id\": \"14b1c0b4-6250-451b-944d-8e8385b0cd63\",\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"unitPrice\": 29990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 29990000.0,\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"reviewed\": false\n      },\n      {\n        \"id\": \"5b70ea96-069a-489c-89bd-2cc99c97cfbd\",\n        \"productId\": \"b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8\",\n        \"productName\": \"MSI Modern 14 C13M\",\n        \"unitPrice\": 13990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 13990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M\",\n        \"reviewed\": false\n      }\n    ],\n    \"createdAt\": \"2026-10-07T11:34:53.321477Z\"\n  },\n  \"message\": \"Some items are no longer in stock\"\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"3a720ebd-5a71-4e7a-bdeb-c60a038fa4f8\",\n    \"orderRef\": \"ORD-100101\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"OUT_OF_STOCK\",\n    \"subtotal\": 43980000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 43980000.0,\n    \"couponCode\": null,\n    \"discount\": 0.0,\n    \"paymentMethod\": \"COD\",\n    \"paymentStatus\": \"PENDING\",\n    \"paymentRef\": null,\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"id\": \"5087fea1-2833-40a0-93a0-2f962c00b738\",\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"unitPrice\": 29990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 29990000.0,\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"reviewed\": false\n      },\n      {\n        \"id\": \"bcd2fa9b-9891-4f26-bef1-ca6206c3cdf1\",\n        \"productId\": \"b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8\",\n        \"productName\": \"MSI Modern 14 C13M\",\n        \"unitPrice\": 13990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 13990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M\",\n        \"reviewed\": false\n      }\n    ],\n    \"createdAt\": \"2026-10-08T16:11:39.457977Z\"\n  },\n  \"message\": \"Some items are no longer in stock\"\n}"
             }
           ],
           "event": [
@@ -2561,7 +2561,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"addressId\": \"3ff222a2-6225-4644-81d1-4658a8cb4581\",\n  \"paymentMethod\": \"COD\",\n  \"couponCode\": \"FREESHIP30K\"\n}",
+                  "raw": "{\n  \"addressId\": \"d5c300b0-7461-409e-92bc-2fee23e4d802\",\n  \"paymentMethod\": \"COD\",\n  \"couponCode\": \"FREESHIP30K\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2578,7 +2578,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"order\": {\n    \"id\": \"05ac4553-ef95-42a4-b1a0-7c95f22a6469\",\n    \"orderRef\": \"ORD-100068\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"OUT_OF_STOCK\",\n    \"subtotal\": 73970000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 73940000.0,\n    \"couponCode\": \"FREESHIP30K\",\n    \"discount\": 30000.0,\n    \"paymentMethod\": \"COD\",\n    \"paymentStatus\": \"PENDING\",\n    \"paymentRef\": null,\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"id\": \"c2cad6df-39ba-4ae4-9f69-e05a75d3e114\",\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"unitPrice\": 29990000.0,\n        \"quantity\": 2,\n        \"lineTotal\": 59980000.0,\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"reviewed\": false\n      },\n      {\n        \"id\": \"e7e944bc-63a7-42e5-a517-2bd1134572de\",\n        \"productId\": \"b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8\",\n        \"productName\": \"MSI Modern 14 C13M\",\n        \"unitPrice\": 13990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 13990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M\",\n        \"reviewed\": false\n      }\n    ],\n    \"createdAt\": \"2026-10-07T11:34:53.413839Z\"\n  },\n  \"message\": \"Some items are no longer in stock\"\n}"
+              "body": "{\n  \"order\": {\n    \"id\": \"32fe522c-4b08-4b8d-83e9-7543e7c5ccf8\",\n    \"orderRef\": \"ORD-100102\",\n    \"status\": \"FAILED\",\n    \"failureCode\": \"OUT_OF_STOCK\",\n    \"subtotal\": 73970000.0,\n    \"shippingFee\": 0.0,\n    \"total\": 73940000.0,\n    \"couponCode\": \"FREESHIP30K\",\n    \"discount\": 30000.0,\n    \"paymentMethod\": \"COD\",\n    \"paymentStatus\": \"PENDING\",\n    \"paymentRef\": null,\n    \"shippingAddress\": {\n      \"recipientName\": \"Nguyen Van B\",\n      \"phone\": \"0907654321\",\n      \"line1\": \"12 Nguyen Hue\",\n      \"ward\": \"Ben Nghe\",\n      \"district\": \"Quan 1\",\n      \"province\": \"Ho Chi Minh\"\n    },\n    \"items\": [\n      {\n        \"id\": \"1efcfc1a-9db8-4b72-866b-669f4a3d55e0\",\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"unitPrice\": 29990000.0,\n        \"quantity\": 2,\n        \"lineTotal\": 59980000.0,\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"reviewed\": false\n      },\n      {\n        \"id\": \"50da08f0-f5c2-4b67-bfb6-08c23db3e9ce\",\n        \"productId\": \"b9606e9b-ec51-5d2a-b26e-fd1466cb8bf8\",\n        \"productName\": \"MSI Modern 14 C13M\",\n        \"unitPrice\": 13990000.0,\n        \"quantity\": 1,\n        \"lineTotal\": 13990000.0,\n        \"thumbnailUrl\": \"https://placehold.co/600x600/312e81/ffffff/png?text=MSI+Modern+14+C13M\",\n        \"reviewed\": false\n      }\n    ],\n    \"createdAt\": \"2026-10-08T16:11:40.387322Z\"\n  },\n  \"message\": \"Some items are no longer in stock\"\n}"
             }
           ],
           "event": [
@@ -2677,7 +2677,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"addressId\": \"3ff222a2-6225-4644-81d1-4658a8cb4581\",\n  \"paymentMethod\": \"COD\",\n  \"couponCode\": \"EXPIRED100K\"\n}",
+                  "raw": "{\n  \"addressId\": \"d5c300b0-7461-409e-92bc-2fee23e4d802\",\n  \"paymentMethod\": \"COD\",\n  \"couponCode\": \"EXPIRED100K\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2694,7 +2694,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:53.498248584Z\",\n  \"status\": 409,\n  \"code\": \"COUPON_NOT_APPLICABLE\",\n  \"message\": \"Coupon 'EXPIRED100K' is no longer available\",\n  \"path\": \"/checkout\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:42.311751508Z\",\n  \"status\": 409,\n  \"code\": \"COUPON_NOT_APPLICABLE\",\n  \"message\": \"Coupon 'EXPIRED100K' is no longer available\",\n  \"path\": \"/checkout\"\n}"
             }
           ],
           "event": [
@@ -2775,20 +2775,20 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/05ac4553-ef95-42a4-b1a0-7c95f22a6469/reviews",
+                  "raw": "{{baseUrl}}/orders/32fe522c-4b08-4b8d-83e9-7543e7c5ccf8/reviews",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "05ac4553-ef95-42a4-b1a0-7c95f22a6469",
+                    "32fe522c-4b08-4b8d-83e9-7543e7c5ccf8",
                     "reviews"
                   ]
                 },
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"reviews\": [\n    {\n      \"orderItemId\": \"c2cad6df-39ba-4ae4-9f69-e05a75d3e114\",\n      \"rating\": 5,\n      \"comment\": \"Sản phẩm tốt, giao hàng nhanh.\"\n    }\n  ]\n}",
+                  "raw": "{\n  \"reviews\": [\n    {\n      \"orderItemId\": \"1efcfc1a-9db8-4b72-866b-669f4a3d55e0\",\n      \"rating\": 5,\n      \"comment\": \"Sản phẩm tốt, giao hàng nhanh.\"\n    }\n  ]\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2805,7 +2805,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:53.518412584Z\",\n  \"status\": 409,\n  \"code\": \"ORDER_NOT_REVIEWABLE\",\n  \"message\": \"An order in status FAILED cannot be reviewed\",\n  \"path\": \"/orders/05ac4553-ef95-42a4-b1a0-7c95f22a6469/reviews\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:42.567371467Z\",\n  \"status\": 409,\n  \"code\": \"ORDER_NOT_REVIEWABLE\",\n  \"message\": \"An order in status FAILED cannot be reviewed\",\n  \"path\": \"/orders/32fe522c-4b08-4b8d-83e9-7543e7c5ccf8/reviews\"\n}"
             }
           ]
         },
@@ -2861,20 +2861,20 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/05ac4553-ef95-42a4-b1a0-7c95f22a6469/reviews",
+                  "raw": "{{baseUrl}}/orders/32fe522c-4b08-4b8d-83e9-7543e7c5ccf8/reviews",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "05ac4553-ef95-42a4-b1a0-7c95f22a6469",
+                    "32fe522c-4b08-4b8d-83e9-7543e7c5ccf8",
                     "reviews"
                   ]
                 },
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"reviews\": [\n    {\n      \"orderItemId\": \"c2cad6df-39ba-4ae4-9f69-e05a75d3e114\",\n      \"rating\": 1,\n      \"comment\": \"lần hai\"\n    }\n  ]\n}",
+                  "raw": "{\n  \"reviews\": [\n    {\n      \"orderItemId\": \"1efcfc1a-9db8-4b72-866b-669f4a3d55e0\",\n      \"rating\": 1,\n      \"comment\": \"lần hai\"\n    }\n  ]\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2891,7 +2891,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:53.527660167Z\",\n  \"status\": 409,\n  \"code\": \"ORDER_NOT_REVIEWABLE\",\n  \"message\": \"An order in status FAILED cannot be reviewed\",\n  \"path\": \"/orders/05ac4553-ef95-42a4-b1a0-7c95f22a6469/reviews\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:42.591238967Z\",\n  \"status\": 409,\n  \"code\": \"ORDER_NOT_REVIEWABLE\",\n  \"message\": \"An order in status FAILED cannot be reviewed\",\n  \"path\": \"/orders/32fe522c-4b08-4b8d-83e9-7543e7c5ccf8/reviews\"\n}"
             }
           ]
         },
@@ -2975,7 +2975,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"averageRating\": 5.0,\n  \"total\": 2,\n  \"content\": [\n    {\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"authorName\": \"Lâm Quang Vinh\",\n      \"rating\": 5,\n      \"comment\": \"Màu rất đẹp, chơi game 120Hz mượt. Rất đáng giá.\",\n      \"createdAt\": \"2026-09-29T07:07:34.525012Z\"\n    },\n    {\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"authorName\": \"Trương Bảo Châu\",\n      \"rating\": 5,\n      \"comment\": \"Hình ảnh sắc nét, xem phim như ở rạp. Lắp đặt tận nhà nhanh.\",\n      \"createdAt\": \"2026-09-20T07:07:34.525012Z\"\n    }\n  ]\n}"
+              "body": "{\n  \"averageRating\": 4.5,\n  \"total\": 8,\n  \"content\": [\n    {\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"authorName\": \"Đinh Phương Mai\",\n      \"rating\": 5,\n      \"comment\": \"Chống loá tốt, phòng nhiều cửa sổ vẫn xem được ban ngày.\",\n      \"createdAt\": \"2026-10-06T16:06:16.327026Z\"\n    },\n    {\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"authorName\": \"Lương Bảo Ngọc\",\n      \"rating\": 4,\n      \"comment\": \"Lắp đặt tận nhà nhanh, kỹ thuật viên cẩn thận.\",\n      \"createdAt\": \"2026-09-30T16:06:16.327026Z\"\n    },\n    {\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"authorName\": \"Lâm Quang Vinh\",\n      \"rating\": 5,\n      \"comment\": \"Màu rất đẹp, chơi game 120Hz mượt. Rất đáng giá.\",\n      \"createdAt\": \"2026-09-29T07:07:34.525012Z\"\n    },\n    {\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"authorName\": \"Trịnh Hải Đăng\",\n      \"rating\": 3,\n      \"comment\": \"Remote ít nút, điều khiển bằng giọng nói tiếng Việt chưa chính xác.\",\n      \"createdAt\": \"2026-09-22T16:06:16.327026Z\"\n    },\n    {\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"authorName\": \"Trương Bảo Châu\",\n      \"rating\": 5,\n      \"comment\": \"Hình ảnh sắc nét, xem phim như ở rạp. Lắp đặt tận nhà nhanh.\",\n      \"createdAt\": \"2026-09-20T07:07:34.525012Z\"\n    }\n  ]\n}"
             }
           ]
         },
@@ -3025,13 +3025,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/products/513f03f9-8a1c-5813-9feb-2cae892e82a9/review-summary",
+                  "raw": "{{baseUrl}}/products/759d9034-b058-5375-aa35-cadf437332c3/review-summary",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "products",
-                    "513f03f9-8a1c-5813-9feb-2cae892e82a9",
+                    "759d9034-b058-5375-aa35-cadf437332c3",
                     "review-summary"
                   ]
                 },
@@ -3046,7 +3046,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"pros\": [\n    \"Âm thanh tốt, bass mạnh\",\n    \"Có chống ồn trong tầm giá\",\n    \"Giao hàng nhanh\"\n  ],\n  \"cons\": [\n    \"Vỏ nhựa cảm giác hơi mỏng\"\n  ],\n  \"verdict\": \"Sản phẩm phù hợp với những ai tìm kiếm thiết bị có chống ồn và âm bass mạnh trong tầm giá hợp lý.\",\n  \"reviewCount\": 3,\n  \"generatedAt\": \"2026-10-07T11:29:28.503059Z\"\n}"
+              "body": "{\n  \"pros\": [\n    \"Chống loá tốt khi xem ban ngày\",\n    \"Hình ảnh sắc nét, màu sắc đẹp\",\n    \"Chơi game 120Hz mượt, độ trễ thấp\",\n    \"Lắp đặt nhanh chóng và cẩn thận\"\n  ],\n  \"cons\": [\n    \"Remote ít nút\",\n    \"Điều khiển giọng nói tiếng Việt chưa chuẩn\",\n    \"Giao diện Tizen có quảng cáo\"\n  ],\n  \"verdict\": \"Sản phẩm phù hợp với người thích xem phim, bóng đá và các game thủ chơi game 120Hz.\",\n  \"reviewCount\": 8,\n  \"generatedAt\": \"2026-10-08T16:09:12.647423Z\"\n}"
             }
           ],
           "event": [
@@ -3332,7 +3332,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"code\": \"TIER1-3R86CSWC\",\n    \"tier\": 1,\n    \"discountPercent\": 10,\n    \"issuedAt\": \"2026-10-07T11:34:54.338044Z\",\n    \"expiresAt\": null,\n    \"consumedAt\": null\n  }\n]"
+              "body": "[\n  {\n    \"code\": \"TIER1-TK67YFVM\",\n    \"tier\": 1,\n    \"discountPercent\": 10,\n    \"issuedAt\": \"2026-10-08T16:11:47.982907Z\",\n    \"expiresAt\": null,\n    \"consumedAt\": null\n  }\n]"
             }
           ]
         },
@@ -3481,7 +3481,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"redemptionId\": \"8b48e07d-e671-467d-a0c3-09365384290a\",\n  \"code\": \"GIFT-NSRV-UC7W\",\n  \"giftName\": \"Ốp lưng silicon\",\n  \"pointsSpent\": 500,\n  \"balanceAfter\": 9500,\n  \"claimedAt\": \"2026-10-07T11:34:54.409109335Z\"\n}"
+              "body": "{\n  \"redemptionId\": \"7645dca0-e8ec-4571-bef9-7b8f83693253\",\n  \"code\": \"GIFT-K58W-9WKJ\",\n  \"giftName\": \"Ốp lưng silicon\",\n  \"pointsSpent\": 500,\n  \"balanceAfter\": 9500,\n  \"claimedAt\": \"2026-10-08T16:11:48.315492969Z\"\n}"
             }
           ]
         },
@@ -3551,7 +3551,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:54.458169293Z\",\n  \"status\": 409,\n  \"code\": \"GIFT_ALREADY_CLAIMED\",\n  \"message\": \"User 3af9aee4-058d-4adc-94ab-575bed249b40 already claimed gift ce2eb2ca-a432-5d29-9755-1f4f1abf2a14\",\n  \"path\": \"/loyalty/gifts/ce2eb2ca-a432-5d29-9755-1f4f1abf2a14/claim\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:48.442503511Z\",\n  \"status\": 409,\n  \"code\": \"GIFT_ALREADY_CLAIMED\",\n  \"message\": \"User 72a99205-d63d-4635-84f3-1ffdad0b66c4 already claimed gift ce2eb2ca-a432-5d29-9755-1f4f1abf2a14\",\n  \"path\": \"/loyalty/gifts/ce2eb2ca-a432-5d29-9755-1f4f1abf2a14/claim\"\n}"
             }
           ]
         },
@@ -3621,7 +3621,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:54.477069335Z\",\n  \"status\": 409,\n  \"code\": \"TIER_TOO_LOW\",\n  \"message\": \"Gift 5a895aa7-839d-5f07-9729-7f3a68806ac1 needs tier 3, customer is tier 1\",\n  \"path\": \"/loyalty/gifts/5a895aa7-839d-5f07-9729-7f3a68806ac1/claim\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:48.487584969Z\",\n  \"status\": 409,\n  \"code\": \"TIER_TOO_LOW\",\n  \"message\": \"Gift 5a895aa7-839d-5f07-9729-7f3a68806ac1 needs tier 3, customer is tier 1\",\n  \"path\": \"/loyalty/gifts/5a895aa7-839d-5f07-9729-7f3a68806ac1/claim\"\n}"
             }
           ]
         },
@@ -3687,7 +3687,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"redemptionId\": \"8b48e07d-e671-467d-a0c3-09365384290a\",\n    \"code\": \"GIFT-NSRV-UC7W\",\n    \"giftName\": \"Ốp lưng silicon\",\n    \"imageUrl\": \"https://picsum.photos/seed/op-lung-silicon/400\",\n    \"pointsSpent\": 500,\n    \"claimedAt\": \"2026-10-07T11:34:54.409109Z\"\n  }\n]"
+              "body": "[\n  {\n    \"redemptionId\": \"7645dca0-e8ec-4571-bef9-7b8f83693253\",\n    \"code\": \"GIFT-K58W-9WKJ\",\n    \"giftName\": \"Ốp lưng silicon\",\n    \"imageUrl\": \"https://picsum.photos/seed/op-lung-silicon/400\",\n    \"pointsSpent\": 500,\n    \"claimedAt\": \"2026-10-08T16:11:48.315493Z\"\n  }\n]"
             }
           ]
         },
@@ -3754,7 +3754,7 @@
                 "description": "",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"orderRef\": \"ORD-100001\",\n  \"userId\": \"3c6118c5-3dcc-4836-a62e-aa0d660e04fb\",\n  \"amountSpent\": 99000000\n}",
+                  "raw": "{\n  \"orderRef\": \"ORD-100001\",\n  \"userId\": \"afe4527a-58fa-45a8-a515-8e81c84e53c7\",\n  \"amountSpent\": 99000000\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3771,7 +3771,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:54.502+00:00\",\n  \"path\": \"/api/loyalty/points\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"requestId\": \"70f4b3cc-438\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:48.561+00:00\",\n  \"path\": \"/api/loyalty/points\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"requestId\": \"728bbf52-12676\"\n}"
             }
           ]
         }
@@ -3850,7 +3850,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"content\": [\n    {\n      \"id\": \"05ac4553-ef95-42a4-b1a0-7c95f22a6469\",\n      \"orderRef\": \"ORD-100068\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"OUT_OF_STOCK\",\n      \"total\": 73940000.0,\n      \"itemCount\": 2,\n      \"firstItem\": {\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"quantity\": 2\n      },\n      \"reviewed\": false,\n      \"createdAt\": \"2026-10-07T11:34:53.413839Z\"\n    },\n    {\n      \"id\": \"147b132d-acf3-4bd5-b3ad-a80c122d84f6\",\n      \"orderRef\": \"ORD-100067\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"OUT_OF_STOCK\",\n      \"total\": 43980000.0,\n      \"itemCount\": 2,\n      \"firstItem\": {\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"quantity\": 1\n      },\n      \"reviewed\": false,\n      \"createdAt\": \"2026-10-07T11:34:53.321477Z\"\n    },\n    {\n      \"id\": \"b1d21e32-1f04-4124-a115-2488f852a75e\",\n      \"orderRef\": \"ORD-100066\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"PAYMENT_FAILED\",\n      \"total\": 29990000.0,\n      \"itemCount\": 1,\n      \"firstItem\": {\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"quantity\": 1\n      },\n      \"reviewed\": false,\n      \"createdAt\": \"2026-10-07T11:34:53.175880Z\"\n    },\n    {\n      \"id\": \"8820e033-91b9-4240-95a1-d3849c615606\",\n      \"orderRef\": \"ORD-100065\",\n      \"status\": \"CONFIRMED\",\n      \"failureCode\": null,\n      \"total\": 29990000.0,\n      \"itemCount\": 1,\n      \"firstItem\": {\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"quantity\": 1\n      },\n      \"reviewed\": false,\n      \"createdAt\": \"2026-10-07T11:34:53.053775Z\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 20,\n  \"totalElements\": 4,\n  \"totalPages\": 1\n}"
+              "body": "{\n  \"content\": [\n    {\n      \"id\": \"32fe522c-4b08-4b8d-83e9-7543e7c5ccf8\",\n      \"orderRef\": \"ORD-100102\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"OUT_OF_STOCK\",\n      \"total\": 73940000.0,\n      \"itemCount\": 2,\n      \"firstItem\": {\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"quantity\": 2\n      },\n      \"reviewed\": false,\n      \"createdAt\": \"2026-10-08T16:11:40.387322Z\"\n    },\n    {\n      \"id\": \"3a720ebd-5a71-4e7a-bdeb-c60a038fa4f8\",\n      \"orderRef\": \"ORD-100101\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"OUT_OF_STOCK\",\n      \"total\": 43980000.0,\n      \"itemCount\": 2,\n      \"firstItem\": {\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"quantity\": 1\n      },\n      \"reviewed\": false,\n      \"createdAt\": \"2026-10-08T16:11:39.457977Z\"\n    },\n    {\n      \"id\": \"6e0beff0-2958-409c-b684-0d03f9bef695\",\n      \"orderRef\": \"ORD-100100\",\n      \"status\": \"FAILED\",\n      \"failureCode\": \"PAYMENT_FAILED\",\n      \"total\": 29990000.0,\n      \"itemCount\": 1,\n      \"firstItem\": {\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"quantity\": 1\n      },\n      \"reviewed\": false,\n      \"createdAt\": \"2026-10-08T16:11:35.686556Z\"\n    },\n    {\n      \"id\": \"ac4d0118-c37e-4bea-9997-1ea196d04929\",\n      \"orderRef\": \"ORD-100099\",\n      \"status\": \"CONFIRMED\",\n      \"failureCode\": null,\n      \"total\": 29990000.0,\n      \"itemCount\": 1,\n      \"firstItem\": {\n        \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n        \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n        \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n        \"quantity\": 1\n      },\n      \"reviewed\": false,\n      \"createdAt\": \"2026-10-08T16:11:32.740581Z\"\n    }\n  ],\n  \"page\": 0,\n  \"size\": 20,\n  \"totalElements\": 4,\n  \"totalPages\": 1\n}"
             }
           ],
           "event": [
@@ -3915,13 +3915,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/8820e033-91b9-4240-95a1-d3849c615606",
+                  "raw": "{{baseUrl}}/orders/ac4d0118-c37e-4bea-9997-1ea196d04929",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "8820e033-91b9-4240-95a1-d3849c615606"
+                    "ac4d0118-c37e-4bea-9997-1ea196d04929"
                   ]
                 },
                 "description": ""
@@ -3935,7 +3935,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"8820e033-91b9-4240-95a1-d3849c615606\",\n  \"orderRef\": \"ORD-100065\",\n  \"status\": \"CONFIRMED\",\n  \"failureCode\": null,\n  \"subtotal\": 29990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 29990000.0,\n  \"couponCode\": null,\n  \"discount\": 0.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"PAID\",\n  \"paymentRef\": \"TXN-DEMO-0001\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"id\": \"9e77aaba-b025-44fe-ac49-0d9d7647d384\",\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n      \"unitPrice\": 29990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 29990000.0,\n      \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n      \"reviewed\": false\n    }\n  ],\n  \"createdAt\": \"2026-10-07T11:34:53.053775Z\"\n}"
+              "body": "{\n  \"id\": \"ac4d0118-c37e-4bea-9997-1ea196d04929\",\n  \"orderRef\": \"ORD-100099\",\n  \"status\": \"CONFIRMED\",\n  \"failureCode\": null,\n  \"subtotal\": 29990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 29990000.0,\n  \"couponCode\": null,\n  \"discount\": 0.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"PAID\",\n  \"paymentRef\": \"TXN-DEMO-0001\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"id\": \"9a8223f4-a5e3-463d-a3ac-60f5d604c231\",\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n      \"unitPrice\": 29990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 29990000.0,\n      \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n      \"reviewed\": false\n    }\n  ],\n  \"createdAt\": \"2026-10-08T16:11:32.740581Z\"\n}"
             }
           ]
         },
@@ -3991,13 +3991,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/8820e033-91b9-4240-95a1-d3849c615606/status",
+                  "raw": "{{baseUrl}}/orders/ac4d0118-c37e-4bea-9997-1ea196d04929/status",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "8820e033-91b9-4240-95a1-d3849c615606",
+                    "ac4d0118-c37e-4bea-9997-1ea196d04929",
                     "status"
                   ]
                 },
@@ -4021,7 +4021,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"8820e033-91b9-4240-95a1-d3849c615606\",\n  \"orderRef\": \"ORD-100065\",\n  \"status\": \"COMPLETED\",\n  \"failureCode\": null,\n  \"subtotal\": 29990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 29990000.0,\n  \"couponCode\": null,\n  \"discount\": 0.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"PAID\",\n  \"paymentRef\": \"TXN-DEMO-0001\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"id\": \"9e77aaba-b025-44fe-ac49-0d9d7647d384\",\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n      \"unitPrice\": 29990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 29990000.0,\n      \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n      \"reviewed\": false\n    }\n  ],\n  \"createdAt\": \"2026-10-07T11:34:53.053775Z\"\n}"
+              "body": "{\n  \"id\": \"ac4d0118-c37e-4bea-9997-1ea196d04929\",\n  \"orderRef\": \"ORD-100099\",\n  \"status\": \"COMPLETED\",\n  \"failureCode\": null,\n  \"subtotal\": 29990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 29990000.0,\n  \"couponCode\": null,\n  \"discount\": 0.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"PAID\",\n  \"paymentRef\": \"TXN-DEMO-0001\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"id\": \"9a8223f4-a5e3-463d-a3ac-60f5d604c231\",\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n      \"unitPrice\": 29990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 29990000.0,\n      \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n      \"reviewed\": false\n    }\n  ],\n  \"createdAt\": \"2026-10-08T16:11:32.740581Z\"\n}"
             }
           ]
         },
@@ -4077,13 +4077,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/8820e033-91b9-4240-95a1-d3849c615606/status",
+                  "raw": "{{baseUrl}}/orders/ac4d0118-c37e-4bea-9997-1ea196d04929/status",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "8820e033-91b9-4240-95a1-d3849c615606",
+                    "ac4d0118-c37e-4bea-9997-1ea196d04929",
                     "status"
                   ]
                 },
@@ -4107,7 +4107,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:53.639196959Z\",\n  \"status\": 400,\n  \"code\": \"VALIDATION_ERROR\",\n  \"message\": \"PENDING is an internal state and cannot be set\",\n  \"path\": \"/orders/8820e033-91b9-4240-95a1-d3849c615606/status\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:43.199978675Z\",\n  \"status\": 400,\n  \"code\": \"VALIDATION_ERROR\",\n  \"message\": \"PENDING is an internal state and cannot be set\",\n  \"path\": \"/orders/ac4d0118-c37e-4bea-9997-1ea196d04929/status\"\n}"
             }
           ]
         },
@@ -4154,13 +4154,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/8820e033-91b9-4240-95a1-d3849c615606/cancel",
+                  "raw": "{{baseUrl}}/orders/ac4d0118-c37e-4bea-9997-1ea196d04929/cancel",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "8820e033-91b9-4240-95a1-d3849c615606",
+                    "ac4d0118-c37e-4bea-9997-1ea196d04929",
                     "cancel"
                   ]
                 },
@@ -4175,7 +4175,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"8820e033-91b9-4240-95a1-d3849c615606\",\n  \"orderRef\": \"ORD-100065\",\n  \"status\": \"CANCELLED\",\n  \"failureCode\": null,\n  \"subtotal\": 29990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 29990000.0,\n  \"couponCode\": null,\n  \"discount\": 0.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"REFUNDED\",\n  \"paymentRef\": \"TXN-DEMO-0001\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"id\": \"9e77aaba-b025-44fe-ac49-0d9d7647d384\",\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n      \"unitPrice\": 29990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 29990000.0,\n      \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n      \"reviewed\": false\n    }\n  ],\n  \"createdAt\": \"2026-10-07T11:34:53.053775Z\"\n}"
+              "body": "{\n  \"id\": \"ac4d0118-c37e-4bea-9997-1ea196d04929\",\n  \"orderRef\": \"ORD-100099\",\n  \"status\": \"CANCELLED\",\n  \"failureCode\": null,\n  \"subtotal\": 29990000.0,\n  \"shippingFee\": 0.0,\n  \"total\": 29990000.0,\n  \"couponCode\": null,\n  \"discount\": 0.0,\n  \"paymentMethod\": \"MOCK_CARD\",\n  \"paymentStatus\": \"REFUNDED\",\n  \"paymentRef\": \"TXN-DEMO-0001\",\n  \"shippingAddress\": {\n    \"recipientName\": \"Nguyen Van B\",\n    \"phone\": \"0907654321\",\n    \"line1\": \"12 Nguyen Hue\",\n    \"ward\": \"Ben Nghe\",\n    \"district\": \"Quan 1\",\n    \"province\": \"Ho Chi Minh\"\n  },\n  \"items\": [\n    {\n      \"id\": \"9a8223f4-a5e3-463d-a3ac-60f5d604c231\",\n      \"productId\": \"759d9034-b058-5375-aa35-cadf437332c3\",\n      \"productName\": \"Smart Tivi Samsung Neo QLED 4K 75 inch 2025 (75QN80F)\",\n      \"unitPrice\": 29990000.0,\n      \"quantity\": 1,\n      \"lineTotal\": 29990000.0,\n      \"thumbnailUrl\": \"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/v/tv-ss-75qn80f-qled-4k-75_1_.png\",\n      \"reviewed\": false\n    }\n  ],\n  \"createdAt\": \"2026-10-08T16:11:32.740581Z\"\n}"
             },
             {
               "name": "409 Not cancellable",
@@ -4192,13 +4192,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/orders/8820e033-91b9-4240-95a1-d3849c615606/cancel",
+                  "raw": "{{baseUrl}}/orders/ac4d0118-c37e-4bea-9997-1ea196d04929/cancel",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "orders",
-                    "8820e033-91b9-4240-95a1-d3849c615606",
+                    "ac4d0118-c37e-4bea-9997-1ea196d04929",
                     "cancel"
                   ]
                 },
@@ -4213,7 +4213,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"timestamp\": \"2026-10-07T11:34:53.676831417Z\",\n  \"status\": 409,\n  \"code\": \"ORDER_NOT_CANCELLABLE\",\n  \"message\": \"An order in status CANCELLED cannot be cancelled\",\n  \"path\": \"/orders/8820e033-91b9-4240-95a1-d3849c615606/cancel\"\n}"
+              "body": "{\n  \"timestamp\": \"2026-10-08T16:11:43.848350717Z\",\n  \"status\": 409,\n  \"code\": \"ORDER_NOT_CANCELLABLE\",\n  \"message\": \"An order in status CANCELLED cannot be cancelled\",\n  \"path\": \"/orders/ac4d0118-c37e-4bea-9997-1ea196d04929/cancel\"\n}"
             }
           ]
         }

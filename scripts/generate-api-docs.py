@@ -656,7 +656,7 @@ def main():
 
         ```
         GET /products/{productId}/review-summary
-        { "pros": [...], "cons": [...], "verdict": "...", "reviewCount": 3, "generatedAt": "..." }
+        { "pros": [...], "cons": [...], "verdict": "...", "reviewCount": 9, "generatedAt": "..." }
         ```
 
         **Call it separately and render it late.** It is not part of the review list precisely so
@@ -669,7 +669,17 @@ def main():
         never returns an error, because the reviews underneath it are the real content.
 
         `pros` and `cons` are short phrases meant to be rendered as chips, not prose.
-
+        """))
+    w(endpoint(cap, "reviews.summary", "Review summary", auth=False,
+               description="Written by ai-service from the reviews order-service holds, then "
+                           "cached against the count it was written from. Note how a complaint "
+                           "several reviewers share survives a high average — a summary that "
+                           "reads as uniformly glowing looks fabricated, which is the failure "
+                           "mode here."))
+    w(endpoint(cap, "reviews.summary.none", "Review summary — nothing to summarise", auth=False,
+               description="Under three reviews. The body is literally `null` and the status is "
+                           "still 200: show nothing, and do not treat it as an error."))
+    w(textwrap.dedent("""\
         ---
 
         ## Reporting the payment

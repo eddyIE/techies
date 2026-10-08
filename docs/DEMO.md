@@ -305,7 +305,7 @@ curl -s "$API/loyalty/me" -H "Authorization: Bearer $TOKEN" \
 ## 11. The AI review summary
 
 ```bash
-# Any product with at least three reviews. V7 seeds several.
+# Any product with at least three reviews. V7 and V12 seed 30 of them.
 PID=$(curl -s "$API/products?size=40" | python3 -c '
 import sys,json,urllib.request
 for p in json.load(sys.stdin)["content"]:

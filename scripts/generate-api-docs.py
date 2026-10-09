@@ -401,38 +401,71 @@ def main():
 
     w("## Auth endpoints\n")
     w(endpoint(cap, "auth.register", "Register", auth=False,
-               description="Creates an account. Email is case-insensitive and must be unique."))
+               description="Creates an account, unverified, and mails a 6-digit code to the "
+                           "address. Email is case-insensitive and must be unique.",
+               extra="`verificationRequired` is always `true`. Branch on it rather than on a "
+                     "hardcoded assumption, so switching verification off is not a breaking "
+                     "change."))
     w(endpoint(cap, "auth.register.duplicate", "Register — email taken", auth=False,
                description="Registering an existing email, including in different casing."))
     w(endpoint(cap, "auth.register.invalid", "Register — validation failure", auth=False,
                description="Shows the `fieldErrors` map you bind to form fields."))
+    w(endpoint(cap, "auth.login.unverified", "Login — not yet verified", auth=False,
+               description="The password is right; the address has not been confirmed. Send the "
+                           "user to the code screen and offer `/auth/resend-otp`."))
+    w(endpoint(cap, "auth.verifyEmail.wrong", "Verify email — wrong code", auth=False,
+               description="Five wrong guesses burn the code; the sixth attempt returns "
+                           "`429 TOO_MANY_VERIFICATION_ATTEMPTS` and the way back is a new code, "
+                           "not waiting. An expired one returns `400 VERIFICATION_CODE_EXPIRED`."))
+    w(endpoint(cap, "auth.verifyEmail", "Verify email", auth=False,
+               description="Finishes the registration and returns a token directly, so there is "
+                           "no second login. The code is single use.",
+               extra="A code already spent, or one for an account that is verified already, "
+                     "returns `409 EMAIL_ALREADY_VERIFIED`."))
+    w(endpoint(cap, "auth.resendOtp.tooSoon", "Resend code — inside the cooldown", auth=False,
+               description="One code per minute per purpose. The previous code keeps working "
+                           "meanwhile, so show the wait rather than clearing the input."))
+    w(endpoint(cap, "auth.resendOtp.unknown", "Resend code — unknown address", auth=False,
+               description="`204`, exactly as for a real account, and nothing is mailed. The "
+                           "response is deliberately not a way to find out which accounts exist."))
     w(endpoint(cap, "auth.login", "Login", auth=False,
                description="Returns the token plus the user, so Login need not call `/users/me` after.",
                extra="`expiresIn` is seconds (2,592,000 = 30 days)."))
     w(endpoint(cap, "auth.login.bad", "Login — wrong credentials", auth=False,
                description="Identical response whether the email is unknown or the password is wrong, "
-                           "so the API does not reveal which accounts exist."))
+                           "so the API does not reveal which accounts exist. Note that this is "
+                           "checked *before* verification, so a wrong password on an unverified "
+                           "account reports `INVALID_CREDENTIALS`, not `EMAIL_NOT_VERIFIED`."))
     w(endpoint(cap, "auth.checkEmail", "Check email exists", auth=False,
-               description="Step 1 of the password reset flow."))
+               description="Lets the forgot-password screen tell the user there is no account "
+                           "before it asks them to wait for a code."))
     w(endpoint(cap, "auth.checkEmail.unknown", "Check email — not registered", auth=False,
                description="Returns `200` with `exists: false`, not a 404."))
 
     w(textwrap.dedent("""\
-        ### Reset password
+        ### Forgot password, end to end
 
-        `POST /auth/reset-password` · Public · responds `204`
+        Three calls. The middle one is the same `resend-otp` used for registration, with a
+        different `purpose`:
 
-        ```json
-        { "email": "user@techies.vn", "newPassword": "newpassword9" }
-        ```
+        1. `POST /auth/check-email` — optional, so the screen can say "no account" immediately.
+        2. `POST /auth/resend-otp` with `{"email": ..., "purpose": "PASSWORD_RESET"}` — always
+           `204`. A reset code is never issued for an account that never verified.
+        3. `POST /auth/reset-password` with the code and the new password.
 
-        Returns `204` with no body, or `404 ACCOUNT_NOT_FOUND`.
-
-        > **Security note for the team.** This takes no proof of ownership — no emailed token,
-        > no code. Anyone who knows an email address can reset that account. It was chosen
-        > deliberately to keep the project small, and it is fine for a local demo, but do not
-        > use real credentials against a deployed instance.
-
+        """))
+    w(endpoint(cap, "auth.resendOtp", "Request a reset code", auth=False,
+               description="Step 2. `204` whether or not an account exists at that address."))
+    w(endpoint(cap, "auth.resetPassword", "Reset password", auth=False,
+               description="Step 3. `404 ACCOUNT_NOT_FOUND` if there is no such account.",
+               extra="The password policy is checked first, so a weak new password returns "
+                     "`400 WEAK_PASSWORD` *without* spending the code — the user can retry "
+                     "with the same digits."))
+    w(endpoint(cap, "auth.resetPassword.wrongCode", "Reset password — wrong code", auth=False,
+               description="The code is the proof of ownership. Until identity `V3` this "
+                           "endpoint needed only the email, which meant anyone who knew an "
+                           "address could take the account."))
+    w(textwrap.dedent("""\
         ---
         """))
 

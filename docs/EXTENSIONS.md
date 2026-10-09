@@ -44,12 +44,14 @@ reintroduce the shared state that stateless JWT was chosen to avoid.
 
 ## 4. Password reset ownership proof
 
-**Not built.** `check-email` reveals account existence; `reset-password` then changes the
-password given only that email. Anyone who knows an address can take the account.
+**Built.** This entry is kept as the record of a cut that was later reversed. A 6-digit code,
+mailed over Gmail SMTP, now backs both registration and password reset — see the email
+verification rules in `docs/SPEC-identity.md`.
 
-**What it costs.** A single-use, short-lived reset token delivered out of band — email (SMTP or
-a provider) or SMS. The token table is trivial; the delivery channel is the actual work, and is
-why it was cut.
+**What is still not built.** Rate limiting beyond the 60-second resend cooldown; a bounce or
+complaint handler; and any delivery guarantee at all — a failed send is logged and dropped, and
+the user's recovery is to ask for another code. `check-email` also still reveals whether an
+account exists, kept because the client's forgot-password screen branches on it.
 
 ## 5. Order fulfilment states
 

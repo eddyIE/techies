@@ -34,6 +34,13 @@ public class User {
     @Column(nullable = false, length = 11)
     private String phone;
 
+    /**
+     * False until the 6-digit code mailed at registration comes back. Login refuses while it
+     * is false; accounts that predate verification were backfilled to true (identity V3).
+     */
+    @Column(name = "email_verified", nullable = false)
+    private boolean emailVerified;
+
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
@@ -48,6 +55,7 @@ public class User {
         user.passwordHash = passwordHash;
         user.fullName = fullName;
         user.phone = phone;
+        user.emailVerified = false;
         Instant now = Instant.now();
         user.createdAt = now;
         user.updatedAt = now;

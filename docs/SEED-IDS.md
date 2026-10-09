@@ -4,6 +4,16 @@ Single source of truth for the fixed UUIDs shared by `catalog-service` and
 `inventory-service`. Both seed migrations are generated from this list, so stock always
 attaches to a product that exists. **Do not edit either migration by hand.**
 
+## Demo account
+
+Seeded by identity `V3` and already verified, because `techies.vn` receives no mail. Inserted
+only when no account holds that address, so a database that has run the walkthrough before
+keeps the one it has.
+
+| Email | Password | UUID |
+|---|---|---|
+| `demo@techies.vn` | `password1` | `11111111-1111-1111-1111-111111111111` |
+
 ## Categories
 
 | Slug | Name | UUID |

@@ -2,8 +2,10 @@ package vn.techies.ecommerce.identity.api.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import vn.techies.ecommerce.identity.domain.VerificationCode.Purpose;
 
 import java.util.UUID;
 
@@ -19,7 +21,22 @@ public final class AuthDtos {
             @NotBlank @Pattern(regexp = "^[0-9]{9,11}$", message = "must be 9-11 digits") String phone) {
     }
 
-    public record RegisterResponse(UUID userId, String email) {
+    /**
+     * @param verificationRequired always true. Present so the client can branch on the response
+     *                             rather than on a hardcoded assumption about this flow, and so
+     *                             turning verification off later is not a breaking change.
+     */
+    public record RegisterResponse(UUID userId, String email, boolean verificationRequired) {
+    }
+
+    public record VerifyEmailRequest(
+            @NotBlank @Email String email,
+            @NotBlank @Pattern(regexp = "^[0-9]{6}$", message = "must be 6 digits") String code) {
+    }
+
+    public record ResendCodeRequest(
+            @NotBlank @Email String email,
+            @NotNull Purpose purpose) {
     }
 
     public record LoginRequest(
@@ -37,11 +54,13 @@ public final class AuthDtos {
     }
 
     /**
-     * Deliberately carries no proof of ownership — see docs/SPEC-identity.md. Anyone knowing
-     * the email can reset the account. Accepted, documented limitation of this project.
+     * {@code code} is the proof of ownership: the 6-digit code mailed to that address by
+     * {@code /auth/resend-otp} with purpose {@code PASSWORD_RESET}. Until it existed, this
+     * request needed nothing but the email — that was the hole it closes.
      */
     public record ResetPasswordRequest(
             @NotBlank @Email String email,
+            @NotBlank @Pattern(regexp = "^[0-9]{6}$", message = "must be 6 digits") String code,
             @NotBlank String newPassword) {
     }
 

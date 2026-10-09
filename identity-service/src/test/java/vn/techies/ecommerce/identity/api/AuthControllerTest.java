@@ -10,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import vn.techies.ecommerce.identity.AbstractPostgresTest;
+import vn.techies.ecommerce.identity.AbstractAuthTest;
+
+import vn.techies.ecommerce.identity.domain.VerificationCode.Purpose;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -29,31 +29,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "techies.jwt.ttl-days=30"
 })
 @AutoConfigureMockMvc
-class AuthControllerTest extends AbstractPostgresTest {
+class AuthControllerTest extends AbstractAuthTest {
 
-    @Autowired
-    private MockMvc mvc;
     @Autowired
     private ObjectMapper json;
 
-    private String uniqueEmail() {
-        return "user-" + UUID.randomUUID() + "@example.com";
-    }
-
-    private String registerBody(String email, String password) {
-        return """
-                {"email":"%s","password":"%s","fullName":"Nguyen Van A","phone":"0901234567"}
-                """.formatted(email, password);
-    }
-
-    private MvcResult register(String email, String password) throws Exception {
-        return mvc.perform(post("/auth/register").contentType(MediaType.APPLICATION_JSON)
-                        .content(registerBody(email, password)))
-                .andReturn();
-    }
-
     @Test
-    @DisplayName("register then login returns a signed JWT carrying the user id and a 30-day expiry")
+    @DisplayName("register, verify then login returns a signed JWT carrying the user id and a 30-day expiry")
     void registerThenLogin() throws Exception {
         String email = uniqueEmail();
 
@@ -61,11 +43,12 @@ class AuthControllerTest extends AbstractPostgresTest {
                         .content(registerBody(email, "password1")))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.userId").exists())
-                .andExpect(jsonPath("$.email").value(email));
+                .andExpect(jsonPath("$.email").value(email))
+                .andExpect(jsonPath("$.verificationRequired").value(true));
 
-        MvcResult result = mvc.perform(post("/auth/login").contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {"email":"%s","password":"password1"}""".formatted(email)))
+        verifyEmail(email, codeSentTo(email, Purpose.REGISTRATION)).andExpect(status().isOk());
+
+        MvcResult result = login(email, "password1")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.tokenType").value("Bearer"))
                 .andExpect(jsonPath("$.user.email").value(email))
@@ -91,11 +74,9 @@ class AuthControllerTest extends AbstractPostgresTest {
     void neverLeaksPasswordHash() throws Exception {
         String email = uniqueEmail();
         String registerResponse = register(email, "password1").getResponse().getContentAsString();
+        verifyEmail(email, codeSentTo(email, Purpose.REGISTRATION)).andExpect(status().isOk());
 
-        MvcResult login = mvc.perform(post("/auth/login").contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {"email":"%s","password":"password1"}""".formatted(email)))
-                .andReturn();
+        MvcResult login = login(email, "password1").andReturn();
 
         assertThat(registerResponse).doesNotContain("passwordHash", "password_hash", "$2a$", "$2b$");
         assertThat(login.getResponse().getContentAsString())
@@ -118,18 +99,14 @@ class AuthControllerTest extends AbstractPostgresTest {
     @DisplayName("wrong password and unknown email return the same 401, leaking nothing")
     void loginFailuresAreIndistinguishable() throws Exception {
         String email = uniqueEmail();
-        register(email, "password1");
+        registerAndVerify(email, "password1");
 
-        MvcResult wrongPassword = mvc.perform(post("/auth/login").contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {"email":"%s","password":"wrongpassword1"}""".formatted(email)))
+        MvcResult wrongPassword = login(email, "wrongpassword1")
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.code").value("INVALID_CREDENTIALS"))
                 .andReturn();
 
-        MvcResult unknownEmail = mvc.perform(post("/auth/login").contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {"email":"%s","password":"password1"}""".formatted(uniqueEmail())))
+        MvcResult unknownEmail = login(uniqueEmail(), "password1")
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.code").value("INVALID_CREDENTIALS"))
                 .andReturn();
@@ -167,7 +144,7 @@ class AuthControllerTest extends AbstractPostgresTest {
     @DisplayName("check-email reports existence, and reset-password then changes the password")
     void checkEmailThenReset() throws Exception {
         String email = uniqueEmail();
-        register(email, "password1");
+        registerAndVerify(email, "password1");
 
         mvc.perform(post("/auth/check-email").contentType(MediaType.APPLICATION_JSON)
                         .content("""
@@ -183,18 +160,12 @@ class AuthControllerTest extends AbstractPostgresTest {
 
         mvc.perform(post("/auth/reset-password").contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"email":"%s","newPassword":"newpassword9"}""".formatted(email)))
+                                {"email":"%s","code":"%s","newPassword":"newpassword9"}"""
+                                .formatted(email, requestResetCode(email))))
                 .andExpect(status().isNoContent());
 
-        mvc.perform(post("/auth/login").contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {"email":"%s","password":"newpassword9"}""".formatted(email)))
-                .andExpect(status().isOk());
-
-        mvc.perform(post("/auth/login").contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {"email":"%s","password":"password1"}""".formatted(email)))
-                .andExpect(status().isUnauthorized());
+        login(email, "newpassword9").andExpect(status().isOk());
+        login(email, "password1").andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -202,7 +173,8 @@ class AuthControllerTest extends AbstractPostgresTest {
     void resetUnknownAccount() throws Exception {
         mvc.perform(post("/auth/reset-password").contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"email":"%s","newPassword":"newpassword9"}""".formatted(uniqueEmail())))
+                                {"email":"%s","code":"123456","newPassword":"newpassword9"}"""
+                                .formatted(uniqueEmail())))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.code").value("ACCOUNT_NOT_FOUND"));
     }

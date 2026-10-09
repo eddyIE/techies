@@ -33,14 +33,14 @@ From `docs/SEED-IDS.md`. Chosen so each branch is reproducible:
 | **OUT_OF_STOCK branch** | MSI Modern 14 C13M · Lenovo Tab P12 | **0** |
 | 404-on-detail | Nothing Phone (2a) · Amazfit GTR 4 | inactive |
 
-## 1. Register and log in
+## 1. Log in
+
+`demo@techies.vn` is seeded already verified (identity `V3`), because `techies.vn` is not a real
+domain and no code could ever arrive for it. Section 1b walks the verification flow with an
+address that can actually receive mail.
 
 ```bash
 API=http://localhost:8080/api
-
-curl -s -X POST $API/auth/register -H 'Content-Type: application/json' -d '{
-  "email":"demo@techies.vn","password":"password1",
-  "fullName":"Nguyen Van Demo","phone":"0901234567"}'
 
 TOKEN=$(curl -s -X POST $API/auth/login -H 'Content-Type: application/json' \
   -d '{"email":"demo@techies.vn","password":"password1"}' | python3 -c 'import sys,json;print(json.load(sys.stdin)["accessToken"])')
@@ -49,6 +49,62 @@ echo $TOKEN
 
 The token lasts 30 days. There is no refresh endpoint and no logout — the client simply
 discards it.
+
+## 1b. Email verification — use an address you can read
+
+Needs `MAIL_USERNAME` and `MAIL_PASSWORD` (a Google **app password**) in `.env`. Substitute your
+own address; the code arrives within a few seconds.
+
+```bash
+MINE=you@gmail.com
+
+# Registering mails a 6-digit code and leaves the account unverified.
+curl -s -X POST $API/auth/register -H 'Content-Type: application/json' -d '{
+  "email":"'$MINE'","password":"password1",
+  "fullName":"Nguyen Van A","phone":"0901234567"}'
+# -> {"userId":"...","email":"...","verificationRequired":true}
+
+# Logging in now is refused, even though the password is right.
+curl -s -X POST $API/auth/login -H 'Content-Type: application/json' \
+  -d '{"email":"'$MINE'","password":"password1"}'
+# -> 403 EMAIL_NOT_VERIFIED
+
+# A wrong password on the same account reports INVALID_CREDENTIALS instead, so the 403 above
+# cannot be used to find out which addresses have accounts.
+curl -s -X POST $API/auth/login -H 'Content-Type: application/json' \
+  -d '{"email":"'$MINE'","password":"wrongpassword1"}'
+# -> 401 INVALID_CREDENTIALS
+
+# Read the code from the inbox, then verify. This returns a token directly: no second login.
+curl -s -X POST $API/auth/verify-email -H 'Content-Type: application/json' \
+  -d '{"email":"'$MINE'","code":"482913"}'
+
+# Guess five times and the code is burned — the real one stops working too, and the way back
+# is a new code, not waiting.
+for i in 1 2 3 4 5; do
+  curl -s -o /dev/null -w '%{http_code} ' -X POST $API/auth/verify-email \
+    -H 'Content-Type: application/json' -d '{"email":"'$MINE'","code":"000000"}'
+done; echo        # 400 400 400 400 429
+
+# Asking again inside 60 seconds is refused; the previous code still works meanwhile.
+curl -s -X POST $API/auth/resend-otp -H 'Content-Type: application/json' \
+  -d '{"email":"'$MINE'","purpose":"REGISTRATION"}'
+# -> 429 VERIFICATION_CODE_REQUESTED_TOO_SOON
+
+# Forgot password is the same code with a different purpose.
+curl -s -o /dev/null -w '%{http_code}\n' -X POST $API/auth/resend-otp \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"'$MINE'","purpose":"PASSWORD_RESET"}'          # 204
+curl -s -X POST $API/auth/reset-password -H 'Content-Type: application/json' \
+  -d '{"email":"'$MINE'","code":"931204","newPassword":"newpassword9"}'
+```
+
+Only the BCrypt hash of the code is stored, so reading the table gets you nothing:
+
+```bash
+docker exec techies-postgres psql -U techies -d techies \
+  -c "SELECT purpose, code_hash, attempts, expires_at FROM identity.verification_codes;"
+```
 
 ## 2. Browse (no token needed)
 
@@ -345,6 +401,12 @@ curl -s -o /dev/null -w '%{http_code}\n' -X POST $API/loyalty/vouchers/X/release
 # And neither is the review summary generator, which would otherwise let any logged-in user
 # spend the Gemini quota by reloading a product page.
 curl -s -o /dev/null -w '%{http_code}\n' -X POST $API/ai/review-summary -H "Authorization: Bearer $TOKEN"                # 404
+
+# An unknown address gets the same 204 as a real one, so resend-otp is not an account
+# enumerator either. Nothing is mailed.
+curl -s -o /dev/null -w '%{http_code}\n' -X POST $API/auth/resend-otp \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"nobody-at-all@example.com","purpose":"REGISTRATION"}'    # 204
 
 # Forged identity header without a token gets nowhere:
 curl -s -o /dev/null -w '%{http_code}\n' $API/cart -H 'X-User-Id: 00000000-0000-0000-0000-000000000001'   # 401

@@ -6,7 +6,7 @@ Source of requirements: `Java - BT Lớn.xlsx` (sheets: Chức năng, List màn 
 
 | Module id | Responsibility | Depends on |
 |---|---|---|
-| identity | Register, login, password reset, profile, addresses | — |
+| identity | Register, email verification, login, password reset, profile, addresses | — |
 | catalog | Categories, product list, search, product detail | — |
 | inventory | Stock levels, atomic deduct / compensating restore | — |
 | order | Cart, checkout saga, mock payment, orders, cancel | identity, catalog, inventory, loyalty |
@@ -81,4 +81,5 @@ conditional `UPDATE ... WHERE available >= qty`, backed by `@Version` optimistic
 | Payment | Mocked in `order`, caller-controlled outcome | Both branches of Order Flow demoable on command |
 | Stock model | Deduct + restore, no reservation lifecycle | Payment is synchronous and no admin commits reservations; oversell prevention comes from the atomic write, not from reserving. See SPEC-inventory.md |
 | Auth | JWT 30-day TTL, no refresh, no logout endpoint | Confirmed with mobile; user re-logs in manually on expiry |
-| Password reset | `check-email` then `reset-password`, no token | Explicitly chosen for speed; accepted limitation, see SPEC-identity.md |
+| Email verification | 6-digit code over Gmail SMTP, backing both sign-up and password reset | Android-only client, so a code beats a link: no public landing URL and no deep linking needed. See SPEC-identity.md |
+| Password reset | `resend-otp` with `PASSWORD_RESET`, then `reset-password` with the code | Replaces the email-only reset that was the project's one real auth hole |

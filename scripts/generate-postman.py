@@ -255,17 +255,42 @@ def main():
                     + ex("auth.register.invalid", "400 Validation error")),
                 item("Login", request("POST", "/auth/login", {
                     "email": "{{email}}", "password": "{{password}}"}, auth=False,
-                    desc="Run this first. The test script saves accessToken for every other request."),
-                    ex("auth.login", "200 OK") + ex("auth.login.bad", "401 Invalid credentials"),
+                    desc="Run this first. The test script saves accessToken for every other request.\n\n"
+                         "The default `demo@techies.vn` is seeded already verified, so it logs in "
+                         "straight away. A freshly registered account returns **403 "
+                         "EMAIL_NOT_VERIFIED** until *Verify email* succeeds."),
+                    ex("auth.login", "200 OK") + ex("auth.login.bad", "401 Invalid credentials")
+                    + ex("auth.login.unverified", "403 Not yet verified"),
                     SAVE_TOKEN),
+                item("Verify email", request("POST", "/auth/verify-email", {
+                    "email": "{{email}}", "code": "123456"}, auth=False,
+                    desc="Finishes a registration. Put the 6 digits from the email in `code`.\n\n"
+                         "Returns a token, so there is no need to call *Login* after. The code is "
+                         "single use, lives 10 minutes, and five wrong guesses burn it \u2014 ask for "
+                         "a new one rather than waiting."),
+                    ex("auth.verifyEmail", "200 OK") + ex("auth.verifyEmail.wrong", "400 Wrong code"),
+                    SAVE_TOKEN),
+                item("Resend / request a code", request("POST", "/auth/resend-otp", {
+                    "email": "{{email}}", "purpose": "REGISTRATION"}, auth=False,
+                    desc="`purpose` is `REGISTRATION` or `PASSWORD_RESET`. One code per minute "
+                         "per purpose.\n\n**Always 204**, including for an address with no "
+                         "account: the response is deliberately not a way to find out which "
+                         "accounts exist."),
+                    ex("auth.resendOtp", "204 No Content")
+                    + ex("auth.resendOtp.tooSoon", "429 Inside the cooldown")
+                    + ex("auth.resendOtp.unknown", "204 Unknown address, nothing sent")),
                 item("Check email exists", request("POST", "/auth/check-email", {"email": "{{email}}"},
-                    auth=False, desc="Step 1 of password reset."),
+                    auth=False, desc="Lets the forgot-password screen say 'no account' before it "
+                                     "asks the user to wait for a code."),
                     ex("auth.checkEmail", "200 exists") + ex("auth.checkEmail.unknown", "200 not registered")),
                 item("Reset password", request("POST", "/auth/reset-password", {
-                    "email": "{{email}}", "newPassword": "{{password}}"}, auth=False,
-                    desc="No token and no email verification by design. Returns 204.\n\n"
+                    "email": "{{email}}", "code": "123456", "newPassword": "{{password}}"}, auth=False,
+                    desc="Run *Resend / request a code* with `purpose: PASSWORD_RESET` first, then "
+                         "put those digits in `code`. Returns 204.\n\n"
                          "Deliberately resets to the SAME password so the collection stays "
-                         "re-runnable; change newPassword to test a real reset.")),
+                         "re-runnable; change newPassword to test a real reset."),
+                    ex("auth.resetPassword", "204 No Content")
+                    + ex("auth.resetPassword.wrongCode", "400 Wrong code")),
             ]},
             {"name": "2. Catalog (public)", "item": [
                 item("Categories", request("GET", "/categories", auth=False), ex("catalog.categories", "200 OK")),

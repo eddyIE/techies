@@ -23,6 +23,20 @@ spring:
       hibernate:
         default_schema: identity
     open-in-view: false
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail.smtp.auth: true
+      # Gmail on 587 opens in the clear and upgrades, so STARTTLS has to be required rather
+      # than merely enabled: without it a downgrade would send the app password unencrypted.
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.connectiontimeout: 5000
+      mail.smtp.timeout: 10000
+      mail.smtp.writetimeout: 10000
   flyway:
     enabled: true
     schemas: identity
@@ -41,11 +55,26 @@ management:
     web:
       exposure:
         include: health,info
+  health:
+    # spring-boot-starter-mail contributes a health indicator that opens an SMTP connection
+    # every time /actuator/health is called. The Docker healthcheck calls it every 5 seconds,
+    # so leaving it on means either a container that is never healthy (no credentials) or a
+    # connection to Gmail every 5 seconds (with them). Mail is not on the critical path:
+    # nothing else in the stack waits on it, and a failed send is logged and dropped.
+    mail:
+      enabled: false
 
 techies:
   jwt:
     secret: ${JWT_SECRET:change-me-to-a-long-random-string-at-least-32-bytes}
     ttl-days: ${JWT_TTL_DAYS:30}
+  verification:
+    # Six digits is only a million combinations, so the short life and the attempt cap are
+    # most of the strength here. 10 minutes is long enough to find the mail in a spam folder.
+    ttl: 10m
+    resend-cooldown: 60s
+    max-attempts: 5
+    from-name: ${MAIL_FROM_NAME:Techies}
 
 springdoc:
   api-docs:

@@ -1,5 +1,5 @@
 """Exercise every endpoint against the live stack and capture real request/response pairs."""
-import json, os, urllib.request, urllib.error, uuid, collections
+import json, os, subprocess, urllib.request, urllib.error, uuid, collections
 
 API = os.environ.get("API", "http://localhost:8080/api")
 captured = collections.OrderedDict()
@@ -25,6 +25,32 @@ def call(key, method, path, body=None, token=None, note=None):
 email = f"fe-demo-{uuid.uuid4().hex[:6]}@techies.vn"
 PW = "password1"
 
+# Standing in for an inbox. Registration now mails a 6-digit code, and only its BCrypt hash is
+# stored, so there is nothing for this script to read back: it plants the hash of a known code
+# instead. This is the one place the capture reaches past the API, and the alternative is
+# leaving the two verification endpoints out of the documents the mobile client is built from.
+CODE = "123456"
+CODE_HASH = "$2y$10$ei267uHweJ7Gi7qsdbBZtOzass7a03UPPPBrKGrHUx4dSXkrEzwNO"   # BCrypt("123456")
+
+def plant_code(address):
+    """Makes CODE the live code for that address, and clears any failed attempts."""
+    subprocess.run(
+        ["docker", "exec", "techies-postgres", "psql", "-U", "techies", "-d", "techies", "-q",
+         "-c", "UPDATE identity.verification_codes SET code_hash = '%s', attempts = 0 "
+               "WHERE user_id = (SELECT id FROM identity.users WHERE LOWER(email) = '%s')"
+               % (CODE_HASH, address.lower())],
+        check=True, capture_output=True)
+    return CODE
+
+def register_verified(address, full_name, phone):
+    """Registers, verifies, and returns the token. Login refuses an unverified account."""
+    call(None, "POST", "/auth/register",
+         {"email": address, "password": PW, "fullName": full_name, "phone": phone})
+    plant_code(address)
+    _, verified = call(None, "POST", "/auth/verify-email",
+                       {"email": address, "code": CODE})
+    return verified["accessToken"]
+
 # --- auth -----------------------------------------------------------------
 call("auth.register", "POST", "/auth/register",
      {"email": email, "password": PW, "fullName": "Nguyen Van A", "phone": "0901234567"})
@@ -32,11 +58,36 @@ call("auth.register.duplicate", "POST", "/auth/register",
      {"email": email, "password": PW, "fullName": "Nguyen Van A", "phone": "0901234567"})
 call("auth.register.invalid", "POST", "/auth/register",
      {"email": "not-an-email", "password": "x", "fullName": "", "phone": "abc"})
-_, login = call("auth.login", "POST", "/auth/login", {"email": email, "password": PW})
+call("auth.login.unverified", "POST", "/auth/login", {"email": email, "password": PW},
+     note="the password is correct -- the account just has not confirmed its address yet")
+call("auth.resendOtp.tooSoon", "POST", "/auth/resend-otp",
+     {"email": email, "purpose": "REGISTRATION"},
+     note="the code from registration is seconds old, so a second one is refused")
+plant_code(email)
+call("auth.verifyEmail.wrong", "POST", "/auth/verify-email", {"email": email, "code": "000000"})
+plant_code(email)
+_, login = call("auth.verifyEmail", "POST", "/auth/verify-email", {"email": email, "code": CODE},
+                note="returns a token, so the client does not log in a second time")
 token = login["accessToken"]
+call("auth.login", "POST", "/auth/login", {"email": email, "password": PW})
 call("auth.login.bad", "POST", "/auth/login", {"email": email, "password": "wrongpassword1"})
 call("auth.checkEmail", "POST", "/auth/check-email", {"email": email})
 call("auth.checkEmail.unknown", "POST", "/auth/check-email", {"email": "ghost@techies.vn"})
+call("auth.resendOtp.unknown", "POST", "/auth/resend-otp",
+     {"email": "ghost@techies.vn", "purpose": "REGISTRATION"},
+     note="204 for an address with no account, so the endpoint cannot enumerate accounts")
+
+# Password reset on its own account: it changes the password, and the one above is reused below.
+reset_email = f"fe-reset-{uuid.uuid4().hex[:6]}@techies.vn"
+register_verified(reset_email, "Le Thi Reset", "0903333333")
+call("auth.resendOtp", "POST", "/auth/resend-otp",
+     {"email": reset_email, "purpose": "PASSWORD_RESET"},
+     note="step 1 of forgot-password; the response is 204 either way")
+plant_code(reset_email)
+call("auth.resetPassword", "POST", "/auth/reset-password",
+     {"email": reset_email, "code": CODE, "newPassword": "newpassword9"})
+call("auth.resetPassword.wrongCode", "POST", "/auth/reset-password",
+     {"email": reset_email, "code": "000000", "newPassword": "newpassword9"})
 
 # --- user -----------------------------------------------------------------
 call("user.me", "GET", "/users/me", token=token)
@@ -202,10 +253,7 @@ GIFT_PHONE_CASE = "ce2eb2ca-a432-5d29-9755-1f4f1abf2a14"   # 500 points, min tie
 GIFT_EARBUDS = "5a895aa7-839d-5f07-9729-7f3a68806ac1"      # 12.000 points, min tier 3
 
 loyal_email = f"loyal-demo-{uuid.uuid4().hex[:6]}@techies.vn"
-call(None, "POST", "/auth/register",
-     {"email": loyal_email, "password": PW, "fullName": "Tran Thi Loyal", "phone": "0902222222"})
-_, loyal_login = call(None, "POST", "/auth/login", {"email": loyal_email, "password": PW})
-ltoken = loyal_login["accessToken"]
+ltoken = register_verified(loyal_email, "Tran Thi Loyal", "0902222222")
 _, laddr = call(None, "POST", "/addresses", {
     "recipientName": "Tran Thi Loyal", "phone": "0902222222", "line1": "45 Nguyen Trai",
     "ward": "Ben Thanh", "district": "Quan 1", "province": "Ho Chi Minh", "isDefault": True}, ltoken)
